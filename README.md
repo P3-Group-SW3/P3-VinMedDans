@@ -6,7 +6,7 @@
 ## DISCLAIMER READ ME FIRST
 All pushes to the master(Stable) branch should be STABLE versions of the software. It must pass all tests before a pull request for it to be made. 
 The unstable branch is allowed to have failing unit tests, although they should be solved within a relatively short time frame or generally avoided
-Three reviews are required for something to be pushed to unstable branch
+Three reviews are required for something to be pushed to main branch
 The Personal branches are personal branches, thus whatever you want is allowed in there as long as it is project oriented
 
 ## Table of Contents
