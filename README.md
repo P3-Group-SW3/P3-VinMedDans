@@ -1,6 +1,6 @@
 # Project Name
 
-[![License](https://github.com/P3-Group-SW3/P3-VinMedDans/blob/main/LICENSE)](LICENSE)
+[[License](https://github.com/P3-Group-SW3/P3-VinMedDans/blob/main/LICENSE)](LICENSE)
 
 
 ## DISCLAIMER READ ME FIRST
