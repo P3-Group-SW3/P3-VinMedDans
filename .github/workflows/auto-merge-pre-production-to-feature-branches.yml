@@ -1,12 +1,15 @@
+# .github/workflows/auto-merge-pre-production-to-feature-hotfix-bugfix.yml
 name: Auto-merge Pre-production to Feature, Hotfix, and Bugfix Branches
+
 on:
   push:
     branches:
-      - pre-production
+      - pre-production   # Trigger on pushes to pre-production
 
 jobs:
   merge:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -16,15 +19,14 @@ jobs:
           git config --global user.name "GitHub Action"
           git config --global user.email "action@github.com"
 
-      - name: Fetch branches
-        run: |
-          git fetch --all
+      - name: Fetch all branches
+        run: git fetch --all
 
       - name: Merge pre-production into Feature, Hotfix, and Bugfix branches
         run: |
           for branch in $(git branch -r | grep -E 'origin/(feature|bugfix|hotfix)/'); do
             branch_name=${branch#origin/}
             git checkout $branch_name
-            git merge pre-production --no-edit
+            git merge origin/pre-production --no-edit
             git push origin $branch_name
           done
