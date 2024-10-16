@@ -1,12 +1,15 @@
+# .github/workflows/auto-merge-production-to-pre-production.yml
 name: Auto-merge Production to Pre-production
+
 on:
   push:
     branches:
-      - production
+      - production   # Trigger only on pushes to the production branch
 
 jobs:
   merge:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -19,5 +22,5 @@ jobs:
       - name: Merge production into pre-production
         run: |
           git checkout pre-production
-          git merge production --no-edit
+          git merge origin/production --no-edit
           git push origin pre-production
