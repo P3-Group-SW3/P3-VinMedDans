@@ -43,16 +43,15 @@ Provide a brief overview of your project, explaining the purpose, scope, and mai
   - Spring Security
   - Spring Data JPA
   - [Other Spring Boot Dependencies]
-- **Database**: [Unknown]
-- **Build Tool**: [Maven or Gradle]
+- **Database**: [MariaDB]
+- **Build Tool**: [Maven]
 
 ### Frontend:
 - **React.js**
   - React Router
   - Axios (for HTTP requests)
-  - [Other libraries or frameworks like Redux, Material-UI, etc.]
 - **JavaScript (ES6+)**
-- **CSS** or [CSS Framework like Bootstrap or Material-UI]
+- **CSS** Bootstrap
 
 ## Getting Started
 
@@ -60,23 +59,22 @@ Provide a brief overview of your project, explaining the purpose, scope, and mai
 - [List the required software versions, such as Java, Node.js, npm, and any databases]
 - [Unknown so far]
 - Example:
-  - Java 17
+  - Java 21
   - Node.js 16.x
   - npm 7.x
-  - MySQL 8.x or PostgreSQL
+  - MySQL 8.x
 
 ### Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/your-repo.git
+    git clone [Github repo link]
     ```
 2. Navigate to the project directory:
     ```bash
     cd your-repo
     ```
 
-## Backend Setup
-[Unknown so far]
+## Setup
 1. Go to the backend directory:
     ```bash
     cd backend
@@ -86,31 +84,11 @@ Provide a brief overview of your project, explaining the purpose, scope, and mai
     mvn clean install
     ```
 3. Configure the database:
-   - Update the `application.properties` or `application.yml` file with your database credentials.
+   - Update the `application.properties` file with your database credentials.
 4. Run the Spring Boot application:
     ```bash
     mvn spring-boot:run
     ```
-
-## Frontend Setup
-[Unknown so far]
-1. Go to the frontend directory:
-    ```bash
-    cd frontend
-    ```
-2. Install dependencies:
-    ```bash
-    npm install
-    ```
-3. Start the React development server:
-    ```bash
-    npm start
-    ```
-
-## Running the Application
-[Unknown so far]
-- The backend will be running on `http://localhost:8080` by default.
-- The frontend will be running on `http://localhost:3000`.
 
 
 ## Contributing
