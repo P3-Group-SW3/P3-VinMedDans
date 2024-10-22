@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/P3-VinMedDans.iml" filepath="$PROJECT_DIR$/.idea/P3-VinMedDans.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VMD-webshop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/VMD-webshop.main.iml" />
     </modules>
   </component>
 </project>
