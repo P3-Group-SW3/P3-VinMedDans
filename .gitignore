@@ -39,3 +39,6 @@ out/
 
 # No no files
 !**\src\main\resources\application.properties
+src/main/resources/application.properties
+.idea/vcs.xml
+.idea/misc.xml
