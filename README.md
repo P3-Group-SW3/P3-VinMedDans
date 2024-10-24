@@ -13,25 +13,23 @@
 - [Features](#features)
 - [Technologies](#technologies)
 - [Getting Started](#getting-started)
+- [Setup](#Setup)
 - [Backend Setup](#backend-setup)
-- [Frontend Setup](#frontend-setup)
+- [Frontend Setup](#Frontend-setup)
 - [Running the Application](#running-the-application)
 - [API Endpoints](#api-endpoints)
 - [Contributing](#contributing)
 - [License](#license)
-- [Contact](#contact)
 
 ## Introduction
 
-Provide a brief overview of your project, explaining the purpose, scope, and main goals of the application.
+This project is developed as an 3. semester project at Aalborg University. The project is developed in collaboration with the company "Vin Med Dans" and is a web shop. The main goal of the project is to develop a larger (then previous semesters) program in a structured way using OOAD.
 
 ## Features
 
-- Sample
-- Sample
-- Sample
-  - Sample
-- sample
+- Buy/Sell products
+- Manage Stock
+- Educate yourself about fruit wine
 
 ## Technologies
 
@@ -41,24 +39,19 @@ Provide a brief overview of your project, explaining the purpose, scope, and mai
   - Spring Web
   - Spring Security
   - Spring Data JPA
-  - [Other Spring Boot Dependencies]
 - **Database**: [MariaDB]
-- **Build Tool**: [Maven]
+- **Build Tool**: [Gradle]
 
 ### Frontend:
 - **React.js**
   - React Router
-  - Axios (for HTTP requests)
 - **JavaScript (ES6+)**
 - **CSS** Bootstrap
 
 ## Getting Started
 
 ### Prerequisites
-- [List the required software versions, such as Java, Node.js, npm, and any databases]
-- [Unknown so far]
-- Example:
-  - Java 21
+  - Java 23
   - Node.js 16.x
   - npm 7.x
   - MySQL 8.x
@@ -66,28 +59,47 @@ Provide a brief overview of your project, explaining the purpose, scope, and mai
 ### Installation
 1. Clone the repository:
     ```bash
-    git clone [Github repo link]
+    git clone https://github.com/P3-Group-SW3/P3-VinMedDans/
     ```
 2. Navigate to the project directory:
     ```bash
-    cd your-repo
+    cd <Repo Directory>
     ```
 
+
 ## Setup
-1. Go to the backend directory:
-    ```bash
-    cd backend
-    ```
-2. Install dependencies (if using Maven):
-    ```bash
-    mvn clean install
-    ```
-3. Configure the database:
-   - Update the `application.properties` file with your database credentials.
-4. Run the Spring Boot application:
-    ```bash
-    mvn spring-boot:run
-    ```
+
+  ### Frontend Setup
+  1. Go to the project root directory:
+      ```bash
+      cd your-repo-dir
+      ```
+  2. Install dependencies:
+      ```bash
+      ./gradlew clean build
+      ```
+  3. Configure the database:
+     - Update the `application.properties` file with your database credentials.
+  4. Run the Spring Boot application:
+      ```bash
+      ./gradlew bootRun
+      ```
+
+  ### Frontend Setup
+  1. Navigate to the React project directory:
+      ```bash
+      cd path/to/repo/frontend
+      ```
+  2. Build the React application:
+      ```bash
+      npm run build
+      ```
+  3. Copy the build output to the Spring Boot `static` directory:
+      ```bash
+      cp -r build/* path/to/repo/src/main/resources/static/
+      ```
+
+## API Endpoints
 
 
 ## Contributing
