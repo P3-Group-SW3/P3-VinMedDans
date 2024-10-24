@@ -6,7 +6,7 @@
 ## DISCLAIMER READ ME FIRST
 - All pushes to the production(Stable) branch should be STABLE versions of the software. It must pass all tests before a pull request for it to be made. 
 - The pre-production branch is allowed to have failing unit tests, although they should be solved within a relatively short time frame or generally avoided
-- Three reviews are required for something to be pushed to main branch
+- Three reviews are required for something to be pushed to production branch
 
 ## Table of Contents
 - [Introduction](#introduction)
