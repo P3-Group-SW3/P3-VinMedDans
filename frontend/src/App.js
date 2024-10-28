@@ -1,25 +1,37 @@
-import React, { useEffect, useState } from 'react';
-import './App.css';
+import React from 'react';
+import Header from './components/Header';
+import Navbar from './components/Navbar';
+import Section from './components/Section';
+import Footer from './components/Footer';
+import './styles/styles.css';
+import './bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
-  const [items, setItems] = useState([]);
-
-  useEffect(() => {
-    fetch('/api/items')
-      .then(response => response.json())
-      .then(data => setItems(data));
-  }, []);
-
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>Items</h1>
-        <ul>
-          {items.map(item => (
-            <li key={item.id}>{item.name}</li>
-          ))}
-        </ul>
-      </header>
+      <Header />
+      <Navbar />
+      <Section 
+        title="Hvad er frugtvin"
+        description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
+        imagePosition="left"
+        imagePath='image4'
+      />
+      <Section 
+        title="Jord til bord"
+        description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
+        imagePosition="right"
+        imagePath='image5'
+      />
+      <Section 
+        title="Køb vores frugtvin"
+        description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
+        buttonText="Gå til webshop"
+        imagePosition="left"
+        imagePath='image6'
+      />
+      <Footer />
     </div>
   );
 }
