@@ -13,15 +13,12 @@ import org.springframework.data.annotation.Id;
 @Table(name="Wine")
 public class Wine extends Product{
 
-    @Column(name="name")
     private String name;
-
-    @Column(name="amountLeft")
     private int amountLeft;
 
     public Wine(){}
 
-    public Wine(String ID, int price, String description, String imageURL, int discount, String name, int amountLeft) {
+    public Wine(Long ID, double price, String description, String imageURL, int discount, String name, int amountLeft) {
         super(ID, price, description, imageURL, discount);
         this.name = name;
         this.amountLeft = amountLeft;
