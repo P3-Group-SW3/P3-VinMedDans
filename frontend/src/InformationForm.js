@@ -16,7 +16,9 @@ class InformationForm extends React.Component {
                     <input name="phoneNumber" placeholder="Phone Number"/>
                     {" "}
                     Adresse
-
+                    <input name="name" placeholder="Name"/>
+                    <input name="mail" placeholder="Mail"/>
+                    <input name="phoneNumber" placeholder="Phone Number"/>
                 </form>
             </div>)
 
