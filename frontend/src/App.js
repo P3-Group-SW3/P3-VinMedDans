@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import Header from './components/Header';
+import Navbar from './components/Navbar';
+import Section from './components/Section';
+import Footer from './components/Footer';
+import './styles/styles.css';
+import './bootstrap/dist/css/bootstrap.min.css';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Header />
+      <Navbar />
+      <Section 
+        title="Hvad er frugtvin"
+        description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
+        imagePosition="left"
+        imagePath='image4'
+      />
+      <Section 
+        title="Jord til bord"
+        description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
+        imagePosition="right"
+        imagePath='image5'
+      />
+      <Section 
+        title="Køb vores frugtvin"
+        description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
+        buttonText="Gå til webshop"
+        imagePosition="left"
+        imagePath='image6'
+      />
+      <Footer />
     </div>
   );
 }
