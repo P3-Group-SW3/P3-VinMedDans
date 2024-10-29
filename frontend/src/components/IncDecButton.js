@@ -2,9 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/productpage.css';
 
-function Button({ text, onClick, makeCircle }) {
+function Button({ text, onClick }) {
+  console.log('Button rendered with text:', text); // Debugging log
   return (
-    <button className={makeCircle ? 'buttonCircle' : 'button'} aria-label="Action button" onClick={onClick}>
+    <button className="button" aria-label="Action button" onClick={onClick}>
       {text}
     </button>
   );
