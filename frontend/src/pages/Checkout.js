@@ -15,9 +15,9 @@ function Checkout() {
             <Header />
             <Navbar />
             <main className="container my-4">
-                <div className="row">
+                <div className="row mt-2">
                     <div className="col-md-6">
-                        <ContactInfo/>
+                        <InformationForm/>
                     </div>
                     <div className="col-md-6">
                         <OrderSummary/>

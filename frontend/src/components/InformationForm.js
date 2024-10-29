@@ -4,28 +4,35 @@ import '../styles/InformationForm.css';
 
 const InformationForm = () => {
     return (
-        <div className="square">
-            <form>
-                <br/>
-                <h2>Kontakt oplysninger</h2><br/>
-                <div className="diname">
-                    <br/><input className="name" name="firstName" placeholder="Fornavn"/>
-                    <input className="name" name="lastName" placeholder="Efternavn"/><br/>
-                </div>
-                <br/>
-                <div className="contacts">
-                    <br/><input className="mail" name="mail" placeholder="Mail"/>
-                    <input name="phoneNumber" placeholder="Tillefon nummer"/><br/>
-                </div>
+        <section>
+            <div name="square" className="square">
+                <form>
+                    <br/>
+                    <h2>Kontakt oplysninger</h2><br/>
+                    <div className="form-control-lg" name="contacts">
+                        <div className="row justify-content-around">
+                            <input className="name" name="firstName" placeholder="Fornavn"/>
+                            <input className="name" name="lastName" placeholder="Efternavn"/>
+                            <input className="name" name="mail" placeholder="Mail"/>
+                            <input className="name" name="phonenumber" placeholder="Tillefon nummer"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <h2>Levering</h2><br/>
+                    <div className="CountrySelect align-self-center" name="CountrySelect">
+                        <CountrySelect/>
+                    </div>
+                    <div className="form-control-lg">
+                        <div className="row justify-content-around">
+                            <input className="levering" name="areaCode" placeholder="Postnummer"/>
+                            <input className="levering" name="town" placeholder="By"/>
+                            <input className="levering" name="adres" placeholder="Adresse"/>
+                        </div>
+                    </div>
 
-                <br/><br/>
-                Levering<br/>
-                <CountrySelect/><br/>
-                <input name="areaCode" placeholder="Postnummer"/>
-                <input name="town" placeholder="By"/>
-                <input name="adres" placeholder="Adresse"/>
-            </form>
-        </div>)
+                </form>
+            </div>
+        </section>)
 }
 
 const CountrySelect = () => {
