@@ -23,6 +23,7 @@ public abstract class Product {
         this.discount = discount;
     }
 
+    //Getters
     public int getDiscount() { return this.discount; }
 
     public String getDescription() { return this.description; }
@@ -33,9 +34,11 @@ public abstract class Product {
 
     public Long getID() { return this.ID; }
 
+    abstract int getAmountLeft();
+
+   //Setters
     abstract void setAmountLeft(int amountLeft);
 
-    abstract int getAmountLeft();
 
     void setPrice(int price) {
         this.price = price;

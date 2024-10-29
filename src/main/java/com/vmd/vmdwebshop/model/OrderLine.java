@@ -13,24 +13,29 @@ public class OrderLine {
     private Long ID;
     private int amount;
     private double price;
+
+
+    /* @ManyToOne indicates that more than one instance (row) in the OrderLine table can be associated
+    with only one instance (row) in the Product table. Because more than one customer can order the same product,
+    therefore there will be multiple OrderLines that are associated with the same product.
+    FetchType.LAZY means that the content is only fetched when being accessed.
+    @JoinColumn takes the ID column from the Wine table and inserts it into the OrderLine table with the name Wine_id */
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "wine_id", nullable = false, insertable = false, updatable = false)
+    private Wine wine;
+
+    @Column(name = "wine_id", nullable = false)
     private Long wine_ID;
 
-//    /* @ManyToOne indicates that more than one instance (row) in the OrderLine table can be associated
-//    with only one instance (row) in the Product table. Because more than one customer can order the same product,
-//    therefore there will be multiple OrderLines that are associated with the same product.
-//    FetchType.LAZY means that the content is only fetched when being accessed.
-//    @JoinColumn takes the ID column from the Wine table and inserts it into the OrderLine table with the name Wine_id */
-//    @ManyToOne(fetch = FetchType.LAZY)
-//    @JoinColumn(name = "Wine_id")
-//    private Wine wine;
-
-
+    //Empty Constructor
+    public OrderLine() {}
 
     //Constructor
     public OrderLine(Long ID, int amount, Wine wine) {
         this.ID = ID;
         this.amount = amount;
         this.price = wine.getPrice();
+        this.wine = wine;
         this.wine_ID = wine.getID();
     }
 
@@ -38,6 +43,13 @@ public class OrderLine {
         return amount * price;
     }
 
+    public void addItem(){
+        if (wine.getAmountLeft() > 0) amount += 1;
+    }
+
+    public void subtractItem(){
+    if (amount > 0) amount -= 1;
+    }
 
 
 
