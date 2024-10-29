@@ -1,31 +1,45 @@
 import React, { useEffect, useState }from 'react';
 import Select from "react-select";
 import '../styles/InformationForm.css';
+import '../styles/styles.css';
+import '../bootstrap/dist/css/bootstrap.min.css'
 
 const InformationForm = () => {
     return (
-        <div className="square">
-            <form>
-                <br/>
-                <h2>Kontakt oplysninger</h2><br/>
-                <div className="diname">
-                    <br/><input className="name" name="firstName" placeholder="Fornavn"/>
-                    <input className="name" name="lastName" placeholder="Efternavn"/><br/>
-                </div>
-                <br/>
-                <div className="contacts">
-                    <br/><input className="mail" name="mail" placeholder="Mail"/>
-                    <input name="phoneNumber" placeholder="Tillefon nummer"/><br/>
-                </div>
+        <section>
+            <div name="square" className="square" method="post">
+                <form>
+                    <br/>
+                    <h2>Kontakt oplysninger</h2><br/>
+                    <div className="form-control-lg" name="contacts">
+                        <div className="row justify-content-around">
+                            <input className="name" name="firstName" placeholder="Fornavn"/>
+                            <input className="name" name="lastName" placeholder="Efternavn"/>
+                            <input className="name" name="mail" placeholder="Mail"/>
+                            <input className="name" name="phonenumber" placeholder="Tillefon nummer"/>
+                        </div>
+                    </div>
+                    <br/>
+                    <h2>Levering</h2><br/>
+                    <div className="CountrySelect align-self-center" name="CountrySelect">
+                        <CountrySelect/>
+                    </div>
+                    <div className="form-control-lg">
+                        <div className="row justify-content-around">
+                            <input className="levering" name="areaCode" placeholder="Postnummer"/>
+                            <input className="levering" name="town" placeholder="By"/>
+                            <input className="levering" name="adres" placeholder="Adresse"/>
 
-                <br/><br/>
-                Levering<br/>
-                <CountrySelect/><br/>
-                <input name="areaCode" placeholder="Postnummer"/>
-                <input name="town" placeholder="By"/>
-                <input name="adres" placeholder="Adresse"/>
-            </form>
-        </div>)
+                        </div>
+                    </div>
+                    <div className="row justify-content-around ">
+                        <button type="submit" className="btn btn-dark mt-3 align-self-center">Bekræft Køb (placeholder)</button>
+                    </div>
+
+
+                </form>
+            </div>
+        </section>)
 }
 
 const CountrySelect = () => {

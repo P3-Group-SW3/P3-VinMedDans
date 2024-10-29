@@ -1,22 +1,18 @@
 .square{
-    display: compact;
-    width: 45vw;
-    height: 80vh;
-    background-color: #696969;
-    overflow: auto;
-}
-
-.diname{
-    display: flex;
-    column-gap: 1vw;
-    justify-content: space-between;
-}
-.contacts{
-    display: flex;
-    column-gap: 1vw;
-    justify-content: space-between;
+    background-color: #E3E3E3;
+    overflow: hidden;
 }
 
 .name{
-    max-width: 35vw;
+    margin-top: 2.5%;
+}
+
+.CountrySelect{
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 5%;
+}
+.levering{
+    margin-top: 2.5%;
 }
