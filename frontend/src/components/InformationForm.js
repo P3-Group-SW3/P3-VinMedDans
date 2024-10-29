@@ -1,6 +1,8 @@
 import React, { useEffect, useState }from 'react';
 import Select from "react-select";
 import '../styles/InformationForm.css';
+import '../styles/styles.css';
+import '../bootstrap/dist/css/bootstrap.min.css'
 
 const InformationForm = () => {
     return (
@@ -27,8 +29,13 @@ const InformationForm = () => {
                             <input className="levering" name="areaCode" placeholder="Postnummer"/>
                             <input className="levering" name="town" placeholder="By"/>
                             <input className="levering" name="adres" placeholder="Adresse"/>
+
                         </div>
                     </div>
+                    <div className="row justify-content-around ">
+                        <button type="submit" className="btn btn-dark mt-3 align-self-center">Bekræft Køb (placeholder)</button>
+                    </div>
+
 
                 </form>
             </div>

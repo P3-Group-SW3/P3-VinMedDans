@@ -1,6 +1,6 @@
 .square{
     background-color: #E3E3E3;
-    overflow: auto;
+    overflow: hidden;
 }
 
 .name{
