@@ -14,7 +14,7 @@ function NavBar() {
 
 function NavItem({ text, color }) {
   return (
-    <a className="nav-link" href="#" style={{ color, fontSize: '1.5rem', fontFamily: 'Cherry Bomb One' }}>
+    <a className="nav-link" href="#" style={{ color, fontSize: '1.5rem', fontFamily: 'CherryBomb' }}>
       {text.toUpperCase()}
     </a>
   );

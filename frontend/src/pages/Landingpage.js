@@ -27,7 +27,7 @@ function Landingpage() {
             <Section
                 title="Køb vores frugtvin"
                 description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
-                buttonText="Gå til webshop"
+                buttonText="GÅ TIL WEBSHOP"
                 imagePosition="left"
                 imagePath='image6'
             />

@@ -24,9 +24,9 @@ const Section = ({ title, description, imagePosition, buttonText, imagePath }) =
           </div>
         </div>
         <div className="col-md-6">
-          <h2 className="display-5" style={{ fontSize: '2rem' }}>{title}</h2> {/* Adjusted font size */}
-          <p className="lead" style={{ fontSize: '1.1rem' }}>{description}</p> {/* Adjusted font size */}
-          {buttonText && <button className="btn btn-primary mt-3">{buttonText}</button>} {/* Added margin-top */}
+          <h2 className="display-5" style={{ fontSize: '3.5rem', fontFamily: 'Shadows' }}>{title}</h2> {/* Adjusted font size */}
+          <p className="lead" style={{ fontSize: '1.1rem', fontFamily: 'RubikRegular' }}>{description}</p> {/* Adjusted font size */}
+          {buttonText && <button style={{background: '#E93271', border: 'none', borderRadius: '25px', fontSize: '1.2rem',fontFamily: 'CherryBomb'}} className="btn btn-primary mt-3">{buttonText}</button>} {/* Added margin-top */}
         </div>
       </div>
     </div>

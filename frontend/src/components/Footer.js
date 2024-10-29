@@ -16,7 +16,7 @@ function FooterColumn({ items }) {
     <div className="col-md-auto">
       <ul className="list-unstyled">
         {items.map((item, index) => (
-          <li key={index} className="py-2" >{item}</li>
+          <li key={index} style={{fontFamily: 'RubikRegular'}} className="py-2" >{item}</li>
         ))}
       </ul>
     </div>
