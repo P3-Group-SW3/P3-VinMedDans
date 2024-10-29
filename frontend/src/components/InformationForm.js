@@ -5,7 +5,7 @@ import '../styles/InformationForm.css';
 const InformationForm = () => {
     return (
         <section>
-            <div name="square" className="square">
+            <div name="square" className="square" method="post">
                 <form>
                     <br/>
                     <h2>Kontakt oplysninger</h2><br/>
