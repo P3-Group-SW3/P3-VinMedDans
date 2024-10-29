@@ -1,5 +1,4 @@
 import React from 'react';
-import PaymentTerminal from "./PaymentTerminal";
 
 function ContactInfo() {
     return (
@@ -9,7 +8,7 @@ function ContactInfo() {
                 <div className="form-group">
                     <input type="text" className="form-control mt-2" placeholder="Fornavn"/>
                     <input type="text" className="form-control mt-2" placeholder="Efternavn"/>
-                    <input type="email" className="form-control mt-2" placeholder="Mail"/>
+                    <input type="email" className="form-control" placeholder="Mail"/>
                     <input type="text" className="form-control mt-2" placeholder="Telefonnummer"/>
                 </div>
                 <h2>Levering</h2>
@@ -19,7 +18,13 @@ function ContactInfo() {
                     <input type="text" className="form-control mt-2" placeholder="Postnummer" />
                     <input type="text" className="form-control mt-2" placeholder="By" />
                 </div>
-                <PaymentTerminal/>
+                <h2>Betaling</h2>
+                <div className="form-group">
+                    <input type="text" className="form-control" placeholder="Kortnummer" />
+                    <input type="text" className="form-control mt-2" placeholder="Kortnummer" />
+                    <input type="text" className="form-control mt-2" placeholder="Kortnummer" />
+                </div>
+                <button type="submit" className="btn btn-dark mt-3">Bekræft Køb</button>
             </form>
         </section>
     );
