@@ -1,31 +1,31 @@
 import React, { useEffect, useState }from 'react';
-import Header from './Header';
-import Navbar from './Navbar';
-import Section from './Section';
-import Footer from './Footer';
+import Select from "react-select";
 import '../styles/InformationForm.css';
 
-class InformationForm extends React.Component {
-    render() {
-        return (
-            <div className="square">
-                <form>
-                    Kontakt oplysninger
-                    <input name="frontName" placeholder="Fornavn"/>
-                    <input name="lastName" placeholder="Efternavn"/>
-                    <input name="mail" placeholder="Mail"/>
-                    <input name="phoneNumber" placeholder="Tillefon nummer"/>
-                    {" "}
-                    Levering
-                    <CountrySelect />
-                    <input name="areaCode" placeholder="Postnummer"/>
-                    <input name="adres" placeholder="Adresse"/>
-                    <input name="town" placeholder="By"/>
-                </form>
-            </div>)
+const InformationForm = () => {
+    return (
+        <div className="square">
+            <form>
+                <br/>
+                <h2>Kontakt oplysninger</h2><br/>
+                <div className="diname">
+                    <br/><input className="name" name="firstName" placeholder="Fornavn"/>
+                    <input className="name" name="lastName" placeholder="Efternavn"/><br/>
+                </div>
+                <br/>
+                <div className="contacts">
+                    <br/><input className="mail" name="mail" placeholder="Mail"/>
+                    <input name="phoneNumber" placeholder="Tillefon nummer"/><br/>
+                </div>
 
-
-    }
+                <br/><br/>
+                Levering<br/>
+                <CountrySelect/><br/>
+                <input name="areaCode" placeholder="Postnummer"/>
+                <input name="town" placeholder="By"/>
+                <input name="adres" placeholder="Adresse"/>
+            </form>
+        </div>)
 }
 
 const CountrySelect = () => {
@@ -50,3 +50,5 @@ const CountrySelect = () => {
         />
     );
 };
+
+export default InformationForm;

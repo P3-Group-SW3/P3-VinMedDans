@@ -1,5 +1,22 @@
 .square{
+    display: compact;
+    width: 45vw;
+    height: 80vh;
+    background-color: #696969;
+    overflow: auto;
+}
+
+.diname{
     display: flex;
-    width: 50vw;
-    color: #696969;
+    column-gap: 1vw;
+    justify-content: space-between;
+}
+.contacts{
+    display: flex;
+    column-gap: 1vw;
+    justify-content: space-between;
+}
+
+.name{
+    max-width: 35vw;
 }
