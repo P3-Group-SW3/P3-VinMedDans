@@ -5,8 +5,6 @@ import { CartModify } from './cartModify';
 const Item = ({ title, description, price, image, stock, imagePos }) => {
     const isImageLeft = imagePos === 'left';
 
-    console.log('Rendering Item component');
-    console.log('Props:', { title, description, price, image, stock, imagePos });
 
     return (
         <div className="container my-5">
@@ -26,9 +24,9 @@ const Item = ({ title, description, price, image, stock, imagePos }) => {
                 <div className="col-md-6">
                     <h2 className="display-5" style={{ fontSize: '2rem' }}>{title}</h2>
                     <p className="lead" style={{ fontSize: '1.1rem' }}>{description}</p>
-                    <p className="lead" style={{ fontSize: '1.1rem' }}>Price: {price}</p>
+                    <p className="lead" style={{ fontSize: '1.1rem' }}>Pris: {price}</p>
                     <CartModify />
-                    <p className="lead" style={{ fontSize: '1.1rem' }}>Stock: {stock}</p>
+                    <p className="lead" style={{ fontSize: '1.1rem' }}>Lager: {stock}</p>
                 </div>
             </div>
         </div>

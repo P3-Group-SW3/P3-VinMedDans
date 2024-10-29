@@ -1,17 +1,19 @@
-import PropTypes from "prop-types";
-import React from "react";
+import React from 'react';
+import PropTypes from 'prop-types';
+import '../styles/productpage.css';
 
-export const Button = ({ buttonClassName, text = "TEXT HERE" }) => {
+function Button({ text, onClick }) {
+  console.log('Button rendered with text:', text); // Debugging log
   return (
-    <button className={`btn d-inline-flex align-items-center justify-content-center position-relative ${buttonClassName}`} style={{ height: "60px", padding: "10px 25px" }}>
-      <div className="position-absolute bg-magenta rounded" style={{ height: "60px", width: "197px", top: "0", left: "0" }}></div>
-      <div className="text-white" style={{ fontFamily: "var(--button-font-family)", fontSize: "var(--button-font-size)", fontStyle: "var(--button-font-style)", fontWeight: "var(--button-font-weight)", letterSpacing: "var(--button-letter-spacing)", lineHeight: "var(--button-line-height)" }}>
-        {text}
-      </div>
+    <button className="button" aria-label="Action button" onClick={onClick}>
+      {text}
     </button>
   );
-};
+}  
 
 Button.propTypes = {
-  text: PropTypes.string,
+  text: PropTypes.string.isRequired,
+  onClick: PropTypes.func,
 };
+
+export default Button;

@@ -1,5 +1,5 @@
 import React from "react";
-import { Button } from "./Button";
+import Button from './Button';
 
 
 export const CartModify = () => {
@@ -23,9 +23,8 @@ export const CartModify = () => {
         </div>
       </div>
       <Button
-        buttonClassName="btn d-inline-flex align-items-center justify-content-center position-relative"
-        className="flex-shrink-0"
         text="FØJ TIL KURV"
+        onClick={() => console.log("Button clicked")}
       />
     </div>
   );
