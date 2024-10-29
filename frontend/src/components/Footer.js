@@ -3,21 +3,20 @@ import React from 'react';
 function Footer() {
   return (
     <footer className="container-fluid bg-light py-4">
-      <div className="row">
-        <FooterColumn title="Instagram" items={["Hvad skal der stå her?", "Hvad skal der stå her?", "Hvad skal der stå her?"]} />
-        <FooterColumn items={["Hvad skal der stå her?", "Hvad skal der stå her?", "Hvad skal der stå her?"]} />
+      <div className="row mx-5 justify-content-between">
+        <FooterColumn items={["Instagram", "Telefonnummer", "Email"]} />
+        <FooterColumn items={["Levering", "Handelsbetingelser", "Kontrolrapport"]} />
       </div>
     </footer>
   );
 }
 
-function FooterColumn({ title, items }) {
+function FooterColumn({ items }) {
   return (
-    <div className="col-md-6">
-      {title && <h5>{title}</h5>}
+    <div className="col-md-auto">
       <ul className="list-unstyled">
         {items.map((item, index) => (
-          <li key={index} style={{ fontFamily: 'Rubik' }}>{item}</li>
+          <li key={index} className="py-2" >{item}</li>
         ))}
       </ul>
     </div>
