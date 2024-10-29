@@ -5,7 +5,6 @@ import './index.css';
 import reportWebVitals from './reportWebVitals';
 import Checkout from "./pages/Checkout";
 import Landingpage from "./pages/Landingpage";
-import ProductPage from "./pages/ProductPage";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -15,8 +14,6 @@ root.render(
               <Route path="/">
                   <Route index element={<Landingpage />}/>
                   <Route path="Checkout" element={<Checkout />}/>
-                  <Route path="webshop" element={<ProductPage />}/>
-                  <Route path="*" element={<h1>404 - Not Found</h1>}/>
               </Route>
           </Routes>
       </BrowserRouter>
