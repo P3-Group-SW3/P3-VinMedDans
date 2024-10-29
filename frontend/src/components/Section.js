@@ -11,8 +11,8 @@ const Section = ({ title, description, imagePosition, buttonText, imagePath }) =
   return (
     <div className="container my-5">
       <div className={`row align-items-center ${isImageLeft ? '' : 'flex-row-reverse'}`}>
-        <div className="col-md-6 d-flex justify-content-center">
-          <div className="border p-3" style={{ width: '450px', height: '450px' }}>
+        <div className={`col-md-6 d-flex ${isImageLeft ? 'justify-content-start' : 'justify-content-end'}`}>
+          <div style={{ width: '450px', height: '450px' }}>
             {selectedImage && (
               <img
                 src={selectedImage}
