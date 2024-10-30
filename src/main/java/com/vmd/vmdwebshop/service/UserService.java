@@ -12,11 +12,13 @@ public class UserService {
     @Autowired
     private CustomerRepository customerRepository;
 
+    //Will probably get deleted
     public Customer createCustomer(HttpServletRequest request) {
-        Customer customer = new Customer(request.getSession().getId(), true);
+        Customer customer = new Customer(request.getSession().getId());
         return customerRepository.save(customer);
     }
 
+    //Will probably get deleted
     public Customer getCustomerById(long id) {
         return customerRepository.findById(id).orElse(null);
     }

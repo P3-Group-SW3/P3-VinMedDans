@@ -20,6 +20,13 @@ public class CustomerController {
         return "Wub wub";
     }
 
+    /**
+     * Creates a cookie for the current customer by fetching the sessionID and set it in the "customerId" cookie.
+     *
+     * @param request   
+     * @param response
+     * @return
+     */
     @GetMapping("/register-customer")
     public String createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
         String sessionId = request.getSession().getId();
