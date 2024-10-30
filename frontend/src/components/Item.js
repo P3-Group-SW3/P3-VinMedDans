@@ -33,8 +33,8 @@ const Item = ({ title, description, price, image, stock, imagePos }) => {
                 </div>
                 <div className="col-md-6">
                     <h2 className="header-large">{title}</h2>
+                    <p className="price-text">{price} DKK</p>
                     <p className="body-text">{description}</p>
-                    <p className="price-text">Pris: {price}</p>
                     <CartModify />
                     {renderStockMessage()}
                 </div>
