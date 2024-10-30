@@ -35,7 +35,7 @@ export const CartModify = (item) => {
       </div>
       <div style={{ margin: '0 10px' }}>
         <Button
-          text="FØJ TIL KURV"
+          text="Føj til kurv"
           onClick={() => console.log("Button clicked with item:", item, "quantity:", quantity)} // function til backend her!!
         />
       </div>
