@@ -17,7 +17,7 @@ function Checkout() {
             <main className="container my-4">
                 <div className="row mt-2">
                     <div className="col-md-6">
-                        <InformationForm/>
+                        <ContactInfo/>
                     </div>
                     <div className="col-md-6">
                         <OrderSummary/>

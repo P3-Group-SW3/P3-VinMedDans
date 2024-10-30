@@ -7,10 +7,10 @@ import '../bootstrap/dist/css/bootstrap.min.css'
 const InformationForm = () => {
     return (
         <section>
-            <div name="square" className="square" method="post">
-                <form>
+            <div name="square" className="square align-items-center" method="post">
+                <form method="POST">
                     <br/>
-                    <h2>Kontakt oplysninger</h2><br/>
+                    <h2 >Kontakt oplysninger</h2><br/>
                     <div className="form-control-lg" name="contacts">
                         <div className="row justify-content-around">
                             <input className="name" name="firstName" placeholder="Fornavn"/>
