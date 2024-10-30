@@ -11,9 +11,16 @@ public class OrderLine {
     @Id //creates a column that represents an ID for each row in the OrderLine table
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "customer_id", nullable = false, insertable = false, updatable = false)
+    private Customer customer;
+
+    @Column(name = "customer_id", nullable = false)
+    private Long customer_ID;
+
     private int amount;
     private double price;
-
 
     /* @ManyToOne indicates that more than one instance (row) in the OrderLine table can be associated
     with only one instance (row) in the Product table. Because more than one customer can order the same product,
@@ -33,25 +40,22 @@ public class OrderLine {
     //Constructor
     public OrderLine(Long ID, int amount, Wine wine) {
         this.ID = ID;
+
         this.amount = amount;
         this.price = wine.getPrice();
         this.wine = wine;
         this.wine_ID = wine.getID();
     }
 
-    public double calculateOrderLine(){
-        return amount * price;
+
+    //Method for increasing or decreasing the product type amount in the orderline
+    public void editOrderLineAmount(boolean addAmount){
+        if (addAmount) {
+            if (wine.getAmountLeft() > 0) amount += 1;
+        }
+        else {
+            if (amount > 0) amount -= 1;
+        }
     }
-
-    public void addItem(){
-        if (wine.getAmountLeft() > 0) amount += 1;
-    }
-
-    public void subtractItem(){
-    if (amount > 0) amount -= 1;
-    }
-
-
-
 
 }

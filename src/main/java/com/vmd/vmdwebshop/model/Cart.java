@@ -15,11 +15,12 @@ public class Cart {
         this.items.remove(index);
     }
 
-    public double calculateTotalPrice() {
-        double total = 0;
-        for (OrderLine orderLine : items) {
-            total += orderLine.calculateOrderLine();
-        }
-        return total;
-    }
+    // Skal laves i service i stedet
+//    public double calculateTotalPrice() {
+//        double total = 0;
+//        for (OrderLine orderLine : items) {
+//            total += orderLine.calculateOrderLine();
+//        }
+//        return total;
+//    }
 }

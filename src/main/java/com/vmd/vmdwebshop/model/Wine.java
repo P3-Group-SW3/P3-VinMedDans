@@ -26,7 +26,7 @@ public class Wine extends Product{
 
     String getName() { return this.name; }
 
-    int getAmountLeft() { return this.amountLeft; }
+    public int getAmountLeft() { return this.amountLeft; }
 
     public boolean canBePurchased(int amountPurchased){
         return amountLeft - amountPurchased >= 0;
