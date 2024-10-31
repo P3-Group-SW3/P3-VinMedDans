@@ -9,7 +9,7 @@ import ProductPage from "./pages/ProductPage";
 
 const SetTitle = () => {
   useEffect(() => {
-    document.title = 'Vin Med Dans 💃';
+    document.title = 'Vinmeddans';
   }, []);
 
   return null;
