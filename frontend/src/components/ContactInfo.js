@@ -1,5 +1,5 @@
 import React from 'react';
-import PaymentTerminal from "./PaymentTerminal";
+
 
 function ContactInfo() {
     return (
