@@ -12,11 +12,7 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "customer_id", nullable = false, insertable = false, updatable = false)
-    private Customer customer;
-
-    @Column(name = "customer_id", nullable = false)
+    @Column(name = "customerID", nullable = false)
     private Long customer_ID;
 
     private int amount;
@@ -27,20 +23,20 @@ public class OrderLine {
     FetchType.LAZY means that the content is only fetched when being accessed.
     @JoinColumn takes the ID column from the Wine table and inserts it into the OrderLine table with the name Wine_id */
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wine_id", nullable = false, insertable = false, updatable = false)
+    @JoinColumn(name = "wineID", nullable = false, insertable = false, updatable = false)
     private Wine wine; //hvorfor det??
 
-    @Column(name = "wine_id", nullable = false)
+    @Column(name = "wineID", nullable = false)
     private Long wine_ID;
 
     //Empty Constructor
     public OrderLine() {}
 
     //Constructor
-    public OrderLine(Long ID, int amount, Wine wine, Customer customer) {
+    public OrderLine(Long ID, int amount, Wine wine, Long customer_ID) {
         this.ID = ID;
 
-        this.customer_ID = Long.parseLong(customer.getId());
+        this.customer_ID = customer_ID;
         this.amount = amount;
         this.wine_ID = wine.getID();
     }

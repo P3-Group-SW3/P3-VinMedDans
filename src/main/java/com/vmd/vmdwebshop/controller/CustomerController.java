@@ -1,7 +1,5 @@
 package com.vmd.vmdwebshop.controller;
 
-import com.vmd.vmdwebshop.model.Customer;
-import com.vmd.vmdwebshop.service.UserService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,8 +10,6 @@ import java.util.stream.Collectors;
 
 @RestController
 public class CustomerController {
-
-    private UserService customerService;
 
     @GetMapping("/")
     public String frontPage() {

@@ -1,7 +1,7 @@
 package com.vmd.vmdwebshop.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import com.vmd.vmdwebshop.model.Product;
+import com.vmd.vmdwebshop.service.Product;
 import org.springframework.stereotype.Repository;
 
 @Repository
