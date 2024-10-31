@@ -20,7 +20,6 @@ public class OrderLine {
     private Long customer_ID;
 
     private int amount;
-    private double price;
 
     /* @ManyToOne indicates that more than one instance (row) in the OrderLine table can be associated
     with only one instance (row) in the Product table. Because more than one customer can order the same product,
@@ -29,7 +28,7 @@ public class OrderLine {
     @JoinColumn takes the ID column from the Wine table and inserts it into the OrderLine table with the name Wine_id */
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "wine_id", nullable = false, insertable = false, updatable = false)
-    private Wine wine;
+    private Wine wine; //hvorfor det??
 
     @Column(name = "wine_id", nullable = false)
     private Long wine_ID;
@@ -38,19 +37,35 @@ public class OrderLine {
     public OrderLine() {}
 
     //Constructor
-    public OrderLine(Long ID, int amount, Wine wine) {
+    public OrderLine(Long ID, int amount, Wine wine, Customer customer) {
         this.ID = ID;
 
+        this.customer_ID = Long.parseLong(customer.getId());
         this.amount = amount;
-        this.price = wine.getPrice();
-        this.wine = wine;
         this.wine_ID = wine.getID();
     }
 
+    public Long getID() {
+        return this.ID;
+    }
+
+    public int getAmount() {
+        return this.amount;
+    }
+
+    public Long getCustomerID() {return this.customer_ID;}
+
+    public Long getWineID() {return this.wine_ID;}
+
+    public void setAmount(int amount) {
+        this.amount = amount;
+    }
+
+
 
     //Method for increasing or decreasing the product type amount in the orderline
-    public void editOrderLineAmount(boolean addAmount){
-        if (addAmount) {
+    public void editOrderLineAmount(boolean increment){
+        if (increment) {
             if (wine.getAmountLeft() > 0) amount += 1;
         }
         else {
