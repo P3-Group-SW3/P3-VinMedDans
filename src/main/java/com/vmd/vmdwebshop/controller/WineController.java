@@ -1,3 +1,4 @@
+// src/main/java/com/vmd/vmdwebshop/controller/WineController.java
 package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.model.Wine;
@@ -8,14 +9,19 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/base/")
+@RequestMapping("/")
 public class WineController {
 
     @Autowired
     private WineService wineService;
 
-    @GetMapping("/api/wine")
-    public List<Wine> getAll(){
+    @GetMapping("/api/getAllWines")
+    public List<Wine> getAllWines() {
         return wineService.getAllWines();
+    }
+
+    @GetMapping("/api/getWineById/{id}")
+    public Wine getWineById(@PathVariable Long id) {
+        return wineService.getWineById(id);
     }
 }

@@ -13,7 +13,7 @@ public class OrderLine {
     private Long ID;
 
     @Column(name = "customerID", nullable = false)
-    private Long customer_ID;
+    private Long customerID;
 
     private int amount;
 
@@ -27,18 +27,18 @@ public class OrderLine {
     private Wine wine; //hvorfor det??
 
     @Column(name = "wineID", nullable = false)
-    private Long wine_ID;
+    private Long wineID;
 
     //Empty Constructor
     public OrderLine() {}
 
     //Constructor
-    public OrderLine(Long ID, int amount, Wine wine, Long customer_ID) {
+    public OrderLine(Long ID, int amount, Wine wine, Long customerID) {
         this.ID = ID;
 
-        this.customer_ID = customer_ID;
+        this.customerID = customerID;
         this.amount = amount;
-        this.wine_ID = wine.getID();
+        this.wineID = wine.getID();
     }
 
     public Long getID() {
@@ -49,9 +49,9 @@ public class OrderLine {
         return this.amount;
     }
 
-    public Long getCustomerID() {return this.customer_ID;}
+    public Long getCustomerID() {return this.customerID;}
 
-    public Long getWineID() {return this.wine_ID;}
+    public Long getWineID() {return this.wineID;}
 
     public void setAmount(int amount) {
         this.amount = amount;
