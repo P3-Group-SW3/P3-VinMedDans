@@ -24,7 +24,7 @@ root.render(
         <Route path="/">
           <Route index element={<Landingpage />} />
           <Route path="Checkout" element={<Checkout />} />
-          <Route path="webshop" element={<ProductPage />} />
+          <Route path="shop" element={<ProductPage />} />
           <Route path="*" element={<h1>404 - Not Found</h1>} />
         </Route>
       </Routes>

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from './Button';
 
-export const CartModify = () => {
+export const CartModify = (item) => {
   const [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => {
@@ -13,12 +13,13 @@ export const CartModify = () => {
   };
 
   return (
-    <div className="d-inline-flex align-items-center gap-3 position-relative">
+    <div className="d-inline-flex align-items-center gap-3 position-relative"  style={{ marginLeft: '10px' }}>
       <div className="d-inline-flex align-items-center gap-2">
         <Button 
           text="-" 
           onClick={decrementQuantity} 
-          makeCircle={true}
+          makeCircle={false}
+          makeSquare={true}
         />
         
         <div className="quantity-display" style={{ width: "50px", textAlign: "center" }}>
@@ -28,13 +29,14 @@ export const CartModify = () => {
         <Button 
           text="+" 
           onClick={incrementQuantity} 
-          makeCircle={true}
+          makeCircle={false}
+          makeSquare={true}
         />
       </div>
       <div style={{ margin: '0 10px' }}>
         <Button
-          text="FØJ TIL KURV"
-          onClick={() => console.log("Button clicked")}
+          text="Føj til kurv"
+          onClick={() => console.log("Button clicked with item:", item, "quantity:", quantity)} // function til backend her!!
         />
       </div>
     </div>
