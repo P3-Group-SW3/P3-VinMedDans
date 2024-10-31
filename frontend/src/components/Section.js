@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import images from '../images/images'; // Adjust the path as needed
+import images from '../images/images';
+import Button from "./Button"; // Adjust the path as needed
 
 const Section = ({ title, description, imagePosition, buttonText, imagePath }) => {
   const isImageLeft = imagePosition === 'left';
@@ -24,9 +25,12 @@ const Section = ({ title, description, imagePosition, buttonText, imagePath }) =
           </div>
         </div>
         <div className="col-md-6">
-          <h2 className="display-5" style={{ fontSize: '3.5rem', fontFamily: 'Shadows' }}>{title}</h2> {/* Adjusted font size */}
-          <p className="lead" style={{ fontSize: '1.1rem', fontFamily: 'RubikRegular' }}>{description}</p> {/* Adjusted font size */}
-          {buttonText && <button style={{background: '#E93271', border: 'none', borderRadius: '25px', fontSize: '1.2rem',fontFamily: 'CherryBomb'}} className="btn btn-primary mt-3">{buttonText}</button>} {/* Added margin-top */}
+          <h2 className="header-large" style={{ fontSize: '3.5rem'}}>{title}</h2> {/* Adjusted font size */}
+          <p className="body-text" style={{ fontSize: '1.1rem'}}>{description}</p> {/* Adjusted font size */}
+          {buttonText && <Button
+              text="FØJ TIL KURV"
+              onClick={() => console.log("Button clicked")}
+          />} {/* Added margin-top */}
         </div>
       </div>
     </div>
