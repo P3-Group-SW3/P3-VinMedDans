@@ -1,40 +1,42 @@
-
-
 .button {
-    padding: 10px 20px;
-    background-color: #E93271;
-    color: white;
-    border: none;
-    border-radius: 35px;
-    cursor: pointer;
-    font-size: 16px;
-    font-weight: bold;
-    transition: background-color 0.3s ease, transform 0.3s ease;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    font-family: 'Cherry Bomb One', cursive;
-    font-weight: 50;
-  }
-  
-  .button:hover {
-    background-color: #e75c8d;
-    transform: translateY(-2px);
-  }
-  
-  .button:active {
-    background-color: #E93271;
-    transform: translateY(0);
-  }
-  
-  .button:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(245, 245, 245, 0);
-  }
+  padding: 10px;
+  background-color: #C0924D;
+  color: white;
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  font-family: 'rubik', cursive;
+  font-weight: 100;
+  height: 50px; 
+  width: 180px; 
+}
+
+.button:hover {
+  background-color: #b9945c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.button:active {
+  background-color: #b9945c;
+  transform: translateY(0);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.button:focus {
+  outline: none;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
   
   .buttonCircle {
-      width: 50px; /* Fixed width */
-      height: 50px; /* Fixed height */
+      width: 50px; 
+      height: 50px; 
       padding: 10px;
-      background-color: #E93271;
+      background-color: #C0924D;
       color: white;
       border: none;
       border-radius: 50%;
@@ -42,7 +44,7 @@
       font-size: 16px;
       font-weight: bold;
       transition: background-color 0.3s ease, transform 0.3s ease;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -51,16 +53,53 @@
   }
   
   .buttonCircle:hover {
-      background-color: #c7255d;
+      background-color: #b9945c;
       transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   }
   
   .buttonCircle:active {
-      background-color: #a61d4a;
+      background-color: #b9945c;
       transform: translateY(0);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
   }
   
   .buttonCircle:focus {
       outline: none;
-      box-shadow: 0 0 0 3px rgba(233, 50, 113, 0.5);
+      box-shadow: 0 0 0 3px rgba(233, 50, 114, 0);
   }
+
+.buttonSquare {
+  width: 50px; 
+  height: 50px; 
+  padding: 10px;
+  background-color: #C0924D;
+  color: white;
+  border: none;
+  border-radius: 0px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 1.5rem;
+} 
+
+.buttonSquare:hover {
+  background-color: #b9945c;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.buttonSquare:active {
+  background-color: #b9945c;
+  transform: translateY(0);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.buttonSquare:focus {
+  outline: none;
+}

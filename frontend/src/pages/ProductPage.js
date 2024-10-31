@@ -8,7 +8,7 @@ const items = [
     {
         id: 1,
         name: "Cabernet Sauvignon",
-        description: "A full-bodied red wine with dark fruit flavors and savory tastes from black pepper to bell pepper.",
+        description: "A full-bodied red wine with dark fruit flavors and savory tastes from black pepper to bell pepper. It offers hints of earthy undertones and subtle tobacco, adding layers of depth. The finish is smooth yet robust, leaving a lingering warmth on the palate. Notes of plum and a touch of oak bring balance, enhancing its complexity. Ideal for pairing with grilled meats or rich, hearty dishes. The wine's tannins are well-structured, providing a bold character without overwhelming the senses. Each sip reveals new flavors, making it perfect for savoring slowly.",
         price: 29.99,
         stock: 1,
         imageUrl: "https://picsum.photos/200",
@@ -62,6 +62,7 @@ function ProductPage() {
                     image={item.imageUrl}
                     stock={item.stock.toString()}
                     imagePos="left"
+                    item={item}  
                 ></Item>
             ))}
             <Footer />
