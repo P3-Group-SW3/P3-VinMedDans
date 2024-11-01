@@ -1,13 +1,11 @@
 package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.model.Customer;
 import org.springframework.stereotype.Service;
-import com.vmd.vmdwebshop.model.*;
 import com.vmd.vmdwebshop.repository.*;
 import org.springframework.web.servlet.View;
+import com.vmd.vmdwebshop.model.*;
 
 import java.util.*;
-import java.util.Scanner;
 
 
 @Service
@@ -16,21 +14,19 @@ public class OrderLineService {
     private final View error;
     private WineRepository wineRepository;
     private OrderLineRepository orderLineRepository;
-    private CustomerRepository customerRepository;
 
     public OrderLineService(View error) {
         this.error = error;
     }
 
-    public OrderLine createOrderLine(Long customer_id, int amount, Long wine_id) {
+    public OrderLine createOrderLine(Long customer_ID, int amount, Long wine_ID) {
         double price;
 
-        Wine wine = wineRepository.findById(wine_id).orElse(null);
-        OrderLine orderLine = orderLineRepository.findById(customer_id).orElse(null);
-        Customer customer = customerRepository.findById(customer_id).orElse(null);
+        Wine wine = wineRepository.findById(wine_ID).orElse(null);
+        OrderLine orderLine = orderLineRepository.findById(customer_ID).orElse(null);
 
-        if(wine != null && orderLine != null && customer != null) {
-            orderLine = new OrderLine(customer_id, amount, wine, customer);
+        if(wine != null && orderLine != null) {
+            orderLine = new OrderLine(customer_ID, amount, wine, customer_ID);
             orderLineRepository.save(orderLine);
             price = orderLine.getAmount() * wine.getPrice();
 
@@ -42,15 +38,15 @@ public class OrderLineService {
     }
 
     // Looks for an orderline that fits both customer id and wine id
-    public void editOrderLine(Long customer_id, int amount, Long wine_id){
+    public void editOrderLine(Long customer_ID, int amount, Long wine_ID){
 
-        OrderLine orderLine = orderLineRepository.findByCustomerIdAndWineId(customer_id, wine_id);
+        OrderLine orderLine = orderLineRepository.findByCustomerIDAndWineID(customer_ID, wine_ID);
 
         if(orderLine != null){
             orderLine.setAmount(amount);
 
             List<OrderLine> orderLineList;
-            orderLineList = orderLineRepository.findByCustomerId(customer_id);
+            orderLineList = orderLineRepository.findByCustomerId(customer_ID);
         } else {
             System.out.println("Der er sket en fejl");
         }
@@ -58,10 +54,10 @@ public class OrderLineService {
 
     }
 
-    public void clearCart(Long customer_id){
-        orderLineRepository.deleteOrderLinesByCustomerId(customer_id);
+    public void clearCart(Long customer_ID){
+        orderLineRepository.deleteOrderLinesByCustomerId(customer_ID);
 
-        OrderLine orderLine = orderLineRepository.findById(customer_id).orElse(null);
+        OrderLine orderLine = orderLineRepository.findById(customer_ID).orElse(null);
 
         if(orderLine != null){
             System.out.println("Succes");
@@ -75,11 +71,11 @@ public class OrderLineService {
         return amount * price;
     }
 
-    public void modulateOrderLine(Long customer_id, Long wine_id, boolean increment){
+    public void modulateOrderLine(Long customer_ID, Long wine_ID, boolean increment){
 
-        Wine wine = wineRepository.findById(wine_id).orElse(null);
+        Wine wine = wineRepository.findById(wine_ID).orElse(null);
 
-        OrderLine orderLine = orderLineRepository.findByCustomerIdAndWineId(customer_id, wine_id);
+        OrderLine orderLine = orderLineRepository.findByCustomerIDAndWineID(customer_ID, wine_ID);
 
     }
 

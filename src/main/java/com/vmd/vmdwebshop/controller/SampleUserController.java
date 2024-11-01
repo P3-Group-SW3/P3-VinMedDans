@@ -1,31 +1,31 @@
+// src/main/java/com/vmd/vmdwebshop/controller/SampleUserController.java
 package com.vmd.vmdwebshop.controller;
 
-import com.vmd.vmdwebshop.model.SampleUser;
-import com.vmd.vmdwebshop.service.SampleUserService;
+import com.vmd.vmdwebshop.model.Wine;
+import com.vmd.vmdwebshop.service.WineService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/base/") // Base URL for user-related endpoints
+@RequestMapping("/base") // Base URL for user-related endpoints
 public class SampleUserController {
 
     @Autowired
-    private SampleUserService userService;
+    private WineService wineService;
 
-    @GetMapping("/users")
-    public ResponseEntity<List<SampleUser>> getAllUsers() {
-        List<SampleUser> users = userService.getAllUsers();
-        return ResponseEntity.ok(users);
+    @GetMapping("/hello")
+    public ResponseEntity<String> sayHello() {
+        return ResponseEntity.ok("Hallo World");
     }
 
-    @PostMapping
-    public ResponseEntity<SampleUser> createUser(@RequestBody SampleUser user) {
-        SampleUser createdUser = userService.createUser(user);
-        return ResponseEntity.ok(createdUser);
+    @GetMapping("/wine")
+    public ResponseEntity<List<Wine>> wine() {
+        List<Wine> wines = wineService.getAllWines();
+        return ResponseEntity.ok(wines);
     }
-
-    // Additional endpoints for updating and deleting users can be added
 }
