@@ -4,6 +4,7 @@ package com.vmd.vmdwebshop.controller;
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.service.WineService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,12 +17,18 @@ public class WineController {
     private WineService wineService;
 
     @GetMapping("/api/getAllWines")
-    public List<Wine> getAllWines() {
-        return wineService.getAllWines();
+    public ResponseEntity<List<Wine>> wine() {
+        List<Wine> wines = wineService.getAllWines();
+        return ResponseEntity.ok(wines);
     }
 
     @GetMapping("/api/getWineById/{id}")
-    public Wine getWineById(@PathVariable Long id) {
-        return wineService.getWineById(id);
+    public ResponseEntity<Wine> getWineById(@PathVariable Long id) {
+        Wine wine = wineService.getWineById(id);
+        if (wine != null) {
+            return ResponseEntity.ok(wine);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

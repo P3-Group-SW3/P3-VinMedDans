@@ -45,5 +45,4 @@ src/main/resources/application.properties
 .idea/misc.xml
 .idea/vcs.xml
 src/main/resources/application.properties
-.idea/misc.xml
-.idea/vcs.xml
+/frontend/node_modules/*
