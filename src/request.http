@@ -1,0 +1,62 @@
+### GET request with a header
+GET https://localhost:8080/api/getAllWines
+Accept: application/json
+
+
+### GET request with a header
+GET https://localhost:8080/api/getWineById/1
+Accept: application/json
+
+
+### Send POST request with json body
+POST https://localhost:8080/api/createOrderLine
+Content-Type: application/json
+
+{
+  "customer_ID": 123,
+  "amount": 9,
+  "wine_id": 1
+}
+
+
+### Send POST request with json body
+POST https://localhost:8080/api/editOrderLine
+Content-Type: application/json
+
+{
+  "customer_ID": 123,
+  "amount": 7,
+  "wine_id": 1
+}
+
+
+### Send POST request with json body
+POST https://localhost:8080/api/clearCart/123
+Content-Type: application/json
+
+{
+  "customer_ID": 123
+}
+
+
+### Send POST request with json body
+POST https://localhost:8080/api/incrementOrderLine
+Content-Type: application/json
+
+{
+  "customer_ID": 123,
+  "increment": true,
+  "wine_id": 1
+}
+
+
+### Send POST request with json body
+POST https://localhost:8080/api/createOrder
+Content-Type: application/json
+
+{
+  "customer_ID": 123,
+  "increment": true,
+  "wine_id": 1
+}
+
