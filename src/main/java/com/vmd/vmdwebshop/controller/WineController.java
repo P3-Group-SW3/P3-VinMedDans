@@ -16,7 +16,7 @@ public class WineController {
     @Autowired
     private WineService wineService;
 
-    @GetMapping("/api/getAllWines")
+    @GetMapping(value = "/api/getAllWines")
     public ResponseEntity<List<Wine>> wine() {
         List<Wine> wines = wineService.getAllWines();
         return ResponseEntity.ok(wines);
@@ -30,5 +30,10 @@ public class WineController {
         } else {
             return ResponseEntity.notFound().build();
         }
+    }
+
+    @PostMapping("/api/test")
+    public ResponseEntity<String> testWine(@RequestBody String id) {
+        return ResponseEntity.ok(id);
     }
 }

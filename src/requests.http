@@ -1,26 +1,26 @@
 ### GET request with a header
-GET https://localhost:8080/api/getAllWines
+GET http://localhost:8080/api/getAllWines
 Accept: application/json
 
 
 ### GET request with a header
-GET https://localhost:8080/api/getWineById/1
+GET http://localhost:8080/api/getWineById/2
 Accept: application/json
 
 
 ### Send POST request with json body
-POST https://localhost:8080/api/createOrderLine
+POST http://localhost:8080/api/createOrderLine
 Content-Type: application/json
 
 {
   "customer_ID": 123,
   "amount": 9,
-  "wine_id": 1
+  "wine_id": 2
 }
 
 
 ### Send POST request with json body
-POST https://localhost:8080/api/editOrderLine
+POST http://localhost:8080/api/editOrderLine
 Content-Type: application/json
 
 {
@@ -31,7 +31,7 @@ Content-Type: application/json
 
 
 ### Send POST request with json body
-POST https://localhost:8080/api/clearCart/123
+POST http://localhost:8080/api/clearCart/123
 Content-Type: application/json
 
 {
@@ -40,7 +40,7 @@ Content-Type: application/json
 
 
 ### Send POST request with json body
-POST https://localhost:8080/api/incrementOrderLine
+POST http://localhost:8080/api/incrementOrderLine
 Content-Type: application/json
 
 {
@@ -51,7 +51,7 @@ Content-Type: application/json
 
 
 ### Send POST request with json body
-POST https://localhost:8080/api/createOrder
+POST http://localhost:8080/api/createOrder
 Content-Type: application/json
 
 {
@@ -59,5 +59,25 @@ Content-Type: application/json
   "increment": true,
   "wine_id": 1
 }
+
+### Send POST request with json body
+POST http://localhost:8080/api/test
+Content-Type: application/json
+
+{
+  "id": 123
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/returnOrderLine
+Content-Type: application/json
+
+{
+  "customer_ID": 123,
+  "amount": 9,
+  "wine_id": 2
+}
+
+
 
 

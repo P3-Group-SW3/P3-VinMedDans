@@ -3,6 +3,7 @@ package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,7 +24,7 @@ public class OrderLineController {
     @Autowired
     private WineRepository wineRepository;
 
-    @PostMapping("/api/createOrderLine")
+    @PostMapping(value ="/api/createOrderLine", consumes = "application/json", produces = "application/json")
     public ResponseEntity<List<OrderLine>> createOrderLine(@RequestBody Long customer_ID, int amount, String wine_ID){
 
         OrderLine orderLine = orderLineService.createOrderLine(customer_ID, amount, Long.parseLong(wine_ID));
@@ -59,5 +60,4 @@ public class OrderLineController {
         return ResponseEntity.ok(orderLineRepository.findByCustomerId(Long.parseLong(customer_ID)));
 
     }
-
 }

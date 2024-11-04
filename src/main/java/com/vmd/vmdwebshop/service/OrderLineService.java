@@ -23,7 +23,9 @@ public class OrderLineService {
         double price;
 
         Wine wine = wineRepository.findById(wine_ID).orElse(null);
+        System.out.println("her");
         OrderLine orderLine = orderLineRepository.findById(customer_ID).orElse(null);
+        System.out.println("her2");
 
         if(wine != null && orderLine != null) {
             orderLine = new OrderLine(customer_ID, amount, wine, customer_ID);
