@@ -27,7 +27,7 @@ public class imageService {
         Path filePath;
         Random random = new Random();
         do {
-            int randomNumber = 10000 + random.nextInt(90000); 
+            int randomNumber = 10000 + random.nextInt(90000);
             fileName = "image_" + randomNumber + ".png";
             filePath = uploadPath.resolve(fileName);
         } while (Files.exists(filePath));
