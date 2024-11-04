@@ -1,7 +1,7 @@
 package com.vmd.vmdwebshop.controller;
 
-
 import com.vmd.vmdwebshop.service.imageService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,8 +13,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 
-
-
 @RestController
 @RequestMapping("/api/images")
 public class ImageController {
@@ -22,6 +20,7 @@ public class ImageController {
     @Value("${file.img-upload-dir}")
     private String uploadDir;
 
+    @Autowired
     private imageService imageService;
 
     @PostMapping("/upload")
