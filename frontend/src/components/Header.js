@@ -2,6 +2,7 @@ import React, { useEffect, Component } from 'react';
 import logoImg from '../images/Logo Img.png';
 import logoText from '../images/Logo Text.png';
 import {useNavigate} from "react-router-dom";
+import navbar from './Navbar'
 
 const Header = () => {
 

@@ -1,0 +1,17 @@
+.nav-button {
+    padding: 10px;
+    background-color: white;
+    color: var(--main-color);
+    border: none;
+    font-size: 20px;
+    font-family: 'Rubik Dirt', sans-serif;
+    flex: 1 1 auto;
+    justify-content: center;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.nav-button:hover, :focus, :active {
+    transform: translateY(-2px);
+    color: white;
+    text-shadow: 1px 0 var(--main-color), -1px 0 var(--main-color), 0 4px var(--main-color), 0 -1px var(--main-color);
+}
