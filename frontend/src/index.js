@@ -6,10 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import Checkout from "./pages/Checkout";
 import Landingpage from "./pages/LandingPage";
 import ProductPage from "./pages/ProductPage";
+import AboutUsPage from "./pages/AboutUsPage";
+import LocationPage from "./pages/LocationPage";
+import ContactPage from "./pages/ContactPage";
+import EventPage from "./pages/EventPage";
 
 const SetTitle = () => {
   useEffect(() => {
-    document.title = 'Vin Med Dans 💃';
+    document.title = 'Vinmeddans';
   }, []);
 
   return null;
@@ -23,8 +27,12 @@ root.render(
       <Routes>
         <Route path="/">
           <Route index element={<Landingpage />} />
-          <Route path="Checkout" element={<Checkout />} />
+          <Route path="checkout" element={<Checkout />} />
           <Route path="shop" element={<ProductPage />} />
+          <Route path="about" element={<AboutUsPage />} />
+          <Route path="locations" element={<LocationPage />} />
+          <Route path="contact" element={<ContactPage />} />
+          <Route path="events" element={<EventPage />} />
           <Route path="*" element={<h1>404 - Not Found</h1>} />
         </Route>
       </Routes>

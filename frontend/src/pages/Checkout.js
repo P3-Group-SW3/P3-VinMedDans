@@ -4,6 +4,8 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import '../styles/styles.css';
 import '../bootstrap/dist/css/bootstrap.min.css';
+import OrderSummary from "../components/OrderSummary";
+import ContactInfo from "../components/ContactInfo";
 
 
 function Checkout() {
@@ -11,7 +13,17 @@ function Checkout() {
         <div className="Landingpage">
             <Header />
             <Navbar />
-            <Footer />
+            <main className="container my-4">
+                <div className="row mt-2">
+                    <div className="col-md-6">
+                        <ContactInfo/>
+                    </div>
+                    <div className="col-md-6">
+                        <OrderSummary/>
+                    </div>
+                </div>
+            </main>
+            <Footer/>
         </div>
     );
 }
