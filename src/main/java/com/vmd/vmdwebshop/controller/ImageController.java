@@ -63,4 +63,13 @@ public class ImageController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    /**
+     * Get a list of images
+     * @return A response entity with the list of images
+     */
+    @GetMapping("/getImageList")
+    public ResponseEntity<String> getImages() {
+        return ResponseEntity.ok(imageService.getImages());
+    }
 }

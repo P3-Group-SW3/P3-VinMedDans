@@ -47,4 +47,24 @@ public class imageService {
 
         return filePath.toString();
     }
+
+    /**
+     * Get a list of images
+     * @return A list of image file names
+     */
+    public <List>String getImages() {
+        Path path = Paths.get(uploadDir);
+        return path.toString();
+    }
+
+    /**
+     * Delete an image
+     * @param filename The name of the image file
+     * @return True if the image was deleted, false otherwise
+     * @throws IOException If an error occurs while deleting the image
+     */
+    public boolean deleteImage(String filename) throws IOException {
+        Path path = Paths.get(uploadDir).resolve(filename);
+        return Files.deleteIfExists(path);
+    }
 }
