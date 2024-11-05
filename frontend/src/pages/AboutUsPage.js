@@ -7,7 +7,6 @@ function AboutUsPage() {
     return (
         <div className="Landingpage">
             <Header />
-            <Navbar />
             <Footer/>
         </div>
     );

@@ -20,7 +20,7 @@ const Cart = () => {
             <CartOverlay show={show} handleClose={hideModal}>
                 <OrderSummary />
             </CartOverlay>
-            <button type="button" onClick={showModal}>
+            <button className="cart-button" type="button" onClick={showModal}>
                 Kurv
             </button>
         </main>

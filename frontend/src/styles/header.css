@@ -1,12 +1,12 @@
 .nav-button {
     padding: 10px;
-    background-color: white;
     color: var(--main-color);
     border: none;
     font-size: 20px;
     font-family: 'Rubik Dirt', sans-serif;
     flex: 1 1 auto;
     justify-content: center;
+    text-align: center;
     transition: color 0.3s, text-shadow 0.3s;
 }
 

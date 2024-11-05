@@ -48,7 +48,6 @@ function EventPage() {
     return (
         <div className="Landingpage">
             <Header />
-            <Navbar />
             {events.map((event) => (
                 <Event
                     key={event.id}

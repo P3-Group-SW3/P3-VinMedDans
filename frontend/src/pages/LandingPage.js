@@ -11,7 +11,6 @@ function Landingpage() {
     return (
         <div className="Landingpage">
             <Header />
-            <Navbar />
             <Section
                 title="Hvad er frugtvin"
                 description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
