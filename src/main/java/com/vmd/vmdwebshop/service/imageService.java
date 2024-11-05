@@ -34,6 +34,9 @@ public class imageService {
 
         String fileName;
         if (customName != null && !customName.isEmpty()) {
+            if (customName.contains("..") || customName.contains("/") || customName.contains("\\")) {
+                throw new IllegalArgumentException("Invalid custom name");
+            }
             fileName = customName + ".png";
         } else {
             Random random = new Random();
