@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import OrderSummary from './OrderSummary'
 import '../styles/modal.css'
 
+
 const Cart = () => {
     const [show, setShow] = useState(false);
 
@@ -20,7 +21,7 @@ const Cart = () => {
                 <OrderSummary />
             </CartOverlay>
             <button type="button" onClick={showModal}>
-                Open
+                Kurv
             </button>
         </main>
     );
