@@ -16,6 +16,9 @@ import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+/**
+ * Controller for handling image uploads and retrievals
+ */
 @RestController
 @RequestMapping("/api/images")
 public class ImageController {
@@ -26,17 +29,27 @@ public class ImageController {
     @Autowired
     private imageService imageService;
 
+    /**
+     * Upload an image
+     * @param file The image file
+     * @param customName The custom name for the image
+     * @return A response entity with the result of the upload
+     */
     @PostMapping("/upload")
-    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file) {
+    public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam(value = "customName", required = false) String customName) {
         try {
-            // Save the file to the directory
-            String filePath = imageService.saveImage(file);
+            String filePath = imageService.saveImage(file, customName);
             return ResponseEntity.ok("Image uploaded successfully: " + filePath);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
         }
     }
 
+    /**
+     * Get an image
+     * @param filename The name of the image file
+     * @return The image file
+     */
     @GetMapping("/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
         try {
@@ -44,7 +57,7 @@ public class ImageController {
             Resource resource = new UrlResource(path.toUri());
 
             return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG) // Or adjust based on your image type
+                    .contentType(MediaType.IMAGE_JPEG)
                     .body(resource);
         } catch (MalformedURLException e) {
             return ResponseEntity.notFound().build();
