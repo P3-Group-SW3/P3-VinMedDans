@@ -1,9 +1,13 @@
 import React, { useState } from "react";
+import {useNavigate} from "react-router-dom";
 import OrderSummary from './OrderSummary'
 import '../styles/modal.css'
 
 
 const Cart = () => {
+
+    const navigate = useNavigate();
+
     const [show, setShow] = useState(false);
 
     const showModal = () => {
@@ -18,7 +22,10 @@ const Cart = () => {
     return (
         <main>
             <CartOverlay show={show} handleClose={hideModal}>
-                <OrderSummary />
+                <OrderSummary/>
+                <a className="button" onClick={() => navigate(`/checkout`)}>
+                    Gå til betaling
+                </a>
             </CartOverlay>
             <button className="cart-button" type="button" onClick={showModal}>
                 Kurv
