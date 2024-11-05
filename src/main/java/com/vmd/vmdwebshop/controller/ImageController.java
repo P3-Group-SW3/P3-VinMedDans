@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 
 /**
  * Controller for handling image uploads and retrievals
@@ -31,7 +32,8 @@ public class ImageController {
 
     /**
      * Upload an image
-     * @param file The image file
+     *
+     * @param file       The image file
      * @param customName The custom name for the image
      * @return A response entity with the result of the upload
      */
@@ -47,6 +49,7 @@ public class ImageController {
 
     /**
      * Get an image
+     *
      * @param filename The name of the image file
      * @return The image file
      */
@@ -66,10 +69,16 @@ public class ImageController {
 
     /**
      * Get a list of images
+     *
      * @return A response entity with the list of images
      */
     @GetMapping("/getImageList")
-    public ResponseEntity<String> getImages() {
-        return ResponseEntity.ok(imageService.getImages());
+    public ResponseEntity<List<String>> getImages() {
+        try {
+            List<String> imageList = imageService.getImages();
+            return ResponseEntity.ok(imageList);
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
 }

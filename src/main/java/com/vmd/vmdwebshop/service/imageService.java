@@ -5,10 +5,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.nio.file.StandardCopyOption;
+import java.nio.file.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -52,9 +51,17 @@ public class imageService {
      * Get a list of images
      * @return A list of image file names
      */
-    public <List>String getImages() {
+    public List<String> getImages() throws IOException {
+        List<String> imageNames = new ArrayList<>();
         Path path = Paths.get(uploadDir);
-        return path.toString();
+
+        try (DirectoryStream<Path> stream = Files.newDirectoryStream(path, "*.png")) {
+            for (Path entry : stream) {
+                imageNames.add(entry.getFileName().toString());
+            }
+        }
+
+        return imageNames;
     }
 
     /**
