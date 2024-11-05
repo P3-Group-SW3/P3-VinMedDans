@@ -2,14 +2,12 @@ import '../styles/modal.css'
 
 const CartOverlay = ({ handleClose, show, children }) => {
     const showHideClassName = show ? "modal display-block" : "modal display-none";
+    console.log("Modal class applied:", showHideClassName);
 
     return (
-        <div className={showHideClassName}>
-            <section className="modal-main">
+        <div className={showHideClassName} onClick={handleClose}>
+            <section className="modal-main" onClick={(e) => e.stopPropagation()}>
                 {children}
-                <button type="button" onClick={handleClose}>
-                    Close
-                </button>
             </section>
         </div>
     );

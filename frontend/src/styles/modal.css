@@ -17,10 +17,10 @@
     transform: translate(-50%,-50%);
 }
 
-.display-block {
+.modal.display-block {
     display: block;
 }
 
-.display-none {
+.modal.display-none {
     display: none;
 }

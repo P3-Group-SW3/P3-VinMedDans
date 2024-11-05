@@ -1,37 +1,29 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 import CartOverlay from './CartOverlay'
+import '../styles/modal.css'
 
-class Cart extends Component {
-    constructor() {
-        super();
-        this.state = {
-            show: false
-        };
-        this.showModal = this.showModal.bind(this);
-        this.hideModal = this.hideModal.bind(this);
-    }
+const Cart = () => {
+    const [show, setShow] = useState(true);
 
-    showModal = () => {
-        this.setState({ show: true });
+    const showModal = () => {
+        setShow((show) => !show); // Toggle state instead of just setting to true
+        console.log("Modal state after click:", show); // Log to confirm state after update
     };
 
-    hideModal = () => {
-        this.setState({ show: false });
+    const hideModal = () => {
+        setShow(false);
     };
 
-    render() {
-        return (
-            <main>
-                <h1>React Modal</h1>
-                <CartOverlay show={this.state.show} handleClose={this.hideModal}>
-                    <p>Modal</p>
-                </CartOverlay>
-                <button type="button" onClick={this.showModal}>
-                    Open
-                </button>
-            </main>
-        );
-    }
-}
+    return (
+        <main>
+            <CartOverlay show={show} handleClose={hideModal}>
+                <p>Modal</p>
+            </CartOverlay>
+            <button type="button" onClick={showModal}>
+                Open
+            </button>
+        </main>
+    );
+};
 
 export default Cart
