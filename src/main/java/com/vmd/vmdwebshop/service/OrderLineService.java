@@ -1,86 +1,82 @@
 package com.vmd.vmdwebshop.service;
 
+import com.vmd.vmdwebshop.model.OrderLine;
+import com.vmd.vmdwebshop.repository.OrderLineRepository;
+import com.vmd.vmdwebshop.repository.WineRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import com.vmd.vmdwebshop.repository.*;
 import org.springframework.web.servlet.View;
-import com.vmd.vmdwebshop.model.*;
 
+
+import com.vmd.vmdwebshop.repository.*;
+import com.vmd.vmdwebshop.model.*;
+import java.util.List;
 import java.util.*;
 
-
 @Service
+@Transactional
 public class OrderLineService {
 
+
     private final View error;
-    private WineRepository wineRepository;
-    private OrderLineRepository orderLineRepository;
 
-    public OrderLineService(View error) {
+    private final WineRepository wineRepository;
+    private final OrderLineRepository orderLineRepository;
+
+    // Constructor injection to receive the repositories
+
+    /**
+     * Constructor Dependency Injection (CDI) - Dependencies are injected via the constructor.
+     * We use a constructor to inject the concepts of the wine and orderline repositories into the OrderLineService class.
+     * @param error
+     * @param orderLineRepository
+     * @param wineRepository
+     */
+    public OrderLineService(View error, OrderLineRepository orderLineRepository, WineRepository wineRepository) {
         this.error = error;
+        this.orderLineRepository = orderLineRepository;
+        this.wineRepository = wineRepository;
     }
 
-    public OrderLine createOrderLine(Long customer_ID, int amount, Long wine_ID) {
-        double price;
+    public List<OrderLine> getAllOrderLines(Long customerID) {
+        return orderLineRepository.findAllByCustomerId(customerID);
+    }
 
-        Wine wine = wineRepository.findById(wine_ID).orElse(null);
-        OrderLine orderLine = orderLineRepository.findById(customer_ID).orElse(null);
 
-        if(wine != null && orderLine != null) {
-            orderLine = new OrderLine(customer_ID, amount, wine, customer_ID);
+    public List<OrderLine> createAndEditOrderLine(OrderLine orderLine) {
+
+        OrderLine existingOrderLine = orderLineRepository.findByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
+
+        if (existingOrderLine != null) {
+            existingOrderLine.setAmount(orderLine.getAmount());
+        } else if (orderLine.getAmount() == 0 || orderLine.getAmount() <= 0) {
+            orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
+        } else {
             orderLineRepository.save(orderLine);
-            price = orderLine.getAmount() * wine.getPrice();
-
-        } else {
-            System.out.println("Der er sket en fejl");
         }
-
-        return orderLine;
+        return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
     }
 
-    // Looks for an orderline that fits both customer id and wine id
-    public void editOrderLine(Long customer_ID, int amount, Long wine_ID){
+    public boolean clearCart(Long customerID) {
+        orderLineRepository.deleteOrderLinesByCustomerId(customerID);
 
-        OrderLine orderLine = orderLineRepository.findByCustomerIDAndWineID(customer_ID, wine_ID);
+        OrderLine orderLine = orderLineRepository.findById(customerID).orElse(null);
 
-        if(orderLine != null){
-            orderLine.setAmount(amount);
-
-            List<OrderLine> orderLineList;
-            orderLineList = orderLineRepository.findByCustomerId(customer_ID);
-        } else {
-            System.out.println("Der er sket en fejl");
-        }
-
-
+        return orderLine == null;
     }
 
-    public void clearCart(Long customer_ID){
-        orderLineRepository.deleteOrderLinesByCustomerId(customer_ID);
-
-        OrderLine orderLine = orderLineRepository.findById(customer_ID).orElse(null);
-
-        if(orderLine != null){
-            System.out.println("Succes");
-        } else {
-            System.out.println("Failed");
-        }
-
-    }
-
-    public double calculateOrderLine(int amount, double price){
+    public double calculateOrderLine(int amount, double price) {
         return amount * price;
     }
 
-    public void modulateOrderLine(Long customer_ID, Long wine_ID, boolean increment){
 
-        Wine wine = wineRepository.findById(wine_ID).orElse(null);
+    public List<OrderLine> deleteOrderLine(Long wineID, Long customerID) {
+        orderLineRepository.deleteOrderLineByCustomerIDAndWineID(customerID, wineID);
 
-        OrderLine orderLine = orderLineRepository.findByCustomerIDAndWineID(customer_ID, wine_ID);
+        return orderLineRepository.findAllByCustomerId(customerID);
+
 
     }
-
-    //lav en remove orderline
-
-
-
 }
+

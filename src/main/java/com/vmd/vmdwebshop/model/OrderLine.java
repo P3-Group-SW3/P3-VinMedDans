@@ -12,7 +12,7 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-    @Column(name = "customerID", nullable = false)
+    @Column(name = "customerID")
     private Long customerID;
 
     private int amount;
@@ -29,17 +29,22 @@ public class OrderLine {
     @Column(name = "wineID", nullable = false)
     private Long wineID;
 
+    @ManyToOne
+    @JoinColumn(name = "orderID")
+    private Orders orders;
+
     //Empty Constructor
     public OrderLine() {}
 
     //Constructor
-    public OrderLine(Long ID, int amount, Wine wine, Long customerID) {
-        this.ID = ID;
-
-        this.customerID = customerID;
+    public OrderLine(int amount, Long wineID, Long customerID) {
         this.amount = amount;
-        this.wineID = wine.getID();
+        this.wineID = wineID;
+        this.customerID = customerID;
+
     }
+
+
 
     public Long getID() {
         return this.ID;
@@ -51,22 +56,19 @@ public class OrderLine {
 
     public Long getCustomerID() {return this.customerID;}
 
+    public void removeCustomerID() {this.customerID = null; }
+
     public Long getWineID() {return this.wineID;}
 
     public void setAmount(int amount) {
         this.amount = amount;
     }
 
+    public void setCustomerID(Long customerID) {this.customerID = customerID; }
 
-
-    //Method for increasing or decreasing the product type amount in the orderline
-    public void editOrderLineAmount(boolean increment){
-        if (increment) {
-            if (wine.getAmountLeft() > 0) amount += 1;
-        }
-        else {
-            if (amount > 0) amount -= 1;
-        }
+    public void setOrders(Orders orders) {
+        this.orders = orders;
+        this.customerID = null;
     }
 
 }
