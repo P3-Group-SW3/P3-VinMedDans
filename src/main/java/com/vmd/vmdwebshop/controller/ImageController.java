@@ -53,7 +53,10 @@ public class ImageController {
     @GetMapping("/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
         try {
-            Path path = Paths.get(uploadDir).resolve(filename);
+            if (filename.contains("..") || filename.contains("/") || filename.contains("\\")) {
+                throw new IllegalArgumentException("Invalid filename");
+            }
+            Path path = Paths.get(uploadDir).resolve(filename).normalize();
             Resource resource = new UrlResource(path.toUri());
 
             return ResponseEntity.ok()
@@ -61,6 +64,8 @@ public class ImageController {
                     .body(resource);
         } catch (MalformedURLException e) {
             return ResponseEntity.notFound().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 
