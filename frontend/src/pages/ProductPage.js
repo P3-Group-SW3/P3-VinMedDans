@@ -51,7 +51,6 @@ function ProductPage() {
     return (
         <div className="productPage">
             <Header />
-            <Navbar />
             
             {items.map((item, index) => (
                 <Item

@@ -1,13 +1,13 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
-import '../styles/navbutton.css'
+import '../styles/header.css'
 
 function NavBar() {
 
     const navigate = useNavigate();
 
   return (
-    <nav className="nav justify-content-around border-bottom">
+    <nav className="nav justify-content-between border-bottom vh-100">
       <NavItem text="Webshop" color="#E93271" onClick={() => navigate(`/shop`)}/>
       <NavItem text="Hvem er vi" color="#C44097" onClick={() => navigate(`/about`)}/>
       <NavItem text="Hvor er vi" color="#F4AC46" onClick={() => navigate(`/locations`)}/>

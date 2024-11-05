@@ -7,7 +7,6 @@ function ContactPage() {
     return (
         <div className="ContactPage">
             <Header />
-            <Navbar />
 
             <div className="contact-content container my-5">
                 <div className="row">
