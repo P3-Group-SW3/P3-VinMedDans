@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import CartOverlay from './CartOverlay'
+import OrderSummary from './OrderSummary'
 import '../styles/modal.css'
 
 const Cart = () => {
-    const [show, setShow] = useState(true);
+    const [show, setShow] = useState(false);
 
     const showModal = () => {
         setShow((show) => !show); // Toggle state instead of just setting to true
@@ -17,12 +17,25 @@ const Cart = () => {
     return (
         <main>
             <CartOverlay show={show} handleClose={hideModal}>
-                <p>Modal</p>
+                <OrderSummary />
             </CartOverlay>
             <button type="button" onClick={showModal}>
                 Open
             </button>
         </main>
+    );
+};
+
+const CartOverlay = ({ handleClose, show, children }) => {
+    const showHideClassName = show ? "modal display-block" : "modal display-none";
+    console.log("Modal class applied:", showHideClassName);
+
+    return (
+        <div className={showHideClassName} onClick={handleClose}>
+            <section className="modal-main" onClick={(e) => e.stopPropagation()}>
+                {children}
+            </section>
+        </div>
     );
 };
 
