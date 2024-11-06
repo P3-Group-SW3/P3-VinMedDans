@@ -1,53 +1,22 @@
 import React from "react";
+import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import Item from "../components/Item";
 
-const items = [
-    {
-        id: 1,
-        name: "Cabernet Sauvignon",
-        description: "A full-bodied red wine with dark fruit flavors and savory tastes from black pepper to bell pepper. It offers hints of earthy undertones and subtle tobacco, adding layers of depth. The finish is smooth yet robust, leaving a lingering warmth on the palate. Notes of plum and a touch of oak bring balance, enhancing its complexity. Ideal for pairing with grilled meats or rich, hearty dishes. The wine's tannins are well-structured, providing a bold character without overwhelming the senses. Each sip reveals new flavors, making it perfect for savoring slowly.",
-        price: 29.99,
-        stock: 1,
-        imageUrl: "https://picsum.photos/200",
-    },
-    {
-        id: 2,
-        name: "Chardonnay",
-        description: "A popular white wine with flavors ranging from apple and lemon to papaya and pineapple.",
-        price: 19.99,
-        stock: 6,
-        imageUrl: "https://picsum.photos/200",
-    },
-    {
-        id: 3,
-        name: "Pinot Noir",
-        description: "A light-bodied red wine with flavors of red fruit, flowers, and spices.",
-        price: 34.99,
-        stock: 11,
-        imageUrl: "https://picsum.photos/200",
-    },
-    {
-        id: 4,
-        name: "Sauvignon Blanc",
-        description: "A crisp, dry, and aromatic white wine with flavors of lime, green apple, passion fruit, and white peach.",
-        price: 24.99,
-        stock: 0,
-        imageUrl: "https://picsum.photos/200",
-    },
-    {
-        id: 5,
-        name: "Merlot",
-        description: "A smooth red wine with flavors of black cherry, raspberry, and plum.",
-        price: 22.99,
-        stock: 55,
-        imageUrl: "https://picsum.photos/200",
-    }
-];
-
 function ProductPage() {
+    const [items, setItems] = useState([]);
+
+    useEffect(() => {
+        fetch('/api/getAllWines')
+            .then(response => response.json())
+            .then(data => setItems(data))
+            .catch(error => console.error('Error fetching data:', error));
+    }, []);
+
+    console.log(items);
+
     return (
         <div className="productPage">
             <Header />
@@ -55,11 +24,11 @@ function ProductPage() {
             {items.map((item, index) => (
                 <Item
                     key={index}
-                    title={item.name}
-                    description={item.description}
-                    price={item.price.toString()} 
-                    image={item.imageUrl}
-                    stock={item.stock.toString()}
+                    title={item?.name}
+                    description={item?.description}
+                    price={item?.price?.toString()} 
+                    image={item.imageURL}
+                    stock={item?.stock?.toString()}
                     imagePos="left"
                     item={item}  
                 ></Item>
