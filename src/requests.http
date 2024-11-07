@@ -1,0 +1,49 @@
+
+### Send GET request
+GET http://localhost:8080/api/clearCart/0
+Content-Type: application/json
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/createWine
+Content-Type: application/json
+
+{
+  "id": 4,
+  "price": 189,
+  "wine_id": 2,
+  "description": "hej med dig",
+  "imageURL": "abc",
+  "name": "havtorben",
+  "amountLeft": 9
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditOrderLine
+Content-Type: application/json
+
+{
+  "id": null,
+  "amount": 31,
+  "wineID": 2,
+  "customerID": 123
+}
+
+### GET request with a header
+GET http://localhost:8080//api/getAllOrderLines/123
+Accept: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/api/deleteOrderLine
+Content-Type: application/json
+
+{
+  "id": null,
+  "amount": 9,
+  "wineID": 2,
+  "customerID": 123
+}
+
+
+
+
