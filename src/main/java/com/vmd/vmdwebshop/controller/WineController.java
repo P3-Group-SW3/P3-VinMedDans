@@ -31,4 +31,10 @@ public class WineController {
             return ResponseEntity.notFound().build();
         }
     }
+
+    @PostMapping("/api/createWine")
+    public ResponseEntity<Wine> createWine(@RequestBody Wine wine) {
+        wineService.createWine(wine);
+        return ResponseEntity.ok(wine);
+    }
 }
