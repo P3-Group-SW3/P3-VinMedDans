@@ -46,8 +46,6 @@ public class Orders {
     // Add a method to add an OrderLine
     public void addOrderLine(OrderLine orderLine) {
         orderLines.add(orderLine);
-        orderLine.setOrders(this); // Set the Orders reference in OrderLine
-        orderLine.removeCustomerID();
     }
 
 
