@@ -24,6 +24,8 @@ public class OrderService {
         Orders order = orderinfo.createOrderFromInfo();
         for(OrderLine orderLine : orderLines) {
             order.addOrderLine(orderLine);
+            orderLine.setOrders(order);
+            orderLine.removeCustomerID();
         }
         order.setState(Orders.State.REGISTRATED);
         orderReporsitory.save(order);

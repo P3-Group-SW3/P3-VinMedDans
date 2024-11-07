@@ -7,7 +7,6 @@ function LocationPage() {
     return (
         <div className="Landingpage">
             <Header />
-            <Navbar />
             <Footer/>
         </div>
     );
