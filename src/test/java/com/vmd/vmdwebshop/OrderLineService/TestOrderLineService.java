@@ -54,39 +54,42 @@ public class TestOrderLineService {
     public void TestClearCart03(){ assertTrue(orderLineService.clearCart(Long.parseLong("123"))); }
 
     @Test
-    public void TestClearCart05(){ assertTrue(orderLineService.clearCart(Long.parseLong("0"))); }
+    public void TestClearCart05(){ assertTrue(orderLineService.clearCart(Long.parseLong("1"))); }
 
     @Test
     public void TestGetOrderLines01(){
         when(orderLineRepository.findAllByCustomerId(Long.parseLong("911"))).thenReturn(orderLineList);
 
-        assertEquals(orderLineList, orderLineService.getAllOrderLines(Long.parseLong("911")));
-
         System.out.println(orderLineList);
+        System.out.println(orderLineService.getAllOrderLines(Long.parseLong("1")));
 
-        System.out.println(orderLineService.getAllOrderLines(Long.parseLong("911")));
+        assertEquals(orderLineList, orderLineService.getAllOrderLines(Long.parseLong("1")));
+
+
     }
 
     @Test
     public void TestGetOrderLines02(){
-        when(orderLineRepository.findAllByCustomerId(Long.parseLong("123"))).thenReturn(orderLineList);
-
-        assertNotEquals(orderLineList, orderLineService.getAllOrderLines(Long.parseLong("911")));
+        when(orderLineRepository.findAllByCustomerId(Long.parseLong("1"))).thenReturn(orderLineList);
 
         System.out.println(orderLineList);
-
         System.out.println(orderLineService.getAllOrderLines(Long.parseLong("911")));
+
+        assertNotEquals(orderLineList, orderLineService.getAllOrderLines(Long.parseLong("911")));
     }
 
     @Test
     public void TestGetOrderLines03(){
-        when(orderLineRepository.findAllByCustomerId(Long.parseLong("0"))).thenReturn(orderLineList);
+        when(orderLineRepository.findAllByCustomerId(Long.parseLong("1"))).thenReturn(orderLineList);
 
-        assertNotEquals(orderLineList, orderLineService.getAllOrderLines(Long.parseLong("123")));
+        List<OrderLine> orderLine1 = orderLineService.getAllOrderLines(Long.parseLong("123"));
 
         System.out.println(orderLineList);
+        System.out.println(orderLine1);
 
-        System.out.println(orderLineService.getAllOrderLines(Long.parseLong("123")));
+        assertNotEquals(orderLineList, orderLine1);
+
+
 
     }
 
