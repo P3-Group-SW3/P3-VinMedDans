@@ -16,6 +16,7 @@ public interface OrderLineRepository extends JpaRepository<OrderLine, Long> {
     @Query(value="DELETE FROM orderline WHERE customerID = ?1", nativeQuery = true)
     void deleteOrderLinesByCustomerId(Long customerID);
 
+    @Query(value="SELECT * FROM orderline WHERE orderline.customerID = ?1 AND orderline.wineID = ?2", nativeQuery = true)
     OrderLine findByCustomerIDAndWineID(Long customerID, Long wineID);
 
     void deleteOrderLineByCustomerIDAndWineID(Long customerID, Long wineID);
