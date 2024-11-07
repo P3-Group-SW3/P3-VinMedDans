@@ -10,6 +10,7 @@ import AboutUsPage from "./pages/AboutUsPage";
 import LocationPage from "./pages/LocationPage";
 import ContactPage from "./pages/ContactPage";
 import EventPage from "./pages/EventPage";
+import AdminPage from "./pages/AdminPage";
 
 const SetTitle = () => {
   useEffect(() => {
@@ -33,6 +34,7 @@ root.render(
           <Route path="locations" element={<LocationPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="events" element={<EventPage />} />
+          <Route path="admin" element={<AdminPage />} />
           <Route path="*" element={<h1>404 - Not Found</h1>} />
         </Route>
       </Routes>
