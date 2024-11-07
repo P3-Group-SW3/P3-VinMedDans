@@ -33,8 +33,8 @@ public class OrderController {
      * @return
      */
     @PostMapping("/api/orderInfo")
-    public ResponseEntity<Orders> createOrder(@RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String userid) {
-        List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(Long.parseLong(userid));
+    public ResponseEntity<Orders> createOrder(@RequestBody Orderinfo order ){
+        List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(Long.parseLong("1"));
         return ResponseEntity.ok(orderService.createOrderfromInfo(order, orderLines));
     }
 
@@ -53,8 +53,15 @@ public class OrderController {
      * @return
      */
     @GetMapping("/api/orders/{id}")
-    public ResponseEntity<Orders> getOrderById(@PathVariable long id) {
-        return ResponseEntity.ok(orderService.getOrderById(id));
+    public ResponseEntity<Orders> getOrderById(@PathVariable Long id) {
+        Orders order = orderService.getOrderById(id);
+        if(order!= null){
+            return ResponseEntity.ok(orderService.getOrderById(id));
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     /**
