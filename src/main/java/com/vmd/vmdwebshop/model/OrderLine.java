@@ -41,7 +41,6 @@ public class OrderLine {
         this.amount = amount;
         this.wineID = wineID;
         this.customerID = customerID;
-
     }
 
 

@@ -24,13 +24,13 @@ Content-Type: application/json
 
 {
   "id": null,
-  "amount": 31,
-  "wineID": 2,
-  "customerID": 123
+  "amount": 12,
+  "wineID": 1,
+  "customerID": 911
 }
 
 ### GET request with a header
-GET http://localhost:8080//api/getAllOrderLines/123
+GET http://localhost:8080//api/getAllOrderLines/911
 Accept: application/json
 
 ### Send POST request with json body
