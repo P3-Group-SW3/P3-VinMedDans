@@ -4,6 +4,7 @@ package com.vmd.vmdwebshop.controller;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import com.vmd.vmdwebshop.service.WineService;
+import jakarta.validation.Valid;
 import org.hibernate.query.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -53,10 +54,9 @@ public class OrderLineController {
      * @return List<OrderLine>
      */
     @PostMapping("/api/createAndEditOrderLine")
-    public ResponseEntity<List<OrderLine>> createOrderLine(@RequestBody OrderLine orderLine) {
+    public ResponseEntity<List<OrderLine>> createOrderLine(@RequestBody @Valid OrderLine orderLine) {
         return ResponseEntity.ok(orderLineService.createAndEditOrderLine(orderLine));
     }
-
 
     @GetMapping("/api/clearCart/{customerID}")
     public ResponseEntity<String> clearCart(@PathVariable Long customerID) {

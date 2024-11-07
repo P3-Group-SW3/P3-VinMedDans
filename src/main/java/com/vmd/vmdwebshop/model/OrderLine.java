@@ -2,6 +2,10 @@ package com.vmd.vmdwebshop.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 
 
 @Entity
@@ -13,8 +17,11 @@ public class OrderLine {
     private Long ID;
 
     @Column(name = "customerID")
+    @NotBlank(message = "this field must not be empty")
     private Long customerID;
 
+    @Digits(integer = 3, fraction = 0, message = "this field must only consist of digits")
+    @Min(value = 0, message = "the amount must not be less than 0")
     private int amount;
 
     /* @ManyToOne indicates that more than one instance (row) in the OrderLine table can be associated
@@ -27,6 +34,7 @@ public class OrderLine {
     private Wine wine; //hvorfor det??
 
     @Column(name = "wineID", nullable = false)
+    @NotBlank(message = "this field must not be empty")
     private Long wineID;
 
     @ManyToOne
