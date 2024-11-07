@@ -7,6 +7,11 @@ import Item from "../components/Item";
 function ProductPage() {
     const [items, setItems] = useState([]);
 
+    /*
+    call: /api/getAllWines
+    method: GET
+    response: JSON array of objects
+    */
     useEffect(() => {
         fetch('/api/getAllWines')
             .then(response => response.json())

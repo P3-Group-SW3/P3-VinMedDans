@@ -29,7 +29,6 @@ export const CartModify = (item) => {
         console.error('Error:', error);
       }); 
     });
-    
   }
 
   return (
