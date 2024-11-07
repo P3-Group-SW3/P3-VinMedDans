@@ -2,7 +2,6 @@ import React, { useEffect, Component, useRef } from 'react';
 import logoImg from '../images/Logo Img.png';
 import logoText from '../images/Logo Text.png';
 import {useNavigate} from "react-router-dom";
-import Cart from './Cart'
 import Navbar from './Navbar'
 import '../styles/header.css'
 
@@ -36,7 +35,6 @@ const Header = () => {
         <div className="d-flex flex-row align-items-center justify-content-center w-100">
             <img src={logoImg} alt="Logo" className="me-2"/>
             <img src={logoText} alt="Secondary Logo"/>
-            <Cart/>
         </div>
         <div>
             <Navbar />

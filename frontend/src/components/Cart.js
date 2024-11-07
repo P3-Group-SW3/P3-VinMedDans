@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import OrderSummary from './OrderSummary'
 import '../styles/modal.css'
+import cartImage from '../images/basket.png';
 
 
 const Cart = () => {
@@ -10,27 +11,23 @@ const Cart = () => {
 
     const [show, setShow] = useState(false);
 
-    const showModal = () => {
-        setShow((show) => !show); // Toggle state instead of just setting to true
-        console.log("Modal state after click:", show); // Log to confirm state after update
-    };
-
-    const hideModal = () => {
-        setShow(false);
+    const toggleShow = () => {
+        setShow((show) => !show);
+        console.log("Modal state after click:", show);
     };
 
     return (
-        <main>
-            <CartOverlay show={show} handleClose={hideModal}>
+        <div className="d-flex">
+            <CartOverlay show={show} handleClose={toggleShow}>
                 <OrderSummary/>
-                <a className="button" onClick={() => navigate(`/checkout`)}>
+                <a className="button d-flex justify-self-center" onClick={() => navigate(`/checkout`)}>
                     Gå til betaling
                 </a>
             </CartOverlay>
-            <button className="cart-button" type="button" onClick={showModal}>
-                Kurv
-            </button>
-        </main>
+            <a className="cart-button" role="button" onClick={toggleShow}>
+                <img src={cartImage} className="img-fluid" alt="Kurv"/>
+            </a>
+        </div>
     );
 };
 
