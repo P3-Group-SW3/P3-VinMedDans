@@ -46,3 +46,4 @@ src/main/resources/application.properties
 .idea/vcs.xml
 src/main/resources/application.properties
 /frontend/node_modules/*
+application.properties
