@@ -27,14 +27,14 @@ public class OrderController {
      * This is the post mapping from the request from the front end and makes an order from a customer.
      *
      * @param order
-     * @param userid
+     * @param customerID
      * We take theese two values, the order is filled with information based on the frontend
      * And we use the cookie id to get the list of ordelines from the customer send these objects through our order service
      * @return
      */
     @PostMapping("/api/orderInfo")
-    public ResponseEntity<Orders> createOrder(@RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String userid) {
-        List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(Long.parseLong(userid));
+    public ResponseEntity<Orders> createOrder(@RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
+        List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(customerID);
         return ResponseEntity.ok(orderService.createOrderfromInfo(order, orderLines));
     }
 
