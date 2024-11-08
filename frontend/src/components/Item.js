@@ -16,6 +16,7 @@ const Item = ({ title, description, price, image, stock, imagePos, item}) => {
         }
     };
 
+
     return (
         <div className="container my-5 rounded-box" style={{ width: '100%', height: '100%' }}>
             <div className={`row align-items-center ${imagePos === 'left' ? '' : 'flex-row-reverse'}`}>
