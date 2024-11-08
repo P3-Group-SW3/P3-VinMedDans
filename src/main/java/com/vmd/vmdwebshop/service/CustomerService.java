@@ -4,6 +4,7 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.CookieValue;
 
 import java.io.IOException;
 
@@ -61,5 +62,57 @@ public class CustomerService {
         }
 
         return "Matching cookie not found.";
+    }
+
+    public String getCustomerID(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            return "no cookies found!";
+        }
+
+        String sessionID = request.getSession().getId();
+
+        for (Cookie cookie : cookies) {
+            if ("customerData".equals(cookie.getName())) {
+                String value = cookie.getValue();
+
+                String customerID = value.split("\\|")[0];
+                if (sessionID.equals(customerID)) {
+                    return customerID;
+                } else {
+                    return "SessionID does not match the customerID!";
+                }
+            }
+        }
+
+        return "No matching cookie found!";
+    }
+
+    public String getLegalAge(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        if (cookies == null) {
+            return "Cookies not found!";
+        }
+
+        String sessionID = request.getSession().getId();
+
+        for (Cookie cookie : cookies) {
+            if ("customerData".equals(cookie.getName())) {
+                String value = cookie.getValue();
+
+                String customerID = value.split("\\|")[0];
+                if (sessionID.equals(customerID)) {
+                    return value.split("\\|")[1];
+                } else {
+                    return "SessionID does not match the customerID!";
+                }
+            }
+        }
+
+        return "Matching cookie not found!";
+    }
+
+    public boolean existingCookieCheck(@CookieValue(value = "customerData", required = false) String customerData) {
+        return customerData != null;
     }
 }

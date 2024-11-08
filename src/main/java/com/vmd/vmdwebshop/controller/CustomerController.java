@@ -36,26 +36,4 @@ public class CustomerController {
     }
 
 
-    @GetMapping("/getallcookies")
-    public String readAllCookies(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            return Arrays.stream(cookies)
-                    .map(c -> c.getName() + "=" + c.getValue()).collect(Collectors.joining(", "));
-        }
-        return "No cookies found";
-    }
-
-    @GetMapping("/deletecookies")
-    public String deleteCookies(HttpServletResponse response) {
-        Cookie cookie = new Cookie("customerData", null);
-        cookie.setMaxAge(0);
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
-
-        response.addCookie(cookie);
-
-        return "cookie named " + cookie.getName() + " is now deleted";
-    }
 }
