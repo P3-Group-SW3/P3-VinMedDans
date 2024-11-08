@@ -1,47 +1,40 @@
 package com.vmd.vmdwebshop.controller;
 
+import com.vmd.vmdwebshop.service.CustomerService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.stream.Collectors;
 
 @RestController
+@RequestMapping("/")
 public class CustomerController {
 
+    @Autowired
+    private CustomerService customerService;
+
     @GetMapping("/")
-    public String frontPage() {
-        return "Wub wub";
+    public String redirectToCreateCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
+        return createCustomerCookie(request, response);
     }
 
-    /**
-     * Creates a cookie for the current customer by fetching the sessionID and set it in the "customerId" cookie.
-     *
-     * @param request   
-     * @param response
-     * @return
-     */
-    @GetMapping("/register-customer")
+    @GetMapping("/api/createcookie")
     public String createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
-        String sessionId = request.getSession().getId();
+        customerService.setCustomerCookie(response, request);
 
-        Cookie cookie = new Cookie("customerId", sessionId);
-        cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/"); // global cookie accessible everywhere
-
-        response.addCookie(cookie);
-
-        return "Cookie set successfully";
+        return "Customer cookie has been set!";
     }
 
-    @GetMapping("/get")
-    public String readCookie(@CookieValue(value = "customerId", defaultValue = "Atta") String id) {
-        return "HEY! my customer id is " + id;
+    @GetMapping("/api/updatecookie")
+    public String updateCustomerCookie(HttpServletResponse response, HttpServletRequest request) {
+        return customerService.updateLegalAge(response, request);
     }
+
 
     @GetMapping("/getallcookies")
     public String readAllCookies(HttpServletRequest request) {
@@ -55,7 +48,7 @@ public class CustomerController {
 
     @GetMapping("/deletecookies")
     public String deleteCookies(HttpServletResponse response) {
-        Cookie cookie = new Cookie("customerId", null);
+        Cookie cookie = new Cookie("customerData", null);
         cookie.setMaxAge(0);
         cookie.setSecure(true);
         cookie.setHttpOnly(true);
