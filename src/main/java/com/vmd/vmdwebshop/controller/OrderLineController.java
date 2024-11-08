@@ -40,7 +40,7 @@ public class OrderLineController {
      * @return list of orderlines
      */
     @GetMapping("/api/getAllOrderLines/{customerID}")
-    public ResponseEntity<List<OrderLine>> getAllOrderLines(@PathVariable long customerID) {
+    public ResponseEntity<List<OrderLine>> getAllOrderLines(@PathVariable String customerID) {
         return ResponseEntity.ok(orderLineService.getAllOrderLines(customerID));
     }
 
@@ -59,7 +59,7 @@ public class OrderLineController {
     }
 
     @GetMapping("/api/clearCart/{customerID}")
-    public ResponseEntity<String> clearCart(@PathVariable Long customerID) {
+    public ResponseEntity<String> clearCart(@PathVariable String customerID) {
         if (orderLineService.clearCart(customerID)) {
             return ResponseEntity.ok("Order line has been cleared");
         }
@@ -70,7 +70,7 @@ public class OrderLineController {
     @PostMapping("api/returnOrderLine")
     public ResponseEntity<OrderLine> returnOrderLine(@RequestBody OrderLine orderLine, @CookieValue(value = "cookieId", defaultValue = "") String cookieID) {
 
-        orderLine.setCustomerID(Long.parseLong(cookieID));
+        orderLine.setCustomerID(cookieID);
 
         //orderLineRepository.save(orderLine);
 
@@ -80,7 +80,7 @@ public class OrderLineController {
     @PostMapping("api/deleteOrderLine")
     public ResponseEntity<List<OrderLine>> deleteOrderLine(@RequestBody OrderLine orderLine) {
 
-        return ResponseEntity.ok(orderLineService.deleteOrderLine(orderLine.getWineID(), orderLine.getCustomerID()));
+        return ResponseEntity.ok(orderLineService.deleteOrderLine(orderLine));
     }
 
 

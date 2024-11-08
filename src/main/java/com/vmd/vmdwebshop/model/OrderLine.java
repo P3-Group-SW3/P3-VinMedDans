@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 
 
 @Entity
@@ -18,7 +18,7 @@ public class OrderLine {
 
     @Column(name = "customerID")
     @NotBlank(message = "this field must not be empty")
-    private Long customerID;
+    private String customerID;
 
     @Digits(integer = 3, fraction = 0, message = "this field must only consist of digits")
     @Min(value = 0, message = "the amount must not be less than 0")
@@ -34,7 +34,7 @@ public class OrderLine {
     private Wine wine; //hvorfor det??
 
     @Column(name = "wineID", nullable = false)
-    @NotBlank(message = "this field must not be empty")
+    @NotNull (message = "Wine ID must not be null")
     private Long wineID;
 
     @ManyToOne
@@ -45,7 +45,7 @@ public class OrderLine {
     public OrderLine() {}
 
     //Constructor
-    public OrderLine(int amount, Long wineID, Long customerID) {
+    public OrderLine(int amount, Long wineID, String customerID) {
         this.amount = amount;
         this.wineID = wineID;
         this.customerID = customerID;
@@ -61,7 +61,7 @@ public class OrderLine {
         return this.amount;
     }
 
-    public Long getCustomerID() {return this.customerID;}
+    public String getCustomerID() {return this.customerID;}
 
     public void removeCustomerID() {this.customerID = null; }
 
@@ -71,7 +71,7 @@ public class OrderLine {
         this.amount = amount;
     }
 
-    public void setCustomerID(Long customerID) {this.customerID = customerID; }
+    public void setCustomerID(String customerID) {this.customerID = customerID; }
 
     public void setOrders(Orders orders) {
         this.orders = orders;

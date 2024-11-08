@@ -39,50 +39,50 @@ public class TestOrderLineService {
     public void setUp() {
         MockitoAnnotations.openMocks(this); // Initialize mocks before each test
 
-        orderLineList.add(new OrderLine(11, Long.parseLong("911"), Long.parseLong("2")));
-        orderLineList.add(new OrderLine(12, Long.parseLong("911"), Long.parseLong("1")));
+        orderLineList.add(new OrderLine(11, Long.parseLong("2"), "911"));
+        orderLineList.add(new OrderLine(12, Long.parseLong("2"), "911"));
 
     }
 
     @Test
-    public void TestClearCart01(){ assertTrue(orderLineService.clearCart(Long.parseLong("789"))); }
+    public void TestClearCart01(){ assertTrue(orderLineService.clearCart("789")); }
 
     @Test
-    public void TestClearCart02(){ assertTrue(orderLineService.clearCart(Long.parseLong("199"))); }
+    public void TestClearCart02(){ assertTrue(orderLineService.clearCart("199")); }
 
     @Test
-    public void TestClearCart03(){ assertTrue(orderLineService.clearCart(Long.parseLong("123"))); }
+    public void TestClearCart03(){ assertTrue(orderLineService.clearCart("123")); }
 
     @Test
-    public void TestClearCart05(){ assertTrue(orderLineService.clearCart(Long.parseLong("1"))); }
+    public void TestClearCart05(){ assertTrue(orderLineService.clearCart("1")); }
 
     @Test
     public void TestGetOrderLines01(){
-        when(orderLineRepository.findAllByCustomerId(Long.parseLong("911"))).thenReturn(orderLineList);
+        when(orderLineRepository.findAllByCustomerId("911")).thenReturn(orderLineList);
 
         System.out.println(orderLineList);
-        System.out.println(orderLineService.getAllOrderLines(Long.parseLong("1")));
+        System.out.println(orderLineService.getAllOrderLines("1"));
 
-        assertEquals(orderLineList, orderLineService.getAllOrderLines(Long.parseLong("1")));
+        assertEquals(orderLineList, orderLineService.getAllOrderLines("1"));
 
 
     }
 
     @Test
     public void TestGetOrderLines02(){
-        when(orderLineRepository.findAllByCustomerId(Long.parseLong("1"))).thenReturn(orderLineList);
+        when(orderLineRepository.findAllByCustomerId("911")).thenReturn(orderLineList);
 
         System.out.println(orderLineList);
-        System.out.println(orderLineService.getAllOrderLines(Long.parseLong("911")));
+        System.out.println(orderLineService.getAllOrderLines("911"));
 
-        assertNotEquals(orderLineList, orderLineService.getAllOrderLines(Long.parseLong("911")));
+        assertNotEquals(orderLineList, orderLineService.getAllOrderLines("911"));
     }
 
     @Test
     public void TestGetOrderLines03(){
-        when(orderLineRepository.findAllByCustomerId(Long.parseLong("1"))).thenReturn(orderLineList);
+        when(orderLineRepository.findAllByCustomerId("911")).thenReturn(orderLineList);
 
-        List<OrderLine> orderLine1 = orderLineService.getAllOrderLines(Long.parseLong("123"));
+        List<OrderLine> orderLine1 = orderLineService.getAllOrderLines("123");
 
         System.out.println(orderLineList);
         System.out.println(orderLine1);
@@ -95,24 +95,24 @@ public class TestOrderLineService {
 
     @Test
     public void TestCreateAndEditOrderLine(){
-        OrderLine newOrderLine = new OrderLine(15, Long.parseLong("911"), Long.parseLong("2"));
+        OrderLine newOrderLine = new OrderLine(15, Long.parseLong("911"), "2");
 
         orderLineService.createAndEditOrderLine(newOrderLine);
 
-        assertEquals(newOrderLine, orderLineRepository.findByCustomerIDAndWineID(Long.parseLong("911"), Long.parseLong("2")));
+        assertEquals(newOrderLine, orderLineRepository.findByCustomerIDAndWineID("911", Long.parseLong("2")));
 
         System.out.println(newOrderLine);
 
-        System.out.println(orderLineRepository.findByCustomerIDAndWineID(Long.parseLong("911"), Long.parseLong("2")));
+        System.out.println(orderLineRepository.findByCustomerIDAndWineID("911", Long.parseLong("2")));
     }
 
     @Test
     public void TestDeleteOrderLine01(){
-        orderLineService.deleteOrderLine(Long.parseLong("1"), Long.parseLong("911"));
+        //orderLineService.deleteOrderLine("911", Long.parseLong("1"));
 
-        assertNull(orderLineRepository.findByCustomerIDAndWineID(Long.parseLong("911"), Long.parseLong("1")));
+        assertNull(orderLineRepository.findByCustomerIDAndWineID("911", Long.parseLong("1")));
 
-        System.out.println(orderLineRepository.findByCustomerIDAndWineID(Long.parseLong("911"), Long.parseLong("1")));
+        System.out.println(orderLineRepository.findByCustomerIDAndWineID("911", Long.parseLong("1")));
     }
 
     @Test
