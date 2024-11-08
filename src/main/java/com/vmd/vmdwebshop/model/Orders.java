@@ -9,11 +9,16 @@ import java.util.Set;
 @Entity
 @Table(name = "orders") // Renamed to avoid SQL reserved keyword conflict
 public class Orders {
+
+    /**
+     * Denne enum er til fortælle hvilken state pakken er for levering
+     */
     public enum State {
         REGISTERED,
         PACKED,
         SHIPPED
     }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -26,10 +31,12 @@ public class Orders {
     private String city;
     private State state;
 
-
+    //relationship med orderlines
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderLine> orderLines = new HashSet<>();
 
+
+    //constructors
     public Orders() {
     }
 
@@ -42,8 +49,7 @@ public class Orders {
         this.city = city;
     }
 
-    // ænder det til service
-    // Add a method to add an OrderLine
+    // tilføjer orderline
     public void addOrderLine(OrderLine orderLine) {
         orderLines.add(orderLine);
     }
