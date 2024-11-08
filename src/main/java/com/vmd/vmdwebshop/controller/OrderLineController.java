@@ -4,6 +4,7 @@ package com.vmd.vmdwebshop.controller;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import com.vmd.vmdwebshop.service.WineService;
+import jakarta.validation.Valid;
 import org.hibernate.query.Order;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -39,7 +40,7 @@ public class OrderLineController {
      * @return list of orderlines
      */
     @GetMapping("/api/getAllOrderLines/{customerID}")
-    public ResponseEntity<List<OrderLine>> getAllOrderLines(@PathVariable Long customerID) {
+    public ResponseEntity<List<OrderLine>> getAllOrderLines(@PathVariable String customerID) {
         return ResponseEntity.ok(orderLineService.getAllOrderLines(customerID));
     }
 
@@ -53,13 +54,12 @@ public class OrderLineController {
      * @return List<OrderLine>
      */
     @PostMapping("/api/createAndEditOrderLine")
-    public ResponseEntity<List<OrderLine>> createOrderLine(@RequestBody OrderLine orderLine) {
+    public ResponseEntity<List<OrderLine>> createOrderLine(@RequestBody @Valid OrderLine orderLine) {
         return ResponseEntity.ok(orderLineService.createAndEditOrderLine(orderLine));
     }
 
-
     @GetMapping("/api/clearCart/{customerID}")
-    public ResponseEntity<String> clearCart(@PathVariable Long customerID) {
+    public ResponseEntity<String> clearCart(@PathVariable String customerID) {
         if (orderLineService.clearCart(customerID)) {
             return ResponseEntity.ok("Order line has been cleared");
         }
@@ -70,7 +70,7 @@ public class OrderLineController {
     @PostMapping("api/returnOrderLine")
     public ResponseEntity<OrderLine> returnOrderLine(@RequestBody OrderLine orderLine, @CookieValue(value = "cookieId", defaultValue = "") String cookieID) {
 
-        orderLine.setCustomerID(Long.parseLong(cookieID));
+        orderLine.setCustomerID(cookieID);
 
         //orderLineRepository.save(orderLine);
 
@@ -80,7 +80,7 @@ public class OrderLineController {
     @PostMapping("api/deleteOrderLine")
     public ResponseEntity<List<OrderLine>> deleteOrderLine(@RequestBody OrderLine orderLine) {
 
-        return ResponseEntity.ok(orderLineService.deleteOrderLine(orderLine.getWineID(), orderLine.getCustomerID()));
+        return ResponseEntity.ok(orderLineService.deleteOrderLine(orderLine));
     }
 
 
