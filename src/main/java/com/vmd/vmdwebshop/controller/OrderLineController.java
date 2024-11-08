@@ -60,11 +60,9 @@ public class OrderLineController {
 
     @GetMapping("/api/clearCart/{customerID}")
     public ResponseEntity<String> clearCart(@PathVariable String customerID) {
-        if (orderLineService.clearCart(customerID)) {
-            return ResponseEntity.ok("Order line has been cleared");
-        }
+        orderLineService.clearCart(customerID);
+        return ResponseEntity.ok("The cart has been cleared successfully");
 
-        return ResponseEntity.ok("Order line has not been cleared");
     }
 
     @PostMapping("api/returnOrderLine")
