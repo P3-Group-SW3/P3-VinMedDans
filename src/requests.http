@@ -30,7 +30,7 @@ Content-Type: application/json
 }
 
 ### GET request with a header
-GET http://localhost:8080//api/getAllOrderLines/123
+GET http://localhost:8080/api/getAllOrderLines/123
 Accept: application/json
 
 ### Send POST request with json body
@@ -51,7 +51,7 @@ Content-Type: application/json
 {
   "firstName":"G T",
   "lastName": "C",
-  "email": "g.t@gmail.c",
+  "email": "g.t@.gmail.com",
   "phone": "+9999999999",
   "address": "ringevej 23",
   "zipCode": "4100",

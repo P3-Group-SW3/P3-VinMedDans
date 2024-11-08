@@ -39,7 +39,7 @@ public class OrderLineController {
      * @return list of orderlines
      */
     @GetMapping("/api/getAllOrderLines/{customerID}")
-    public ResponseEntity<List<OrderLine>> getAllOrderLines(@PathVariable long customerID) {
+    public ResponseEntity<List<OrderLine>> getAllOrderLines(@PathVariable Long customerID) {
         return ResponseEntity.ok(orderLineService.getAllOrderLines(customerID));
     }
 

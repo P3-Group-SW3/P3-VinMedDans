@@ -10,7 +10,7 @@ import java.util.Set;
 @Table(name = "orders") // Renamed to avoid SQL reserved keyword conflict
 public class Orders {
     public enum State {
-        REGISTRATED,
+        REGISTERED,
         PACKED,
         SHIPPED
     }

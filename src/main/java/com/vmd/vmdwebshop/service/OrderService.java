@@ -27,7 +27,7 @@ public class OrderService {
             orderLine.setOrders(order);
             orderLine.removeCustomerID();
         }
-        order.setState(Orders.State.REGISTRATED);
+        order.setState(Orders.State.REGISTERED);
         orderReporsitory.save(order);
         return order;
     }
