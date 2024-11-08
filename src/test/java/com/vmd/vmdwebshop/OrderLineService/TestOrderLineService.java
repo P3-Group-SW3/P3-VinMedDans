@@ -40,8 +40,7 @@ public class TestOrderLineService {
         MockitoAnnotations.openMocks(this); // Initialize mocks before each test
 
         orderLineList.add(new OrderLine(11, Long.parseLong("2"), "911"));
-        orderLineList.add(new OrderLine(12, Long.parseLong("2"), "911"));
-
+        orderLineList.add(new OrderLine(12, Long.parseLong("1"), "911"));
     }
 
     @Test
@@ -60,10 +59,17 @@ public class TestOrderLineService {
     public void TestGetOrderLines01(){
         when(orderLineRepository.findAllByCustomerId("911")).thenReturn(orderLineList);
 
-        System.out.println(orderLineList);
+        for (OrderLine orderline : orderLineList){
+            System.out.println(orderline.getCustomerID());
+        }
+
+        for (OrderLine orderline : orderLineService.getAllOrderLines("1")){
+            System.out.println(orderline.getCustomerID());
+        }
+
         System.out.println(orderLineService.getAllOrderLines("1"));
 
-        assertEquals(orderLineList, orderLineService.getAllOrderLines("1"));
+        assertNotEquals(orderLineList, orderLineService.getAllOrderLines("1"));
 
 
     }
@@ -72,38 +78,61 @@ public class TestOrderLineService {
     public void TestGetOrderLines02(){
         when(orderLineRepository.findAllByCustomerId("911")).thenReturn(orderLineList);
 
+        for (OrderLine orderline : orderLineList){
+            System.out.println(orderline.getCustomerID());
+        }
+
+        for (OrderLine orderline : orderLineService.getAllOrderLines("911")){
+            System.out.println(orderline.getCustomerID());
+        }
+
         System.out.println(orderLineList);
         System.out.println(orderLineService.getAllOrderLines("911"));
 
-        assertNotEquals(orderLineList, orderLineService.getAllOrderLines("911"));
+        assertEquals(orderLineList, orderLineService.getAllOrderLines("911"));
     }
 
     @Test
     public void TestGetOrderLines03(){
-        when(orderLineRepository.findAllByCustomerId("911")).thenReturn(orderLineList);
+        when(orderLineRepository.findAllByCustomerId("456")).thenReturn(orderLineList);
 
-        List<OrderLine> orderLine1 = orderLineService.getAllOrderLines("123");
+        for (OrderLine orderline : orderLineList){
+            System.out.println(orderline.getCustomerID());
+        }
+
+        List<OrderLine> orderLine1 = orderLineService.getAllOrderLines("911");
+
+
+        for (OrderLine orderline : orderLine1){
+            System.out.println(orderline.getCustomerID());
+        }
 
         System.out.println(orderLineList);
         System.out.println(orderLine1);
 
         assertNotEquals(orderLineList, orderLine1);
 
-
-
     }
 
     @Test
     public void TestCreateAndEditOrderLine(){
-        OrderLine newOrderLine = new OrderLine(15, Long.parseLong("911"), "2");
+        OrderLine newOrderLine = new OrderLine(15, Long.parseLong("2"), "911");
 
-        orderLineService.createAndEditOrderLine(newOrderLine);
+        System.out.println(orderLineService.getAllOrderLines("911"));
 
-        assertEquals(newOrderLine, orderLineRepository.findByCustomerIDAndWineID("911", Long.parseLong("2")));
+        System.out.println(orderLineList);
 
-        System.out.println(newOrderLine);
+        List<OrderLine> orderLines1 = orderLineService.createAndEditOrderLine(newOrderLine);
 
-        System.out.println(orderLineRepository.findByCustomerIDAndWineID("911", Long.parseLong("2")));
+        System.out.println(orderLines1);
+        System.out.println(orderLineList);
+
+
+        System.out.println(orderLineList.getFirst().getAmount());
+        System.out.println(orderLineList.getLast().getAmount());
+
+        assertTrue(orderLines1.contains(newOrderLine));
+
     }
 
     @Test
