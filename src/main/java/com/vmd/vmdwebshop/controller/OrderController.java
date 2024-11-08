@@ -33,6 +33,7 @@ public class OrderController {
      * @return
      */
     @PostMapping("/api/orderInfo")
+
     public ResponseEntity<Orders> createOrder(@RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
         List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(customerID);
         return ResponseEntity.ok(orderService.createOrderfromInfo(order, orderLines));
@@ -53,8 +54,14 @@ public class OrderController {
      * @return
      */
     @GetMapping("/api/orders/{id}")
-    public ResponseEntity<Orders> getOrderById(@PathVariable long id) {
-        return ResponseEntity.ok(orderService.getOrderById(id));
+    public ResponseEntity<Orders> getOrderById(@PathVariable String id) {
+        Orders order = orderService.getOrderById(Long.parseLong(id));
+        if(order!= null){
+            return ResponseEntity.ok(order);
+        }
+        else {
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
@@ -63,7 +70,7 @@ public class OrderController {
      * @param state
      */
     @PostMapping("/api/orders/state/{id}")
-    public void changeState(@PathVariable long id, @RequestParam int state) {
+    public void changeState(@PathVariable Long id, @RequestParam int state) {
         orderService.changeState(id, state);
     }
 }
