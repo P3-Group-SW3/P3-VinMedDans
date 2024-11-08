@@ -23,14 +23,14 @@ POST http://localhost:8080/api/createAndEditOrderLine
 Content-Type: application/json
 
 {
-  "id": 1,
-  "amount": 12,
+  "amount": 100,
+  "customerID": "efg",
   "wineID": 1,
-  "customerID": "abc"
+  "orderid": null
 }
 
 ### GET request with a header
-GET http://localhost:8080//api/getAllOrderLines/911
+GET http://localhost:8080//api/getAllOrderLines/efg
 Accept: application/json
 
 ### Send POST request with json body
@@ -38,11 +38,12 @@ POST http://localhost:8080/api/deleteOrderLine
 Content-Type: application/json
 
 {
-  "id": null,
-  "amount": 9,
+
   "customerID": "abc",
-  "wineID": 2
+  "wineID": 1
+
 }
+
 
 
 

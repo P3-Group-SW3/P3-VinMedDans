@@ -1,5 +1,6 @@
 package com.vmd.vmdwebshop.service;
 
+import com.vmd.vmdwebshop.exception.orderline.CartNotClearedException;
 import com.vmd.vmdwebshop.exception.orderline.OrderLineDoesNotExistException;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
@@ -59,12 +60,16 @@ public class OrderLineService {
         return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
     }
 
-    public boolean clearCart(String customerID) {
+    public List<OrderLine> clearCart(String customerID) {
         orderLineRepository.deleteOrderLinesByCustomerId(customerID);
 
-        List<OrderLine> orderLine = orderLineRepository.findAllByCustomerId(customerID),orEl;
-
-        return orderLine == null;
+        List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(customerID);
+        if (!orderLines.isEmpty()){
+            throw new CartNotClearedException("The cart has not been cleared");
+        }
+        else{
+            return orderLines;
+        }
     }
 
     public double calculateOrderLine(int amount, double price) {
