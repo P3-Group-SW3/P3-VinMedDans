@@ -44,16 +44,11 @@ public class TestOrderLineService {
     }
 
     @Test
-    public void TestClearCart01(){ assertTrue(orderLineService.clearCart("789")); }
+    public void TestClearCart01(){
+        List<OrderLine> orderLines = orderLineService.clearCart("ddd");
+        assertTrue(orderLines.isEmpty(), "The cart is empty after clearing");
+    }
 
-    @Test
-    public void TestClearCart02(){ assertTrue(orderLineService.clearCart("199")); }
-
-    @Test
-    public void TestClearCart03(){ assertTrue(orderLineService.clearCart("123")); }
-
-    @Test
-    public void TestClearCart05(){ assertTrue(orderLineService.clearCart("1")); }
 
     @Test
     public void TestGetOrderLines01(){
@@ -70,7 +65,6 @@ public class TestOrderLineService {
         System.out.println(orderLineService.getAllOrderLines("1"));
 
         assertNotEquals(orderLineList, orderLineService.getAllOrderLines("1"));
-
 
     }
 

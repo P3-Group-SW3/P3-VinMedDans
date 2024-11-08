@@ -10,6 +10,10 @@ public class Orderinfo {
     private String zipCode;
     private String city;
 
+    /**
+     * Creates an Order with it's information
+     * @return
+     */
     public Orders createOrderFromInfo() {
         Orders order = new Orders(firstName, lastName, email, phone, address, zipCode, city);
         return order;
@@ -18,6 +22,8 @@ public class Orderinfo {
     public Orderinfo(){
 
     }
+
+    // Getters and setters
     public String getFirstName(){
         return firstName;
     }
