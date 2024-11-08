@@ -16,10 +16,25 @@ public class OrderService {
     @Autowired
     private OrderRepository orderReporsitory;
 
+    /**
+     * Denne classe returnere alle odrene i systemet
+     * @return List<Orders>
+     */
     public List<Orders> getAllOrders() { return orderReporsitory.findAll(); }
 
+    /**
+     * finder en specifik order based on the order id
+     * @param id
+     * @return
+     */
     public Orders getOrderById(Long id){ return orderReporsitory.findById(id).orElse(null); }
 
+    /**
+     * Creates a order based on the information given by the customer
+     * @param orderinfo
+     * @param orderLines
+     * @return
+     */
     public Orders createOrderfromInfo(Orderinfo orderinfo, List<OrderLine> orderLines) {
         Orders order = orderinfo.createOrderFromInfo();
         for(OrderLine orderLine : orderLines) {
@@ -32,6 +47,12 @@ public class OrderService {
         return order;
     }
 
+    /**
+     * allows admins to change the state of an order
+     * Det er her vi ville tilføje emails
+     * @param id
+     * @param state
+     */
     public void changeState(Long id, int state) {
         Orders order = getOrderById(id);
         order.setState(Orders.State.values()[state]);
