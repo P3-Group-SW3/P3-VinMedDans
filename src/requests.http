@@ -24,7 +24,7 @@ Content-Type: application/json
 
 {
   "amount": 100,
-  "customerID": "efg",
+  "customerID": "abc",
   "wineID": 1,
   "orderid": null
 }
