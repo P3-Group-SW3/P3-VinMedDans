@@ -1,9 +1,8 @@
-package com.vmd.vmdwebshop.OrderLineService;
+package com.vmd.vmdwebshop.service;
 
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
-import com.vmd.vmdwebshop.service.OrderLineService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
