@@ -71,6 +71,7 @@ public class OrderController {
      */
     @PostMapping("/api/orders/state/{id}")
     public void changeState(@PathVariable Long id, @RequestParam int state) {
+        //når vi laver denne skal vi senere gemme ændringerne 
         orderService.changeState(id, state);
     }
 }
