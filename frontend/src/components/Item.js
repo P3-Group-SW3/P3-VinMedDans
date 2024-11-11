@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { CartModify } from './cartModify';
-import '../styles/fonts.css'; // Ensure the correct path to your CSS file
+import '../styles/fonts.css';
+import '../styles/item.css';
 
-const Item = ({ title, description, price, image, stock, imagePos }) => {
-    const isImageLeft = imagePos === 'left';
+const Item = ({ title, description, price, image, stock, imagePos, item}) => {
 
     const renderStockMessage = () => {
         if (stock > 10) {
@@ -16,26 +16,26 @@ const Item = ({ title, description, price, image, stock, imagePos }) => {
         }
     };
 
+
     return (
-        <div className="container my-5">
-            <div className={`row align-items-center ${isImageLeft ? '' : 'flex-row-reverse'}`}>
+        <div className="container my-5 rounded-box" style={{ width: '100%', height: '100%' }}>
+            <div className={`row align-items-center ${imagePos === 'left' ? '' : 'flex-row-reverse'}`}>
                 <div className="col-md-6 d-flex justify-content-center">
-                    <div className="border p-3" style={{ width: '450px', height: '450px' }}>
+                    <div className="product-image">
                         {image && (
                             <img
                                 src={image}
                                 alt={title}
                                 className="img-fluid"
-                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                             />
                         )}
                     </div>
                 </div>
                 <div className="col-md-6">
                     <h2 className="header-large">{title}</h2>
+                    <p className="price-text">{price} DKK</p>
                     <p className="body-text">{description}</p>
-                    <p className="price-text">Pris: {price}</p>
-                    <CartModify />
+                    <CartModify item={item} />
                     {renderStockMessage()}
                 </div>
             </div>

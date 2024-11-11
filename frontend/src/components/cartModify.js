@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Button from './Button';
 
-export const CartModify = () => {
+export const CartModify = (item) => {
   const [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => {
@@ -12,13 +12,33 @@ export const CartModify = () => {
     setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1));
   };
 
+  // API call to add item to cart
+  const addToCart = () => {
+    console.log("Button clicked with item:", item, "quantity:", quantity);
+    useState(() => {
+      fetch('/api/addToCart', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ item, quantity }),
+      })
+      .then(response => response.json())
+      .then(data => console.log('Success:', data))
+      .catch((error) => {
+        console.error('Error:', error);
+      }); 
+    });
+  }
+
   return (
-    <div className="d-inline-flex align-items-center gap-3 position-relative">
+    <div className="d-inline-flex align-items-center gap-3 position-relative"  style={{ marginLeft: '10px' }}>
       <div className="d-inline-flex align-items-center gap-2">
         <Button 
           text="-" 
           onClick={decrementQuantity} 
-          makeCircle={true}
+          makeCircle={false}
+          makeSquare={true}
         />
         
         <div className="quantity-display" style={{ width: "50px", textAlign: "center" }}>
@@ -28,13 +48,14 @@ export const CartModify = () => {
         <Button 
           text="+" 
           onClick={incrementQuantity} 
-          makeCircle={true}
+          makeCircle={false}
+          makeSquare={true}
         />
       </div>
       <div style={{ margin: '0 10px' }}>
         <Button
-          text="FØJ TIL KURV"
-          onClick={() => console.log("Button clicked")}
+          text="Føj til kurv"
+          onClick={ addToCart }
         />
       </div>
     </div>

@@ -1,11 +1,11 @@
 /* fonts.css */
 .header-large {
     font-size: 2.5rem;
-    font-weight: bold;
-    text-align: left;
     margin-bottom: 1rem; 
-    font-family: 'Shadows Into Light Two', cursive; 
+    font-weight: 500;
+    font-family: 'Rubik Dirt', sans-serif; 
 }
+
 
 .body-text {
     font-family: 'Rubik', sans-serif;
@@ -14,7 +14,7 @@
 
 .price-text {
     font-family: 'Special Elite', cursive; 
-    font-size: 1.1rem; 
+    font-size: 2rem; 
 }
 
 .stock-green {
@@ -22,13 +22,15 @@
     font-weight: 400; 
     font-family: 'Rubik', sans-serif;
     margin-top: 1rem;
+    margin-left: 0.5rem;
 }
 
 .stock-yellow {
-    color: #FFD700; /* Yellow text for stock message */
+    color: #bea200; /* Yellow text for stock message */
     font-weight: 400; 
     font-family: 'Rubik', sans-serif;
     margin-top: 1rem;
+    margin-left: 0.5rem;
 }
 
 .stock-red {
@@ -36,4 +38,5 @@
     font-weight: 400; 
     font-family: 'Rubik', sans-serif;
     margin-top: 1rem;
+    margin-left: 0.5rem;
 }
