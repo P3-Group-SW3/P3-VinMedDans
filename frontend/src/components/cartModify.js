@@ -15,19 +15,17 @@ export const CartModify = (item) => {
   // API call to add item to cart
   const addToCart = () => {
     console.log("Button clicked with item:", item, "quantity:", quantity);
-    useState(() => {
-      fetch('/api/addToCart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ item, quantity }),
-      })
-      .then(response => response.json())
-      .then(data => console.log('Success:', data))
-      .catch((error) => {
-        console.error('Error:', error);
-      }); 
+    fetch('/api/addToCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ item, quantity }),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => {
+      console.error('Error:', error);
     });
   }
 
