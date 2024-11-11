@@ -47,3 +47,4 @@ src/main/resources/application.properties
 src/main/resources/application.properties
 /frontend/node_modules/*
 application.properties
+src/main/resources/application.properties

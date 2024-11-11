@@ -1,5 +1,7 @@
 package com.vmd.vmdwebshop.service;
 
+import com.vmd.vmdwebshop.exception.orderline.CartNotClearedException;
+import com.vmd.vmdwebshop.exception.orderline.OrderLineDoesNotExistException;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
@@ -39,7 +41,7 @@ public class OrderLineService {
         this.wineRepository = wineRepository;
     }
 
-    public List<OrderLine> getAllOrderLines(Long customerID) {
+    public List<OrderLine> getAllOrderLines(String customerID) {
         return orderLineRepository.findAllByCustomerId(customerID);
     }
 
@@ -58,12 +60,16 @@ public class OrderLineService {
         return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
     }
 
-    public boolean clearCart(Long customerID) {
+    public List<OrderLine> clearCart(String customerID) {
         orderLineRepository.deleteOrderLinesByCustomerId(customerID);
 
-        OrderLine orderLine = orderLineRepository.findById(customerID).orElse(null);
-
-        return orderLine == null;
+        List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(customerID);
+        if (!orderLines.isEmpty()){
+            throw new CartNotClearedException("The cart has not been cleared");
+        }
+        else{
+            return orderLines;
+        }
     }
 
     public double calculateOrderLine(int amount, double price) {
@@ -71,11 +77,17 @@ public class OrderLineService {
     }
 
 
-    public List<OrderLine> deleteOrderLine(Long wineID, Long customerID) {
-        orderLineRepository.deleteOrderLineByCustomerIDAndWineID(customerID, wineID);
+    public List<OrderLine> deleteOrderLine(OrderLine orderLine) {
+        OrderLine existingOrderLine =
+                orderLineRepository.findByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
 
-        return orderLineRepository.findAllByCustomerId(customerID);
-
+        if(existingOrderLine == null){
+            throw new OrderLineDoesNotExistException("No such orderline exists");
+        }
+        else {
+            orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
+        }
+        return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
 
     }
 }
