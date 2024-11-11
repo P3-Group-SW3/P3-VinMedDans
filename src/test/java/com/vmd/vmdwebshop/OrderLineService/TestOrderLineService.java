@@ -2,6 +2,7 @@ package com.vmd.vmdwebshop.OrderLineService;
 
 import com.vmd.vmdwebshop.exception.orderline.CartNotClearedException;
 import com.vmd.vmdwebshop.exception.orderline.EmptyCartException;
+import com.vmd.vmdwebshop.exception.orderline.OrderLineDataAccessException;
 import com.vmd.vmdwebshop.exception.orderline.OrderLineDoesNotExistException;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
@@ -12,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.web.servlet.View;
 import java.util.*;
 import static org.mockito.Mockito.*;
@@ -36,15 +39,21 @@ public class TestOrderLineService {
     List<OrderLine> orderLineList = new ArrayList<>() {};
 
     OrderLine orderLine = null;
-
+    OrderLine orderLine1 = null;
+    OrderLine orderLine2 = null;
+    OrderLine orderLine3 = null;
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this); // Initialize mocks before each test
 
+        OrderLine orderLine1 = new OrderLine(20, Long.parseLong("1"), "abc");
+        OrderLine orderLine2 = new OrderLine(19, Long.parseLong("2"), "abc");
+
+
         orderLineList.clear();
-        orderLineList.add(new OrderLine(20, Long.parseLong("1"), "abc"));
-        orderLineList.add(new OrderLine(12, Long.parseLong("1"), "911"));
+        orderLineList.add(orderLine1);
+        orderLineList.add(orderLine2);
     }
 
     // Testing on clearCart method
@@ -138,25 +147,24 @@ public class TestOrderLineService {
 
     }
 
+
+    /** Tests that when the createAndEditOrderLine method is called, the service returns a list of OrderLines*/
     @Test
-    public void TestCreateAndEditOrderLine(){
-        OrderLine newOrderLine = new OrderLine(15, Long.parseLong("2"), "abc");
-
-        System.out.println(orderLineService.getAllOrderLines("911"));
-
-        System.out.println(orderLineList);
-
-        List<OrderLine> orderLines1 = orderLineService.createAndEditOrderLine(newOrderLine);
-
-        System.out.println(orderLines1);
-        System.out.println(orderLineList);
+    public void TestCreateAndEditOrderLine01(){
+        when(orderLineRepository.findAllByCustomerId("abc")).thenReturn(orderLineList);
 
 
-        System.out.println(orderLineList.getFirst().getAmount());
-        System.out.println(orderLineList.getLast().getAmount());
+        List<OrderLine> updatedOrderLines = orderLineService.createAndEditOrderLine(new OrderLine(2, Long.parseLong("2"), "abc"));
 
-        assertTrue(orderLines1.contains(newOrderLine));
+        assertTrue(!updatedOrderLines.isEmpty(), "The customers orderlines are returned");
+    }
 
+    /** Test that an exception is thrown if there is a data acces failure in the database */
+    @Test
+    public void TestCreateAndEditOrderLine02(){
+        when(orderLineRepository.findByCustomerIDAndWineID("abc", Long.parseLong("2"))).thenThrow(DataAccessResourceFailureException.class);
+
+        assertThrows(DataAccessException.class, () -> orderLineRepository.findByCustomerIDAndWineID("abc", Long.parseLong("2")));
     }
 
     // Testing on deleteOrderLine method
