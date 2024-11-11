@@ -66,7 +66,7 @@ public class OrderController {
 
     /**
      * changes the state of an order
-     * @param id
+     * @param orderID
      * @param state
      */
     @PostMapping("/api/orders/state/{orderID}")
