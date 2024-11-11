@@ -2,7 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VMD-webshop.iml" filepath="$PROJECT_DIR$/.idea/modules/VMD-webshop.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/VMD-webshop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/VMD-webshop.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/VMD-webshop.test.iml" filepath="$PROJECT_DIR$/.idea/modules/VMD-webshop.test.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.VMD.VMD-webshop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.VMD.VMD-webshop.main.iml" />
     </modules>
   </component>
 </project>
