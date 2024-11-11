@@ -50,12 +50,12 @@ public class OrderController {
 
     /**
      * Gets a specifiv order based on id
-     * @param id
+     * @param orderID
      * @return
      */
-    @GetMapping("/api/orders/{id}")
-    public ResponseEntity<Orders> getOrderById(@PathVariable String id) {
-        Orders order = orderService.getOrderById(Long.parseLong(id));
+    @GetMapping("/api/orders/{orderID}")
+    public ResponseEntity<Orders> getOrderById(@PathVariable String orderID) {
+        Orders order = orderService.getOrderById(Long.parseLong(orderID));
         if(order!= null){
             return ResponseEntity.ok(order);
         }
@@ -69,9 +69,9 @@ public class OrderController {
      * @param id
      * @param state
      */
-    @PostMapping("/api/orders/state/{id}")
-    public void changeState(@PathVariable Long id, @RequestParam int state) {
+    @PostMapping("/api/orders/state/{orderID}")
+    public void changeState(@PathVariable Long orderID, @RequestParam int state) {
         //når vi laver denne skal vi senere gemme ændringerne 
-        orderService.changeState(id, state);
+        orderService.changeState(orderID, state);
     }
 }

@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/VMD-webshop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/VMD-webshop.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.VMD.VMD-webshop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.VMD.VMD-webshop.main.iml" />
     </modules>
   </component>
 </project>

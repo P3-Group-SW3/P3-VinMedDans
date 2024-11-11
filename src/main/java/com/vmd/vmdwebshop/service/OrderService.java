@@ -24,10 +24,10 @@ public class OrderService {
 
     /**
      * finder en specifik order based on the order id
-     * @param id
+     * @param orderID
      * @return
      */
-    public Orders getOrderById(Long id){ return orderReporsitory.findById(id).orElse(null); }
+    public Orders getOrderById(Long orderID){ return orderReporsitory.findById(orderID).orElse(null); }
 
     /**
      * Creates a order based on the information given by the customer
@@ -50,11 +50,11 @@ public class OrderService {
     /**
      * allows admins to change the state of an order
      * Det er her vi ville tilføje emails
-     * @param id
+     * @param orderID
      * @param state
      */
-    public void changeState(Long id, int state) {
-        Orders order = getOrderById(id);
+    public void changeState(Long orderID, int state) {
+        Orders order = getOrderById(orderID);
         order.setState(Orders.State.values()[state]);
     }
 
