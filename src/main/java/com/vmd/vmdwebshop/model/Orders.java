@@ -12,6 +12,7 @@ public class Orders {
 
     /**
      * Denne enum er til fortælle hvilken state pakken er for levering
+     *
      */
     public enum State {
         REGISTERED,
