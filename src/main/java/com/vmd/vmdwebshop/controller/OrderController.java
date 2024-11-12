@@ -1,11 +1,13 @@
 package com.vmd.vmdwebshop.controller;
 
 
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.service.OrderLineService;
 import com.vmd.vmdwebshop.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -34,7 +36,7 @@ public class OrderController {
      */
     @PostMapping("/api/orderInfo")
 
-    public ResponseEntity<Orders> createOrder(@RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
         List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(customerID);
         return ResponseEntity.ok(orderService.createOrderfromInfo(order, orderLines));
     }
@@ -50,12 +52,12 @@ public class OrderController {
 
     /**
      * Gets a specifiv order based on id
-     * @param id
+     * @param orderID
      * @return
      */
-    @GetMapping("/api/orders/{id}")
-    public ResponseEntity<Orders> getOrderById(@PathVariable String id) {
-        Orders order = orderService.getOrderById(Long.parseLong(id));
+    @GetMapping("/api/orders/{orderID}")
+    public ResponseEntity<Orders> getOrderById(@PathVariable String orderID) {
+        Orders order = orderService.getOrderById(Long.parseLong(orderID));
         if(order!= null){
             return ResponseEntity.ok(order);
         }
@@ -65,13 +67,13 @@ public class OrderController {
     }
 
     /**
-     * changes the state of an order
-     * @param id
+     * changes the state of an order based on a number from 0 to 2
+     * @param orderID
      * @param state
      */
-    @PostMapping("/api/orders/state/{id}")
-    public void changeState(@PathVariable Long id, @RequestParam int state) {
+    @PostMapping("/api/orders/state/{orderID}")
+    public void changeState(@PathVariable Long orderID, @RequestBody OrderState state) {
         //når vi laver denne skal vi senere gemme ændringerne 
-        orderService.changeState(id, state);
+        orderService.changeState(orderID, state.getState());
     }
 }
