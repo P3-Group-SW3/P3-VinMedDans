@@ -105,6 +105,6 @@ public class Orders {
     public State getState() { return state; }
 
     //Slet
-    public void setID(Long id){this.ID = id;}
+    //public void setID(Long id){this.ID = id;}
 }
 
