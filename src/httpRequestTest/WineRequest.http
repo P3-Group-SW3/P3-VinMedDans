@@ -1,0 +1,102 @@
+### Send POST request with json body
+GET http://localhost:8080/api/getWineById/1
+Content-Type: application/json
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/createWine
+Content-Type: application/json
+
+{
+  "id": 4,
+  "price": 189,
+  "wine_id": 2,
+  "description": "hej med dig",
+  "imageURL": "abc",
+  "name": "havtorben",
+  "amountLeft": 9
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditWine
+Content-Type: application/json
+
+{
+  "id": 5,
+  "price": 189,
+  "wine_id": 2,
+  "description": "hej med dig",
+  "imageURL": "uuuuuURL",
+  "name": "HavVin",
+  "amountLeft": 199
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditWine
+Content-Type: application/json
+
+{
+  "id": 5,
+  "price": 189,
+  "wine_id": 2,
+  "description": "hej med dig",
+  "imageURL": "uuuuuURL",
+  "name": "HavVin",
+  "amountLeft": 300
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/deleteWine
+Content-Type: application/json
+
+{
+  "id": 5,
+  "price": 189,
+  "wine_id": 2,
+  "description": "hej med dig",
+  "imageURL": "uuuuuURL",
+  "name": "HavVin",
+  "amountLeft": 300
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/deleteWine
+Content-Type: application/json
+
+{
+  "id": 6,
+  "price": 189,
+  "wine_id": 2,
+  "description": "hej med dig",
+  "imageURL": "uuuuuURL",
+  "name": "HavVin",
+  "amountLeft": 300
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditWine
+Content-Type: application/json
+
+{
+  "price": 100,
+  "description": "",
+  "imageURL": "",
+  "name": "jeh",
+  "amountLeft": 10000
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditWine
+Content-Type: application/json
+
+{
+  "ID": 1,
+  "wineID": 1,
+  "price": 189,
+  "description": "hej med dig",
+  "imageURL": "bøh",
+  "name": "HavVin",
+  "amountLeft": 999
+}
+
+

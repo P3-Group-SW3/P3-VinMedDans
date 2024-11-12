@@ -18,13 +18,13 @@ public class WineController {
 
     @GetMapping("/api/getAllWines")
     public ResponseEntity<List<Wine>> wine() {
-        List<Wine> wines = wineService.getAllWines();
+        List<Wine> wines = wineService.getAll();
         return ResponseEntity.ok(wines);
     }
 
-    @GetMapping("/api/getWineById/{id}")
-    public ResponseEntity<Wine> getWineById(@PathVariable Long id) {
-        Wine wine = wineService.getWineById(id);
+    @GetMapping("/api/getWineById/{wineID}")
+    public ResponseEntity<Wine> getWineById(@PathVariable Long wineID) {
+        Wine wine = wineService.getWineById(wineID);
         if (wine != null) {
             return ResponseEntity.ok(wine);
         } else {
@@ -32,9 +32,13 @@ public class WineController {
         }
     }
 
-    @PostMapping("/api/createWine")
-    public ResponseEntity<Wine> createWine(@RequestBody Wine wine) {
-        wineService.createWine(wine);
-        return ResponseEntity.ok(wine);
+    @PostMapping("/api/createAndEditWine")
+    public ResponseEntity<List<Wine>> createWine(@RequestBody Wine wine) {
+        return ResponseEntity.ok(wineService.createAndEdit(wine));
+    }
+
+    @PostMapping("/api/deleteWine")
+    public ResponseEntity<List<Wine>> deleteWine(@RequestBody Wine wine){
+        return ResponseEntity.ok(wineService.delete(wine));
     }
 }

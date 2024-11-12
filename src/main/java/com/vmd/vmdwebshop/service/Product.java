@@ -1,14 +1,22 @@
 package com.vmd.vmdwebshop.service;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @MappedSuperclass
 public abstract class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
+
+    @Digits(integer = 5, fraction = 0, message = "The price can't be higher than 99999")
+    @Min(1)
     private double price;
+
+    @NotBlank(message = "this field must not be empty")
     private String description;
+
+    @NotBlank(message = "this field must not be empty")
     private String imageURL;
 
     public Product() {}
