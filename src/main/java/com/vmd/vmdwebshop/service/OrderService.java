@@ -47,7 +47,6 @@ public class OrderService {
      */
     public Orders createOrderfromInfo(Orderinfo orderinfo, List<OrderLine> orderLines) {
         Orders order = orderinfo.createOrderFromInfo();
-        System.out.println(order.getID());
         order.setState(Orders.State.REGISTERED);
         orderRepository.save(order);
         for(OrderLine orderLine : orderLines) {
