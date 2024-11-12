@@ -4,8 +4,8 @@ public class OrderLineDataAccessException extends RuntimeException{
 
     private String message;
 
-    public OrderLineDataAccessException(String msg){
-        super(msg);
-        this.message = msg;
+    public OrderLineDataAccessException(String message){
+        super(message);
+        this.message = message;
     }
 }
