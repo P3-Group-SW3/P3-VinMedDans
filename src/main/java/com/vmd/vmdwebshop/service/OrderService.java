@@ -20,9 +20,10 @@ public class OrderService {
     private OrderRepository orderRepository;
     private final View error;
 
-
+    // fjern / tilføj OrderRepository orderRepository baseret på test
     public OrderService(View error){
         this.error = error;
+        //this.orderRepository = orderRepository;
     }
 
     /**
@@ -46,18 +47,20 @@ public class OrderService {
      */
     public Orders createOrderfromInfo(Orderinfo orderinfo, List<OrderLine> orderLines) {
         Orders order = orderinfo.createOrderFromInfo();
+        System.out.println(order.getID());
+        order.setState(Orders.State.REGISTERED);
+        orderRepository.save(order);
         for(OrderLine orderLine : orderLines) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
             orderLine.removeCustomerID();
         }
-        order.setState(Orders.State.REGISTERED);
-        orderRepository.save(order);
         for(OrderLine orderLine : orderLines) {
             if(orderLine.GetorderID() != order.getID()){
                 throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of:" + order.getID());
             }
         }
+
         return order;
     }
 
