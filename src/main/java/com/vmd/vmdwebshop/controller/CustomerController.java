@@ -10,8 +10,6 @@ import java.util.stream.Collectors;
 
 @RestController
 public class CustomerController {
-
-
     /**
      * Creates a cookie for the current customer by fetching the sessionID and set it in the "customerId" cookie.
      *
