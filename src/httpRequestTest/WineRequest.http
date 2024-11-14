@@ -1,80 +1,40 @@
 ### Send POST request with json body
-GET http://localhost:8080/api/getWineById/1
+GET http://localhost:8080/api/wine/getById/1
+Content-Type: application/json
+
+### Send POST request with json body
+GET http://localhost:8080/api/wine/getList
 Content-Type: application/json
 
 
 ### Send POST request with json body
-POST http://localhost:8080/api/createWine
+POST http://localhost:8080/api/wine/admin/createAndEdit
 Content-Type: application/json
 
 {
-  "id": 4,
-  "price": 189,
-  "wine_id": 2,
-  "description": "hej med dig",
-  "imageURL": "abc",
-  "name": "havtorben",
-  "amountLeft": 9
-}
-
-### Send POST request with json body
-POST http://localhost:8080/api/createAndEditWine
-Content-Type: application/json
-
-{
-  "id": 5,
-  "price": 189,
-  "wine_id": 2,
-  "description": "hej med dig",
-  "imageURL": "uuuuuURL",
-  "name": "HavVin",
-  "amountLeft": 199
-}
-
-### Send POST request with json body
-POST http://localhost:8080/api/createAndEditWine
-Content-Type: application/json
-
-{
-  "id": 5,
-  "price": 189,
-  "wine_id": 2,
-  "description": "hej med dig",
-  "imageURL": "uuuuuURL",
-  "name": "HavVin",
-  "amountLeft": 300
-}
-
-### Send POST request with json body
-POST http://localhost:8080/api/deleteWine
-Content-Type: application/json
-
-{
-  "id": 5,
-  "price": 189,
-  "wine_id": 2,
-  "description": "hej med dig",
-  "imageURL": "uuuuuURL",
-  "name": "HavVin",
-  "amountLeft": 300
-}
-
-### Send POST request with json body
-POST http://localhost:8080/api/deleteWine/5
-Content-Type: application/json
-
-
-### Send POST request with json body
-POST http://localhost:8080/api/createAndEditWine
-Content-Type: application/json
-
-{
-  "ID": 60,
+  "ID": 1,
   "description": "Hej med dig",
   "imageURL": "Bøh",
   "price": 100,
-  "amountLeft": 99,
-  "name": "Rødvin"
+  "amountLeft": 29,
+  "name": "Blåvin"
+}
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/wine/admin/delete/79
+Content-Type: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/api/wine/admin/createAndEdit
+Content-Type: application/json
+
+{
+  "description": "MMMM",
+  "imageURL": "asd",
+  "price": 90,
+  "amountLeft": 23,
+  "name": "Bllvin"
 }
 
 

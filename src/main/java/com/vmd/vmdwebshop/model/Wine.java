@@ -26,7 +26,7 @@ public class Wine extends Product {
     @Min(value = 0, message = "the amount must not be less than 0")
     private int amountLeft;
 
-    Wine(){}
+    public Wine(){}
 
     public Wine(String description, String imageURL,  double price, int amountLeft, String name) {
         super(price, description, imageURL);

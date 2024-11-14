@@ -1,14 +1,14 @@
 package com.vmd.vmdwebshop.service;
 
 public class WineData {
-    private Long ID;
+    private int ID;
     private String description;
     private String imageURL;
     private double price;
     private int amountLeft;
     private String name;
 
-    WineData(Long ID, String description, String imageURL, double price, int amountLeft, String name){
+    public WineData(int ID, String description, String imageURL, double price, int amountLeft, String name){
         this.ID = ID;
         this.description = description;
         this.imageURL = imageURL;
@@ -17,7 +17,7 @@ public class WineData {
         this.name = name;
     }
 
-    public Long getID(){ return this.ID; }
+    public int getID(){ return this.ID; }
 
     public double getPrice() { return this.price; }
 

@@ -21,7 +21,13 @@ public class WineService implements AdministrativeMethods<Wine> {
 
     @Override
     public List<Wine> getAll() {
-        return wineRepository.findAll();
+        List<Wine> wineList = wineRepository.findAll();
+
+        if (wineList.isEmpty()){
+            throw new WineNotFoundException("No wines were found in the database");
+        }
+
+        return wineList;
     }
 
     public Wine getWineById(Long wineID) {

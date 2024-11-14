@@ -21,9 +21,14 @@ public class WineController {
     private WineRepository wineRepository;
 
     @GetMapping("/getList")
-    public ResponseEntity<List<Wine>> wine() {
-        List<Wine> wines = wineService.getAll();
-        return ResponseEntity.ok(wines);
+    public ResponseEntity<List<Wine>> getList() {
+        try {
+            List<Wine> wines = wineService.getAll();
+            return ResponseEntity.ok(wines);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @GetMapping("/getById/{ID}")
@@ -44,8 +49,12 @@ public class WineController {
      * @param wineData
      * @return List<Wine>
      */
-    @PostMapping("admin/createAndEdit")
-    public ResponseEntity<List<Wine>> createWine(@RequestBody WineData wineData) {
+    @PostMapping(value="/admin/createAndEdit", consumes = "application/json")
+    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody WineData wineData) {
+        System.out.println(wineData.getID());
+        System.out.println(wineData.getName());
+        System.out.println(wineData.getImageURL());
+
         Wine wine = new Wine(
                 wineData.getDescription(),
                 wineData.getImageURL(),
@@ -54,7 +63,7 @@ public class WineController {
                 wineData.getName());
 
         try{
-            return ResponseEntity.ok(wineService.createAndEdit(wine, wineData.getID()));
+            return ResponseEntity.ok(wineService.createAndEdit(wine, Long.valueOf(wineData.getID())));
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();

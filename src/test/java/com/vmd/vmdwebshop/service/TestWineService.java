@@ -10,9 +10,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.web.servlet.View;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertNull;
@@ -45,6 +43,7 @@ public class TestWineService {
 
         WineNotFoundException newException = assertThrows(WineNotFoundException.class, () -> { wineService.createAndEdit(wine, Long.parseLong("99")); });
         assertEquals("The Wine was not updated", newException.getMessage());
+        System.out.println(newException.getMessage());
     }
 
     @Test
@@ -53,6 +52,7 @@ public class TestWineService {
 
         WineNotFoundException newException = assertThrows(WineNotFoundException.class, ()->{ wineService.delete(Long.parseLong("1")); });
         assertEquals("Wine does not exist in the database", newException.getMessage());
+        System.out.println(newException.getMessage());
     }
 
     @Test
@@ -61,6 +61,16 @@ public class TestWineService {
 
         WineNotFoundException newException = assertThrows(WineNotFoundException.class, ()->{ wineService.getWineById(Long.parseLong("1")); });
         assertEquals("The wine was not found", newException.getMessage());
+        System.out.println(newException.getMessage());
+    }
+
+    @Test void TestGetList(){
+        when(wineRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
+
+        WineNotFoundException newException = assertThrows(WineNotFoundException.class, ()->{ wineService.getAll(); });
+        assertEquals("No wines were found in the database", newException.getMessage());
+        System.out.println(newException.getMessage());
+
     }
 }
 
