@@ -1,9 +1,8 @@
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Event from "../components/Event";
 import React from "react";
-import images from "../images/images";
+
 
 function EventPage() {
 
