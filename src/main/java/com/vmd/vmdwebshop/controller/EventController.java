@@ -25,4 +25,5 @@ public class EventController {
     public ResponseEntity<List<Event>> getAllEvents() {
         return ResponseEntity.ok(eventService.getAll());
     }
+
 }
