@@ -45,7 +45,10 @@ public class OrderLineService {
     }
 
     public List<OrderLine> getAllOrderLines(String customerID) {
-        return orderLineRepository.findAllByCustomerId(customerID);
+        try{
+            return orderLineRepository.findAllByCustomerId(customerID);
+        } catch (DataAccessException e) {
+        throw new OrderLineDataAccessException(" Can not access the database");}
     }
 
     /**
@@ -104,11 +107,11 @@ public class OrderLineService {
             if (!remainingOrderLines.isEmpty()) {
                 throw new CartNotClearedException("The cart has not been cleared");
             }
-
             return remainingOrderLines;
 
-        } catch (DataAccessException e){throw new OrderLineDataAccessException("Database error");}
-
+        } catch (DataAccessException e) {
+            throw new OrderLineDataAccessException(" Can not access the database");
+        }
     }
 
     public double calculateOrderLine(int amount, double price) {
