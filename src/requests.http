@@ -1,83 +1,149 @@
+
+### Send GET request
+GET http://localhost:8080/api/clearCart/0
+Content-Type: application/json
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/createWine
+Content-Type: application/json
+
+{
+  "id": 4,
+  "price": 189,
+  "wine_id": 2,
+  "description": "hej med dig",
+  "imageURL": "abc",
+  "name": "havtorben",
+  "amountLeft": 9
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditOrderLine
+Content-Type: application/json
+
+{
+  "amount": 100,
+  "customerID": "efg",
+  "wineID": 1,
+  "orderid": null
+}
+
 ### GET request with a header
-GET http://localhost:8080/api/getAllWines
+GET http://localhost:8080//api/getAllOrderLines/efg
 Accept: application/json
 
+### Send POST request with json body
+POST http://localhost:8080/api/deleteOrderLine
+Content-Type: application/json
+
+{
+
+  "customerID": "abc",
+  "wineID": 1
+
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/orderInfo
+Content-Type: application/json
+
+{
+  "firstName":"G T",
+  "lastName": "C",
+  "email": "g.t@gmail.com",
+  "phone": "+9999999999",
+  "address": "ringevej 23",
+  "zipCode": "4100",
+  "city": "Ballerup"
+}
 
 ### GET request with a header
-GET http://localhost:8080/api/getWineById/2
+GET http://localhost:8080/api/orders
 Accept: application/json
 
+### GET request with a header
+GET http://localhost:8080/api/orders/15
+Accept: application/json
 
 ### Send POST request with json body
-POST http://localhost:8080/api/createOrderLine
+POST http://localhost:8080/api/orders/state/7
 Content-Type: application/json
 
 {
-  "customer_ID": 123,
-  "amount": 9,
-  "wine_id": 2
+  "state": 2
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/orders/state/7
+Content-Type: application/json
+
+{
+  "state": 1
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/orders/state/7
+Content-Type: application/json
+
+{
+  "state": 0
 }
 
 
 ### Send POST request with json body
-POST http://localhost:8080/api/editOrderLine
+POST http://localhost:8080/api/orderInfo
 Content-Type: application/json
 
 {
-  "customer_ID": 123,
-  "amount": 7,
-  "wine_id": 1
+  "firstName":"G T",
+  "lastName": "",
+  "email": "g.t@.gmail.com",
+  "phone": "+9999999999",
+  "address": "ringevej 23",
+  "zipCode": "4100",
+  "city": "Ballerup"
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/orderInfo
+Content-Type: application/json
+
+{
+  "firstName":"G T",
+  "lastName": "C",
+  "email": "g.t.com",
+  "phone": "+9999999999",
+  "address": "ringevej 23",
+  "zipCode": "4100",
+  "city": "Ballerup"
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/orderInfo
+Content-Type: application/json
+
+{
+  "firstName":"G T",
+  "lastName": "C",
+  "email": "g.t.com",
+  "phone": "99999999",
+  "address": "ringevej 23",
+  "zipCode": "4100",
+  "city": "Ballerup"
 }
 
 
 ### Send POST request with json body
-POST http://localhost:8080/api/clearCart/123
+POST http://localhost:8080/api/orderInfo
 Content-Type: application/json
 
 {
-  "customer_ID": 123
+  "firstName":"G T",
+  "lastName": "C",
+  "email": "g.t.com",
+  "phone": "99999999",
+  "address": "ringevej 23",
+  "zipCode": "41000",
+  "city": "Ballerup"
 }
-
-
-### Send POST request with json body
-POST http://localhost:8080/api/incrementOrderLine
-Content-Type: application/json
-
-{
-  "customer_ID": 123,
-  "increment": true,
-  "wine_id": 1
-}
-
-
-### Send POST request with json body
-POST http://localhost:8080/api/createOrder
-Content-Type: application/json
-
-{
-  "customer_ID": 123,
-  "increment": true,
-  "wine_id": 1
-}
-
-### Send POST request with json body
-POST http://localhost:8080/api/test
-Content-Type: application/json
-
-{
-  "id": 123
-}
-
-### Send POST request with json body
-POST http://localhost:8080/api/returnOrderLine
-Content-Type: application/json
-
-{
-  "customer_ID": 123,
-  "amount": 9,
-  "wine_id": 2
-}
-
-
-
-

@@ -3,9 +3,22 @@ package com.vmd.vmdwebshop.model;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Table(name = "orders") // Renamed to avoid SQL reserved keyword conflict
 public class Orders {
+
+    /**
+     * Denne enum er til fortælle hvilken state pakken er for levering
+     *
+     */
+    public enum State {
+        REGISTERED,
+        PACKED,
+        SHIPPED
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -14,58 +27,59 @@ public class Orders {
     private String fullName;
     private String mail;
     private String phoneNumber;
-    private String street;
-    private String streetNum;
+    private String adress;
     private String zipCode;
     private String city;
+    private State state;
+
+    //relationship med orderlines
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OrderLine> orderLines = new HashSet<>();
+
+
+    //constructors
+    public Orders() {
+    }
+
+    public Orders(String firstName, String lastName, String mail, String phoneNumber, String adress, String zipCode, String city) {
+        this.fullName = firstName + " " + lastName;
+        this.mail = mail;
+        this.phoneNumber = phoneNumber;
+        this.adress = adress;
+        this.zipCode = zipCode;
+        this.city = city;
+    }
+
+    // tilføjer orderline
+    public void addOrderLine(OrderLine orderLine) {
+        orderLines.add(orderLine);
+    }
+
+
 
     // Getters and setters
     public Long getID() {
         return ID;
     }
 
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
-
     public String getFullName() {
         return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public String getMail() {
         return mail;
     }
 
-    public void setMail(String mail) {
-        this.mail = mail;
-    }
-
     public String getPhoneNumber() {
         return phoneNumber;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public String getAdress() {
+        return adress;
     }
 
-    public String getStreet() {
-        return street;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public String getStreetNum() {
-        return streetNum;
-    }
-
-    public void setStreetNum(String streetNum) {
-        this.streetNum = streetNum;
+    public void setAdress(String adress) {
+        this.adress = adress;
     }
 
     public String getZipCode() {
@@ -83,4 +97,11 @@ public class Orders {
     public void setCity(String city) {
         this.city = city;
     }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+
+    public State getState() { return state; }
 }
+

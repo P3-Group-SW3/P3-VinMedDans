@@ -9,12 +9,15 @@ import java.util.*;
 
 @Repository
 public interface OrderLineRepository extends JpaRepository<OrderLine, Long> {
-    @Query(value="SELECT * FROM OrderLine WHERE customer_ID = ?1", nativeQuery = true)
-    List<OrderLine> findByCustomerId(Long customer_ID);
+    @Query(value="SELECT * FROM orderline WHERE customerID = ?1", nativeQuery = true)
+    List<OrderLine> findAllByCustomerId(String customerID);
 
     @Modifying
-    @Query(value="DELETE FROM OrderLine WHERE customer_ID = ?1", nativeQuery = true)
-    void deleteOrderLinesByCustomerId(Long customer_ID);
+    @Query(value="DELETE FROM orderline WHERE customerID = ?1", nativeQuery = true)
+    void deleteOrderLinesByCustomerId(String customerID);
 
-    OrderLine findByCustomerIDAndWineID(Long customerId, Long wineId);
+    @Query(value="SELECT * FROM orderline WHERE orderline.customerID = ?1 AND orderline.wineID = ?2", nativeQuery = true)
+    OrderLine findByCustomerIDAndWineID(String customerID, Long wineID);
+
+    void deleteOrderLineByCustomerIDAndWineID(String customerID, Long wineID);
 }

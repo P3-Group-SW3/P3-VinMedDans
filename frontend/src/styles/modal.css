@@ -1,0 +1,34 @@
+
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width:100%;
+    height: 100%;
+}
+
+.modal-main {
+    position:relative;
+    background: white;
+    width: 30%;
+    height: auto;
+    top:16em;
+    left:60em;
+    transform: translate(-50%,-50%);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+}
+
+.modal.display-block {
+    display: block;
+}
+
+.modal.display-none {
+    display: none;
+}
+
+.cart-button {
+    position: fixed;
+    top: 2em;
+    right: 8em;
+}

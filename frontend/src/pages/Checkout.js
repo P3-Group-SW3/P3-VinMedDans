@@ -12,7 +12,6 @@ function Checkout() {
     return (
         <div className="Landingpage">
             <Header />
-            <Navbar />
             <main className="container my-4">
                 <div className="row mt-2">
                     <div className="col-md-6">

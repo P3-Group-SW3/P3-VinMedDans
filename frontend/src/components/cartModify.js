@@ -12,6 +12,23 @@ export const CartModify = (item) => {
     setQuantity(prevQuantity => Math.max(prevQuantity - 1, 1));
   };
 
+  // API call to add item to cart
+  const addToCart = () => {
+    console.log("Button clicked with item:", item, "quantity:", quantity);
+    fetch('/api/addToCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ item, quantity }),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => {
+      console.error('Error:', error);
+    });
+  }
+
   return (
     <div className="d-inline-flex align-items-center gap-3 position-relative"  style={{ marginLeft: '10px' }}>
       <div className="d-inline-flex align-items-center gap-2">
@@ -36,7 +53,7 @@ export const CartModify = (item) => {
       <div style={{ margin: '0 10px' }}>
         <Button
           text="Føj til kurv"
-          onClick={() => console.log("Button clicked with item:", item, "quantity:", quantity)} // function til backend her!!
+          onClick={ addToCart }
         />
       </div>
     </div>
