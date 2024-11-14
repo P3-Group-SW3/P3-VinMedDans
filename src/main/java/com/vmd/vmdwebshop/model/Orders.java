@@ -16,6 +16,7 @@ public class Orders {
      */
     public enum State {
         REGISTERED,
+        CONFIRMED,
         PACKED,
         SHIPPED
     }
