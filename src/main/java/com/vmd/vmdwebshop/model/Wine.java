@@ -2,6 +2,10 @@ package com.vmd.vmdwebshop.model;
 
 import jakarta.persistence.*;
 import com.vmd.vmdwebshop.service.Product;
+import jakarta.validation.constraints.Digits;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -9,12 +13,16 @@ import java.util.Set;
 @Entity
 @Table(name="Wine")
 public class Wine extends Product {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
+
+    @NotBlank(message = "this field must not be empty")
     private String name;
+
+    @Digits(integer = 4, fraction = 0, message = "There can't be more than 9999 wines")
+    @Min(value = 0, message = "the amount must not be less than 0")
     private int amountLeft;
 
     //relationship med orderlines
@@ -23,22 +31,14 @@ public class Wine extends Product {
 
     public Wine(){}
 
-    public Wine(Long ID, double price, String description, String imageURL, String name, int amountLeft) {
-        super(ID, price, description, imageURL);
-        this.ID = ID;
+    public Wine(String description, String imageURL,  double price, int amountLeft, String name) {
+        super(price, description, imageURL);
         this.name = name;
         this.amountLeft = amountLeft;
     }
 
-    // Getter for ID
-    public Long getID() {
-        return ID;
-    }
+    public Long getID() { return this.ID; }
 
-    // Setter for ID
-    public void setID(Long ID) {
-        this.ID = ID;
-    }
 
     // Getter for name
     public String getName() {
