@@ -64,6 +64,7 @@ public class OrderService {
     public Orders createOrderfromInfo(Orderinfo orderinfo, List<OrderLine> orderLines) {
         Orders order = orderinfo.createOrderFromInfo();
         order.setState(Orders.State.REGISTERED);
+        order.setDate(new Date());
         orderRepository.save(order);
         if(order.getID() == null){
             throw new OrderNotSaved(order.getFullName(), order.getMail());
