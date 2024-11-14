@@ -1,8 +1,9 @@
 package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.exception.order.OrderlineNotAdded;
-import com.vmd.vmdwebshop.exception.order.StateChangefailedException;
+import com.vmd.vmdwebshop.exception.order.*;
+import jakarta.validation.constraints.Null;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import com.vmd.vmdwebshop.repository.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,14 +31,29 @@ public class OrderService {
      * Denne classe returnere alle odrene i systemet
      * @return List<Orders>
      */
-    public List<Orders> getAllOrders() { return orderRepository.findAll(); }
+    public List<Orders> getAllOrders() {
+        List<Orders> orders = orderRepository.findAll();
+        if(orders.isEmpty() || orders == Null){
+            throw new OrdersNotFound();
+        }
+
+        return orders;
+    }
 
     /**
      * finder en specifik order based on the order id
      * @param orderID
      * @return
      */
-    public Orders getOrderById(Long orderID){ return orderRepository.findById(orderID).orElse(null); }
+    public Orders getOrderById(Long orderID){
+        Orders order = orderRepository.findById(orderID).orElse(null);
+
+        if(order == null){
+            throw new OrderNotFoundInDatbase(orderID);
+        }
+
+        return order;
+    }
 
     /**
      * Creates a order based on the information given by the customer
@@ -49,12 +65,13 @@ public class OrderService {
         Orders order = orderinfo.createOrderFromInfo();
         order.setState(Orders.State.REGISTERED);
         orderRepository.save(order);
+        if(order.getID() == null){
+            throw new OrderNotSaved(order.getFullName(), order.getMail());
+        }
         for(OrderLine orderLine : orderLines) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
             orderLine.removeCustomerID();
-        }
-        for(OrderLine orderLine : orderLines) {
             if(orderLine.GetorderID() != order.getID()){
                 throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of:" + order.getID());
             }
@@ -75,7 +92,7 @@ public class OrderService {
         Orders.State state2 = Orders.State.values()[state];
         order.setState(Orders.State.values()[state]);
         if(order.getState() != state2) {
-            throw new StateChangefailedException("The state of order: " + orderID + " state wan't changed from" + state1 + " to " + state2);
+            throw new StateChangeFailedException(state1, state2);
         }
     }
 
