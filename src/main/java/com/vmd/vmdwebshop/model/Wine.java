@@ -1,11 +1,10 @@
 package com.vmd.vmdwebshop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import com.vmd.vmdwebshop.service.Product;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="Wine")
@@ -17,6 +16,10 @@ public class Wine extends Product {
 
     private String name;
     private int amountLeft;
+
+    //relationship med orderlines
+    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OrderLine> orderLines = new HashSet<>();
 
     public Wine(){}
 

@@ -65,7 +65,15 @@ public class OrderLine {
 
     public void removeCustomerID() {this.customerID = null; }
 
-    public Long getWineID() {return this.wineID;}
+    public void setWine(Wine wine){
+        this.wine = wine;
+    }
+
+    public Wine getWine(){
+        return wine;
+    }
+
+    public Long getWineID() {return this.wine.getID();}
 
     public void setAmount(int amount) {
         this.amount = amount;
