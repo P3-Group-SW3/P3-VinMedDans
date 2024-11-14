@@ -4,7 +4,9 @@
     top: 5em;
     right: 3em;
     margin-left: auto;
-
+    height: fit-content;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5em;
 }
 
 .modal-main {
@@ -12,9 +14,7 @@
     flex-direction: column;
     align-content: center;
     background: white;
-    padding: 2em;
-    height: auto;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    padding: 1em;
 }
 
 .modal.display-block {
