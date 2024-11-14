@@ -27,14 +27,14 @@ public class EventService implements AdministrativeMethods<Event> {
     }
 
     @Override
-    public List<Event> createAndEdit(Event event){
+    public List<Event> createAndEdit(Event event, Long ID){
         eventRepository.save(event);
         return eventRepository.findAll();
     }
 
     @Override
-    public List<Event> delete(Event event){
-        eventRepository.deleteById(event.getId());
+    public List<Event> delete(Long ID){
+        eventRepository.deleteById(ID);
         return eventRepository.findAll();
     }
 }

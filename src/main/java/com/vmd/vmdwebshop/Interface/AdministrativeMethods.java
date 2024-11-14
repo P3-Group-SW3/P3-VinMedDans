@@ -7,7 +7,7 @@ public interface AdministrativeMethods<T> {
     //Factory Method Design Pattern
     List<T> getAll();
 
-    List<T> createAndEdit(T typeParameter);
+    List<T> createAndEdit(T typeParameter, Long ID);
 
-    List<T> delete(T typeParameter);
+    List<T> delete(Long ID);
 }

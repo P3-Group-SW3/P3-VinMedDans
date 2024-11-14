@@ -6,7 +6,6 @@ import com.vmd.vmdwebshop.exception.wine.*;
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -30,32 +29,33 @@ public class WineService implements AdministrativeMethods<Wine> {
     }
 
     @Override
-    public List<Wine> createAndEdit(Wine wine) {
+    public List<Wine> createAndEdit(Wine wine, Long ID) {
 
-        try {
-            if (wine.getID() == null) {
+            if (ID == null) {
                 wineRepository.save(wine);
             } else {
-                Wine existingWine = wineRepository.findById(wine.getID()).orElse(null);
+                Wine existingWine = wineRepository.findById(ID).orElse(null);
+
+                if(existingWine == null){
+                    throw new WineNotFoundException("The Wine was not updated");
+                }
+
                 existingWine.setAmountLeft(wine.getAmountLeft());
                 wineRepository.save(existingWine);
             }
-        } catch (DataAccessException e) {
-            throw new WineDidNotUpdateDataBaseException("The wine object has not been saved or updated in the database");
-        }
 
         return wineRepository.findAll();
     }
 
     @Override
-    public List<Wine> delete(Wine wine) {
-        Wine existingWine = wineRepository.findById(wine.getID()).orElse(null);
+    public List<Wine> delete(Long ID) {
+        Wine existingWine = wineRepository.findById(ID).orElse(null);
 
         if (existingWine == null){
-            throw new NullPointerException("Wine does not exist in the database");
+            throw new WineNotFoundException("Wine does not exist in the database");
         }
 
-        wineRepository.deleteById(wine.getID());
+        wineRepository.deleteById(ID);
 
         return wineRepository.findAll();
     }

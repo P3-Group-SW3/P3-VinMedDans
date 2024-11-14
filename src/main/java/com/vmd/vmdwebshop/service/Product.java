@@ -5,9 +5,6 @@ import jakarta.validation.constraints.*;
 
 @MappedSuperclass
 public abstract class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
 
     @Digits(integer = 5, fraction = 0, message = "The price can't be higher than 99999")
     @Min(1)
@@ -21,8 +18,7 @@ public abstract class Product {
 
     public Product() {}
 
-    public Product(Long ID, double price, String description, String imageURL) {
-        this.ID = ID;
+    public Product(double price, String description, String imageURL) {
         this.price = price;
         this.description = description;
         this.imageURL = imageURL;
@@ -35,7 +31,6 @@ public abstract class Product {
 
     public double getPrice() { return this.price; }
 
-    public Long getID() { return this.ID; }
 
 
     void setPrice(int price) {
