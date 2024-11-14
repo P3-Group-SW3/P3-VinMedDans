@@ -3,6 +3,7 @@ package com.vmd.vmdwebshop.controller;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -10,13 +11,6 @@ import java.util.stream.Collectors;
 
 @RestController
 public class CustomerController {
-    /**
-     * Creates a cookie for the current customer by fetching the sessionID and set it in the "customerId" cookie.
-     *
-     * @param request   
-     * @param response
-     * @return
-     */
     @GetMapping("/register-customer")
     public String createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
         String sessionId = request.getSession().getId();
