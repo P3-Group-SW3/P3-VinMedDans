@@ -18,11 +18,9 @@ public class Wine extends Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-    @NotBlank(message = "this field must not be empty")
     private String name;
 
-    @Digits(integer = 4, fraction = 0, message = "There can't be more than 9999 wines")
-    @Min(value = 0, message = "the amount must not be less than 0")
+
     private int amountLeft;
 
     public Wine(){}

@@ -22,23 +22,24 @@ public class WineData {
         this.name = name;
     }
 
+
     public int getID(){ return this.ID; }
 
-    @Digits(integer = 5, fraction = 0, message = "The price can't be higher than 99999")
-    @Min(1)
+    @Digits(integer = 5, fraction = 0, message = "The price can't be higher than 9999")
+    @Min(value = 1, message = "The price must be more than 1 DKK")
     public double getPrice() { return this.price; }
 
-    @NotBlank(message = "this field must not be empty")
+    @NotBlank(message = "The wine must have a description")
     public String getDescription() { return this.description; }
 
-    @Digits(integer = 4, fraction = 0, message = "There can't be more than 9999 wines")
-    @Min(value = 0, message = "the amount must not be less than 0")
+    @Digits(integer = 4, fraction = 0, message = "There can't be more than 9999 wines in stock")
+    @Min(value = 0, message = "The stock amount must not be less than 0")
     public int getAmountLeft() { return this.amountLeft; }
 
-    @NotBlank(message = "this field must not be empty")
+    @NotBlank(message = "The wine must have an image URL")
     public String getImageURL() { return this.imageURL; }
 
-    @NotBlank(message = "this field must not be empty")
+    @NotBlank(message = "The wine must have a name")
     public String getName() { return this.name; }
 
     public Wine createWineFromWineData(){
