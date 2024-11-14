@@ -32,11 +32,11 @@ public class OrderService {
      * @return List<Orders>
      */
     public List<Orders> getAllOrders() {
+
         List<Orders> orders = orderRepository.findAll();
-        if(orders.isEmpty() || orders == Null){
+        if (orders == null){
             throw new OrdersNotFound();
         }
-
         return orders;
     }
 
