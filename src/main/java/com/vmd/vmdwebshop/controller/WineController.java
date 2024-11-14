@@ -28,12 +28,17 @@ public class WineController {
 
     @GetMapping("/getWineById/{wineID}")
     public ResponseEntity<Wine> getWineById(@PathVariable Long wineID) {
-        Wine wine = wineService.getWineById(wineID);
-        if (wine != null) {
+
+        try {
+            Wine wine = wineService.getWineById(wineID);
             return ResponseEntity.ok(wine);
-        } else {
+
+        } catch (RuntimeException e){
+            System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
+
         }
+
     }
 
 
@@ -57,7 +62,7 @@ public class WineController {
             return ResponseEntity.ok(wineService.createAndEdit(wine, wineData.getID()));
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
-            return ResponseEntity.ok(wineRepository.findAll());
+            return ResponseEntity.internalServerError().build();
         }
 
     }
@@ -69,7 +74,7 @@ public class WineController {
             return ResponseEntity.ok(wineService.delete(ID));
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
-            return ResponseEntity.ok(wineRepository.findAll());
+            return ResponseEntity.internalServerError().build();
         }
 
     }

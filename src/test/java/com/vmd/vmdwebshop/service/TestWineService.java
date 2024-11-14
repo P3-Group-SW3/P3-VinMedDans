@@ -30,11 +30,7 @@ public class TestWineService {
     @InjectMocks
     private WineService wineService;
 
-    List<Wine> wineList = new ArrayList<>() {
-    };
-
     Wine wine = null;
-
 
     @BeforeEach
     public void setUp() {
@@ -57,6 +53,14 @@ public class TestWineService {
 
         WineNotFoundException newException = assertThrows(WineNotFoundException.class, ()->{ wineService.delete(Long.parseLong("1")); });
         assertEquals("Wine does not exist in the database", newException.getMessage());
+    }
+
+    @Test
+    public void TestGetWineByID(){
+        when(wineRepository.findById(Long.parseLong("1"))).thenReturn(Optional.empty());
+
+        WineNotFoundException newException = assertThrows(WineNotFoundException.class, ()->{ wineService.getWineById(Long.parseLong("1")); });
+        assertEquals("The wine was not found", newException.getMessage());
     }
 }
 

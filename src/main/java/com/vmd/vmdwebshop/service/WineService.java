@@ -25,7 +25,13 @@ public class WineService implements AdministrativeMethods<Wine> {
     }
 
     public Wine getWineById(Long wineID) {
-        return wineRepository.findById(wineID).orElse(null);
+        Wine existingWine = wineRepository.findById(wineID).orElse(null);
+
+        if (existingWine == null){
+            throw new WineNotFoundException("The wine was not found");
+        }
+
+        return existingWine;
     }
 
     @Override
