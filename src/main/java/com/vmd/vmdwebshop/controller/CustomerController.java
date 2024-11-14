@@ -19,21 +19,29 @@ public class CustomerController {
     private CustomerService customerService;
 
     @GetMapping("/")
-    public String redirectToCreateCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
-        return createCustomerCookie(request, response);
+    public void redirectToCreateCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
+        createCustomerCookie(request, response);
     }
 
     @GetMapping("/api/createcookie")
-    public String createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
+    public void createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
         customerService.setCustomerCookie(response, request);
 
-        return "Customer cookie has been set!";
+        System.out.println("Cookie has been set!");
     }
 
     @GetMapping("/api/updatecookie")
-    public String updateCustomerCookie(HttpServletResponse response, HttpServletRequest request) {
-        return customerService.updateLegalAge(response, request);
+    public void updateCustomerCookie(HttpServletResponse response, HttpServletRequest request) {
+        customerService.updateLegalAge(response, request);
     }
 
+    @GetMapping("/api/customerID")
+    public String customerID(HttpServletRequest request) {
+        return customerService.getCustomerID(request);
+    }
 
+    @GetMapping("/api/legalAge")
+    public String legalAge(HttpServletRequest request) {
+        return customerService.getLegalAge(request);
+    }
 }

@@ -11,27 +11,40 @@ import java.io.IOException;
 @Service
 public class CustomerService {
 
-    // HUSK lav et tjek for om der allerede eksisterer en cookie med dette navn, for ellers vil den overskrive den opdaterede cookie til den gamle cookie
+
     public void setCustomerCookie(HttpServletResponse response, HttpServletRequest request) {
-        String legalAge = "false"; // default value
-        String sessionID = request.getSession().getId();
+        Cookie[] cookies = request.getCookies();
+        boolean cookieExists = false;
 
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("customerData".equals(cookie.getName())) {
+                    cookieExists = true;
+                }
+            }
+        }
 
-        String cookieValue = sessionID + "|" + legalAge;
+        if (!cookieExists) {
+            String sessionID = request.getSession().getId();
+            String legalAge = "false"; // default value
 
-        Cookie cookie = new Cookie("customerData", cookieValue);
-        cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
+            String cookieValue = sessionID + "|" + legalAge;
 
-        response.addCookie(cookie);
+            Cookie cookie = new Cookie("customerData", cookieValue);
+            cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
+            cookie.setSecure(true);
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+
+            response.addCookie(cookie);
+        }
     }
 
-    public String updateLegalAge(HttpServletResponse response, HttpServletRequest request) {
+    public void updateLegalAge(HttpServletResponse response, HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
-            return "No cookies found.";
+            System.out.println("There are no cookies for this customer!");
+            return;
         }
 
         String sessionID = request.getSession().getId();
@@ -53,21 +66,24 @@ public class CustomerService {
 
                         response.addCookie(cookie);
 
-                        return "Cookie updated successfully!";
+                        System.out.println("Cookie updated successfully!");
+                        return;
                     } else {
-                        return "Cookie already set to true";
+                        System.out.println("Cookie is already set to true");
+                        return;
                     }
                 }
             }
         }
 
-        return "Matching cookie not found.";
+        System.out.println("No matching cookie found!");
     }
 
     public String getCustomerID(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
-            return "no cookies found!";
+            System.out.println("No cookies found!");
+            return null;
         }
 
         String sessionID = request.getSession().getId();
@@ -80,18 +96,21 @@ public class CustomerService {
                 if (sessionID.equals(customerID)) {
                     return customerID;
                 } else {
-                    return "SessionID does not match the customerID!";
+                    System.out.println("CustomerID is not the same as the sessionID.");
+                    return null;
                 }
             }
         }
 
-        return "No matching cookie found!";
+        System.out.println("No matching cookie found!");
+        return null;
     }
 
     public String getLegalAge(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
         if (cookies == null) {
-            return "Cookies not found!";
+            System.out.println("No cookies found!");
+            return null;
         }
 
         String sessionID = request.getSession().getId();
@@ -104,15 +123,13 @@ public class CustomerService {
                 if (sessionID.equals(customerID)) {
                     return value.split("\\|")[1];
                 } else {
-                    return "SessionID does not match the customerID!";
+                    System.out.println("SessionID does not match the customerID");
+                    return null;
                 }
             }
         }
 
-        return "Matching cookie not found!";
-    }
-
-    public boolean existingCookieCheck(@CookieValue(value = "customerData", required = false) String customerData) {
-        return customerData != null;
+        System.out.println("Matching cookie not found!");
+        return null;
     }
 }
