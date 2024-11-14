@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/")
+@RequestMapping("/api/wine/")
 public class WineController {
 
     @Autowired
@@ -20,25 +20,21 @@ public class WineController {
     @Autowired
     private WineRepository wineRepository;
 
-    @GetMapping("/getAllWines")
+    @GetMapping("/getList")
     public ResponseEntity<List<Wine>> wine() {
         List<Wine> wines = wineService.getAll();
         return ResponseEntity.ok(wines);
     }
 
-    @GetMapping("/getWineById/{wineID}")
-    public ResponseEntity<Wine> getWineById(@PathVariable Long wineID) {
-
+    @GetMapping("/getById/{ID}")
+    public ResponseEntity<Wine> getWineById(@PathVariable Long ID) {
         try {
-            Wine wine = wineService.getWineById(wineID);
+            Wine wine = wineService.getWineById(ID);
             return ResponseEntity.ok(wine);
-
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
-
         }
-
     }
 
 
@@ -48,9 +44,8 @@ public class WineController {
      * @param wineData
      * @return List<Wine>
      */
-    @PostMapping("/createAndEditWine")
+    @PostMapping("admin/createAndEdit")
     public ResponseEntity<List<Wine>> createWine(@RequestBody WineData wineData) {
-
         Wine wine = new Wine(
                 wineData.getDescription(),
                 wineData.getImageURL(),
@@ -67,7 +62,7 @@ public class WineController {
 
     }
 
-    @PostMapping("/deleteWine/{ID}")
+    @PostMapping("admin/delete/{ID}")
     public ResponseEntity<List<Wine>> deleteWine(@PathVariable Long ID){
 
         try {
