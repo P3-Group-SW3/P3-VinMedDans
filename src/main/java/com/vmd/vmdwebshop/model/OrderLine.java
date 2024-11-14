@@ -78,4 +78,8 @@ public class OrderLine {
         this.customerID = null;
     }
 
+    public Long GetorderID(){
+        return orders.getID();
+    }
+
 }
