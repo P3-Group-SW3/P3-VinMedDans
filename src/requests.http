@@ -115,7 +115,7 @@ Content-Type: application/json
 {
   "firstName":"G T",
   "lastName": "C",
-  "email": "g.t.com",
+  "email": "g.t@s.com",
   "phone": "+9999999999",
   "address": "ringevej 23",
   "zipCode": "4100",
