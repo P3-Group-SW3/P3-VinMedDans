@@ -1,12 +1,15 @@
 package com.vmd.vmdwebshop.controller;
 
 
+import com.vmd.vmdwebshop.exception.orderline.OrderLineDataAccessException;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import com.vmd.vmdwebshop.service.WineService;
 import jakarta.validation.Valid;
 import org.hibernate.query.Order;
+import org.springframework.aot.generate.FileSystemGeneratedFiles;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -41,7 +44,12 @@ public class OrderLineController {
      */
     @GetMapping("/api/getAllOrderLines/{customerID}")
     public ResponseEntity<List<OrderLine>> getAllOrderLines(@PathVariable String customerID) {
-        return ResponseEntity.ok(orderLineService.getAllOrderLines(customerID));
+        try {
+            return ResponseEntity.ok(orderLineService.getAllOrderLines(customerID));
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
@@ -55,14 +63,24 @@ public class OrderLineController {
      */
     @PostMapping("/api/createAndEditOrderLine")
     public ResponseEntity<List<OrderLine>> createOrderLine(@RequestBody @Valid OrderLine orderLine) {
-        return ResponseEntity.ok(orderLineService.createAndEditOrderLine(orderLine));
+        try {
+            return ResponseEntity.ok(orderLineService.createAndEditOrderLine(orderLine));
+        } catch(RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+
+
     }
 
     @GetMapping("/api/clearCart/{customerID}")
-    public ResponseEntity<String> clearCart(@PathVariable String customerID) {
-        orderLineService.clearCart(customerID);
-        return ResponseEntity.ok("The cart has been cleared successfully");
-
+    public ResponseEntity<List<OrderLine>> clearCart(@PathVariable String customerID) {
+        try {
+            return ResponseEntity.ok(orderLineService.clearCart(customerID));
+        } catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("api/returnOrderLine")
@@ -70,15 +88,18 @@ public class OrderLineController {
 
         orderLine.setCustomerID(cookieID);
 
-        //orderLineRepository.save(orderLine);
-
         return ResponseEntity.ok(orderLine);
     }
 
     @PostMapping("api/deleteOrderLine")
     public ResponseEntity<List<OrderLine>> deleteOrderLine(@RequestBody OrderLine orderLine) {
 
-        return ResponseEntity.ok(orderLineService.deleteOrderLine(orderLine));
+        try{
+            return ResponseEntity.ok(orderLineService.deleteOrderLine(orderLine));
+        } catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
     }
 
 

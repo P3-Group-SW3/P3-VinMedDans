@@ -23,12 +23,15 @@ POST http://localhost:8080/api/createAndEditOrderLine
 Content-Type: application/json
 
 {
-  "amount": 100,
-  "customerID": "efg",
-  "wineID": 1,
-  "orderid": null
+
+  "customerID": "abc",
+  "wineID": 2,
+  "amount": 10
+
+
 }
 
+//"orderid": null
 ### GET request with a header
 GET http://localhost:8080//api/getAllOrderLines/efg
 Accept: application/json
@@ -51,7 +54,7 @@ Content-Type: application/json
 {
   "firstName":"G T",
   "lastName": "C",
-  "email": "g.t@.gmail.com",
+  "email": "g.t@gmail.com",
   "phone": "+9999999999",
   "address": "ringevej 23",
   "zipCode": "4100",
@@ -63,7 +66,87 @@ GET http://localhost:8080/api/orders
 Accept: application/json
 
 ### GET request with a header
-GET http://localhost:8080/api/orders/7
+GET http://localhost:8080/api/orders/15
 Accept: application/json
 
+### Send POST request with json body
+POST http://localhost:8080/api/orders/state/7
+Content-Type: application/json
 
+{
+  "state": 2
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/orders/state/7
+Content-Type: application/json
+
+{
+  "state": 1
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/orders/state/7
+Content-Type: application/json
+
+{
+  "state": 0
+}
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/orderInfo
+Content-Type: application/json
+
+{
+  "firstName":"G T",
+  "lastName": "",
+  "email": "g.t@.gmail.com",
+  "phone": "+9999999999",
+  "address": "ringevej 23",
+  "zipCode": "4100",
+  "city": "Ballerup"
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/orderInfo
+Content-Type: application/json
+
+{
+  "firstName":"G T",
+  "lastName": "C",
+  "email": "g.t.com",
+  "phone": "+9999999999",
+  "address": "ringevej 23",
+  "zipCode": "4100",
+  "city": "Ballerup"
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/orderInfo
+Content-Type: application/json
+
+{
+  "firstName":"G T",
+  "lastName": "C",
+  "email": "g.t.com",
+  "phone": "99999999",
+  "address": "ringevej 23",
+  "zipCode": "4100",
+  "city": "Ballerup"
+}
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/orderInfo
+Content-Type: application/json
+
+{
+  "firstName":"G T",
+  "lastName": "C",
+  "email": "g.t.com",
+  "phone": "99999999",
+  "address": "ringevej 23",
+  "zipCode": "41000",
+  "city": "Ballerup"
+}
