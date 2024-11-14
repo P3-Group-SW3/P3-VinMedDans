@@ -23,12 +23,15 @@ POST http://localhost:8080/api/createAndEditOrderLine
 Content-Type: application/json
 
 {
-  "amount": 100,
-  "customerID": "efg",
-  "wineID": 1,
-  "orderid": null
+
+  "customerID": "abc",
+  "wineID": 2,
+  "amount": 10
+
+
 }
 
+//"orderid": null
 ### GET request with a header
 GET http://localhost:8080//api/getAllOrderLines/efg
 Accept: application/json
