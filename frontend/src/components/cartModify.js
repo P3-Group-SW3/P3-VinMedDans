@@ -15,39 +15,37 @@ export const CartModify = (item) => {
   // API call to add item to cart
   const addToCart = () => {
     console.log("Button clicked with item:", item, "quantity:", quantity);
-    useState(() => {
-      fetch('/api/addToCart', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ item, quantity }),
-      })
-      .then(response => response.json())
-      .then(data => console.log('Success:', data))
-      .catch((error) => {
-        console.error('Error:', error);
-      }); 
+    fetch('/api/addToCart', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ item, quantity }),
+    })
+    .then(response => response.json())
+    .then(data => console.log('Success:', data))
+    .catch((error) => {
+      console.error('Error:', error);
     });
   }
 
   return (
     <div className="d-inline-flex align-items-center gap-3 position-relative"  style={{ marginLeft: '10px' }}>
       <div className="d-inline-flex align-items-center gap-2">
-        <Button 
-          text="-" 
-          onClick={decrementQuantity} 
+        <Button
+          text="-"
+          onClick={decrementQuantity}
           makeCircle={false}
           makeSquare={true}
         />
-        
+
         <div className="quantity-display" style={{ width: "50px", textAlign: "center" }}>
           {quantity}
         </div>
 
-        <Button 
-          text="+" 
-          onClick={incrementQuantity} 
+        <Button
+          text="+"
+          onClick={incrementQuantity}
           makeCircle={false}
           makeSquare={true}
         />
