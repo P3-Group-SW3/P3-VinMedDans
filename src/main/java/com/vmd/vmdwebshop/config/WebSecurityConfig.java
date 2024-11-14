@@ -19,15 +19,7 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @EnableWebSecurity
 public class WebSecurityConfig {
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
 
-    /**
-     * @param http
-     * @return SecurityFilterChain
-     * @throws Exception
-     * Configure security filter chain
-     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf -> csrf.disable())

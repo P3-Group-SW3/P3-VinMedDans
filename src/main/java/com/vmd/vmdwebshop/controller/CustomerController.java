@@ -3,7 +3,6 @@ package com.vmd.vmdwebshop.controller;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Arrays;
@@ -52,5 +51,10 @@ public class CustomerController {
         response.addCookie(cookie);
 
         return "cookie named " + cookie.getName() + " is now deleted";
+    }
+
+    @GetMapping("/administrator/test") // This is a test endpoint
+    public String test() {
+        return "Hello, administrator!";
     }
 }

@@ -10,4 +10,5 @@ public class WebConnector {
     public String redirect() {
         return "forward:/index.html";
     }
+
 }
