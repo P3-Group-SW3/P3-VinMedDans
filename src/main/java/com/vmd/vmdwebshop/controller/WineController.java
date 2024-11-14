@@ -5,7 +5,9 @@ import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import com.vmd.vmdwebshop.service.WineData;
 import com.vmd.vmdwebshop.service.WineService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -50,17 +52,8 @@ public class WineController {
      * @return List<Wine>
      */
     @PostMapping(value="/admin/createAndEdit", consumes = "application/json")
-    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody WineData wineData) {
-        System.out.println(wineData.getID());
-        System.out.println(wineData.getName());
-        System.out.println(wineData.getImageURL());
-
-        Wine wine = new Wine(
-                wineData.getDescription(),
-                wineData.getImageURL(),
-                wineData.getPrice(),
-                wineData.getAmountLeft(),
-                wineData.getName());
+    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody @Valid WineData wineData) {
+        Wine wine = wineData.createWineFromWineData();
 
         try{
             return ResponseEntity.ok(wineService.createAndEdit(wine, Long.valueOf(wineData.getID())));

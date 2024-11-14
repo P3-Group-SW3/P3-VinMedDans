@@ -18,7 +18,6 @@ public class Wine extends Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-
     @NotBlank(message = "this field must not be empty")
     private String name;
 

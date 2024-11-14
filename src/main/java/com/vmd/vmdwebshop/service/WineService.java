@@ -43,7 +43,7 @@ public class WineService implements AdministrativeMethods<Wine> {
     @Override
     public List<Wine> createAndEdit(Wine wine, Long ID) {
 
-            if (ID == null) {
+            if (ID == 0) {
                 wineRepository.save(wine);
             } else {
                 Wine existingWine = wineRepository.findById(ID).orElse(null);
