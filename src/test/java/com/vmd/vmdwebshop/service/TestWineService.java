@@ -28,20 +28,25 @@ public class TestWineService {
     @InjectMocks
     private WineService wineService;
 
-    Wine wine = null;
+    Wine wine1 = null;
+    Wine wine2 = null;
+    List<Wine> wineList = new ArrayList<>();
 
     @BeforeEach
     public void setUp() {
         MockitoAnnotations.openMocks(this); // Initialize mocks before each test
 
-        wine = new Wine("Vin", "URL", 189.0, 123, "Rødvin");
+        wine1 = new Wine("Vin", "URL", 189.0, 123, "Rødvin");
+        wine2 = new Wine("Rød", "URL", 189.0, 121, "Hvidvin");
+        wineList.add(wine1);
+        wineList.add(wine2);
     }
 
     @Test
     public void TestCreateAndEditWine01() {
         when(wineRepository.findById(Long.parseLong("99"))).thenReturn(Optional.empty());
 
-        WineNotFoundException newException = assertThrows(WineNotFoundException.class, () -> { wineService.createAndEdit(wine, Long.parseLong("99")); });
+        WineNotFoundException newException = assertThrows(WineNotFoundException.class, () -> { wineService.createAndEdit(wine1, Long.parseLong("99")); });
         assertEquals("The Wine was not updated", newException.getMessage());
         System.out.println(newException.getMessage());
     }
@@ -56,7 +61,7 @@ public class TestWineService {
     }
 
     @Test
-    public void TestGetWineByID(){
+    public void TestGetWineByID01(){
         when(wineRepository.findById(Long.parseLong("1"))).thenReturn(Optional.empty());
 
         WineNotFoundException newException = assertThrows(WineNotFoundException.class, ()->{ wineService.getWineById(Long.parseLong("1")); });
@@ -64,7 +69,15 @@ public class TestWineService {
         System.out.println(newException.getMessage());
     }
 
-    @Test void TestGetList(){
+    @Test void TestGetWineByID02(){
+        when(wineRepository.findById(Long.parseLong("1"))).thenReturn(Optional.ofNullable(wine1));
+
+        Wine existingWine = wineService.getWineById(Long.parseLong("1"));
+
+        assertNotNull(existingWine);
+    }
+
+    @Test void TestGetList01(){
         when(wineRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
 
         WineNotFoundException newException = assertThrows(WineNotFoundException.class, ()->{ wineService.getAll(); });
@@ -72,5 +85,16 @@ public class TestWineService {
         System.out.println(newException.getMessage());
 
     }
+
+    @Test void TestGetList02(){
+        when(wineRepository.findAll()).thenReturn(wineList);
+
+        List<Wine> allWines = wineService.getAll();
+
+        assertTrue(!allWines.isEmpty(), "Wines found");
+        System.out.println(allWines);
+    }
+
+
 }
 
