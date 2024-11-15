@@ -13,7 +13,7 @@ function ProductPage() {
     response: JSON array of objects
     */
     useEffect(() => {
-        fetch('/api/getAllWines')
+        fetch('/api/wine/getList')
             .then(response => response.json())
             .then(data => setItems(data))
             .catch(error => console.error('Error fetching data:', error));
