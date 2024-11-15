@@ -1,6 +1,5 @@
 import React, { useEffect, Component, useRef } from 'react';
-import logoImg from '../images/Logo Img.png';
-import logoText from '../images/Logo Text.png';
+import logo from '../images/logo.png';
 import {useNavigate} from "react-router-dom";
 import Cart from './Cart'
 import Navbar from './Navbar'
@@ -34,12 +33,13 @@ const Header = () => {
   return (
     <div ref={headerRef} className="d-flex fixed-top flex-column bg-white w-100">
         <div className="d-flex flex-row align-items-center justify-content-center w-100">
-            <img src={logoImg} alt="Logo" className="me-2"/>
-            <img src={logoText} alt="Secondary Logo"/>
+            <a onClick={() => navigate('/')} >
+                <img src={logo} alt="Logo" className="me-2"/>
+            </a>
             <Cart/>
         </div>
         <div>
-            <Navbar />
+            <Navbar/>
         </div>
     </div>
   );
