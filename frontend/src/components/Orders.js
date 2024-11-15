@@ -1,10 +1,3 @@
-import images from "../images/images";
-
-const havtorben = images["havtorben"];
-const stikkelsvin = images["stikkelsvin"];
-const hoenefuld = images["hoenefuld"];
-
-
 
 const Orders = [
     {
@@ -12,21 +5,21 @@ const Orders = [
         name: "Havtorben",
         quantity: 2,
         price: 100,
-        image: havtorben
+        image: "null"
     },
     {
         id: 2,
         name: "Stikkelsvin",
         quantity: 2,
         price: 150,
-        image: stikkelsvin
+        image: "null"
     },
     {
         id: 3,
         name: "Hønefuld",
         quantity: 2,
         price: 400,
-        image: hoenefuld
+        image: "null"
     },
 ];
 
