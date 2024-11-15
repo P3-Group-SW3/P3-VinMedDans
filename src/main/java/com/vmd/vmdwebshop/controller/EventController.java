@@ -23,6 +23,6 @@ public class EventController {
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Event>> getAllEvents() {
-        return ResponseEntity.ok(eventService.getAllEvents());
+        return ResponseEntity.ok(eventService.getAll());
     }
 }
