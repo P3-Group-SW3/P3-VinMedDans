@@ -15,20 +15,20 @@ function Landingpage() {
                 title="Hvad er frugtvin"
                 description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
                 imagePosition="left"
-                imagePath='image4'
+                imagePath='http://localhost:8080/api/images/image4.jpg'
             />
             <Section
                 title="Jord til bord"
                 description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
                 imagePosition="right"
-                imagePath='image5'
+                imagePath='http://localhost:8080/api/images/image5.jpg'
             />
             <Section
                 title="Køb vores frugtvin"
                 description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
                 buttonText="Gå til webshop"
                 imagePosition="left"
-                imagePath='image6'
+                imagePath='http://localhost:8080/api/images/image6.jpg'
             />
             <Footer />
         </div>
