@@ -2,7 +2,7 @@
     padding: 10px;
     color: var(--main-color);
     border: none;
-    font-size: 20px;
+    font-size: 30px !important;
     font-family: 'Rubik Dirt', sans-serif;
     flex: 1 1 auto;
     justify-content: center;

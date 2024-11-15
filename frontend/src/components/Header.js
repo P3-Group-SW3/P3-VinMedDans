@@ -32,7 +32,7 @@ const Header = () => {
 
   return (
     <div ref={headerRef} className="d-flex fixed-top flex-column bg-white w-100">
-        <div className="d-flex flex-row align-items-center justify-content-center w-100">
+        <div className="d-flex flex-row align-items-center justify-content-center w-100 py-2">
             <a onClick={() => navigate('/')} >
                 <img src={logo} alt="Logo" className="me-2" style={{cursor: 'pointer'}}/>
             </a>
