@@ -1,5 +1,6 @@
 package com.vmd.vmdwebshop.service;
 
+import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.OrderRepository;
@@ -24,15 +25,23 @@ public class TestOrderService {
 
 
     @Mock
+    private WineRepository wineRepository;
+
+    @Mock
     private OrderLineRepository orderLineRepository;
 
     @Mock
     private OrderRepository orderRepository;
 
     @InjectMocks
+    private OrderLineService orderLineService;
+
+    @InjectMocks
     private OrderService orderService;
 
     List<Orders> orderList = new ArrayList<>() {};
+
+    List<OrderLine> orderLineList = new ArrayList<>(){};
 
     Orders order = null;
 
@@ -46,6 +55,8 @@ public class TestOrderService {
         orderList.getLast().setID(Long.parseLong("1"));
         orderList.add((new Orders("g t","c","n@mail.c","+4599888888","farvel 991","5045","hey")));
         orderList.getLast().setID(Long.parseLong("2"));
+
+        orderLineList.add(new OrderLine())
     }
 
     @Test
