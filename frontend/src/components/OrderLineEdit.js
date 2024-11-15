@@ -5,11 +5,15 @@ const OrderLineEdit = (orderLine) => {
     const [quantity, setQuantity] = useState(orderLine.amount);
 
     const incrementQuantity = () => {
+        console.log("Previous quantity: ", quantity);
         setQuantity(quantity => quantity + 1);
+        console.log("Current quantity: ", quantity);
     }
 
     const decrementQuantity = () => {
+        console.log("Previous quantity: ", quantity);
         setQuantity(quantity => quantity - 1);
+        console.log("Current quantity: ", quantity);
     }
 
     return (
