@@ -1,5 +1,5 @@
 ### Send POST request with json body
-GET http://localhost:8080/api/wine/getById/1
+GET http://localhost:8080/api/wine/getById/
 Content-Type: application/json
 
 ### Send POST request with json body
@@ -22,7 +22,7 @@ Content-Type: application/json
 
 
 ### Send POST request with json body
-POST http://localhost:8080/api/wine/admin/delete/81
+POST http://localhost:8080/api/wine/admin/delete/85
 Content-Type: application/json
 
 ### Send POST request with json body
@@ -46,7 +46,7 @@ Content-Type: application/json
   "description": "MMMM",
   "imageURL": "asd",
   "price": 90,
-  "amountLeft": -1,
+  "amountLeft": 1,
   "name": "Bllvin"
 }
 

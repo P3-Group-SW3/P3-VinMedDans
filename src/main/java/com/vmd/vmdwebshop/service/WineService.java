@@ -6,6 +6,7 @@ import com.vmd.vmdwebshop.exception.wine.*;
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,7 +68,13 @@ public class WineService implements AdministrativeMethods<Wine> {
             throw new WineNotFoundException("Wine does not exist in the database");
         }
 
-        wineRepository.deleteById(ID);
+        try{
+            wineRepository.deleteById(ID);
+
+        } catch (DataIntegrityViolationException e) {
+            throw new WineNotDeletedException(e.getMessage());
+        }
+
 
         return wineRepository.findAll();
     }
