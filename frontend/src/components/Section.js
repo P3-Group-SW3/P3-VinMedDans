@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import images from '../images/images'; // Adjust the path as needed
 
 const Section = ({ title, description, imagePosition, buttonText, imagePath }) => {
   const isImageLeft = imagePosition === 'left';
