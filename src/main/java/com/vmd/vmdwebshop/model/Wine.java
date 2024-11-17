@@ -23,7 +23,7 @@ public class Wine extends Product {
     private int amountLeft;
 
     //relationship med orderlines
-    @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderLine> orderLines = new HashSet<>();
 
     public Wine(){}

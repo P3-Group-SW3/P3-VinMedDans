@@ -28,6 +28,7 @@ public class OrderLineService {
 
     private final WineRepository wineRepository;
     private final OrderLineRepository orderLineRepository;
+    private final WineService wineService;
 
     // Constructor injection to receive the repositories
 
@@ -38,10 +39,11 @@ public class OrderLineService {
      * @param orderLineRepository
      * @param wineRepository
      */
-    public OrderLineService(View error, OrderLineRepository orderLineRepository, WineRepository wineRepository) {
+    public OrderLineService(View error, OrderLineRepository orderLineRepository, WineRepository wineRepository, WineService wineService) {
         this.error = error;
         this.orderLineRepository = orderLineRepository;
         this.wineRepository = wineRepository;
+        this.wineService = wineService;
     }
 
     public List<OrderLine> getAllOrderLines(String customerID) {
@@ -73,6 +75,7 @@ public class OrderLineService {
             } else if (orderLine.getAmount() == 0 || orderLine.getAmount() <= 0) {
                 orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
             } else {
+                orderLine.setWine(wineService.getWineById(orderLine.getWineID()));
                 orderLineRepository.save(orderLine);
             }
         } catch (DataAccessException e){ throw new OrderLineDataAccessException("Failed to update or save to the database");}

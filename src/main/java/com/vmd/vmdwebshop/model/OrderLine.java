@@ -29,8 +29,8 @@ public class OrderLine {
     therefore there will be multiple OrderLines that are associated with the same product.
     FetchType.LAZY means that the content is only fetched when being accessed.
     @JoinColumn takes the ID column from the Wine table and inserts it into the OrderLine table with the name Wine_id */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wineID", nullable = false, insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "wine")
     private Wine wine; //hvorfor det??
 
     @Column(name = "wineID", nullable = false)
@@ -65,14 +65,6 @@ public class OrderLine {
 
     public void removeCustomerID() {this.customerID = null; }
 
-    public void setWine(Wine wine){
-        this.wine = wine;
-    }
-
-    public Wine getWine(){
-        return wine;
-    }
-
     public Long getWineID() {return this.wine.getID();}
 
     public void setAmount(int amount) {
@@ -90,4 +82,11 @@ public class OrderLine {
         return orders.getID();
     }
 
+    public void setWine(Wine wine) {
+        this.wine = wine;
+    }
+
+    public Wine getWine() {
+        return wine;
+    }
 }
