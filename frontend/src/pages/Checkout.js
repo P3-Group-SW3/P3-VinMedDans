@@ -6,12 +6,16 @@ import '../styles/styles.css';
 import '../bootstrap/dist/css/bootstrap.min.css';
 import OrderSummary from "../components/OrderSummary";
 import ContactInfo from "../components/ContactInfo";
+import {CustomerLinks} from "./CustomerLinkContext";
 
 
 function Checkout() {
     return (
         <div className="Landingpage">
-            <Header />
+            <Header
+                links={ CustomerLinks }
+                showCart={true}
+            />
             <main className="container my-4">
                 <div className="row mt-2">
                     <div className="col-md-6">

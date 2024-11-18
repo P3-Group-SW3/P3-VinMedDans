@@ -1,11 +1,15 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
+import {CustomerLinks} from "./CustomerLinkContext";
 
 function ContactPage() {
     return (
         <div className="ContactPage">
-            <Header />
+            <Header
+                links={ CustomerLinks }
+                showCart={true}
+            />
 
             <div className="contact-content container my-5">
                 <div className="row">

@@ -2,12 +2,15 @@ import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
 import Section from "../components/Section";
-
+import {CustomerLinks} from "./CustomerLinkContext";
 
 function AboutUsPage() {
     return (
         <div className="Landingpage">
-            <Header />
+            <Header
+                links={ CustomerLinks }
+                showCart={true}
+            />
             <Section
             title={'Om os'}
             description={'Vinmeddans er skabt af kærlighed til det ukendte, det eksperimenterende og det sammenhold, der skabes ved at være sammen om et projekt. Vi er 3 gamle venner, der elsker at nyde det gode liv, især over et godt glas vin. Derfor besluttede vi os for at kaste  os ud i at brygge vores egen frugtvin på den hyldeblomst, som vokser  overalt om sommeren. Ingen af os havde prøvet at lave frugtvin før, og  det var i høj grad det ukendte resultat, der virkede interessant og  sjovt. ' +

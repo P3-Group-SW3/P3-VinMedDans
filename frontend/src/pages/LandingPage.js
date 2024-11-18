@@ -5,12 +5,16 @@ import Section from '../components/Section';
 import Footer from '../components/Footer';
 import '../styles/styles.css';
 import '../bootstrap/dist/css/bootstrap.min.css';
+import {CustomerLinks} from "./CustomerLinkContext";
 
 
 function Landingpage() {
     return (
         <div className="Landingpage">
-            <Header />
+            <Header
+                links={ CustomerLinks }
+                showCart={true}
+            />
             <Section
                 title="Hvad er frugtvin"
                 description="Lorem ipsum consectetur adipiscing elit. Maecenas tincidunt ac dolor eget gravida..."
