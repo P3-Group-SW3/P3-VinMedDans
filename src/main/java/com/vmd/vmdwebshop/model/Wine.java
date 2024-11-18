@@ -1,15 +1,14 @@
 package com.vmd.vmdwebshop.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import com.vmd.vmdwebshop.service.Product;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name="Wine")
@@ -18,13 +17,14 @@ public class Wine extends Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-
-    @NotBlank(message = "this field must not be empty")
     private String name;
 
-    @Digits(integer = 4, fraction = 0, message = "There can't be more than 9999 wines")
-    @Min(value = 0, message = "the amount must not be less than 0")
+
     private int amountLeft;
+
+    //relationship med orderlines
+    @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private Set<OrderLine> orderLines = new HashSet<>();
 
     public Wine(){}
 
