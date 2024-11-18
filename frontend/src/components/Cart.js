@@ -34,14 +34,14 @@ const CartOverlay = ({ handleClose, show }) => {
 
     const [orderLines, setOrderLines] = useState([]);
 
-    useEffect(() => {
-        fetch('api/getAllOrderLines/456')
+    const refreshOrderLines = () => {
+        fetch('api/getAllOrderLines/jph')
             .then(response => response.json())
             .then(data => setOrderLines(data))
             .catch(error => console.error('Error fetching data: ', error));
-    }, []);
+    }
 
-    const [name, price] = ["wine name", 189]
+    useEffect(() => { refreshOrderLines() }, []);
 
     return (
         <div className={showHideClassName} onClick={handleClose}>
@@ -53,17 +53,17 @@ const CartOverlay = ({ handleClose, show }) => {
                             <div className="d-flex flex-row justify-content-between align-items-center">
                                 <div className="d-flex align-items-center">
                                     <img
-                                        src={placeholderImg}
-                                        alt={name}
+                                        src={orderLine.wine.imageURL}
+                                        alt={orderLine.wine.name}
                                         className="img-fluid"
                                         style={{width: '50px', height: '50px', objectFit: 'cover'}}
                                     />
                                 </div>
-                                <span>{name}</span>
+                                <span>{orderLine.wine.name}</span>
                                 <span>{orderLine.amount}</span>
-                                <span>{price * orderLine.amount},-</span>
+                                <span>{orderLine.wine.price * orderLine.amount},-</span>
                             </div>
-                            < OrderLineEdit orderLine={orderLine}/>
+                            < OrderLineEdit orderLine={orderLine} onUpdate={refreshOrderLines}/>
                         </div>
                     ))}
                 </div>

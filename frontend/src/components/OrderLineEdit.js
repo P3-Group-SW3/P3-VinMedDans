@@ -1,19 +1,65 @@
 import React, { useState } from "react";
 import Button from "./Button";
 
-const OrderLineEdit = (orderLine) => {
+const OrderLineEdit = ({orderLine, onUpdate}) => {
     const [quantity, setQuantity] = useState(orderLine.amount);
 
     const incrementQuantity = () => {
-        console.log("Previous quantity: ", quantity);
-        setQuantity(quantity => quantity + 1);
+        console.log("Previous quantity: ", orderLine.amount);
+
+        orderLine.amount = quantity + 1;
+        setQuantity(quantity => orderLine.amount);
+
+        fetch('/api/createAndEditOrderLine', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify( orderLine ),
+        })
+            .then(response => response.json())
+            .then(data => console.log('Success:', data))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
         console.log("Current quantity: ", quantity);
     }
 
     const decrementQuantity = () => {
-        console.log("Previous quantity: ", quantity);
-        setQuantity(quantity => quantity - 1);
-        console.log("Current quantity: ", quantity);
+        console.log("Previous quantity: ", orderLine.amount);
+
+        if (quantity - 1 > 0) {
+            orderLine.amount = quantity - 1;
+            setQuantity(quantity => orderLine.amount);
+
+            fetch('/api/createAndEditOrderLine', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify( orderLine ),
+            })
+                .then(response => response.json())
+                .then(data => console.log('Success:', data))
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+            console.log("Current quantity: ", quantity);
+        } else if (quantity - 1 === 0) {
+            fetch('/api/deleteOrderLine', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify( orderLine ),
+            })
+                .then(response => response.json())
+                .then(data => console.log('Success:', data))
+                .then(() => onUpdate())
+                .catch((error) => {
+                    console.error('Error:', error);
+                });
+        }
     }
 
     return (
