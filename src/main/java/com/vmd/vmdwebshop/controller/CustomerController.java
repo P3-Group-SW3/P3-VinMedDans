@@ -1,20 +1,15 @@
 package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.service.CustomerService;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.stream.Collectors;
-
 @RestController
 @RequestMapping("/")
 public class CustomerController {
-
+    // SKAL FIKSE ROUTES NÅR FRONT END OG BACK END BLIVER KOPLET SAMMEN.
     @Autowired
     private CustomerService customerService;
 

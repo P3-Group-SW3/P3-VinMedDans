@@ -1,6 +1,5 @@
-package com.vmd.vmdwebshop.customerService;
+package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.service.CustomerService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,13 +10,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-class CustomerTest {
+class TestCustomerService {
 
     @Mock
     private HttpServletRequest request;
@@ -203,4 +201,71 @@ class CustomerTest {
 
         assertNull(result);
     }
+
+    // Test that verifies that if the 'customerData' cookie already exist, then return true.
+    @Test
+    public void testIfCookieExist01() {
+        Cookie customerCookie = new Cookie("customerData", "testSessionID|false");
+        when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
+
+        boolean result = customerService.ifCookieExist(request);
+
+        assertTrue(result);
+    }
+
+    // Test that verifies that if JSESSIONID is present but there is no 'customerData' cookie, then return false.
+    @Test
+    public void testIfCookieExist02() {
+        Cookie JSESSIONID = new Cookie("JSESSIONID", "anotherSessionID");
+        when(request.getCookies()).thenReturn(new Cookie[]{JSESSIONID});
+
+        boolean result = customerService.ifCookieExist(request);
+
+        assertFalse(result);
+    }
+
+    // Test that verifies if there are no cookies at all, then return false.
+    @Test
+    public void testIfCookieExist03() {
+        when(request.getCookies()).thenReturn(null);
+
+        boolean result = customerService.ifCookieExist(request);
+
+        assertFalse(result);
+    }
+
+    // Test that verifies if the request is null, then throw IllegalArgumentException.
+    @Test
+    public void testIfCookieExist04() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            customerService.ifCookieExist(null);
+        });
+
+        assertEquals("HttpServletRequest cannot be null!", exception.getMessage());
+    }
+
+    // Test that verifies that a NullPointerException will get caught.
+    @Test
+    public void testIfCookieExist05() {
+        when(request.getCookies()).thenThrow(new NullPointerException());
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            customerService.ifCookieExist(request);
+        });
+
+        assertEquals("Error processing cookies: request may be invalid!", exception.getMessage());
+    }
+
+    // Test that verifies that a RuntimeException will get caught.
+    @Test
+    public void testIfCookieExist06() {
+        when(request.getCookies()).thenThrow(new RuntimeException());
+
+        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+            customerService.ifCookieExist(request);
+        });
+
+        assertEquals("An unexpected error occurred while checking cookies", exception.getMessage());
+    }
 }
+
