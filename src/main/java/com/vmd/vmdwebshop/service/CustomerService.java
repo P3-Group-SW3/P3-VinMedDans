@@ -36,13 +36,7 @@ public class CustomerService {
 
                 response.addCookie(cookie); // cookie gets added to the response.
             }
-        } catch (NullPointerException exc) {
-            System.err.println("A required object was null(request, response or session): " + exc.getMessage());
-        } catch (IllegalArgumentException exc) {
-            System.err.println("Name or value of cookie is invalid: " + exc.getMessage());
-        } catch (IllegalStateException exc) {
-            System.err.println("Failed to receive session from request: " + exc.getMessage());
-        } catch (Exception exc) {
+        } catch (RuntimeException exc) {
             System.err.println("An unexpected error occurred while setting the customer cookie: " + exc.getMessage());
         }
     }
@@ -209,25 +203,19 @@ public class CustomerService {
             throw new IllegalArgumentException("HttpServletRequest cannot be null!");
         }
 
-        try {
-            Cookie[] cookies = request.getCookies();
 
-            if (cookies != null) {
-                for (Cookie cookie : cookies) {
-                    if ("customerData".equals(cookie.getName())) {
-                        return true;
-                    }
+        Cookie[] cookies = request.getCookies();
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("customerData".equals(cookie.getName())) {
+                    return true;
                 }
             }
-
-            return false;
-
-        } catch (NullPointerException exc) {
-            throw new IllegalStateException("Error processing cookies: request may be invalid!");
-        } catch (Exception exc) {
-            System.err.println("Unexpected error: " + exc.getMessage());
-            throw new RuntimeException("An unexpected error occurred while checking cookies", exc);
         }
+
+        return false;
+
     }
 
     public String getCookieAge(HttpServletRequest request) {

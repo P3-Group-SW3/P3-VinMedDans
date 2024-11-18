@@ -37,6 +37,7 @@ public class OrderController {
     @PostMapping("/api/orderInfo")
 
     public ResponseEntity<Orders> createOrder(@Valid @RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
+
         List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(customerID);
         return ResponseEntity.ok(orderService.createOrderfromInfo(order, orderLines));
     }
