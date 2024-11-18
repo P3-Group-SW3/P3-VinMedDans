@@ -1,18 +1,20 @@
 package com.vmd.vmdwebshop.controller;
 
 
+import com.vmd.vmdwebshop.exception.order.OrderNotFoundInDatbase;
+import com.vmd.vmdwebshop.exception.order.OrderlineNotAdded;
+import com.vmd.vmdwebshop.exception.order.StateChangeFailedException;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
-import com.vmd.vmdwebshop.service.OrderLineService;
 import com.vmd.vmdwebshop.service.OrderService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.vmd.vmdwebshop.service.*;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -21,7 +23,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
     @Autowired
-    private OrderLineRepository orderLineRepository;
+    private OrderLineService orderLineService;
 
     /**
      * This is the post mapping from the request from the front end and makes an order from a customer.
@@ -34,9 +36,15 @@ public class OrderController {
      */
     @PostMapping("/api/orderInfo")
 
-    public ResponseEntity<Orders> createOrder(@RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
-        List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(customerID);
-        return ResponseEntity.ok(orderService.createOrderfromInfo(order, orderLines));
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
+
+        try{
+            List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
+            return ResponseEntity.ok(orderService.createOrderfromInfo(order, orderLines));
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
@@ -45,33 +53,45 @@ public class OrderController {
      */
     @GetMapping("/api/orders")
     public ResponseEntity<List<Orders>> getAllOrders() {
-        return ResponseEntity.ok(orderService.getAllOrders());
+        try {
+            return ResponseEntity.ok(orderService.getAllOrders());
+        }
+        catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     /**
      * Gets a specifiv order based on id
-     * @param id
+     * @param orderID
      * @return
      */
-    @GetMapping("/api/orders/{id}")
-    public ResponseEntity<Orders> getOrderById(@PathVariable String id) {
-        Orders order = orderService.getOrderById(Long.parseLong(id));
-        if(order!= null){
+    @GetMapping("/api/orders/{orderID}")
+    public ResponseEntity<Orders> getOrderById(@PathVariable String orderID) {
+        try {
+            Orders order = orderService.getOrderById(Long.parseLong(orderID));
             return ResponseEntity.ok(order);
         }
-        else {
+        catch (OrderNotFoundInDatbase e){
+            System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }
 
     /**
-     * changes the state of an order
-     * @param id
+     * changes the state of an order based on a number from 0 to 2
+     * @param orderID
      * @param state
      */
-    @PostMapping("/api/orders/state/{id}")
-    public void changeState(@PathVariable Long id, @RequestParam int state) {
-        //når vi laver denne skal vi senere gemme ændringerne 
-        orderService.changeState(id, state);
+    @PostMapping("/api/orders/state/{orderID}")
+    public void changeState(@PathVariable Long orderID, @RequestBody OrderState state) {
+        //når vi laver denne skal vi senere gemme ændringerne
+        try {
+            orderService.changeState(orderID, state.getState());
+        }catch (StateChangeFailedException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

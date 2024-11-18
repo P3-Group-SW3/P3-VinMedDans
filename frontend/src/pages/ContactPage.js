@@ -1,7 +1,6 @@
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-import images from "../images/images";
 
 function ContactPage() {
     return (
@@ -12,7 +11,7 @@ function ContactPage() {
                 <div className="row">
                     <div className="col-md-6 d-flex justify-content-center align-items-center">
                         <img
-                            src= {images.image6}
+                            src= {"http://localhost:8080/api/images/image6.png"}
                             alt="Vinflasker"
                             className="img-fluid"
                             style={{ maxWidth: "80%" }}
