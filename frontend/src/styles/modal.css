@@ -2,7 +2,7 @@
     position: fixed;
     width: 20em;
     top: 5em !important;
-    right: 3em;
+    right: 3em !important;
     margin-left: auto;
     height: fit-content;
     box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
