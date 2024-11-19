@@ -1,9 +1,6 @@
 package com.vmd.vmdwebshop.service;
 
 import com.vmd.vmdwebshop.exception.order.*;
-import jakarta.validation.constraints.Null;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import com.vmd.vmdwebshop.repository.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -17,17 +14,17 @@ import java.util.*;
 @Transactional
 public class OrderService {
 
-    @Autowired
-    private OrderRepository orderRepository;
 
-    @Autowired
-    private OrderLineRepository orderLineRepository;
-    private final View error;
+   
+    private final OrderLineRepository orderLineRepository;
+
+    private final OrderRepository orderRepository;
 
     // fjern / tilføj OrderRepository orderRepository baseret på test
-    public OrderService(View error){
+    public OrderService(View error, OrderRepository orderRepository, OrderLineRepository orderLineRepository){
         this.error = error;
-        //this.orderRepository = orderRepository;
+        this.orderRepository = orderRepository;
+        this.orderLineRepository = orderLineRepository;
     }
 
     /**
@@ -37,7 +34,7 @@ public class OrderService {
     public List<Orders> getAllOrders() {
 
         List<Orders> orders = orderRepository.findAll();
-        if (orders == null){
+        if (orders.isEmpty()){
             throw new OrdersNotFound();
         }
         return orders;
@@ -60,18 +57,20 @@ public class OrderService {
 
     /**
      * Creates a order based on the information given by the customer
-     * @param orderinfo
+     * @param orderDto
      * @param orderLines
      * @return
      */
-    public Orders createOrderfromInfo(Orderinfo orderinfo, List<OrderLine> orderLines) {
-        Orders order = orderinfo.createOrderFromInfo();
+    public Orders createOrderFromInfo(OrderDto orderDto, List<OrderLine> orderLines) {
+        Orders order = orderDto.createOrderFromInfo();
         order.setState(Orders.State.REGISTERED);
         order.setDate(new Date());
         orderRepository.save(order);
+
         if(order.getID() == null){
             throw new OrderNotSaved(order.getFullName(), order.getMail());
         }
+
         for(OrderLine orderLine : orderLines) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
@@ -91,10 +90,11 @@ public class OrderService {
     public void changeState(Long orderID, int state) {
         Orders order = getOrderById(orderID);
         Orders.State state1 = order.getState();
-        Orders.State state2 = Orders.State.values()[state];
-        order.setState(Orders.State.values()[state]);
-        if(order.getState() != state2) {
-            throw new StateChangeFailedException(state1, state2);
+        Orders.State newState = Orders.State.values()[state];
+        order.setState(newState);
+
+        if(order.getState() != newState) {
+            throw new StateChangeFailedException(state1, newState);
         }
     }
 

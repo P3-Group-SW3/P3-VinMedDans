@@ -77,7 +77,7 @@ public class OrderLine {
         this.customerID = "";
     }
 
-    public Long GetorderID(){
+    public Long getOrderID(){
         return orders.getID();
     }
 
