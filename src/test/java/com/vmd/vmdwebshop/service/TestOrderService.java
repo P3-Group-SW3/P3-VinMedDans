@@ -116,12 +116,13 @@ public class TestOrderService {
     //Test that asserts that when the state is not updated, an exception will be thrown
     @Test
     public void TestChangeState02(){
-        when(orderRepository.findById(Long.parseLong("1"))).thenReturn(Optional.ofNullable(orderList.get(1)));
+        when(orderRepository.findById(Long.parseLong("1"))).thenReturn(Optional.ofNullable(order));
+        when(order.getState()).thenReturn(Orders.State.REGISTERED).thenReturn(null);
 
-        orderService.changeState(Long.parseLong("1"), 2);
+        StateChangeFailedException newException = assertThrows(StateChangeFailedException.class, ()->{ orderService.changeState(Long.parseLong("1"), 2); } );
+        System.out.println(newException.getMessage());
 
-        assertEquals("PACKED", orderList.get(1).getState().toString());
-        System.out.println(orderList.get(1).getState().toString());
+        assertEquals("The order failed to change from REGISTERED to PACKED", newException.getMessage());
 
     }
 
