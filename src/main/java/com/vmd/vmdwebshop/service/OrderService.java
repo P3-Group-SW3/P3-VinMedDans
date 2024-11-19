@@ -14,14 +14,17 @@ import java.util.*;
 @Transactional
 public class OrderService {
 
+    private final View error;
+   
+    private final OrderLineRepository orderLineRepository;
 
     private final OrderRepository orderRepository;
-    private final View error;
 
     // fjern / tilføj OrderRepository orderRepository baseret på test
-    public OrderService(View error, OrderRepository orderRepository){
+    public OrderService(View error, OrderRepository orderRepository, OrderLineRepository orderLineRepository){
         this.error = error;
         this.orderRepository = orderRepository;
+        this.orderLineRepository = orderLineRepository;
     }
 
     /**
@@ -71,13 +74,10 @@ public class OrderService {
         for(OrderLine orderLine : orderLines) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
-            orderLine.removeCustomerID();
-
             if(orderLine.getOrderID() != order.getID()){
                 throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of:" + order.getID());
             }
         }
-
         return order;
     }
 
