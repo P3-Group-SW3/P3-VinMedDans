@@ -59,11 +59,12 @@ const CartOverlay = ({ handleClose, show }) => {
                                         style={{width: '50px', height: '50px', objectFit: 'cover'}}
                                     />
                                 </div>
-                                <span>{orderLine.wine.name}</span>
-                                <span>{orderLine.amount}</span>
+                                <div className="flex-column">
+                                    <span>{orderLine.wine.name}</span>
+                                    < OrderLineEdit orderLine={orderLine} onUpdate={refreshOrderLines}/>
+                                </div>
                                 <span>{orderLine.wine.price * orderLine.amount},-</span>
                             </div>
-                            < OrderLineEdit orderLine={orderLine} onUpdate={refreshOrderLines}/>
                         </div>
                     ))}
                 </div>
