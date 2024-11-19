@@ -37,7 +37,7 @@ public class OrderLine {
     private Long wineID;
 
     @ManyToOne
-    @JoinColumn(name = "orderID")
+    @JoinColumn(name = "orderID", nullable = true)
     private Orders orders;
 
     //Empty Constructor
@@ -78,7 +78,7 @@ public class OrderLine {
     }
 
     public Long getOrderID(){
-        return orders.getID();
+        return orders != null ? orders.getID() : null;
     }
 
     public void setWine(Wine wine) {
