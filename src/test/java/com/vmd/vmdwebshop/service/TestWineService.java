@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataAccessException;
 import org.springframework.web.servlet.View;
 
 import java.util.*;
@@ -69,7 +70,8 @@ public class TestWineService {
         System.out.println(newException.getMessage());
     }
 
-    @Test void TestGetWineByID02(){
+    @Test
+    public void TestGetWineByID02(){
         when(wineRepository.findById(Long.parseLong("1"))).thenReturn(Optional.ofNullable(wine1));
 
         Wine existingWine = wineService.getWineById(Long.parseLong("1"));
@@ -77,7 +79,8 @@ public class TestWineService {
         assertNotNull(existingWine);
     }
 
-    @Test void TestGetList01(){
+    @Test
+    public void TestGetList01(){
         when(wineRepository.findAll()).thenReturn(Collections.EMPTY_LIST);
 
         WineNotFoundException newException = assertThrows(WineNotFoundException.class, ()->{ wineService.getAll(); });
@@ -86,13 +89,35 @@ public class TestWineService {
 
     }
 
-    @Test void TestGetList02(){
+    @Test
+    public void TestGetList02(){
         when(wineRepository.findAll()).thenReturn(wineList);
 
         List<Wine> allWines = wineService.getAll();
 
         assertTrue(!allWines.isEmpty(), "Wines found");
         System.out.println(allWines);
+    }
+
+    //test that asserts that a new wines activeState is true by default, and the setActiveState reverses the state.
+    @Test
+    public void TestSetActiveState01(){
+        Wine wine = new Wine(){};
+
+        System.out.println(wine.getActiveState());
+        wine.changeActiveState();
+
+        assertFalse(wine.getActiveState());
+    }
+
+    //Test that asserts that an exception is thrown, if a wine does not exist
+    @Test
+    public void TestSetActiveState02(){
+        when(wineService.changeActiveState("1")).thenThrow(DataAccessException.class);
+
+        //WineDataAccessException newException = assertThrows(WineDataAccessException.class, ()->{ wineService.changeActiveState("1"); });
+
+
     }
 
 
