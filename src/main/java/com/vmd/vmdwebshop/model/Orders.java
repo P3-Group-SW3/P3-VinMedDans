@@ -61,7 +61,7 @@ public class Orders {
         orderLines.add(orderLine);
     }
 
-    public Set<OrderLine> getOrderLies(){
+    public Set<OrderLine> getOrderLines(){
         return orderLines;
     }
 

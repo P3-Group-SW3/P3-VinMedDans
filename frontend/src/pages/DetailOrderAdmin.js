@@ -68,15 +68,33 @@ function DetailOrderAdmin() {
             <p><strong>State:</strong> {states.find(s => s.value === order.state)?.label}</p>
 
             <h3>Orderlines</h3>
-
-                    {order.orderLines.map((line, index) => (
-                        <tr key={index}>
-                            <td>{line.productName}</td>
-                            <td>{line.amount}</td>
-                            <td>{line.price}</td>
-                            <td>{(line.amount * line.price).toFixed(2)}</td>
+            {order.orderLines && order.orderLines.length > 0 ? (
+                <div>
+                    <table className="table">
+                        <thead>
+                        <tr>
+                            <th>Product Name</th>
+                            <th>Quantity</th>
+                            <th>Price</th>
+                            <th>Total</th>
                         </tr>
-                    ))}
+                        </thead>
+                        <tbody>
+                        {order.orderLines.map((line, index) => (
+                            <tr key={index}>
+                                <td>{line.wine.name}</td>
+                                <td>{line.amount}</td>
+                                <td>{line.wine.price}</td>
+                                <td>{(line.amount * line.wine.price).toFixed(2)}</td>
+                            </tr>
+                        ))}
+                        </tbody>
+                    </table>
+                    <h4><strong>Total: </strong>{order.orderLines.reduce((total, line) => total + (line.amount * line.wine.price), 0).toFixed(2)} DKK</h4>
+                </div>
+            ) : (
+                <p>No order lines found.</p>
+            )}
 
 
             <div className="form-group">
