@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from './Button';
+import IncDecButton from "./IncDecButton";
 
 export const CartModify = (item) => {
   const [quantity, setQuantity] = useState(1);
@@ -32,25 +33,11 @@ export const CartModify = (item) => {
 
   return (
     <div className="d-flex" style={{ gap: "1rem" }}>
-        <div className="d-flex">
-            <Button
-              text="-"
-              onClick={decrementQuantity}
-              flatRight={true}
-            />
-
-            <div className="quantity-display bg-white">
-              <span>
-                  {quantity}
-              </span>
-            </div>
-
-            <Button
-              text="+"
-              onClick={incrementQuantity}
-              flatLeft={true}
-            />
-        </div>
+        <IncDecButton
+            decrementQuantity={decrementQuantity}
+            incrementQuantity={incrementQuantity}
+            quantity={quantity}
+        />
         <Button
           text="Føj til kurv"
           isWide={true}

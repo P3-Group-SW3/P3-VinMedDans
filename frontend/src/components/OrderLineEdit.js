@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Button from "./Button";
+import IncDecButton from "./IncDecButton";
 
 const OrderLineEdit = ({orderLine, onUpdate}) => {
     const [quantity, setQuantity] = useState(orderLine.amount);
@@ -63,25 +63,11 @@ const OrderLineEdit = ({orderLine, onUpdate}) => {
     }
 
     return (
-        <div className="d-inline-flex align-items-center gap 2">
-            < Button
-                text="-"
-                onClick={decrementQuantity}
-                makeSquare={true}
-                makeCircle={false}
-            />
-
-            <div className="quantity-display" style={{ width: '50 px', textAlign: 'center'}}>
-                {quantity}
-            </div>
-
-            < Button
-                text="+"
-                onClick={incrementQuantity}
-                makeSquare={true}
-                makeCircle={false}
-            />
-        </div>
+        <IncDecButton
+            decrementQuantity={decrementQuantity}
+            incrementQuantity={incrementQuantity}
+            quantity={quantity}
+        />
     )
 }
 
