@@ -37,7 +37,8 @@ public class TestOrderService {
     @InjectMocks
     private OrderService orderService;
 
-    List<Orders> orderList = new ArrayList<>() {};
+    List<Orders> orderList = new ArrayList<>();
+    List<OrderLine> orderLineList = new ArrayList<>();
 
     Orders order = null;
 
@@ -49,6 +50,10 @@ public class TestOrderService {
 
         orderList.add((new Orders("g t","c","e@mail.c","+4599999999","ringevej 991","5050","hej")));
         orderList.add((new Orders("g t","c","n@mail.c","+4599888888","farvel 991","5045","hey")));
+
+        orderLineList.add((new OrderLine(123, Long.parseLong("1"), "abc1")));
+        orderLineList.add((new OrderLine(123, Long.parseLong("2"), "abc1")));
+
     }
 
     //Test that asserts that when a list of orders isn't found in the database, an exception will be thrown
@@ -105,11 +110,33 @@ public class TestOrderService {
 
     //Test that asserts that when the state is not updated, an exception will be thrown
     @Test
-    public void TestChangeState02(){}
+    public void TestChangeState02(){
+        when(orderRepository.findById(Long.parseLong("1"))).thenReturn(Optional.ofNullable(orderList.get(1)));
 
-    
+        orderService.changeState(Long.parseLong("1"), 2);
+
+        assertEquals("PACKED", orderList.get(1).getState().toString());
+        System.out.println(orderList.get(1).getState().toString());
+
+    }
+
+
+
     @Test
-    public void TestCreateOrderFromInfo01(){}
+    public void TestCreateOrderFromInfo01(){
+        OrderDto orderDto = new OrderDto();
+
+        when(orderDto.createOrderFromInfo()).
+
+        Orders newOrder = mock(Orders.class);
+
+        when(orderRepository.save(any(Orders.class))).thenReturn(newOrder);
+
+        orderService.createOrderFromInfo(orderDto, orderLineList);
+
+        System.out.println(order);
+
+    }
 
     //Test that asserts that an Order object is created, based on the Order Data Transfer Object.
     @Test
