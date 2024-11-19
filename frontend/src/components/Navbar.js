@@ -1,6 +1,7 @@
 import React from 'react';
 import {useNavigate} from "react-router-dom";
 import '../styles/header.css'
+import Cart from './Cart'
 
 function NavBar() {
 
@@ -13,6 +14,7 @@ function NavBar() {
       <NavItem text="Hvor er vi" color="#F4AC46" onClick={() => navigate(`/locations`)}/>
       <NavItem text="Events" color="#F190A2" onClick={() => navigate(`/events`)}/>
       <NavItem text="Kontakt os" color="#882D69" onClick={() => navigate(`/contact`)}/>
+      <Cart />
     </nav>
   );
 }

@@ -15,6 +15,7 @@ export const CartModify = (item) => {
   // API call to add item to cart
   const addToCart = () => {
     console.log("Button clicked with item:", item, "quantity:", quantity);
+
     fetch('/api/addToCart', {
       method: 'POST',
       headers: {
