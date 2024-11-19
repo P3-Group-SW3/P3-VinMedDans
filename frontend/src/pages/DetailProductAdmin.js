@@ -16,60 +16,39 @@ function DetailProductAdmin() {
             })
             .then(data => {
                 setProduct(data);
-
-                setNewAmountLeft(data.amountLeft);  // Initialiser med den nuværende værdi af amountLeft
-
+                setNewAmountLeft(data.amountLeft); // Sæt initial værdi for `newAmountLeft`
             })
             .catch(error => console.error('Error fetching product:', error));
     }, [id]);
 
-
-    // Håndter ændring af amountLeft
-    const handleAmountChange = (event) => {
-        setNewAmountLeft(event.target.value);
-    };
-
-    // Send opdatering af amountLeft til serveren
-    const handleUpdateAmount = () => {
-        if (newAmountLeft !== '') {
-            fetch(`/api/wine/admin/createAndEdit`, {
+    // Funktion til at håndtere opdatering af `amountLeft`
+    const handleUpdateAmountLeft = async () => {
+        try {
+            const response = await fetch(`/api/wine/admin/createAndEdit`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
                 body: JSON.stringify({
-                    ID: product.ID,
+                    id: product.id,
                     name: product.name,
                     price: product.price,
                     description: product.description,
-                    amountLeft: newAmountLeft,
-                    imageURL: product.imageURL
+                    imageURL: product.imageURL,
+                    amountLeft: newAmountLeft // Opdateret værdi for amountLeft
                 }),
-            })
-                .then(response => {
-                    if (response.ok) {
-                        alert('Amount updated successfully');
-                        setProduct(prevProduct => ({ ...prevProduct, amountLeft: newAmountLeft }));
-                    } else {
-                        alert('Error updating amount');
-                    }
-                })
-                .catch(error => console.error('Error updating product:', error));
-        }
-    };
+            });
 
-    // Håndter sletning af produkt
-    const handleDeleteProduct = () => {
-        fetch(`/api/wine/admin/delete/${product.ID}`, { method: 'POST' })
-            .then(response => {
-                if (response.ok) {
-                    alert('Product deleted successfully');
-                    navigate('/products');  // Omdiriger til produktlisten efter sletning
-                } else {
-                    alert('Error deleting product');
-                }
-            })
-            .catch(error => console.error('Error deleting product:', error));
+            if (response.ok) {
+                setProduct({ ...product, amountLeft: newAmountLeft });
+                alert('AmountLeft updated successfully!');
+            } else {
+                alert('Failed to update AmountLeft.');
+            }
+        } catch (error) {
+            console.error('Error updating AmountLeft:', error);
+            alert('An error occurred while updating AmountLeft.');
+        }
     };
 
     if (!product) return <div>Loading...</div>;
@@ -77,25 +56,24 @@ function DetailProductAdmin() {
     return (
         <div>
             <h1>{product.name}</h1>
-            <p>ID: {product.ID}</p>
+            <p>ID: {product.id}</p>
             <p>Price: {product.price}</p>
             <p>Description: {product.description}</p>
-            <p>
-                Amount Left:
-                <input
-                    type="number"
-                    value={newAmountLeft}
-                    onChange={handleAmountChange}
-                    style={{ width: '80px' }}
-                />
-                <button onClick={handleUpdateAmount}>Update Amount</button>
-            </p>
-            <img src={product.imageURL} alt={product.name} style={{ width: '150px' }} />
+            <p>Amount Left: {product.amountLeft}</p>
+            <img src={product.imageURL} alt={product.name} style={{ width: '200px' }} />
 
-            <div>
-                <button onClick={handleDeleteProduct} style={{ backgroundColor: 'red', color: 'white' }}>
-                    Delete Product
-                </button>
+            <div style={{ marginTop: '20px' }}>
+                <label>
+                    New Amount Left:
+                    <input
+                        type="number"
+                        value={newAmountLeft}
+                        onChange={(e) => setNewAmountLeft(e.target.value)}
+                        min="0"
+                        style={{ marginLeft: '10px' }}
+                    />
+                </label>
+                <button onClick={handleUpdateAmountLeft} style={{ marginLeft: '10px' }}>Update</button>
             </div>
         </div>
     );
