@@ -4,6 +4,7 @@ package com.vmd.vmdwebshop.controller;
 import com.vmd.vmdwebshop.exception.orderline.OrderLineDataAccessException;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
+import com.vmd.vmdwebshop.service.PriceDTO;
 import com.vmd.vmdwebshop.service.WineService;
 import jakarta.validation.Valid;
 import org.hibernate.query.Order;
@@ -43,9 +44,11 @@ public class OrderLineController {
      * @return list of orderlines
      */
     @GetMapping("/api/getAllOrderLines/{customerID}")
-    public ResponseEntity<List<OrderLine>> getAllOrderLines(@PathVariable String customerID) {
+    public ResponseEntity<PriceDTO > getAllOrderLines(@PathVariable String customerID) {
         try {
-            return ResponseEntity.ok(orderLineService.getAllOrderLines(customerID));
+            List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
+            PriceDTO price = orderLineService.calculateOrderLine(orderLines);
+            return ResponseEntity.ok(price);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
