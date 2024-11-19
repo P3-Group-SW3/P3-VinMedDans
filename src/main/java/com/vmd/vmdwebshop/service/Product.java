@@ -12,6 +12,8 @@ public abstract class Product {
 
     private String imageURL;
 
+    private boolean activeState = true;
+
     public Product() {}
 
     public Product(double price, String description, String imageURL) {
@@ -27,6 +29,8 @@ public abstract class Product {
 
     public double getPrice() { return this.price; }
 
+    public boolean getActiveState(){return this.activeState; }
+
 
 
     void setPrice(int price) {
@@ -40,4 +44,7 @@ public abstract class Product {
     void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+    public void changeActiveState(){ activeState = !activeState; }
+
 }

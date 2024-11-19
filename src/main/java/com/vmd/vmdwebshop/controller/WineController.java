@@ -3,10 +3,9 @@ package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
-import com.vmd.vmdwebshop.service.WineDTO;
+import com.vmd.vmdwebshop.service.WineDto;
 import com.vmd.vmdwebshop.service.WineService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ public class WineController {
      * @return List<Wine>
      */
     @PostMapping(value="/admin/createAndEdit", consumes = "application/json")
-    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody @Valid WineDTO wineDTO) {
+    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody @Valid WineDto wineDTO) {
         Wine wine = wineDTO.createWineFromWineData();
 
         try{
@@ -74,6 +73,18 @@ public class WineController {
         try {
             return ResponseEntity.ok(wineService.delete(Long.parseLong(ID)));
 
+        } catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+
+    }
+
+    @PostMapping("admin/changeActiveState/{ID}")
+    public ResponseEntity<List<Wine>> changeActiveState(@PathVariable("ID") @Pattern(regexp = "^\\d+$") String ID){
+
+        try {
+            return ResponseEntity.ok(wineService.changeActiveState(ID));
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();

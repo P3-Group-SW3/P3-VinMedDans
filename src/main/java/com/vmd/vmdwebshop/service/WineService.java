@@ -6,6 +6,7 @@ import com.vmd.vmdwebshop.exception.wine.*;
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -75,6 +76,26 @@ public class WineService implements AdministrativeMethods<Wine> {
             throw new WineNotDeletedException(e.getMessage());
         }
 
+
+        return wineRepository.findAll();
+    }
+
+    public List<Wine> changeActiveState(String ID) {
+        Wine existingWine = null;
+
+        try {
+            existingWine = wineRepository.findById(Long.parseLong(ID)).orElse(null);
+        } catch (DataAccessException e) {
+            //throw new WineDataAccessException("The wine was not retrieved from the database");
+        }
+
+        try {
+            if (existingWine != null){
+                existingWine.changeActiveState();
+            }
+        } catch (DataAccessException e){
+            //throw new WineDataAccessException("The Active State of the wine was not updated");
+        }
 
         return wineRepository.findAll();
     }

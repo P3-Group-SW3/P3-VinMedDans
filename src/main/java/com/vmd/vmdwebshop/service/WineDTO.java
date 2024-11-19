@@ -5,7 +5,7 @@ import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 
-public class WineDTO {
+public class WineDto {
     private int ID;
     private String description;
     private String imageURL;
@@ -13,7 +13,7 @@ public class WineDTO {
     private int amountLeft;
     private String name;
 
-    public WineDTO(int ID, String description, String imageURL, double price, int amountLeft, String name){
+    public WineDto(int ID, String description, String imageURL, double price, int amountLeft, String name){
         this.ID = ID;
         this.description = description;
         this.imageURL = imageURL;
