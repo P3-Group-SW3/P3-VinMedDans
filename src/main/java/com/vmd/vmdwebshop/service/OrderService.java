@@ -19,6 +19,9 @@ public class OrderService {
 
     @Autowired
     private OrderRepository orderRepository;
+
+    @Autowired
+    private OrderLineRepository orderLineRepository;
     private final View error;
 
     // fjern / tilføj OrderRepository orderRepository baseret på test
@@ -72,12 +75,10 @@ public class OrderService {
         for(OrderLine orderLine : orderLines) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
-            orderLine.removeCustomerID();
             if(orderLine.GetorderID() != order.getID()){
                 throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of:" + order.getID());
             }
         }
-
         return order;
     }
 

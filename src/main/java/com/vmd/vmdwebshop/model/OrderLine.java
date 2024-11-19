@@ -16,8 +16,7 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-    @Column(name = "customerID")
-    @NotBlank(message = "this field must not be empty")
+    @Column(name = "customerID", nullable = true)
     private String customerID;
 
     @Digits(integer = 3, fraction = 0, message = "this field must only consist of digits")
@@ -75,7 +74,7 @@ public class OrderLine {
 
     public void setOrders(Orders orders) {
         this.orders = orders;
-        this.customerID = null;
+        this.customerID = "";
     }
 
     public Long GetorderID(){

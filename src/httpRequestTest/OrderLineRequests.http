@@ -56,3 +56,18 @@ Content-Type: application/json
 ### GET request with a header
 GET http://localhost:8080//api/getAllOrderLines/jph
 Accept: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditOrderLine
+Content-Type: application/json
+
+{
+  "amount": 10,
+  "customerID": "ken",
+  "wineID": 3,
+  "orderid": null
+}
+
+### GET request with a header
+GET http://localhost:8080//api/getAllOrderLines/ken
+Accept: application/json
