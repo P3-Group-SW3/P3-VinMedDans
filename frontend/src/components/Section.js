@@ -1,6 +1,5 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import images from '../images/images'; // Adjust the path as needed
 
 const Section = ({ title, description, imagePosition, buttonText, imagePath }) => {
   const isImageLeft = imagePosition === 'left';
@@ -11,7 +10,7 @@ const Section = ({ title, description, imagePosition, buttonText, imagePath }) =
       <div className={`row align-items-center ${isImageLeft ? '' : 'flex-row-reverse'}`}>
         <div className="col-md-6 d-flex justify-content-center">
           <div className="border p-3" style={{ width: '450px', height: '450px' }}>
-            {selectedImage && (
+            {imagePath && (
               <img
                 src={imagePath}
                 alt={title}

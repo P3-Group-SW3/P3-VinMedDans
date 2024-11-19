@@ -87,6 +87,7 @@ public class OrderLineController {
     public ResponseEntity<OrderLine> returnOrderLine(@RequestBody OrderLine orderLine, @CookieValue(value = "cookieId", defaultValue = "") String cookieID) {
 
         orderLine.setCustomerID(cookieID);
+        orderLine.setWine(wineService.getWineById(orderLine.getWineID()));
 
         return ResponseEntity.ok(orderLine);
     }
