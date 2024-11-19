@@ -35,8 +35,6 @@ export const CartModify = (item) => {
         <Button
           text="-"
           onClick={decrementQuantity}
-          makeCircle={false}
-          makeSquare={true}
         />
 
         <div className="quantity-display" style={{ width: "50px", textAlign: "center" }}>
@@ -46,8 +44,6 @@ export const CartModify = (item) => {
         <Button
           text="+"
           onClick={incrementQuantity}
-          makeCircle={false}
-          makeSquare={true}
         />
       </div>
       <div style={{ margin: '0 10px' }}>

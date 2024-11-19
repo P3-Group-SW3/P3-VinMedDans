@@ -2,10 +2,10 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import '../styles/button.css';
 
-function Button({ text, onClick, makeCircle, makeSquare }) {
+function Button({ text, onClick }) {
   return (
     <button
-      className={makeCircle ? 'buttonCircle' : makeSquare ? 'buttonSquare' : 'button'}
+      className="button"
       aria-label="Action button"
       onClick={onClick}
     >
