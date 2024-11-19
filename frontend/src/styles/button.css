@@ -1,20 +1,22 @@
 .button {
   display: flex;
-  padding: 10px;
+  padding: 0 10px 0 10px;
   background-color: #C0924D;
   color: white;
   border: none;
-  border-radius: 5px;
+  border-radius: 6px;
   cursor: pointer;
   font-size: 20px;
   transition: background-color 0.3s ease, transform 0.3s ease;
   font-family: 'rubik', cursive;
 }
 
+.wide {
+  padding: 0 40px 0 40px;
+}
+
 .button:hover {
   background-color: #D5B587;
-  transform: translateY(-2px);
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
 .button:active {
@@ -23,7 +25,14 @@
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
 }
 
-.button:focus {
-  outline: none;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+.quantity-display {
+  display: flex;
+  height: 100%;
+  width: 30px;
+  font-size: 20px;
+  text-align: center;
+  align-content: center;
+  justify-content: center;
+  color: #b9945c;
+  font-family: 'rubik', cursive;
 }

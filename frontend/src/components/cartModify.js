@@ -31,28 +31,31 @@ export const CartModify = (item) => {
   }
 
   return (
-    <div className="d-inline-flex align-items-center gap-3 position-relative"  style={{ marginLeft: '10px' }}>
-      <div className="d-inline-flex align-items-center gap-2">
-        <Button
-          text="-"
-          onClick={decrementQuantity}
-        />
+    <div className="d-flex" style={{ gap: "1rem" }}>
+        <div className="d-flex">
+            <Button
+              text="-"
+              onClick={decrementQuantity}
+              flatRight={true}
+            />
 
-        <div className="quantity-display" style={{ width: "50px", textAlign: "center" }}>
-          {quantity}
+            <div className="quantity-display bg-white">
+              <span>
+                  {quantity}
+              </span>
+            </div>
+
+            <Button
+              text="+"
+              onClick={incrementQuantity}
+              flatLeft={true}
+            />
         </div>
-
-        <Button
-          text="+"
-          onClick={incrementQuantity}
-        />
-      </div>
-      <div style={{ margin: '0 10px' }}>
         <Button
           text="Føj til kurv"
+          isWide={true}
           onClick={ addToCart }
         />
-      </div>
     </div>
   );
 };
