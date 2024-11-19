@@ -1,16 +1,15 @@
 {
   "files": {
-    "main.css": "/static/css/main.0b3cb851.css",
-    "main.js": "/static/js/main.e3af247a.js",
+    "main.css": "/static/css/main.0695d19b.css",
+    "main.js": "/static/js/main.9955e92b.js",
     "static/js/453.8ab44547.chunk.js": "/static/js/453.8ab44547.chunk.js",
-    "static/media/havtorben.png": "/static/media/havtorben.3b6d72898ea4c277d004.png",
     "index.html": "/index.html",
-    "main.0b3cb851.css.map": "/static/css/main.0b3cb851.css.map",
-    "main.e3af247a.js.map": "/static/js/main.e3af247a.js.map",
+    "main.0695d19b.css.map": "/static/css/main.0695d19b.css.map",
+    "main.9955e92b.js.map": "/static/js/main.9955e92b.js.map",
     "453.8ab44547.chunk.js.map": "/static/js/453.8ab44547.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.0b3cb851.css",
-    "static/js/main.e3af247a.js"
+    "static/css/main.0695d19b.css",
+    "static/js/main.9955e92b.js"
   ]
 }

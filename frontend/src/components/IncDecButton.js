@@ -1,19 +1,29 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import '../styles/productpage.css';
+import Button from './Button'
 
-function Button({ text, onClick }) {
-    console.log('Button rendered with text:', text); // Debugging log
+function IncDecButton({ decrementQuantity, incrementQuantity, quantity }) {
+
     return (
-        <button className="button" aria-label="Action button" onClick={onClick}>
-            {text}
-        </button>
+        <div className="d-flex">
+            <Button
+                text="-"
+                onClick={decrementQuantity}
+                flatRight={true}
+            />
+
+            <div className="quantity-display bg-white">
+              <span>
+                  {quantity}
+              </span>
+            </div>
+
+            <Button
+                text="+"
+                onClick={incrementQuantity}
+                flatLeft={true}
+            />
+        </div>
     );
 }
 
-Button.propTypes = {
-    text: PropTypes.string.isRequired,
-    onClick: PropTypes.func,
-};
-
-export default Button;
+export default IncDecButton;
