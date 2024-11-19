@@ -10,6 +10,7 @@ import AboutUsPage from "./pages/AboutUsPage";
 import LocationPage from "./pages/LocationPage";
 import ContactPage from "./pages/ContactPage";
 import EventPage from "./pages/EventPage";
+import LoadFonts from "./components/LoadFonts";
 
 const SetTitle = () => {
   useEffect(() => {
@@ -24,6 +25,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <SetTitle />
+      <LoadFonts />
       <Routes>
         <Route path="/">
           <Route index element={<Landingpage />} />
@@ -33,14 +35,11 @@ root.render(
           <Route path="locations" element={<LocationPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="events" element={<EventPage />} />
-          <Route path="*" element={<h1>404 - Not Found</h1>} />
+          <Route path="*" element={<h1>Page not found</h1>} />
         </Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();
