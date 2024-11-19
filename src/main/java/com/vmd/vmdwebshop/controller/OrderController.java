@@ -7,6 +7,7 @@ import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
 import com.vmd.vmdwebshop.service.OrderService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -33,7 +34,7 @@ public class OrderController {
      * @return
      */
     @PostMapping("/api/orderInfo/{customerID}")
-    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @PathVariable String customerID) {
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @PathVariable @Pattern(regexp = "^\\d+$") String customerID) {
 
         try{
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
@@ -68,7 +69,7 @@ public class OrderController {
      * @return
      */
     @GetMapping("/api/orders/{orderID}")
-    public ResponseEntity<Orders> getOrderById(@PathVariable String orderID) {
+    public ResponseEntity<Orders> getOrderById(@PathVariable @Pattern(regexp = "^\\d+$") String orderID) {
         try {
             Orders order = orderService.getOrderById(Long.parseLong(orderID));
             return ResponseEntity.ok(order);
@@ -85,7 +86,7 @@ public class OrderController {
      * @param state
      */
     @PostMapping("/api/orders/state/{orderID}")
-    public void changeState(@PathVariable Long orderID, @RequestBody OrderState state) {
+    public void changeState(@PathVariable @Pattern(regexp = "^\\d+$") Long orderID, @RequestBody OrderState state) {
         //når vi laver denne skal vi senere gemme ændringerne
         try {
             orderService.changeState(orderID, state.getState());
