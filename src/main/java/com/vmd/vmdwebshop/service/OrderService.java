@@ -14,7 +14,7 @@ import java.util.*;
 @Transactional
 public class OrderService {
 
-
+    private final View error;
    
     private final OrderLineRepository orderLineRepository;
 
@@ -74,7 +74,7 @@ public class OrderService {
         for(OrderLine orderLine : orderLines) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
-            if(orderLine.GetorderID() != order.getID()){
+            if(orderLine.getOrderID() != order.getID()){
                 throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of:" + order.getID());
             }
         }
