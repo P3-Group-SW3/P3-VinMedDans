@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { CartModify } from './cartModify';
+import { CartModify } from './CartModify';
 import '../styles/fonts.css';
 import '../styles/item.css';
 

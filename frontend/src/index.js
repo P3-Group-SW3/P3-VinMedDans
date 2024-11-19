@@ -14,6 +14,7 @@ import AdminPageFunc from "./pages/AdminPageFunc";
 import DetailOrderAdmin from "./pages/DetailOrderAdmin";
 import DetailProductAdmin from "./pages/DetailProductAdmin";
 import CreateNewWinePage from "./pages/CreateNewWinePage";
+import LoadFonts from "./components/LoadFonts";
 
 const SetTitle = () => {
   useEffect(() => {
@@ -28,6 +29,7 @@ root.render(
   <React.StrictMode>
     <BrowserRouter>
       <SetTitle />
+      <LoadFonts />
       <Routes>
         <Route path="/">
           <Route index element={<Landingpage />} />
@@ -42,13 +44,11 @@ root.render(
           <Route path="/products/:id" element={<DetailProductAdmin/>} />
           <Route path="create-wine" element={<CreateNewWinePage/>} />
           <Route path="*" element={<h1>404 - Not Found</h1>} />
+          <Route path="*" element={<h1>Page not found</h1>} />
         </Route>
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
 );
 
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals();

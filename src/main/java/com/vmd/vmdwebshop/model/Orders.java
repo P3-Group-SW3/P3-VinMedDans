@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -60,6 +61,9 @@ public class Orders {
         orderLines.add(orderLine);
     }
 
+    public Set<OrderLine> getOrderLies(){
+        return orderLines;
+    }
 
 
     // Getters and setters
