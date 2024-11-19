@@ -25,18 +25,34 @@ public class EventController {
 
     @PostMapping("/admin/createAndEdit")
     public ResponseEntity<List<Event>> createAndEdit(@RequestBody @Valid Event event) {
-        return ResponseEntity.ok(eventService.createAndEdit(event));
+        try {
+            return ResponseEntity.ok(eventService.createAndEdit(event, event.getID()));
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/getAll")
     public ResponseEntity<List<Event>> getAllEvents() {
+        try {
         return ResponseEntity.ok(eventService.getAll());
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
     }
 
     @PostMapping("/admin/delete/{ID}")
     public ResponseEntity<List<Event>> delete(@PathVariable ("ID") Long ID) {
-        return ResponseEntity.ok(eventService.delete(ID));
+        try {
+            return ResponseEntity.ok(eventService.delete(ID));
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
     }
+
 
 
 

@@ -29,15 +29,15 @@ public abstract class Product {
 
 
 
-    void setPrice(int price) {
+    public void setPrice(double price) {
         this.price = price;
     }
 
-    void setDescription(String description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
-    void setImageURL(String imageURL) {
+    public void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
 }

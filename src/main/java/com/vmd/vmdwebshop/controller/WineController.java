@@ -69,7 +69,7 @@ public class WineController {
     }
 
     @PostMapping("admin/delete/{ID}")
-    public ResponseEntity<List<Wine>> deleteWine(@PathVariable("ID") @Pattern(regexp = "^\\d+$") String ID){
+    public ResponseEntity<List<Wine>> delete(@PathVariable("ID") @Pattern(regexp = "^\\d+$") String ID){
 
         try {
             return ResponseEntity.ok(wineService.delete(Long.parseLong(ID)));

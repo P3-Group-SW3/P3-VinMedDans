@@ -75,7 +75,7 @@ public class OrderLineService {
             } else if (orderLine.getAmount() == 0 || orderLine.getAmount() <= 0) {
                 orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
             } else {
-                orderLine.setWine(wineService.getWineById(orderLine.getWineID()));
+                orderLine.setWine(wineService.getWineById(orderLine.getWineID())); // Gives orderline access to the wine object
                 orderLineRepository.save(orderLine);
             }
         } catch (DataAccessException e){ throw new OrderLineDataAccessException("Failed to update or save to the database");}
@@ -140,6 +140,7 @@ public class OrderLineService {
         else {
             orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
         }
+
         return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
 
     }
