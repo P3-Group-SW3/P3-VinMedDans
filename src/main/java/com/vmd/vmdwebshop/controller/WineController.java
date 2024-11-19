@@ -3,10 +3,9 @@ package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
-import com.vmd.vmdwebshop.service.WineDTO;
+import com.vmd.vmdwebshop.service.WineDto;
 import com.vmd.vmdwebshop.service.WineService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +55,7 @@ public class WineController {
      * @return List<Wine>
      */
     @PostMapping(value="/admin/createAndEdit", consumes = "application/json")
-    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody @Valid WineDTO wineDTO) {
+    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody @Valid WineDto wineDTO) {
         Wine wine = wineDTO.createWineFromWineData();
 
         try{
