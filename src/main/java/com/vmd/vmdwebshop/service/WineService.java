@@ -61,6 +61,12 @@ public class WineService implements AdministrativeMethods<Wine> {
         return wineRepository.findAll();
     }
 
+
+    /** THis method deletes a wine entity in the database, based on the ID
+     * Throws an exception if the wine isn't found, or if the object isn't properly deleted.
+     * @param ID
+     * @return List<Wine>
+     */
     @Override
     public List<Wine> delete(Long ID) {
         Wine existingWine = wineRepository.findById(ID).orElse(null);
@@ -80,6 +86,13 @@ public class WineService implements AdministrativeMethods<Wine> {
         return wineRepository.findAll();
     }
 
+    /** This method first tries to find the existing wine.
+     * If not found, it will throw an exception
+     * if found it will change the activeState attribute.
+     * Return a list of all wines.
+     * @param ID
+     * @return List<Wine>
+     */
     public List<Wine> changeActiveState(String ID) {
         Wine existingWine = null;
 
