@@ -124,17 +124,18 @@ public class TestOrderService {
 
     @Test
     public void TestCreateOrderFromInfo01(){
-        OrderDto orderDto = new OrderDto();
-
-        when(orderDto.createOrderFromInfo()).
-
+        OrderDto orderDto = mock(OrderDto.class);
         Orders newOrder = mock(Orders.class);
+        System.out.println(orderDto);
+        System.out.println(newOrder);
 
+        when(orderDto.createOrderFromInfo()).thenReturn(newOrder);
         when(orderRepository.save(any(Orders.class))).thenReturn(newOrder);
+        when(newOrder.getID()).thenReturn(Long.parseLong("1"));
+        when(newOrder.getMail()).
 
         orderService.createOrderFromInfo(orderDto, orderLineList);
 
-        System.out.println(order);
 
     }
 
