@@ -1,13 +1,12 @@
 package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.exception.order.OrderNotFoundInDatbase;
-import com.vmd.vmdwebshop.exception.order.OrdersNotFound;
-import com.vmd.vmdwebshop.exception.order.StateChangeFailedException;
+import com.vmd.vmdwebshop.exception.order.*;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -42,6 +41,9 @@ public class TestOrderService {
 
     Orders order = null;
 
+    OrderDto orderDto = null;
+
+    OrderLine orderLine = null;
 
 
     @BeforeEach
@@ -51,8 +53,11 @@ public class TestOrderService {
         orderList.add((new Orders("g t","c","e@mail.c","+4599999999","ringevej 991","5050","hej")));
         orderList.add((new Orders("g t","c","n@mail.c","+4599888888","farvel 991","5045","hey")));
 
-        orderLineList.add((new OrderLine(123, Long.parseLong("1"), "abc1")));
-        orderLineList.add((new OrderLine(123, Long.parseLong("2"), "abc1")));
+        orderDto = mock(OrderDto.class);
+        order = mock(Orders.class);
+        orderLine = mock(OrderLine.class);
+
+        orderLineList.add(orderLine);
 
     }
 
@@ -124,19 +129,43 @@ public class TestOrderService {
 
     @Test
     public void TestCreateOrderFromInfo01(){
-        OrderDto orderDto = mock(OrderDto.class);
-        Orders newOrder = mock(Orders.class);
-        System.out.println(orderDto);
-        System.out.println(newOrder);
+        when(orderDto.createOrderFromInfo()).thenReturn(order);
+        when(orderRepository.save(any(Orders.class))).thenReturn(order);
+        when(order.getID()).thenReturn(Long.parseLong("1"));
+        when(order.getFullName()).thenReturn("Jens Peter");
+        when(order.getMail()).thenReturn("a@b.com");
+        when(orderLine.getOrderID()).thenReturn(Long.parseLong("1"));
 
-        when(orderDto.createOrderFromInfo()).thenReturn(newOrder);
-        when(orderRepository.save(any(Orders.class))).thenReturn(newOrder);
-        when(newOrder.getID()).thenReturn(Long.parseLong("1"));
-        when(newOrder.getMail()).
+        Orders newOrder = orderService.createOrderFromInfo(orderDto, orderLineList);
 
-        orderService.createOrderFromInfo(orderDto, orderLineList);
+        assertEquals("1", newOrder.getID().toString());
+    }
 
+    @Test
+    public void TestCreateOrderFromInfo02(){
+        when(orderDto.createOrderFromInfo()).thenReturn(order);
+        when(orderRepository.save(any(Orders.class))).thenReturn(order);
+        when(order.getID()).thenReturn(null);
+        when(order.getFullName()).thenReturn("Jens Peter");
+        when(order.getMail()).thenReturn("a@b.com");
 
+        OrderNotSaved newException = assertThrows(OrderNotSaved.class, ()->{ orderService.createOrderFromInfo(orderDto, orderLineList); });
+
+        assertEquals("The order was not created, customer: Jens Peter email: a@b.com", newException.getMessage());
+    }
+
+    @Test
+    public void TestCreateOrderFromInfo03(){
+        when(orderDto.createOrderFromInfo()).thenReturn(order);
+        when(orderRepository.save(any(Orders.class))).thenReturn(order);
+        when(order.getID()).thenReturn(Long.parseLong("2"));
+        when(order.getFullName()).thenReturn("Jens Peter");
+        when(order.getMail()).thenReturn("a@b.com");
+        when(orderLine.getOrderID()).thenReturn(Long.parseLong("3"));
+        when(orderLine.getID()).thenReturn(Long.parseLong("1"));
+
+        OrderlineNotAdded newException = assertThrows(OrderlineNotAdded.class, ()->{ orderService.createOrderFromInfo(orderDto, orderLineList); });
+        assertEquals("orderline with id: 1 did not add the order ID of: 2", newException.getMessage());
     }
 
     //Test that asserts that an Order object is created, based on the Order Data Transfer Object.
