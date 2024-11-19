@@ -13,6 +13,7 @@ import EventPage from "./pages/EventPage";
 import AdminPageFunc from "./pages/AdminPageFunc";
 import DetailOrderAdmin from "./pages/DetailOrderAdmin";
 import DetailProductAdmin from "./pages/DetailProductAdmin";
+import CreateNewWinePage from "./pages/CreateNewWinePage";
 
 const SetTitle = () => {
   useEffect(() => {
@@ -39,6 +40,7 @@ root.render(
           <Route path="admin" element={<AdminPageFunc />} />
           <Route path="/orders/:id" element={<DetailOrderAdmin/>} />
           <Route path="/products/:id" element={<DetailProductAdmin/>} />
+          <Route path="create-wine" element={<CreateNewWinePage/>} />
           <Route path="*" element={<h1>404 - Not Found</h1>} />
         </Route>
       </Routes>

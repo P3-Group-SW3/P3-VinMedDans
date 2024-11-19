@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 
 function DetailProductAdmin() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
 
     useEffect(() => {
-        fetch(`/api/getWineById/${id}`)
+        fetch(`/api/wine/getById/${id}`)
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
             })
-            .then(data => setProduct(data))
+            .then(data => {
+                setProduct(data);
+            })
             .catch(error => console.error('Error fetching product:', error));
     }, [id]);
+
 
     if (!product) return <div>Loading...</div>;
 

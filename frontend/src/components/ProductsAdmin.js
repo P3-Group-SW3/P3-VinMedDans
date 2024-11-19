@@ -8,7 +8,7 @@ function ProductsAdmin() {
     const navigate = useNavigate();
 
     useEffect(() => {
-        fetch('/api/getAllWines')
+        fetch('/api/wine/getList')  // Opdateret endpoint
             .then(response => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
@@ -18,7 +18,7 @@ function ProductsAdmin() {
     }, []);
 
     const handleRowClick = (id) => {
-        navigate(`/products/${id}`);  // Directs to the product detail page with the product's ID
+        navigate(`/products/${id}`);  // Navigerer til produktdetaljer baseret på produkt-ID
     };
 
     return (
@@ -40,7 +40,7 @@ function ProductsAdmin() {
                     <tr
                         key={index}
                         onClick={() => handleRowClick(product.id)}
-                        style={{ cursor: 'pointer' }}
+                        style={{cursor: 'pointer'}}
                     >
                         <td>{product.id}</td>
                         <td>{product.name}</td>
@@ -49,7 +49,7 @@ function ProductsAdmin() {
                         <td>{product.description}</td>
                         <td>
                             {product.imageURL ? (
-                                <img src={product.imageURL} alt={product.name} style={{ width: '50px' }} />
+                                <img src={product.imageURL} alt={product.name} style={{width: '50px'}}/>
                             ) : (
                                 'No image'
                             )}
@@ -58,6 +58,9 @@ function ProductsAdmin() {
                 ))}
                 </tbody>
             </table>
+            <button onClick={() => navigate('/create-wine')} className="btn btn-primary mt-3">
+                Create New Wine
+            </button>
         </div>
     );
 }
