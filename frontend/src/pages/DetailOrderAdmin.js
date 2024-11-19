@@ -8,10 +8,12 @@ function DetailOrderAdmin() {
     const [order, setOrder] = useState(null);
     const [selectedState, setSelectedState] = useState("");
 
+    // List of available states with labels for the dropdown and corresponding values for the backend
     const states = [
         { label: "Registered", value: 0 },
-        { label: "Packed", value: 1 },
-        { label: "Sent", value: 2 }
+        { label: "Confirmed", value: 1 },
+        { label: "Packed", value: 2 },
+        { label: "Shipped", value: 3}
     ];
 
     // Fetch order details when the component loads or when the order ID changes
@@ -27,18 +29,19 @@ function DetailOrderAdmin() {
 
     // Update the selected state in local component state when the user selects a new option
     const handleStateChange = (event) => {
-        setSelectedState(Number(event.target.value));
+        setSelectedState(Number(event.target.value)); // Convert selected value to number
     };
 
     // Send updated state to the backend when the user clicks the update button
     const updateOrderState = () => {
         fetch(`/api/orders/state/${id}`, {
-            method: 'POST',
+            method: 'POST', // Using POST to match backend endpoint
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ state: selectedState })
+            body: JSON.stringify({ state: selectedState }) // Send selected state as JSON
         })
             .then(response => {
                 if (response.ok) {
+                    // If successful, update the order's state in local component state
                     setOrder(prevOrder => ({ ...prevOrder, state: selectedState }));
                 } else {
                     console.error('Error updating order state');
@@ -61,7 +64,20 @@ function DetailOrderAdmin() {
             <p><strong>Address:</strong> {order.adress}</p>
             <p><strong>City:</strong> {order.city}</p>
             <p><strong>Zip Code:</strong> {order.zipCode}</p>
+            <p><strong>Date:</strong> {new Date(order.date).toLocaleDateString()}</p>
             <p><strong>State:</strong> {states.find(s => s.value === order.state)?.label}</p>
+
+            <h3>Orderlines</h3>
+
+                    {order.orderLines.map((line, index) => (
+                        <tr key={index}>
+                            <td>{line.productName}</td>
+                            <td>{line.amount}</td>
+                            <td>{line.price}</td>
+                            <td>{(line.amount * line.price).toFixed(2)}</td>
+                        </tr>
+                    ))}
+
 
             <div className="form-group">
                 <label htmlFor="orderState">Update Order State:</label>

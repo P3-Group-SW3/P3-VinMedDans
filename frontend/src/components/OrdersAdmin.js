@@ -32,6 +32,7 @@ function OrdersAdmin() {
                     <th>City</th>
                     <th>Zip Code</th>
                     <th>State</th>
+                    <th>Date</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -49,6 +50,7 @@ function OrdersAdmin() {
                         <td>{item?.city}</td>
                         <td>{item?.zipCode}</td>
                         <td>{item?.state}</td>
+                        <td>{item?.date}</td>
                     </tr>
                 ))}
                 </tbody>
