@@ -2,11 +2,9 @@ package com.vmd.vmdwebshop.controller;
 
 
 import com.vmd.vmdwebshop.exception.order.OrderNotFoundInDatbase;
-import com.vmd.vmdwebshop.exception.order.OrderlineNotAdded;
 import com.vmd.vmdwebshop.exception.order.StateChangeFailedException;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
-import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.service.OrderService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,11 +34,11 @@ public class OrderController {
      */
     @PostMapping("/api/orderInfo")
 
-    public ResponseEntity<Orders> createOrder(@Valid @RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
 
         try{
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
-            return ResponseEntity.ok(orderService.createOrderfromInfo(order, orderLines));
+            return ResponseEntity.ok(orderService.createOrderFromInfo(order, orderLines));
         }catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
