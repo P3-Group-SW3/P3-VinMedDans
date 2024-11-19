@@ -75,7 +75,7 @@ public class OrderService {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
             if(orderLine.getOrderID() != order.getID()){
-                throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of:" + order.getID());
+                throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of: " + order.getID());
             }
         }
         return order;
