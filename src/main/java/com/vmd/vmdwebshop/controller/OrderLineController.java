@@ -83,7 +83,7 @@ public class OrderLineController {
         }
     }
 
-    @PostMapping("api/returnOrderLine")
+    @PostMapping("/api/returnOrderLine")
     public ResponseEntity<OrderLine> returnOrderLine(@RequestBody OrderLine orderLine, @CookieValue(value = "cookieId", defaultValue = "") String cookieID) {
 
         orderLine.setCustomerID(cookieID);
@@ -91,7 +91,7 @@ public class OrderLineController {
         return ResponseEntity.ok(orderLine);
     }
 
-    @PostMapping("api/deleteOrderLine")
+    @PostMapping("/api/deleteOrderLine")
     public ResponseEntity<List<OrderLine>> deleteOrderLine(@RequestBody OrderLine orderLine) {
 
         try{

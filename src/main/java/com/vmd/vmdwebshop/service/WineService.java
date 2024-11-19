@@ -1,7 +1,8 @@
 // src/main/java/com/vmd/vmdwebshop/service/WineService.java
 package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.Interface.AdministrativeMethods;
+import com.vmd.vmdwebshop.Interface.AdministrativeMethodsInterface;
+import com.vmd.vmdwebshop.Interface.WineAdministrativeMethodsInterface;
 import com.vmd.vmdwebshop.exception.wine.*;
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
@@ -10,11 +11,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @Transactional
-public class WineService implements AdministrativeMethods<Wine> {
+public class WineService implements WineAdministrativeMethodsInterface<Wine> {
 
     @Autowired
     private WineRepository wineRepository;

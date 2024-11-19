@@ -1,6 +1,6 @@
 package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.Interface.AdministrativeMethods;
+import com.vmd.vmdwebshop.Interface.AdministrativeMethodsInterface;
 import com.vmd.vmdwebshop.model.Event;
 import com.vmd.vmdwebshop.repository.EventRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
@@ -10,7 +10,8 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class EventService implements AdministrativeMethods<Event> {
+public class EventService implements AdministrativeMethodsInterface<Event> {
+
 
     private final EventRepository eventRepository;
     private final WineRepository wineRepository;
@@ -26,9 +27,24 @@ public class EventService implements AdministrativeMethods<Event> {
         return eventRepository.findAll();
     }
 
+
     @Override
-    public List<Event> createAndEdit(Event event, Long ID){
-        eventRepository.save(event);
+    public List<Event> createAndEdit(Event event){
+
+        Event existingEvents = eventRepository.findById(event.getID());
+
+        if (existingEvents != null) {
+            existingEvents.setDate(event.getDate());
+            existingEvents.setTime(event.getTime());
+            existingEvents.setLocation(event.getLocation());
+            existingEvents.setTitle(event.getTitle());
+            existingEvents.setDescription(event.getDescription());
+            existingEvents.setImgURL(event.getImgURL());
+            existingEvents.setCancelled(event.isCancelled());
+        } else {
+            eventRepository.save(event);
+        }
+
         return eventRepository.findAll();
     }
 
