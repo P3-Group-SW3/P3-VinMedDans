@@ -126,7 +126,7 @@ public class TestOrderService {
     }
 
 
-
+    //Asserts that the ID of a new order created with the CreateOrderFromInfo() method matches the expected value.
     @Test
     public void TestCreateOrderFromInfo01(){
         when(orderDto.createOrderFromInfo()).thenReturn(order);
@@ -141,6 +141,7 @@ public class TestOrderService {
         assertEquals("1", newOrder.getID().toString());
     }
 
+    //Asserts that if the ID of the order object is null, an exception will be thrown
     @Test
     public void TestCreateOrderFromInfo02(){
         when(orderDto.createOrderFromInfo()).thenReturn(order);
@@ -154,6 +155,8 @@ public class TestOrderService {
         assertEquals("The order was not created, customer: Jens Peter email: a@b.com", newException.getMessage());
     }
 
+
+    //asserts that when the orderID of the orderline and the orderID, the program will throw an exception
     @Test
     public void TestCreateOrderFromInfo03(){
         when(orderDto.createOrderFromInfo()).thenReturn(order);
