@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Button from './Button';
+import IncDecButton from "./IncDecButton";
 
 export const CartModify = (item) => {
   const [quantity, setQuantity] = useState(1);
@@ -15,6 +16,7 @@ export const CartModify = (item) => {
   // API call to add item to cart
   const addToCart = () => {
     console.log("Button clicked with item:", item, "quantity:", quantity);
+
     fetch('/api/addToCart', {
       method: 'POST',
       headers: {
@@ -30,32 +32,17 @@ export const CartModify = (item) => {
   }
 
   return (
-    <div className="d-inline-flex align-items-center gap-3 position-relative"  style={{ marginLeft: '10px' }}>
-      <div className="d-inline-flex align-items-center gap-2">
-        <Button
-          text="-"
-          onClick={decrementQuantity}
-          makeCircle={false}
-          makeSquare={true}
+    <div className="d-flex" style={{ gap: "1rem" }}>
+        <IncDecButton
+            decrementQuantity={decrementQuantity}
+            incrementQuantity={incrementQuantity}
+            quantity={quantity}
         />
-
-        <div className="quantity-display" style={{ width: "50px", textAlign: "center" }}>
-          {quantity}
-        </div>
-
-        <Button
-          text="+"
-          onClick={incrementQuantity}
-          makeCircle={false}
-          makeSquare={true}
-        />
-      </div>
-      <div style={{ margin: '0 10px' }}>
         <Button
           text="Føj til kurv"
+          isWide={true}
           onClick={ addToCart }
         />
-      </div>
     </div>
   );
 };

@@ -2,6 +2,7 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Event from "../components/Event";
 import React from "react";
+import {CustomerLinks} from "./CustomerLinkContext";
 
 
 function EventPage() {
@@ -22,7 +23,10 @@ function EventPage() {
 
     return (
         <div className="Landingpage">
-            <Header />
+            <Header
+                links={ CustomerLinks }
+                showCart={true}
+            />
             {events.map((event) => (
                 <Event
                     key={event.id}
