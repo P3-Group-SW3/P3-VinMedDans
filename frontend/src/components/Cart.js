@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import '../styles/modal.css'
+import '../styles/button.css'
 import cartImage from '../images/basket.png';
-import placeholderImg from '../images/havtorben.png'
 import OrderLineEdit from "./OrderLineEdit";
 
 
@@ -80,7 +80,7 @@ const CartOverlay = ({ handleClose, show }) => {
                     <p>300,-</p>
                 </div>
                 <div className="d-flex justify-content-center">
-                    <a className="button" onClick={() => navigate(`/checkout`)}>
+                    <a className="button wide" onClick={() => navigate(`/checkout`)}>
                         Gå til betaling
                     </a>
                 </div>

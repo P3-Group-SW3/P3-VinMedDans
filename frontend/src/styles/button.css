@@ -2,7 +2,7 @@
   display: flex;
   padding: 0 10px 0 10px;
   background-color: #C0924D;
-  color: white;
+  color: white !important;
   border: none;
   border-radius: 6px;
   cursor: pointer;
