@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/")
 public class CustomerController {
-    // SKAL FIKSE ROUTES NÅR FRONT END OG BACK END BLIVER KOPLET SAMMEN.
+
     @Autowired
     private CustomerService customerService;
 
@@ -20,23 +20,31 @@ public class CustomerController {
 
     @GetMapping("/api/createcookie")
     public void createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
-        customerService.setCustomerCookie(response, request);
-
-        System.out.println("Cookie has been set!");
+        try {
+            customerService.setCustomerCookie(response, request);
+            System.out.println("Cookie has been set!");
+        } catch (RuntimeException e) {
+            System.err.println("An error occurred while trying to update the cookie: " + e.getMessage());
+        }
     }
 
     @GetMapping("/api/updatecookie")
     public void updateCustomerCookie(HttpServletResponse response, HttpServletRequest request) {
-        customerService.updateLegalAge(response, request);
+        try {
+            customerService.updateLegalAge(response, request);
+        } catch (RuntimeException e) {
+            System.err.println("An error occurred while trying to update the cookie: " + e.getMessage());
+        }
     }
 
-    @GetMapping("/api/customerID")
-    public String customerID(HttpServletRequest request) {
-        return customerService.getCustomerID(request);
-    }
+    @GetMapping("/api/cookieAge")
+    public String cookieAge(HttpServletRequest request) {
+        try {
+            customerService.getCookieAge(request);
+        } catch (RuntimeException e) {
+            System.err.println("An error occurred while trying to update the cookie: " + e.getMessage());
+        }
 
-    @GetMapping("/api/legalAge")
-    public String legalAge(HttpServletRequest request) {
-        return customerService.getLegalAge(request);
+        return customerService.getCookieAge(request);
     }
 }

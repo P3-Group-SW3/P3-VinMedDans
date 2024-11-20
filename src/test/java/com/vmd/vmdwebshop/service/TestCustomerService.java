@@ -33,17 +33,19 @@ class TestCustomerService {
     // then the setCustomerCookie method will correctly add a new "customerData" cookie to the response.
     @Test
     public void testSetCustomerCookie01() {
-        when(request.getCookies()).thenReturn(null); // No existing cookies
+        CustomerService spyService = spy(customerService);
+        doReturn(false).when(spyService).ifCookieExist(request);
+
         when(request.getSession()).thenReturn(session);
         when(session.getId()).thenReturn("testSessionID");
 
-        customerService.setCustomerCookie(response, request); // Call to method
+        spyService.setCustomerCookie(response, request);
 
         // Verifying that the response has the right arguments and values.
         //argThat takes a predicate (typically a lambda expression) and applies it to the argument. It then will return true or false.
         verify(response).addCookie(argThat(cookie ->
                 "customerData".equals(cookie.getName()) &&
-                        cookie.getValue().equals("testSessionID|false") &&
+                        cookie.getValue().equals("testSessionID|false|new") &&
                         cookie.getMaxAge() == 7 * 24 * 60 * 60 &&
                         cookie.getSecure() &&
                         cookie.isHttpOnly() &&
@@ -51,43 +53,44 @@ class TestCustomerService {
         ));
     }
 
-    // Test that verifies that no new cookie is added when a "customerData" cookie already exists.
+    // Test that verifies that when ifCookieExist return true, then no cookie will be added to the response.
     @Test
     public void testSetCustomerCookie02() {
-        // Add a cookie object with the name and value that it is looking for.
-        Cookie existingCookie = new Cookie("customerData", "existingSessionID|false");
-        when(request.getCookies()).thenReturn(new Cookie[]{existingCookie}); // getCookies() returns an array with references to cookies.
+        CustomerService spyService = spy(customerService);
+        doReturn(true).when(spyService).ifCookieExist(request);
 
-        customerService.setCustomerCookie(response, request);
+        spyService.setCustomerCookie(response, request);
 
         verify(response, never()).addCookie(any(Cookie.class)); // any is used, because it does not matter what name the cookie has.
     }
 
-    // Test that verifies that a new "customerData" cookie is added when JSESSIONID is present, but not a "customerData" cookie.
+    // Test that verifies that if there is thrown an IllegalArgumentException from ifCookieExist, then it will be caught in setCustomerCookie.
     @Test
     public void testSetCustomerCookie03() {
-        // Cookie object for JSESSIONID, because it is the only cookie that will be present besides the "customerData" cookie.
-        Cookie JSESSIONID = new Cookie("JSESSIONID", "anotherSessionID");
-        when(request.getCookies()).thenReturn(new Cookie[]{JSESSIONID});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("anotherSessionID"); // returns same ID as the cookieValue for "customerData"
+        CustomerService spyService = spy(customerService);
+        doThrow(new IllegalArgumentException("Mocked IllegalArgumentException")).when(spyService).ifCookieExist(request);
 
-        customerService.setCustomerCookie(response, request);
+        assertDoesNotThrow(() -> spyService.setCustomerCookie(response, request));
 
-        verify(response).addCookie(argThat(cookie ->
-                "customerData".equals(cookie.getName()) &&
-                        cookie.getValue().equals("anotherSessionID|false") &&
-                        cookie.getMaxAge() == 7 * 24 * 60 * 60 &&
-                        cookie.getSecure() &&
-                        cookie.isHttpOnly() &&
-                        "/".equals(cookie.getPath())
-        ));
+        verify(response, never()).addCookie(any(Cookie.class));
+
+        verifyNoMoreInteractions(response);
+    }
+
+    // Test that verifies if the request is null, then throw IllegalArgumentException.
+    @Test
+    public void testSetCustomerCookie04() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            customerService.setCustomerCookie(response,null);
+        });
+
+        assertEquals("HttpServletRequest cannot be null!", exception.getMessage());
     }
 
     // Test that verifies if there is already a "customerData" that exists, then the cookie will be updated correctly.
     @Test
     public void testUpdateLegalAge01() {
-        Cookie customerCookie = new Cookie("customerData", "testSessionID|false");
+        Cookie customerCookie = new Cookie("customerData", "testSessionID|false|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
         when(request.getSession()).thenReturn(session);
         when(session.getId()).thenReturn("testSessionID"); // returns same ID as cookieValue in "customerData".
@@ -96,7 +99,7 @@ class TestCustomerService {
 
         verify(response).addCookie(argThat(cookie ->
                 "customerData".equals(cookie.getName()) &&
-                        cookie.getValue().equals("testSessionID|true") && // "true" because now it should be updated.
+                        cookie.getValue().equals("testSessionID|true|old") && // "true" because now it should be updated.
                         cookie.getMaxAge() == 7 * 24 * 60 * 60 &&
                         cookie.getSecure() &&
                         cookie.isHttpOnly() &&
@@ -104,59 +107,93 @@ class TestCustomerService {
         ));
     }
 
-    // Test that verifies that no "customerData" cookie is updated, when the legalAge is already "true".
+    // Test that verifies that an illegalStateException gets thrown, when the legalAge and cookieAge are already updated.
     @Test
     public void testUpdateLegalAge02() {
-        Cookie customerCookie = new Cookie("customerData", "testSessionID|true"); // Already set to "true".
+        Cookie customerCookie = new Cookie("customerData", "testSessionID|true|old");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
         when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("testSessionID"); // Same ID as the customerID.
+        when(session.getId()).thenReturn("testSessionID"); // returns same ID as cookieValue in "customerData".
 
-        customerService.updateLegalAge(response, request);
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            customerService.updateLegalAge(response, request);
+        });
 
-        verify(response, never()).addCookie(any(Cookie.class));
+        assertEquals("Cookie is already set to true.", exception.getMessage());
     }
 
-    // Test that verifies that no "customerData" cookie is updated, when the customerID is not the same as the JSESSIONID.
+    // Test that verifies that an illegalStateException is thrown, when the legalAge is already set to "true".
     @Test
     public void testUpdateLegalAge03() {
-        Cookie customerCookie = new Cookie("customerData", "testSessionID|false");
+        Cookie customerCookie = new Cookie("customerData", "testSessionID|true|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
         when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("anotherSessionID"); // Different ID than the customerID.
+        when(session.getId()).thenReturn("testSessionID"); // returns same ID as cookieValue in "customerData".
 
-        customerService.updateLegalAge(response, request);
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            customerService.updateLegalAge(response, request);
+        });
 
-        verify(response, never()).addCookie(any(Cookie.class));
+        assertEquals("Cookie is already set to true.", exception.getMessage());
     }
 
-    // Test that verifies that no "customerData" cookie is added, when no cookies exist.
+    // Test that verifies that an illegalStateException is thrown, when the cookieAge is already set to "old".
     @Test
     public void testUpdateLegalAge04() {
-        when(request.getCookies()).thenReturn(null); // No cookies found.
+        Cookie customerCookie = new Cookie("customerData", "testSessionID|false|old");
+        when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
+        when(request.getSession()).thenReturn(session);
+        when(session.getId()).thenReturn("testSessionID"); // returns same ID as cookieValue in "customerData".
 
-        customerService.updateLegalAge(response, request);
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            customerService.updateLegalAge(response, request);
+        });
 
-        verify(response, never()).addCookie(any(Cookie.class));
+        assertEquals("Cookie is already set to true.", exception.getMessage());
     }
 
-    // Test that verifies that no "customerData" cookie is added, when the JSESSIONID is present, but no "customerData" cookie exists.
+    // Test that verifies that an IllegalStateException gets thrown, when the two ID don't match.
     @Test
     public void testUpdateLegalAge05() {
-        Cookie JSESSIONID = new Cookie("JSESSIONID", "anotherSessionID"); // JSESSIONID object.
-        when(request.getCookies()).thenReturn(new Cookie[]{JSESSIONID});
+        Cookie customerCookie = new Cookie("customerData", "wrongSessionID|false|new");
+        when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
         when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("anotherSessionID");
+        when(session.getId()).thenReturn("correctSessionID"); // Different ID.
 
-        customerService.updateLegalAge(response, request);
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            customerService.updateLegalAge(response, request);
+        });
 
-        verify(response, never()).addCookie(any(Cookie.class));
+        assertEquals("No matching 'customerData' cookie found!", exception.getMessage());
+    }
+
+    // Test that verifies that an illegalStateException gets thrown, when the cookie name does not equal 'customerData'.
+    @Test
+    public void testUpdateLegalAge06() {
+        Cookie JSESSIONID = new Cookie("JSESSIONID", "anotherSessionID");
+        when(request.getCookies()).thenReturn(new Cookie[]{JSESSIONID});
+
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            customerService.updateLegalAge(response, request);
+        });
+
+        assertEquals("There are no 'customerData' cookie for this customer!", exception.getMessage());
+    }
+
+    // Test that verifies if the request is null, then throw IllegalArgumentException.
+    @Test
+    public void testUpdateLegalAge07() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            customerService.updateLegalAge(response, null);
+        });
+
+        assertEquals("HttpServletRequest cannot be null!", exception.getMessage());
     }
 
     // Test that verifies that the correct sessionID gets returned when a "customerData" cookie already exist.
     @Test
     public void testGetCustomerID01() {
-        Cookie customerCookie = new Cookie("customerData", "testSessionID|false");
+        Cookie customerCookie = new Cookie("customerData", "testSessionID|false|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
         when(request.getSession()).thenReturn(session);
         when(session.getId()).thenReturn("testSessionID");
@@ -166,20 +203,22 @@ class TestCustomerService {
         assertEquals("testSessionID", result); // Tests if the result matches the expected result("testSessionID").
     }
 
-    // Test that verifies that no sessionID gets returned when the JSESSIONID and customerID don't match.
+    // Test that verifies that an illegalArgumentException gets thrown, when the JSESSIONID and customerID don't match.
     @Test
     public void testGetCustomerID02() {
-        Cookie customerCookie = new Cookie("customerData", "differentSessionID|false");
+        Cookie customerCookie = new Cookie("customerData", "differentSessionID|false|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
         when(request.getSession()).thenReturn(session);
         when(session.getId()).thenReturn("testSessionID"); // Different ID than the customerID.
 
-        String result = customerService.getCustomerID(request);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            customerService.getCustomerID(request);
+        });
 
-        assertNull(result); // Tests if the result returns Null.
+        assertEquals("CustomerID is not the same as the sessionID!", exception.getMessage());
     }
 
-    // Test that verifies than no sessionID gets returned when only the JSESSIONID is present, but not a "customerData" cookie.
+    // Test that verifies than an illegalStateException gets thrown, when only the JSESSIONID is present, but not a "customerData" cookie.
     @Test
     public void testGetCustomerID03() {
         Cookie JSESSIONID = new Cookie("JSESSIONID", "anotherSessionID"); // JSESSIONID object.
@@ -187,25 +226,62 @@ class TestCustomerService {
         when(request.getSession()).thenReturn(session);
         when(session.getId()).thenReturn("anotherSessionID");
 
-        String result = customerService.getCustomerID(request);
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            customerService.getCustomerID(request);
+        });
 
-        assertNull(result);
+        assertEquals("No matching 'customerData' cookie found!", exception.getMessage());
     }
 
-    // Test that verifies that no sessionID gets returned when no cookies already exist.
+    // Test that verifies that an illegalStateException gets thrown, when there are no cookies.
     @Test
     public void testGetCustomerID04() {
         when(request.getCookies()).thenReturn(null);
 
-        String result = customerService.getCustomerID(request);
+        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
+            customerService.getCustomerID(request);
+        });
 
-        assertNull(result);
+        assertEquals("There are no cookies for this customer!", exception.getMessage());
+    }
+
+    // Test that verifies if the request is null, then throw IllegalArgumentException.
+    @Test
+    public void testGetCustomerID05() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            customerService.getCustomerID(null);
+        });
+
+        assertEquals("HttpServletRequest cannot be null!", exception.getMessage());
+    }
+
+    // Test that verifies that the correct legalAge gets returned, when a "customerData" cookie already exist.
+    @Test
+    public void testGetLegalAge01() {
+        Cookie customerCookie = new Cookie("customerData", "testSessionID|false|new");
+        when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
+        when(request.getSession()).thenReturn(session);
+        when(session.getId()).thenReturn("testSessionID");
+
+        String result = customerService.getLegalAge(request);
+
+        assertEquals("false", result); // Tests if the result matches the expected result("false").
+    }
+
+    // Test that verifies if the request is null, then throw IllegalArgumentException.
+    @Test
+    public void testGetLegalAge02() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            customerService.getLegalAge(null);
+        });
+
+        assertEquals("HttpServletRequest cannot be null!", exception.getMessage());
     }
 
     // Test that verifies that if the 'customerData' cookie already exist, then return true.
     @Test
     public void testIfCookieExist01() {
-        Cookie customerCookie = new Cookie("customerData", "testSessionID|false");
+        Cookie customerCookie = new Cookie("customerData", "testSessionID|false|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
 
         boolean result = customerService.ifCookieExist(request);
@@ -244,28 +320,27 @@ class TestCustomerService {
         assertEquals("HttpServletRequest cannot be null!", exception.getMessage());
     }
 
-    // Test that verifies that a NullPointerException will get caught.
+    // Test that verifies that the correct cookieAge gets returned, when a "customerData" cookie already exist.
     @Test
-    public void testIfCookieExist05() {
-        when(request.getCookies()).thenThrow(new NullPointerException());
+    public void testGetCookieAge01() {
+        Cookie customerCookie = new Cookie("customerData", "testSessionID|false|new");
+        when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
+        when(request.getSession()).thenReturn(session);
+        when(session.getId()).thenReturn("testSessionID");
 
-        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
-            customerService.ifCookieExist(request);
-        });
+        String result = customerService.getCookieAge(request);
 
-        assertEquals("Error processing cookies: request may be invalid!", exception.getMessage());
+        assertEquals("new", result); // Tests if the result matches the expected result("new").
     }
 
-    // Test that verifies that a RuntimeException will get caught.
+    // Test that verifies if the request is null, then throw IllegalArgumentException.
     @Test
-    public void testIfCookieExist06() {
-        when(request.getCookies()).thenThrow(new RuntimeException());
-
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            customerService.ifCookieExist(request);
+    public void testGetCookieAge02() {
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
+            customerService.getCookieAge(null);
         });
 
-        assertEquals("An unexpected error occurred while checking cookies", exception.getMessage());
+        assertEquals("HttpServletRequest cannot be null!", exception.getMessage());
     }
 }
 
