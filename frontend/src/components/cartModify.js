@@ -37,6 +37,7 @@ export const CartModify = (item) => {
             decrementQuantity={decrementQuantity}
             incrementQuantity={incrementQuantity}
             quantity={quantity}
+            scale={1}
         />
         <Button
           text="Føj til kurv"
