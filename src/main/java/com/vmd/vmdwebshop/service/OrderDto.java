@@ -1,13 +1,12 @@
 package com.vmd.vmdwebshop.service;
 import com.vmd.vmdwebshop.model.*;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
-public class Orderinfo {
+public class OrderDto {
 
     @NotBlank(message = "Dette felt må ikke være blankt")
     @Size(max = 35, message = "Der må ikke være mere ind 35 karaktere")
@@ -50,7 +49,7 @@ public class Orderinfo {
         return order;
     }
 
-    public Orderinfo(){
+    public OrderDto(){
 
     }
 
@@ -83,7 +82,7 @@ public class Orderinfo {
         return phone;
     }
 
-    public void SetPhone(String phone){
+    public void setPhone(String phone){
         this.phone = phone;
     }
 

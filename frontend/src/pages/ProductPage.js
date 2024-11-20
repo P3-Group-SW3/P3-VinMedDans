@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Item from "../components/Item";
+import {CustomerLinks} from "./CustomerLinkContext";
 
 function ProductPage() {
     const [items, setItems] = useState([]);
@@ -23,7 +24,10 @@ function ProductPage() {
 
     return (
         <div className="productPage">
-            <Header />
+            <Header
+                links={ CustomerLinks }
+                showCart={true}
+            />
             
             {items.map((item, index) => (
                 <Item

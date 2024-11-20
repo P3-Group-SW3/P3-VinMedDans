@@ -22,7 +22,7 @@ Content-Type: application/json
 
 
 ### Send POST request with json body
-POST http://localhost:8080/api/wine/admin/delete/85
+POST http://localhost:8080/api/wine/admin/delete/94
 Content-Type: application/json
 
 ### Send POST request with json body
@@ -43,11 +43,16 @@ POST http://localhost:8080/api/wine/admin/createAndEdit
 Content-Type: application/json
 
 {
-  "description": "MMMM",
-  "imageURL": "asd",
+  "description": "b",
+  "imageURL": "c",
   "price": 90,
   "amountLeft": 1,
-  "name": "Bllvin"
+  "name": "d"
 }
+
+### Send POST request with json body
+POST http://localhost:8080/api/wine/admin/changeActiveState/95
+Content-Type: application/json
+
 
 
