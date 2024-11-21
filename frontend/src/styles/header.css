@@ -2,7 +2,7 @@
     padding: 10px;
     color: var(--main-color);
     border: none;
-    font-size: 20px;
+    font-size: 30px !important;
     font-family: 'Rubik Dirt', sans-serif;
     flex: 1 1 auto;
     justify-content: center;
@@ -14,4 +14,12 @@
     transform: translateY(-2px);
     color: white;
     text-shadow: 1px 0 var(--main-color), -1px 0 var(--main-color), 0 4px var(--main-color), 0 -1px var(--main-color);
+}
+
+.cart-button {
+    position: fixed;
+    top: 1em;
+    right: 3em;
+    max-width: 4em;
+    cursor: pointer;
 }

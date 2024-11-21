@@ -6,6 +6,8 @@ import com.vmd.vmdwebshop.exception.wine.*;
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +45,7 @@ public class WineService implements AdministrativeMethods<Wine> {
     @Override
     public List<Wine> createAndEdit(Wine wine, Long ID) {
 
-            if (ID == null) {
+            if (ID == 0) {
                 wineRepository.save(wine);
             } else {
                 Wine existingWine = wineRepository.findById(ID).orElse(null);
@@ -59,6 +61,12 @@ public class WineService implements AdministrativeMethods<Wine> {
         return wineRepository.findAll();
     }
 
+
+    /** THis method deletes a wine entity in the database, based on the ID
+     * Throws an exception if the wine isn't found, or if the object isn't properly deleted.
+     * @param ID
+     * @return List<Wine>
+     */
     @Override
     public List<Wine> delete(Long ID) {
         Wine existingWine = wineRepository.findById(ID).orElse(null);
@@ -67,7 +75,40 @@ public class WineService implements AdministrativeMethods<Wine> {
             throw new WineNotFoundException("Wine does not exist in the database");
         }
 
-        wineRepository.deleteById(ID);
+        try{
+            wineRepository.deleteById(ID);
+
+        } catch (DataIntegrityViolationException e) {
+            throw new WineNotDeletedException(e.getMessage());
+        }
+
+
+        return wineRepository.findAll();
+    }
+
+    /** This method first tries to find the existing wine.
+     * If not found, it will throw an exception
+     * if found it will change the activeState attribute.
+     * Return a list of all wines.
+     * @param ID
+     * @return List<Wine>
+     */
+    public List<Wine> changeActiveState(String ID) {
+        Wine existingWine = null;
+
+        try {
+            existingWine = wineRepository.findById(Long.parseLong(ID)).orElse(null);
+        } catch (DataAccessException e) {
+            //throw new WineDataAccessException("The wine was not retrieved from the database");
+        }
+
+        try {
+            if (existingWine != null){
+                existingWine.changeActiveState();
+            }
+        } catch (DataAccessException e){
+            //throw new WineDataAccessException("The Active State of the wine was not updated");
+        }
 
         return wineRepository.findAll();
     }

@@ -3,14 +3,19 @@ package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
-import com.vmd.vmdwebshop.service.WineData;
+import com.vmd.vmdwebshop.service.WineDto;
 import com.vmd.vmdwebshop.service.WineService;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("/api/wine/")
 public class WineController {
@@ -32,9 +37,9 @@ public class WineController {
     }
 
     @GetMapping("/getById/{ID}")
-    public ResponseEntity<Wine> getWineById(@PathVariable Long ID) {
+    public ResponseEntity<Wine> getWineById(@PathVariable("ID") @Pattern(regexp = "^\\d+$") @Size(max = 10) String ID) {
         try {
-            Wine wine = wineService.getWineById(ID);
+            Wine wine = wineService.getWineById(Long.parseLong(ID));
             return ResponseEntity.ok(wine);
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
@@ -44,26 +49,18 @@ public class WineController {
 
 
     /**
-     * Takes a mock wine object, so that we can receive an ID, in the case that we need to edit an existing wine
+     * Takes a wine Data Transfer Object, so that we can receive an ID, in the case that we need to edit an existing wine
      * Catches the exception that a wine was not found in the database with the given ID
-     * @param wineData
+     * @param wineDTO
      * @return List<Wine>
      */
     @PostMapping(value="/admin/createAndEdit", consumes = "application/json")
-    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody WineData wineData) {
-        System.out.println(wineData.getID());
-        System.out.println(wineData.getName());
-        System.out.println(wineData.getImageURL());
-
-        Wine wine = new Wine(
-                wineData.getDescription(),
-                wineData.getImageURL(),
-                wineData.getPrice(),
-                wineData.getAmountLeft(),
-                wineData.getName());
+    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody @Valid WineDto wineDTO) {
+        //creates a wine object based on the data in the wine DTO
+        Wine wine = wineDTO.createWineFromWineData();
 
         try{
-            return ResponseEntity.ok(wineService.createAndEdit(wine, Long.valueOf(wineData.getID())));
+            return ResponseEntity.ok(wineService.createAndEdit(wine, Long.valueOf(wineDTO.getID())));
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();
@@ -71,11 +68,34 @@ public class WineController {
 
     }
 
+    /**
+     * This method deletes a wine in the database by its ID.
+     * @param ID
+     * @return List<Wine>
+     */
     @PostMapping("admin/delete/{ID}")
-    public ResponseEntity<List<Wine>> deleteWine(@PathVariable Long ID){
+    public ResponseEntity<List<Wine>> deleteWine(@PathVariable("ID") @Pattern(regexp = "^\\d+$") String ID){
 
         try {
-            return ResponseEntity.ok(wineService.delete(ID));
+            return ResponseEntity.ok(wineService.delete(Long.parseLong(ID)));
+
+        } catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+
+    }
+
+
+    /**This method changes the boolean attribute activeState on a wine in the database.
+     * @param ID
+     * @return List<Wine>
+     */
+    @PostMapping("admin/changeActiveState/{ID}")
+    public ResponseEntity<List<Wine>> changeActiveState(@PathVariable("ID") @Pattern(regexp = "^\\d+$") String ID){
+
+        try {
+            return ResponseEntity.ok(wineService.changeActiveState(ID));
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();
