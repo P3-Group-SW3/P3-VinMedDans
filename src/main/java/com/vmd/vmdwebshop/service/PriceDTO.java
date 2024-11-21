@@ -8,7 +8,7 @@ import java.util.List;
 public class PriceDTO {
     private Double totalPrice;
 
-    public PriceDTO(){
+    public PriceDTO() {
         totalPrice = 0.0;
     }
 
@@ -19,5 +19,6 @@ public class PriceDTO {
     public void addToTotalPrice(Double totalPrice) {
         this.totalPrice += totalPrice;
     }
+}
 
 
