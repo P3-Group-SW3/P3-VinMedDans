@@ -35,10 +35,11 @@ const CartOverlay = ({ handleClose, show }) => {
     const [orderLines, setOrderLines] = useState([]);
 
     const refreshOrderLines = () => {
-        fetch('api/getAllOrderLines/jph')
+        fetch('api/getAllOrderLines')
             .then(response => response.json())
             .then(data => setOrderLines(data))
             .catch(error => console.error('Error fetching data: ', error));
+        console.log("Orderline:", orderLines);
     }
 
     useEffect(() => { refreshOrderLines() }, []);

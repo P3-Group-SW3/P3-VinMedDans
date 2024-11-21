@@ -1,5 +1,5 @@
 // Header.js
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom";
 import Cart from './Cart';
@@ -17,6 +17,27 @@ const Header = ({ links, showCart }) => {
         return () => {
             document.body.style.paddingTop = '0';
         };
+    }, []);
+
+    const [cookieAge, setCookieAge] = useState('new');
+
+    useEffect(() => {
+        fetch('api/createcookie')
+
+        fetch('api/cookieAge')
+            .then(data => setCookieAge(data))
+            .catch(error => console.error('Error fetching data: ', error))
+
+        console.log("Cookie age:",cookieAge);
+        console.log("Cookie age type:",typeof cookieAge);
+        if (cookieAge ==='new') {
+            console.log("18 or older?");
+        } else if (cookieAge === 'old') {
+            console.log("No popup :D")
+        } else {
+            console.log("invalid value!! >:(")
+        }
+
     }, []);
 
     return (

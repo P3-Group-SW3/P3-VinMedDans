@@ -13,11 +13,6 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/")
-    public void redirectToCreateCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
-        createCustomerCookie(request, response);
-    }
-
     @GetMapping("/api/createcookie")
     public void createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
         try {

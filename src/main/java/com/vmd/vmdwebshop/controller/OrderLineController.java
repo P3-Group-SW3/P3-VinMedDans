@@ -4,7 +4,9 @@ package com.vmd.vmdwebshop.controller;
 import com.vmd.vmdwebshop.exception.orderline.OrderLineDataAccessException;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
+import com.vmd.vmdwebshop.service.CustomerService;
 import com.vmd.vmdwebshop.service.WineService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import org.hibernate.query.Order;
 import org.springframework.aot.generate.FileSystemGeneratedFiles;
@@ -34,6 +36,8 @@ public class OrderLineController {
     private WineRepository wineRepository;
     @Autowired
     private WineService wineService;
+    @Autowired
+    private CustomerService customerService;
 
 
     /**
@@ -42,9 +46,10 @@ public class OrderLineController {
      * @param customerID
      * @return list of orderlines
      */
-    @GetMapping("/api/getAllOrderLines/{customerID}")
-    public ResponseEntity<List<OrderLine>> getAllOrderLines(@PathVariable String customerID) {
+    @GetMapping("/api/getAllOrderLines")
+    public ResponseEntity<List<OrderLine>> getAllOrderLines(HttpServletRequest request) {
         try {
+            String customerID = customerService.getCustomerID(request);
             return ResponseEntity.ok(orderLineService.getAllOrderLines(customerID));
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
