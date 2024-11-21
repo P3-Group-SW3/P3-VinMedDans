@@ -47,7 +47,6 @@ public class OrderLineController {
     public ResponseEntity<List<OrderLine> > getAllOrderLines(@PathVariable String customerID) {
         try {
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
-            PriceDTO price = orderLineService.calculateOrderLine(orderLines);
             return ResponseEntity.ok(orderLines);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
