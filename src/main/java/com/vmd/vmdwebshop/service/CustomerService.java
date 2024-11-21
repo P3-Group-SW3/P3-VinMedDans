@@ -61,35 +61,31 @@ public class CustomerService {
 
         // We do this again, because we need the value from the cookie (this is also being done in ifCookieExist).
         Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent by the client with the request.
-        String sessionID = request.getSession().getId(); // Gets the JSESSIONID.
 
         // If there is a "customerData" cookie, then save its value in a variable.
         for (Cookie cookie : cookies) {                     // For-each loop.
             if ("customerData".equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                String customerID = value.split("\\|")[0]; // Saves the String before the first "|" in a variable.
+                // If the value contains both "false" and "new", then change them to "true" and "old" and update cookie.
+                if (value.contains("false") && value.contains("new")) {
+                    String updatedValue = value.replace("false", "true").replace("new", "old");
 
-                // If the sessionID and customerID match and the value contains both "false" and "new", then change them to "true" and "old" and update cookie.
-                if (sessionID.equals(customerID)) {
-                    if (value.contains("false") && value.contains("new")) {
-                        String updatedValue = value.replace("false", "true").replace("new", "old");
+                    // Has to be the exact same as when created, or else it will create a new cookie.
+                    cookie.setValue(updatedValue); // Sets value of the cookie to the updatedValue.
+                    cookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
+                    cookie.setSecure(true); // Cookie can only be sent over secure HTTPS connections.
+                    cookie.setHttpOnly(true); // Cookie cannot get accessed or modified via Javascript.
+                    cookie.setPath("/"); // Cookie is accessible to all pages in the domain.
 
-                        // Has to be the exact same as when created, or else it will create a new cookie.
-                        cookie.setValue(updatedValue); // Sets value of the cookie to the updatedValue.
-                        cookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
-                        cookie.setSecure(true); // Cookie can only be sent over secure HTTPS connections.
-                        cookie.setHttpOnly(true); // Cookie cannot get accessed or modified via Javascript.
-                        cookie.setPath("/"); // Cookie is accessible to all pages in the domain.
+                    response.addCookie(cookie); // cookie gets added to the response.
 
-                        response.addCookie(cookie); // cookie gets added to the response.
-
-                        System.out.println("Cookie updated successfully!");
-                        return;
-                    } else {
-                        throw new IllegalStateException("Cookie is already set to true.");
-                    }
+                    System.out.println("Cookie updated successfully!");
+                    return;
+                } else {
+                    throw new IllegalStateException("Cookie is already set to true.");
                 }
+
             }
         }
 
@@ -111,20 +107,12 @@ public class CustomerService {
             throw new IllegalStateException("There are no cookies for this customer!");
         }
 
-        String sessionID = request.getSession().getId(); // Gets the JSESSIONID.
-
-        // If there is a "customerData" cookie, then save its value in a variable.
+        // If there is a "customerData" cookie, then save its value in a variable and return the customerID.
         for (Cookie cookie : cookies) {
             if ("customerData".equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                String customerID = value.split("\\|")[0]; // Saves the String before the first "|" in a variable.
-
-                if (sessionID.equals(customerID)) {
-                    return customerID;
-                } else {
-                    throw new IllegalArgumentException("CustomerID is not the same as the sessionID!");
-                }
+                return value.split("\\|")[0]; // Returning the value before the first "|", which is the customerID.
             }
         }
 
@@ -146,20 +134,12 @@ public class CustomerService {
             throw new IllegalStateException("There are no cookies for this customer!");
         }
 
-        String sessionID = request.getSession().getId(); // Gets the JSESSIONID.
-
-        // If there is a "customerData" cookie, then save its value in a variable.
+        // If there is a "customerData" cookie, then save its value in a variable and return the legalAge.
         for (Cookie cookie : cookies) {
             if ("customerData".equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                String customerID = value.split("\\|")[0]; // Saves the String before the first "|" in a variable.
-
-                if (sessionID.equals(customerID)) {
-                    return value.split("\\|")[1]; // Returns the String between the two "|", which is the legalAge value.
-                } else {
-                    throw new IllegalArgumentException("CustomerID is not the same as the sessionID!");
-                }
+                return value.split("\\|")[1]; // Returns the String between the two "|", which is the legalAge value.
             }
         }
 
@@ -205,20 +185,12 @@ public class CustomerService {
             throw new IllegalStateException("There are no cookies for this customer!");
         }
 
-        String sessionID = request.getSession().getId(); // Gets the JSESSIONID.
-
-        // If there is a "customerData" cookie, then save its value in a variable.
+        // If there is a "customerData" cookie, then save its value in a variable and return the cookieAge.
         for (Cookie cookie : cookies) {
             if ("customerData".equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                String customerID = value.split("\\|")[0]; // Saves the String before the first "|" in a variable.
-
-                if (sessionID.equals(customerID)) {
-                    return value.split("\\|")[2]; // Returns the String after the second "|", which is the cookieAge value.
-                } else {
-                    throw new IllegalArgumentException("CustomerID is not the same as the sessionID!");
-                }
+                return value.split("\\|")[2]; // Returns the String after the second "|", which is the cookieAge value.
             }
         }
 

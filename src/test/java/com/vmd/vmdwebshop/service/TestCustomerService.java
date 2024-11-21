@@ -92,8 +92,6 @@ class TestCustomerService {
     public void testUpdateLegalAge01() {
         Cookie customerCookie = new Cookie("customerData", "testSessionID|false|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("testSessionID"); // returns same ID as cookieValue in "customerData".
 
         customerService.updateLegalAge(response, request);
 
@@ -112,8 +110,6 @@ class TestCustomerService {
     public void testUpdateLegalAge02() {
         Cookie customerCookie = new Cookie("customerData", "testSessionID|true|old");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("testSessionID"); // returns same ID as cookieValue in "customerData".
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
             customerService.updateLegalAge(response, request);
@@ -127,8 +123,6 @@ class TestCustomerService {
     public void testUpdateLegalAge03() {
         Cookie customerCookie = new Cookie("customerData", "testSessionID|true|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("testSessionID"); // returns same ID as cookieValue in "customerData".
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
             customerService.updateLegalAge(response, request);
@@ -142,8 +136,6 @@ class TestCustomerService {
     public void testUpdateLegalAge04() {
         Cookie customerCookie = new Cookie("customerData", "testSessionID|false|old");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("testSessionID"); // returns same ID as cookieValue in "customerData".
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
             customerService.updateLegalAge(response, request);
@@ -152,24 +144,9 @@ class TestCustomerService {
         assertEquals("Cookie is already set to true.", exception.getMessage());
     }
 
-    // Test that verifies that an IllegalStateException gets thrown, when the two ID don't match.
-    @Test
-    public void testUpdateLegalAge05() {
-        Cookie customerCookie = new Cookie("customerData", "wrongSessionID|false|new");
-        when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("correctSessionID"); // Different ID.
-
-        IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
-            customerService.updateLegalAge(response, request);
-        });
-
-        assertEquals("No matching 'customerData' cookie found!", exception.getMessage());
-    }
-
     // Test that verifies that an illegalStateException gets thrown, when the cookie name does not equal 'customerData'.
     @Test
-    public void testUpdateLegalAge06() {
+    public void testUpdateLegalAge05() {
         Cookie JSESSIONID = new Cookie("JSESSIONID", "anotherSessionID");
         when(request.getCookies()).thenReturn(new Cookie[]{JSESSIONID});
 
@@ -182,7 +159,7 @@ class TestCustomerService {
 
     // Test that verifies if the request is null, then throw IllegalArgumentException.
     @Test
-    public void testUpdateLegalAge07() {
+    public void testUpdateLegalAge06() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             customerService.updateLegalAge(response, null);
         });
@@ -195,36 +172,17 @@ class TestCustomerService {
     public void testGetCustomerID01() {
         Cookie customerCookie = new Cookie("customerData", "testSessionID|false|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("testSessionID");
 
         String result = customerService.getCustomerID(request);
 
         assertEquals("testSessionID", result); // Tests if the result matches the expected result("testSessionID").
     }
 
-    // Test that verifies that an illegalArgumentException gets thrown, when the JSESSIONID and customerID don't match.
-    @Test
-    public void testGetCustomerID02() {
-        Cookie customerCookie = new Cookie("customerData", "differentSessionID|false|new");
-        when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("testSessionID"); // Different ID than the customerID.
-
-        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
-            customerService.getCustomerID(request);
-        });
-
-        assertEquals("CustomerID is not the same as the sessionID!", exception.getMessage());
-    }
-
     // Test that verifies than an illegalStateException gets thrown, when only the JSESSIONID is present, but not a "customerData" cookie.
     @Test
-    public void testGetCustomerID03() {
+    public void testGetCustomerID02() {
         Cookie JSESSIONID = new Cookie("JSESSIONID", "anotherSessionID"); // JSESSIONID object.
         when(request.getCookies()).thenReturn(new Cookie[]{JSESSIONID});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("anotherSessionID");
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
             customerService.getCustomerID(request);
@@ -235,7 +193,7 @@ class TestCustomerService {
 
     // Test that verifies that an illegalStateException gets thrown, when there are no cookies.
     @Test
-    public void testGetCustomerID04() {
+    public void testGetCustomerID03() {
         when(request.getCookies()).thenReturn(null);
 
         IllegalStateException exception = assertThrows(IllegalStateException.class, () -> {
@@ -247,7 +205,7 @@ class TestCustomerService {
 
     // Test that verifies if the request is null, then throw IllegalArgumentException.
     @Test
-    public void testGetCustomerID05() {
+    public void testGetCustomerID04() {
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> {
             customerService.getCustomerID(null);
         });
@@ -260,8 +218,6 @@ class TestCustomerService {
     public void testGetLegalAge01() {
         Cookie customerCookie = new Cookie("customerData", "testSessionID|false|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("testSessionID");
 
         String result = customerService.getLegalAge(request);
 
@@ -325,8 +281,6 @@ class TestCustomerService {
     public void testGetCookieAge01() {
         Cookie customerCookie = new Cookie("customerData", "testSessionID|false|new");
         when(request.getCookies()).thenReturn(new Cookie[]{customerCookie});
-        when(request.getSession()).thenReturn(session);
-        when(session.getId()).thenReturn("testSessionID");
 
         String result = customerService.getCookieAge(request);
 
