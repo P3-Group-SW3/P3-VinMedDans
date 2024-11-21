@@ -4,76 +4,72 @@ import { useParams, useNavigate } from 'react-router-dom';
 function DetailProductAdmin() {
     const { id } = useParams();
     const [product, setProduct] = useState(null);
-    const [newAmountLeft, setNewAmountLeft] = useState('');
     const navigate = useNavigate();
 
-    // Hent produktdata når komponenten indlæses
     useEffect(() => {
         fetch(`/api/wine/getById/${id}`)
-            .then(response => {
+            .then((response) => {
                 if (!response.ok) throw new Error('Network response was not ok');
                 return response.json();
             })
-            .then(data => {
+            .then((data) => {
                 setProduct(data);
-                setNewAmountLeft(data.amountLeft); // Sæt initial værdi for `newAmountLeft`
             })
-            .catch(error => console.error('Error fetching product:', error));
+            .catch((error) => console.error('Error fetching product:', error));
     }, [id]);
 
-    // Funktion til at håndtere opdatering af `amountLeft`
-    const handleUpdateAmountLeft = async () => {
-        try {
-            const response = await fetch(`/api/wine/admin/createAndEdit`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    id: product.id,
-                    name: product.name,
-                    price: product.price,
-                    description: product.description,
-                    imageURL: product.imageURL,
-                    amountLeft: newAmountLeft // Opdateret værdi for amountLeft
-                }),
-            });
 
-            if (response.ok) {
-                setProduct({ ...product, amountLeft: newAmountLeft });
-                alert('AmountLeft updated successfully!');
-            } else {
-                alert('Failed to update AmountLeft.');
-            }
-        } catch (error) {
-            console.error('Error updating AmountLeft:', error);
-            alert('An error occurred while updating AmountLeft.');
+    const handleDeleteProduct = () => {
+        if (window.confirm('Are you sure you want to delete this product?')) {
+            fetch(`/api/wine/admin/delete/${id}`, {
+                method: 'POST',
+            })
+                .then((response) => {
+                    if (!response.ok) throw new Error('Failed to delete product');
+                    return response.json();
+                })
+                .then(() => {
+                    alert('Product deleted successfully!');
+                    navigate('/admin');
+                })
+                .catch((error) => console.error('Error deleting product:', error));
         }
     };
 
-    if (!product) return <div>Loading...</div>;
+    if (!product) {
+        return (
+            <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
+                <div className="spinner-border text-primary" role="status">
+                    <span className="visually-hidden">Vi brygger</span>
+                </div>
+            </div>
+        );
+    }
 
     return (
-        <div>
-            <h1>{product.name}</h1>
-            <p>ID: {product.id}</p>
-            <p>Price: {product.price}</p>
-            <p>Description: {product.description}</p>
-            <p>Amount Left: {product.amountLeft}</p>
-            <img src={product.imageURL} alt={product.name} style={{ width: '200px' }} />
-
-            <div style={{ marginTop: '20px' }}>
-                <label>
-                    New Amount Left:
-                    <input
-                        type="number"
-                        value={newAmountLeft}
-                        onChange={(e) => setNewAmountLeft(e.target.value)}
-                        min="0"
-                        style={{ marginLeft: '10px' }}
-                    />
-                </label>
-                <button onClick={handleUpdateAmountLeft} style={{ marginLeft: '10px' }}>Update</button>
+        <div className="container py-5">
+            <div className="card shadow-sm">
+                <img
+                    src={product.imageURL}
+                    alt={product.name}
+                    className="card-img-top"
+                    style={{ objectFit: 'contain', maxHeight: '200px', maxWidth: '200px' }}
+                />
+                <div className="card-body">
+                    <h3 className="card-title">{product.name}</h3>
+                    <p className="card-text"><strong>ID:</strong> {product.id}</p>
+                    <p className="card-text"><strong>Price:</strong> {product.price} DKK</p>
+                    <p className="card-text"><strong>Description:</strong> {product.description}</p>
+                    <p className="card-text"><strong>Amount Left:</strong> {product.amountLeft}</p>
+                    <div className="d-flex justify-content-end">
+                        <button
+                            onClick={handleDeleteProduct}
+                            className="btn btn-danger"
+                        >
+                            Delete Product
+                        </button>
+                    </div>
+                </div>
             </div>
         </div>
     );

@@ -65,7 +65,7 @@ function DetailOrderAdmin() {
             <p><strong>City:</strong> {order.city}</p>
             <p><strong>Zip Code:</strong> {order.zipCode}</p>
             <p><strong>Date:</strong> {new Date(order.date).toLocaleDateString()}</p>
-            <p><strong>State:</strong> {states.find(s => s.value === order.state)?.label}</p>
+            <p><strong>State:</strong> {order.state}</p>
 
             <h3>Orderlines</h3>
             {order.orderLines && order.orderLines.length > 0 ? (
