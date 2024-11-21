@@ -10,7 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 @Transactional
@@ -46,7 +46,8 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
         Wine existingWine;
 
         try {
-            existingWine = wineRepository.findByWineID(ID);
+            Optional<Wine> optionalWine = wineRepository.findById(ID);
+            existingWine = optionalWine.orElse(null);
         }catch (DataAccessException e) {
             throw new WineDataAccessException("Failed to retrieve the wine from the database");}
 
