@@ -3,10 +3,9 @@ package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
-import com.vmd.vmdwebshop.service.WineDTO;
+import com.vmd.vmdwebshop.service.WineDto;
 import com.vmd.vmdwebshop.service.WineService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,13 +49,14 @@ public class WineController {
 
 
     /**
-     * Takes a mock wine object, so that we can receive an ID, in the case that we need to edit an existing wine
+     * Takes a wine Data Transfer Object, so that we can receive an ID, in the case that we need to edit an existing wine
      * Catches the exception that a wine was not found in the database with the given ID
      * @param wineDTO
      * @return List<Wine>
      */
     @PostMapping(value="/admin/createAndEdit", consumes = "application/json")
-    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody @Valid WineDTO wineDTO) {
+    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody @Valid WineDto wineDTO) {
+        //creates a wine object based on the data in the wine DTO
         Wine wine = wineDTO.createWineFromWineData();
 
         try{
@@ -68,12 +68,34 @@ public class WineController {
 
     }
 
+    /**
+     * This method deletes a wine in the database by its ID.
+     * @param ID
+     * @return List<Wine>
+     */
     @PostMapping("admin/delete/{ID}")
     public ResponseEntity<List<Wine>> deleteWine(@PathVariable("ID") @Pattern(regexp = "^\\d+$") String ID){
 
         try {
             return ResponseEntity.ok(wineService.delete(Long.parseLong(ID)));
 
+        } catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.internalServerError().build();
+        }
+
+    }
+
+
+    /**This method changes the boolean attribute activeState on a wine in the database.
+     * @param ID
+     * @return List<Wine>
+     */
+    @PostMapping("admin/changeActiveState/{ID}")
+    public ResponseEntity<List<Wine>> changeActiveState(@PathVariable("ID") @Pattern(regexp = "^\\d+$") String ID){
+
+        try {
+            return ResponseEntity.ok(wineService.changeActiveState(ID));
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();
