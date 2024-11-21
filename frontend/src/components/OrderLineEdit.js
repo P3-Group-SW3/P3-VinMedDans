@@ -19,6 +19,7 @@ const OrderLineEdit = ({orderLine, onUpdate}) => {
         })
             .then(response => response.json())
             .then(data => console.log('Success:', data))
+            .then(() => onUpdate())
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -41,24 +42,11 @@ const OrderLineEdit = ({orderLine, onUpdate}) => {
             })
                 .then(response => response.json())
                 .then(data => console.log('Success:', data))
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-            console.log("Current quantity: ", quantity);
-        } else if (quantity - 1 === 0) {
-            fetch('/api/deleteOrderLine', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify( orderLine ),
-            })
-                .then(response => response.json())
-                .then(data => console.log('Success:', data))
                 .then(() => onUpdate())
                 .catch((error) => {
                     console.error('Error:', error);
                 });
+            console.log("Current quantity: ", quantity);
         }
     }
 
