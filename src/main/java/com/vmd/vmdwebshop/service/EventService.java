@@ -10,6 +10,7 @@ import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class EventService implements AdministrativeMethodsInterface<Event> {
@@ -30,10 +31,16 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
      */
     @Override
     public List<Event> getAll() {
-        List<Event> eventList = eventRepository.findAll();
+        List<Event> eventList;
+
+        try {
+            eventList = eventRepository.findAll();
+        } catch (DataAccessException e) {
+            throw new EventDataAccessException("Failure to retrieve events from the database");
+        }
 
         if(eventList.isEmpty()){
-            throw new EventNotFoundException("No events were found in the database");
+            System.out.println("There are currently no events in the database");
         }
 
         return eventList;
@@ -51,7 +58,8 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
         Event existingEvent;
 
         try {
-            existingEvent = eventRepository.findByEventID(ID);}
+            Optional<Event> optionalEvent = eventRepository.findById(ID);
+            existingEvent = optionalEvent.orElse(null);}
         catch (DataAccessException e) {
             throw new EventDataAccessException("Failed to retrieve the event from the database");}
 
@@ -85,7 +93,8 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
      */
     @Override
     public List<Event> delete(Long ID){
-            Event existingEvent = eventRepository.findByEventID(ID);
+            Optional<Event> optionalEvent = eventRepository.findById(ID);
+            Event existingEvent = optionalEvent.orElse(null);
 
             if(existingEvent == null){
                 throw new NullPointerException("No such event exists");

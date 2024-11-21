@@ -37,7 +37,7 @@ public class Event {
     @NotBlank (message = "This field must not be blank")
     @Length(max = 50)
     @Column(name = "title", nullable = false, length = 50)
-    private String Title;
+    private String title;
 
     @NotBlank (message = "This field must not be blank")
     @Size(max = 500)
@@ -50,6 +50,22 @@ public class Event {
 
     @Column(name = "cancelled", nullable = false)
     private boolean cancelled;
+
+    // Empty Constructor
+    public Event() {}
+
+    // Constructor
+    public Event(String date, String time, String location, String title,
+                 String description, String imgURL, boolean cancelled) {
+        this.date = date;
+        this.time = time;
+        this.location = location;
+        this.title = title;
+        this.description = description;
+        this.imgURL = imgURL;
+        this.cancelled = cancelled;
+
+    }
 
     // Getters and setters
     public Long getID() {
@@ -109,10 +125,10 @@ public class Event {
     }
 
     public String getTitle() {
-        return Title;
+        return title;
     }
 
-    public void setTitle(String Title) {
-        this.Title = Title;
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
