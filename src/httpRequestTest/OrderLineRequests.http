@@ -1,0 +1,73 @@
+
+### Send GET request
+GET http://localhost:8080/api/clearCart/0
+Content-Type: application/json
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditOrderLine
+Content-Type: application/json
+
+{
+  "amount": 100,
+  "customerID": "efg",
+  "wineID": 3,
+  "orderid": null
+}
+
+### GET request with a header
+GET http://localhost:8080/api/getAllOrderLines/efg
+Accept: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/api/deleteOrderLine
+Content-Type: application/json
+
+{
+
+  "customerID": "abc",
+  "wineID": 1
+
+}
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditOrderLine
+Content-Type: application/json
+
+{
+  "amount": 10,
+  "customerID": "jph",
+  "wineID": 1,
+  "orderid": null
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditOrderLine
+Content-Type: application/json
+
+{
+  "amount": 100,
+  "customerID": "jph",
+  "wineID": 2,
+  "orderid": null
+}
+
+### GET request with a header
+GET http://localhost:8080//api/getAllOrderLines/jph
+Accept: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/api/createAndEditOrderLine
+Content-Type: application/json
+
+{
+  "amount": 10,
+  "customerID": "ken",
+  "wineID": 3,
+  "orderid": null
+}
+
+### GET request with a header
+GET http://localhost:8080//api/getAllOrderLines/ken
+Accept: application/json

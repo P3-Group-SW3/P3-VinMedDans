@@ -1,20 +1,22 @@
 package com.vmd.vmdwebshop.service;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 
 @MappedSuperclass
 public abstract class Product {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long ID;
+
     private double price;
+
     private String description;
+
     private String imageURL;
+
+    private boolean activeState = true;
 
     public Product() {}
 
-    public Product(Long ID, double price, String description, String imageURL) {
-        this.ID = ID;
+    public Product(double price, String description, String imageURL) {
         this.price = price;
         this.description = description;
         this.imageURL = imageURL;
@@ -27,7 +29,8 @@ public abstract class Product {
 
     public double getPrice() { return this.price; }
 
-    public Long getID() { return this.ID; }
+    public boolean getActiveState(){return this.activeState; }
+
 
 
     void setPrice(int price) {
@@ -41,4 +44,7 @@ public abstract class Product {
     void setImageURL(String imageURL) {
         this.imageURL = imageURL;
     }
+
+    public void changeActiveState(){ activeState = !activeState; }
+
 }

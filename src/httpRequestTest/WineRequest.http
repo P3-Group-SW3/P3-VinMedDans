@@ -1,0 +1,58 @@
+### Send POST request with json body
+GET http://localhost:8080/api/wine/getById/
+Content-Type: application/json
+
+### Send POST request with json body
+GET http://localhost:8080/api/wine/getList
+Content-Type: application/json
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/wine/admin/createAndEdit
+Content-Type: application/json
+
+{
+  "ID": 2,
+  "description": "Hej med dig",
+  "imageURL": "Bøh",
+  "price": 100,
+  "amountLeft": 11,
+  "name": "Blåvin"
+}
+
+
+### Send POST request with json body
+POST http://localhost:8080/api/wine/admin/delete/94
+Content-Type: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/api/wine/admin/createAndEdit
+Content-Type: application/json
+
+{
+  "ID": null,
+  "description": "a",
+  "imageURL": "a",
+  "price": 1,
+  "amountLeft": 10,
+  "name": "a"
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/wine/admin/createAndEdit
+Content-Type: application/json
+
+{
+  "description": "b",
+  "imageURL": "c",
+  "price": 90,
+  "amountLeft": 1,
+  "name": "d"
+}
+
+### Send POST request with json body
+POST http://localhost:8080/api/wine/admin/changeActiveState/95
+Content-Type: application/json
+
+
+

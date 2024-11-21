@@ -1,20 +1,19 @@
 package com.vmd.vmdwebshop.controller;
 
 
-import com.mysql.cj.x.protobuf.MysqlxCrud;
+import com.vmd.vmdwebshop.exception.order.OrderNotFoundInDatbase;
+import com.vmd.vmdwebshop.exception.order.StateChangeFailedException;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
-import com.vmd.vmdwebshop.repository.OrderLineRepository;
-import com.vmd.vmdwebshop.service.OrderLineService;
 import com.vmd.vmdwebshop.service.OrderService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.vmd.vmdwebshop.service.*;
 
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -23,7 +22,7 @@ public class OrderController {
     @Autowired
     OrderService orderService;
     @Autowired
-    private OrderLineRepository orderLineRepository;
+    private OrderLineService orderLineService;
 
     /**
      * This is the post mapping from the request from the front end and makes an order from a customer.
@@ -34,12 +33,18 @@ public class OrderController {
      * And we use the cookie id to get the list of ordelines from the customer send these objects through our order service
      * @return
      */
-    @PostMapping("/api/orderInfo")
+    @PostMapping("/api/orderInfo/{customerID}")
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @PathVariable @Pattern(regexp = "^\\d+$") String customerID) {
 
-    public ResponseEntity<Orders> createOrder(@Valid @RequestBody Orderinfo order, @CookieValue(value = "cookieId", defaultValue = "") String customerID) {
+        try{
+            List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
+            Orders orders = orderService.createOrderFromInfo(order, orderLines);
+            return ResponseEntity.ok(orders);
 
-        List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(customerID);
-        return ResponseEntity.ok(orderService.createOrderfromInfo(order, orderLines));
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
     }
 
     /**
@@ -48,7 +53,14 @@ public class OrderController {
      */
     @GetMapping("/api/orders")
     public ResponseEntity<List<Orders>> getAllOrders() {
-        return ResponseEntity.ok(orderService.getAllOrders());
+        try {
+            return ResponseEntity.ok(orderService.getAllOrders());
+        }
+        catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+
     }
 
     /**
@@ -57,12 +69,13 @@ public class OrderController {
      * @return
      */
     @GetMapping("/api/orders/{orderID}")
-    public ResponseEntity<Orders> getOrderById(@PathVariable String orderID) {
-        Orders order = orderService.getOrderById(Long.parseLong(orderID));
-        if(order!= null){
+    public ResponseEntity<Orders> getOrderById(@PathVariable @Pattern(regexp = "^\\d+$") String orderID) {
+        try {
+            Orders order = orderService.getOrderById(Long.parseLong(orderID));
             return ResponseEntity.ok(order);
         }
-        else {
+        catch (OrderNotFoundInDatbase e){
+            System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }
@@ -73,8 +86,12 @@ public class OrderController {
      * @param state
      */
     @PostMapping("/api/orders/state/{orderID}")
-    public void changeState(@PathVariable Long orderID, @RequestBody OrderState state) {
-        //når vi laver denne skal vi senere gemme ændringerne 
-        orderService.changeState(orderID, state.getState());
+    public void changeState(@PathVariable @Pattern(regexp = "^\\d+$") Long orderID, @RequestBody OrderState state) {
+        //når vi laver denne skal vi senere gemme ændringerne
+        try {
+            orderService.changeState(orderID, state.getState());
+        }catch (StateChangeFailedException e){
+            System.out.println(e.getMessage());
+        }
     }
 }

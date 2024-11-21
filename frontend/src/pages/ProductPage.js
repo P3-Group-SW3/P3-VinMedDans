@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import Item from "../components/Item";
+import {CustomerLinks} from "./CustomerLinkContext";
 
 function ProductPage() {
     const [items, setItems] = useState([]);
@@ -13,7 +14,7 @@ function ProductPage() {
     response: JSON array of objects
     */
     useEffect(() => {
-        fetch('/api/getAllWines')
+        fetch('/api/wine/getList')
             .then(response => response.json())
             .then(data => setItems(data))
             .catch(error => console.error('Error fetching data:', error));
@@ -23,7 +24,10 @@ function ProductPage() {
 
     return (
         <div className="productPage">
-            <Header />
+            <Header
+                links={ CustomerLinks }
+                showCart={true}
+            />
             
             {items.map((item, index) => (
                 <Item

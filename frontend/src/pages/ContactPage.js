@@ -1,18 +1,20 @@
 import Footer from "../components/Footer";
-import Navbar from "../components/Navbar";
 import Header from "../components/Header";
-import images from "../images/images";
+import {CustomerLinks} from "./CustomerLinkContext";
 
 function ContactPage() {
     return (
         <div className="ContactPage">
-            <Header />
+            <Header
+                links={ CustomerLinks }
+                showCart={true}
+            />
 
             <div className="contact-content container my-5">
                 <div className="row">
                     <div className="col-md-6 d-flex justify-content-center align-items-center">
                         <img
-                            src= {images.image6}
+                            src= {"http://localhost:8080/api/images/image6.png"}
                             alt="Vinflasker"
                             className="img-fluid"
                             style={{ maxWidth: "80%" }}

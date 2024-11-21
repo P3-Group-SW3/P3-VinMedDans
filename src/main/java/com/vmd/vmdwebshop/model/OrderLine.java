@@ -16,8 +16,7 @@ public class OrderLine {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
-    @Column(name = "customerID")
-    @NotBlank(message = "this field must not be empty")
+    @Column(name = "customerID", nullable = true)
     private String customerID;
 
     @Digits(integer = 3, fraction = 0, message = "this field must only consist of digits")
@@ -29,8 +28,8 @@ public class OrderLine {
     therefore there will be multiple OrderLines that are associated with the same product.
     FetchType.LAZY means that the content is only fetched when being accessed.
     @JoinColumn takes the ID column from the Wine table and inserts it into the OrderLine table with the name Wine_id */
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "wineID", nullable = false, insertable = false, updatable = false)
+    @ManyToOne
+    @JoinColumn(name = "wine")
     private Wine wine; //hvorfor det??
 
     @Column(name = "wineID", nullable = false)
@@ -38,7 +37,7 @@ public class OrderLine {
     private Long wineID;
 
     @ManyToOne
-    @JoinColumn(name = "orderID")
+    @JoinColumn(name = "orderID", nullable = true)
     private Orders orders;
 
     //Empty Constructor
@@ -75,11 +74,18 @@ public class OrderLine {
 
     public void setOrders(Orders orders) {
         this.orders = orders;
-        this.customerID = null;
+        this.customerID = "";
     }
 
-    public Long GetorderID(){
-        return orders.getID();
+    public Long getOrderID(){
+        return orders != null ? orders.getID() : null;
     }
 
+    public void setWine(Wine wine) {
+        this.wine = wine;
+    }
+
+    public Wine getWine() {
+        return wine;
+    }
 }
