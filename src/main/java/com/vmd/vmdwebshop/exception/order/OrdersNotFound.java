@@ -1,8 +1,7 @@
 package com.vmd.vmdwebshop.exception.order;
 
 public class OrdersNotFound extends RuntimeException {
-    public OrdersNotFound() {
-    }
+    public OrdersNotFound() {}
 
     @Override
     public String getMessage(){
