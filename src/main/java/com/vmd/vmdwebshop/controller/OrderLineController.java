@@ -44,7 +44,25 @@ public class OrderLineController {
      * @return list of orderlines
      */
     @GetMapping("/api/getAllOrderLines/{customerID}")
-    public ResponseEntity<PriceDTO > getAllOrderLines(@PathVariable String customerID) {
+    public ResponseEntity<List<OrderLine> > getAllOrderLines(@PathVariable String customerID) {
+        try {
+            List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
+            PriceDTO price = orderLineService.calculateOrderLine(orderLines);
+            return ResponseEntity.ok(orderLines);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * this get request takes the customer id as a pathvariable, and returns the users orderlines
+     * returns their "cart"
+     * @param customerID
+     * @return list of orderlines
+     */
+    @GetMapping("/api/getPrice/{customerID}")
+    public ResponseEntity<PriceDTO> getPrice(@PathVariable String customerID) {
         try {
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
             PriceDTO price = orderLineService.calculateOrderLine(orderLines);

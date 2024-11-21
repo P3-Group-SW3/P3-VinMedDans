@@ -123,7 +123,7 @@ public class OrderLineService {
     }
 
     public PriceDTO calculateOrderLine(List<OrderLine> orderLines) {
-        PriceDTO priceDTO = new PriceDTO(orderLines);
+        PriceDTO priceDTO = new PriceDTO();
         for (OrderLine orderLine: orderLines){
             Double price = calculateOrderLine(orderLine);
             priceDTO.addToTotalPrice(price);

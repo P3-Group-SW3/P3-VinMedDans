@@ -7,11 +7,9 @@ import java.util.List;
 
 public class PriceDTO {
     private Double totalPrice;
-    private List<OrderLine> orderLines;
 
-    public PriceDTO(List<OrderLine> orderLines){
+    public PriceDTO(){
         totalPrice = 0.0;
-        this.orderLines = orderLines;
     }
 
     public Double getTotalPrice() {
@@ -23,12 +21,3 @@ public class PriceDTO {
     }
 
 
-
-    public List<OrderLine> getOrderLines() {
-        return orderLines;
-    }
-
-    public void setOrderLines(List<OrderLine> orderLines) {
-        this.orderLines = orderLines;
-    }
-}
