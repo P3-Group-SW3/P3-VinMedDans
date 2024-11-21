@@ -31,17 +31,19 @@ public class Event {
     @NotBlank (message = "This field must not be blank")
     @Size(max = 80)
     @Pattern(regexp = "^[\\p{L} .'-]+$")
-    @Column(name = "location", nullable = false, length = 50)
+    @Column(name = "location", nullable = false, length = 80)
     private String location;
 
     @NotBlank (message = "This field must not be blank")
-    @Length(max = 50)
+    @Size(max = 50)
+    @Pattern(regexp = "^[\\p{L} .'-]+$")
     @Column(name = "title", nullable = false, length = 50)
     private String title;
 
     @NotBlank (message = "This field must not be blank")
     @Size(max = 500)
-    @Column(name = "description", nullable = false, length = 200)
+    @Pattern(regexp = "^[\\p{L} .'-]+$")
+    @Column(name = "description", nullable = false, length = 500)
     private String description;
 
     @NotBlank (message = "This field must not be blank")

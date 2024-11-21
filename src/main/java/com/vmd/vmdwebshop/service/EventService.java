@@ -23,10 +23,11 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
     }
 
     /**
+     * getAll
      * This method finds and returns all existing events in the database.
      * If no events are found, an exception will be thrown.
-     * @return list of all events in the database
-     * @exception EventNotFoundException
+     * @return list of all events in the database.
+     * @exception EventNotFoundException is thrown if an event cannot be retrieved from the database.
      */
     @Override
     public List<Event> getAll() {
