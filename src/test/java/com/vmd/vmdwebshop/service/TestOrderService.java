@@ -38,15 +38,15 @@ public class TestOrderService {
 
 
 
-//    @BeforeEach
-//    public void setUP(){
-//        MockitoAnnotations.openMocks(this); // Initialize mocks before each test
-//
-//        orderList.add((new Orders("g t","c","e@mail.c","+4599999999","ringevej 991","5050","hej")));
-//        orderList.getLast().setID(Long.parseLong("1"));
-//        orderList.add((new Orders("g t","c","n@mail.c","+4599888888","farvel 991","5045","hey")));
-//        orderList.getLast().setID(Long.parseLong("2"));
-//    }
+    @BeforeEach
+    public void setUP(){
+        MockitoAnnotations.openMocks(this); // Initialize mocks before each test
+
+        orderList.add((new Orders("g t","c","e@mail.c","+4599999999","ringevej 991","5050","hej")));
+        //orderList.getLast().setID(Long.parseLong("1"));
+        orderList.add((new Orders("g t","c","n@mail.c","+4599888888","farvel 991","5045","hey")));
+        //orderList.getLast().setID(Long.parseLong("2"));
+    }
 
     @Test
     public void TestGetorders(){
