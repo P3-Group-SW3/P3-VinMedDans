@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/")
+@RequestMapping("/api/")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
-    @GetMapping("/api/createcookie")
+    @GetMapping("/createCookie")
     public void createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
         try {
             customerService.setCustomerCookie(response, request);
@@ -23,7 +23,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/api/updatecookie")
+    @GetMapping("/updateCookie")
     public void updateCustomerCookie(HttpServletResponse response, HttpServletRequest request) {
         try {
             customerService.updateLegalAge(response, request);
@@ -32,7 +32,7 @@ public class CustomerController {
         }
     }
 
-    @GetMapping("/api/cookieAge")
+    @GetMapping("/cookieAge")
     public String cookieAge(HttpServletRequest request) {
         try {
             customerService.getCookieAge(request);
