@@ -42,7 +42,7 @@ const CartOverlay = ({ handleClose, show }) => {
         console.log("Orderline:", orderLines);
     }
 
-    useEffect(() => { refreshOrderLines() }, []);
+    useEffect(() => { refreshOrderLines() }, [show]);
 
     return (
         <div className={showHideClassName} onClick={handleClose}>
