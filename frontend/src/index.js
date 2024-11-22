@@ -1,4 +1,3 @@
-// frontend/src/index.js
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
@@ -15,6 +14,7 @@ import EventPage from './pages/EventPage';
 import LoadFonts from './components/LoadFonts';
 import CriiptoAuthWrapper from './components/CriiptoAuthWrapper';
 import Callback from './components/Callback';
+import Payment from './pages/Payment';
 
 const SetTitle = () => {
   useEffect(() => {
@@ -23,7 +23,6 @@ const SetTitle = () => {
 
   return null;
 };
-
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -39,12 +38,8 @@ root.render(
         <Routes>
           <Route path="/">
             <Route index element={<Landingpage />} />
+            <criiptoAuthWrapper 
             <Route path="checkout" element={<Checkout />} />
-            <Route path="payment" element={
-              <CriiptoAuthWrapper>
-                <Checkout />  {/* This should be replaced with whatever component used to process payment */}
-              </CriiptoAuthWrapper>
-            } />
             <Route path="shop" element={<ProductPage />} />
             <Route path="about" element={<AboutUsPage />} />
             <Route path="locations" element={<LocationPage />} />
