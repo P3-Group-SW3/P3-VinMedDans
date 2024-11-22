@@ -116,8 +116,18 @@ public class OrderLineService {
         }
     }
 
-    public double calculateOrderLine(int amount, double price) {
-        return amount * price;
+    public Double calculateOrderLine(OrderLine orderLine) {
+
+        return orderLine.getAmount() * orderLine.getWine().getPrice();
+    }
+
+    public double calculateOrderLine(List<OrderLine> orderLines) {
+        double totalPrice = 0.0;
+        for (OrderLine orderLine: orderLines){
+            Double price = calculateOrderLine(orderLine);
+            totalPrice += price;
+        }
+        return totalPrice;
     }
 
     /**
