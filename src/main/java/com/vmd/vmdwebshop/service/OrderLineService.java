@@ -123,13 +123,13 @@ public class OrderLineService {
         return orderLine.getAmount() * orderLine.getWine().getPrice();
     }
 
-    public PriceDTO calculateOrderLine(List<OrderLine> orderLines) {
-        PriceDTO priceDTO = new PriceDTO();
+    public double calculateOrderLine(List<OrderLine> orderLines) {
+        double totalPrice = 0.0;
         for (OrderLine orderLine: orderLines){
             Double price = calculateOrderLine(orderLine);
-            priceDTO.addToTotalPrice(price);
+            totalPrice += price;
         }
-        return priceDTO;
+        return totalPrice;
     }
 
     /**
