@@ -4,7 +4,7 @@ import { CartModify } from './CartModify';
 import '../styles/fonts.css';
 import '../styles/item.css';
 
-const Item = ({ title, description, price, image, stock, imagePos, item}) => {
+const Item = ({ title, description, price, image, stock, imagePos, item }) => {
 
     const renderStockMessage = () => {
         if (stock > 10) {
