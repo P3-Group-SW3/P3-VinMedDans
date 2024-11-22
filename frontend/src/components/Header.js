@@ -1,7 +1,6 @@
 // Header.js
 import React, { useEffect, useRef } from 'react';
-import logoImg from '../images/Logo Img.png';
-import logoText from '../images/Logo Text.png';
+import logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom";
 import Cart from './Cart';
 import Navbar from './Navbar';
@@ -23,9 +22,10 @@ const Header = ({ links, showCart }) => {
     return (
         <div ref={headerRef} className="d-flex fixed-top flex-column bg-white w-100">
             <div className="d-flex flex-row align-items-center justify-content-center w-100">
-                <img src={logoImg} alt="Logo" className="me-2" />
-                <img src={logoText} alt="Secondary Logo" />
-                {showCart && <Cart />}
+                <a onClick={() => navigate('/')}>
+                    <img src={logo} alt="Logo" className="me-2" style={{cursor: 'pointer'}}/>
+                </a>
+                {showCart && <Cart/>}
             </div>
             <div>
                 <Navbar links={links} />

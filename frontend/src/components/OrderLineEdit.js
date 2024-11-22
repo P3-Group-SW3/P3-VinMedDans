@@ -67,6 +67,7 @@ const OrderLineEdit = ({orderLine, onUpdate}) => {
             decrementQuantity={decrementQuantity}
             incrementQuantity={incrementQuantity}
             quantity={quantity}
+            scale={0.8}
         />
     )
 }

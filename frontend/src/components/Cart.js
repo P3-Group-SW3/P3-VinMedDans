@@ -49,32 +49,32 @@ const CartOverlay = ({ handleClose, show }) => {
                 <div className="list-group list-group-flush mb-4">
                     {orderLines.map((orderLine) => (
                         <div key={orderLine.id}
-                             className="list-group-item d-flex flex-column">
-                            <div className="d-flex flex-row justify-content-between align-items-center">
-                                <div className="d-flex align-items-center">
-                                    <img
-                                        src={orderLine.wine.imageURL}
-                                        alt={orderLine.wine.name}
-                                        className="img-fluid"
-                                        style={{width: '50px', height: '50px', objectFit: 'cover'}}
-                                    />
-                                </div>
-                                <div className="flex-column">
+                             className="list-group-item d-flex px-0 py-3">
+                            <img
+                                src={orderLine.wine.imageURL}
+                                alt={orderLine.wine.name}
+                                className="img-fluid"
+                                style={{width: '50px', height: '50px', objectFit: 'cover'}}
+                            />
+                            <div className="flex-column w-100">
+                                <div className="d-flex justify-content-between ml-2">
                                     <span>{orderLine.wine.name}</span>
+                                    <span>{orderLine.wine.price * orderLine.amount},-</span>
+                                </div>
+                                <div className="d-flex justify-content-start">
                                     < OrderLineEdit orderLine={orderLine} onUpdate={refreshOrderLines}/>
                                 </div>
-                                <span>{orderLine.wine.price * orderLine.amount},-</span>
                             </div>
                         </div>
                     ))}
                 </div>
                 <div className="d-flex justify-content-between">
-                    <p>Total inkl. moms</p>
-                    <p>100,-</p>
+                    <p className="mb-0">Total inkl. moms</p>
+                    <p className="mb-0">100,-</p>
                 </div>
                 <div className="d-flex justify-content-between">
-                    <p>Rabat</p>
-                    <p>200,-</p>
+                    <p className="mb-0">Rabat</p>
+                    <p className="mb-0">200,-</p>
                 </div>
                 <div className="d-flex justify-content-between">
                     <p>Samlet beløb</p>
