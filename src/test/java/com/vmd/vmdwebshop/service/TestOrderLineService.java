@@ -88,7 +88,7 @@ public class TestOrderLineService {
 
     /** Test that getAllOrderLines method returns a list of all orderlines associated with a customwer*/
     @Test
-    public void TestGetOrderLines01(){
+    public void TestGetAllOrderLines01(){
         when(orderLineRepository.findAllByCustomerId("abc")).thenReturn(orderLineList);
 
         List<OrderLine> orderLines = orderLineService.getAllOrderLines("abc");
