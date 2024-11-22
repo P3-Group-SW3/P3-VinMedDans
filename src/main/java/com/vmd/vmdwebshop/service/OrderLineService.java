@@ -72,10 +72,11 @@ public class OrderLineService {
         try {
             if (existingOrderLine != null) {
                 existingOrderLine.setAmount(orderLine.getAmount());
-            } else if (orderLine.getAmount() == 0 || orderLine.getAmount() <= 0) {
-                orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
+                // TODO: skal ændres så man ikke kan sætte amount til mindre end 1 HUSK TEST
+//            } else if (orderLine.getAmount() == 0 || orderLine.getAmount() <= 0) {
+//                orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
             } else {
-                orderLine.setWine(wineService.getWineById(orderLine.getWineID()));
+                orderLine.setWine(wineService.getWineById(orderLine.getWineID())); // Gives orderline access to the wine object
                 orderLineRepository.save(orderLine);
             }
         } catch (DataAccessException e){ throw new OrderLineDataAccessException("Failed to update or save to the database");}
@@ -84,7 +85,7 @@ public class OrderLineService {
     }
 
     /**
-     * clearCart
+     * clearCar
      * This method clears a customer's cart by deleting all orderlines that matches a specific customer id.
      * First finds all orderlines matching the customer id, if no such orderlines exist an exception will be thrown.
      * Then will execute the deletion of the orderlines, and afterward checks if the deletion was successful by checking
@@ -150,6 +151,7 @@ public class OrderLineService {
         else {
             orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
         }
+
         return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
 
     }
