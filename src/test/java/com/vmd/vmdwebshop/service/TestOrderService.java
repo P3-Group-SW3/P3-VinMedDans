@@ -33,6 +33,12 @@ public class TestOrderService {
     @Mock
     private OrderRepository orderRepository;
 
+    @Mock
+    private OrderLineService orderLineService;
+
+    @Mock
+    private WineService wineService;
+
     @InjectMocks
     private OrderService orderService;
 
@@ -131,10 +137,13 @@ public class TestOrderService {
     @Test
     public void TestCreateOrderFromInfo01(){
         when(orderDto.createOrderFromInfo()).thenReturn(order);
+
         when(orderRepository.save(any(Orders.class))).thenReturn(order);
+
         when(order.getID()).thenReturn(Long.parseLong("1"));
         when(order.getFullName()).thenReturn("Jens Peter");
         when(order.getMail()).thenReturn("a@b.com");
+
         when(orderLine.getOrderID()).thenReturn(Long.parseLong("1"));
 
         Orders newOrder = orderService.createOrderFromInfo(orderDto, orderLineList);
@@ -161,10 +170,13 @@ public class TestOrderService {
     @Test
     public void TestCreateOrderFromInfo03(){
         when(orderDto.createOrderFromInfo()).thenReturn(order);
+
         when(orderRepository.save(any(Orders.class))).thenReturn(order);
+
         when(order.getID()).thenReturn(Long.parseLong("2"));
         when(order.getFullName()).thenReturn("Jens Peter");
         when(order.getMail()).thenReturn("a@b.com");
+
         when(orderLine.getOrderID()).thenReturn(Long.parseLong("3"));
         when(orderLine.getID()).thenReturn(Long.parseLong("1"));
 

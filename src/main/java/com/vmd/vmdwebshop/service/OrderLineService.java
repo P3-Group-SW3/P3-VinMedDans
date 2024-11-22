@@ -1,9 +1,7 @@
 package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.exception.orderline.CartNotClearedException;
-import com.vmd.vmdwebshop.exception.orderline.EmptyCartException;
-import com.vmd.vmdwebshop.exception.orderline.OrderLineDataAccessException;
-import com.vmd.vmdwebshop.exception.orderline.OrderLineDoesNotExistException;
+import com.vmd.vmdwebshop.exception.order.OrderlineNotAdded;
+import com.vmd.vmdwebshop.exception.orderline.*;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
@@ -144,6 +142,31 @@ public class OrderLineService {
 
         return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
 
+    }
+
+    public boolean canBePurchased(List<OrderLine> orderLineList){
+        boolean canBePurchased = true;
+        String exceptionMessage = "There is not enough stock for wine(s):";
+
+        try{
+            for(OrderLine orderLine : orderLineList) {
+                Wine wine = wineRepository.getById(orderLine.getWineID());
+                if (!wine.canBePurchased(orderLine.getAmount())){
+                    canBePurchased = false;
+                    exceptionMessage += " ID:" + wine.getID();
+                }
+            }
+        }catch (DataAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+
+
+        if (canBePurchased == false){
+            throw new OrderLineCannotBePurchased(exceptionMessage);
+        }
+
+        return canBePurchased;
     }
 }
 
