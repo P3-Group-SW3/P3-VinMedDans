@@ -4,6 +4,7 @@ import logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom";
 import Cart from './Cart';
 import Navbar from './Navbar';
+import AgeVerification from "./AgeVerification";
 import '../styles/header.css';
 
 const Header = ({ links, showCart }) => {
@@ -20,6 +21,7 @@ const Header = ({ links, showCart }) => {
     }, []);
 
     const [cookieAge, setCookieAge] = useState('new');
+    const [show, setShow] = useState(false);
 
     useEffect(() => {
         fetch('api/createcookie')
@@ -33,9 +35,9 @@ const Header = ({ links, showCart }) => {
         console.log("Cookie age:",cookieAge);
         console.log("Cookie age type:",typeof cookieAge);
         if (cookieAge ==='new') {
-            console.log("18 or older?");
+            setShow(true);
         } else if (cookieAge === 'old') {
-            console.log("No popup :D")
+            setShow(false);
         } else {
             console.log("invalid value!! >:(")
         }
@@ -45,6 +47,7 @@ const Header = ({ links, showCart }) => {
     return (
         <div ref={headerRef} className="d-flex fixed-top flex-column bg-white w-100">
             <div className="d-flex flex-row align-items-center justify-content-center w-100">
+                < AgeVerification show={show}/>
                 <a onClick={() => navigate('/')}>
                     <img src={logo} alt="Logo" className="me-2" style={{cursor: 'pointer'}}/>
                 </a>
