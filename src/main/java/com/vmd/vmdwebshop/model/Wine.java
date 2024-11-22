@@ -42,6 +42,10 @@ public class Wine extends Product {
         return name;
     }
 
+    public void setName(String name){
+        this.name = name;
+    }
+
     // Getter for amountLeft
     public int getAmountLeft() {
         return amountLeft;
