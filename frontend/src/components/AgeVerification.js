@@ -38,6 +38,9 @@ const AgeVerification = () => {
 
     const oldEnough = () => {
         console.log("Yessss");
+        fetch('api/updateCookie')
+            .then(response => console.log(response))
+            .catch(error => console.error('Error fetching data: ', error))
         setShow(false);
         console.log("After press yes: ", show)
     }
