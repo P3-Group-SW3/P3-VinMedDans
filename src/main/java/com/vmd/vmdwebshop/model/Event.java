@@ -15,38 +15,38 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long ID;
 
     @NotBlank (message = "This field must not be blank")
-    @Future
-    @DateTimeFormat(pattern = "dd/mm/yyyy")
+//    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Column(name = "date", nullable = false, length = 10)
     private String date;
 
     @NotBlank (message = "This field must not be blank")
-    @Future
     @Column(name = "time", nullable = false, length = 5)
     private String time;
 
     @NotBlank (message = "This field must not be blank")
     @Size(max = 80)
-    @Pattern(regexp = "^[\\p{L} .'-]+$")
+    @Pattern(regexp = "^[\\p{L}0-9 .,'-]+$")
     @Column(name = "location", nullable = false, length = 80)
     private String location;
 
     @NotBlank (message = "This field must not be blank")
     @Size(max = 50)
-    @Pattern(regexp = "^[\\p{L} .'-]+$")
+    @Pattern(regexp = "^[\\p{L} .,'-]+$")
     @Column(name = "title", nullable = false, length = 50)
     private String title;
 
     @NotBlank (message = "This field must not be blank")
     @Size(max = 500)
-    @Pattern(regexp = "^[\\p{L} .'-]+$")
+    @Pattern(regexp = "^[\\p{L} .,'\\-\\n]+$")
     @Column(name = "description", nullable = false, length = 500)
     private String description;
 
     @NotBlank (message = "This field must not be blank")
+    @Pattern(regexp = "^[\\p{L}0-9 ._'-]+$")
     @Column(name = "imgURL", nullable = false, length = 200)
     private String imgURL;
 

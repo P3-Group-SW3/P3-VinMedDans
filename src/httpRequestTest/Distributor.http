@@ -1,0 +1,17 @@
+### Send GET request with a header
+GET http://localhost:8080/api/distributor/getAll
+
+### Send POST request with json body
+POST http://localhost:8080/api/distributor/admin/delete/2
+Content-Type: application/json
+
+### Send POST request with json body
+POST http://localhost:8080/api/distributor/admin/createAndEdit/2
+Content-Type: application/json
+
+{
+  "name": "vmd",
+  "location": "roskilde",
+  "websiteURL": "https://www.google.com/?client=safari"
+
+}
