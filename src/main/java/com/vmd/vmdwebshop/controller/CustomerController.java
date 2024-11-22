@@ -4,6 +4,7 @@ import com.vmd.vmdwebshop.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -33,13 +34,14 @@ public class CustomerController {
     }
 
     @GetMapping("/cookieAge")
-    public String cookieAge(HttpServletRequest request) {
+    public ResponseEntity<String> cookieAge(HttpServletRequest request) {
         try {
-            customerService.getCookieAge(request);
+            return ResponseEntity.ok(customerService.getCookieAge(request));
         } catch (RuntimeException e) {
-            System.err.println("An error occurred while trying to update the cookie: " + e.getMessage());
+            System.err.println(e.getMessage());
+            return ResponseEntity.notFound().build();
         }
 
-        return customerService.getCookieAge(request);
+
     }
 }
