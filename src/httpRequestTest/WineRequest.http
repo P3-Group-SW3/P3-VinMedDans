@@ -31,7 +31,7 @@ Content-Type: application/json
 
 {
   "ID": null,
-  "description": "a",
+  "description": "hej med -dig",
   "imageURL": "a",
   "price": 1,
   "amountLeft": 10,
