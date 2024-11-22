@@ -15,14 +15,15 @@ const AgeVerification = () => {
             .catch(error => console.error('Error fetching data: ', error))
 
         fetch('api/cookieAge')
-            .then(response => console.log(response))
+            .then(response => response.text())
             .then(data => {
                 setCookieAge(data);
                 console.log("Fetched cookie age:", cookieAge);
+                console.log("Type of data: ", typeof data);
                 console.log("Fetched data:", data);
-                if (cookieAge === 'new') {
+                if (data === 'new') {
                     setShow(true);
-                } else if (cookieAge === 'old') {
+                } else if (data === 'old') {
                     setShow(false);
                 } else {
                     console.error("Invalid cookie age value:", data);

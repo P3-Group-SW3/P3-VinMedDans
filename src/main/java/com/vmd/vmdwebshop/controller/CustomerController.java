@@ -36,12 +36,14 @@ public class CustomerController {
     @GetMapping("/cookieAge")
     public ResponseEntity<String> cookieAge(HttpServletRequest request) {
         try {
-            return ResponseEntity.ok(customerService.getCookieAge(request));
+            String cookieAge = customerService.getCookieAge(request);
+            if (cookieAge == null) {
+                return ResponseEntity.noContent().build(); // HTTP 204: No Content
+            }
+            return ResponseEntity.ok(cookieAge);
         } catch (RuntimeException e) {
             System.err.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
-
-
     }
 }
