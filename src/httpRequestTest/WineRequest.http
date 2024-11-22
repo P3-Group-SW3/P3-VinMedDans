@@ -16,7 +16,7 @@ Content-Type: application/json
   "description": "Hej med dig",
   "imageURL": "Bøh",
   "price": 100,
-  "amountLeft": 11,
+  "amountLeft": 13,
   "name": "Blåvin"
 }
 
