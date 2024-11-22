@@ -23,6 +23,8 @@ const Header = ({ links, showCart }) => {
 
     useEffect(() => {
         fetch('api/createcookie')
+            .then(response => console.log(response))
+            .catch(error => console.error('Error fetching data: ', error))
 
         fetch('api/cookieAge')
             .then(data => setCookieAge(data))
