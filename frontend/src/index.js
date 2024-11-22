@@ -11,6 +11,7 @@ import LocationPage from "./pages/LocationPage";
 import ContactPage from "./pages/ContactPage";
 import EventPage from "./pages/EventPage";
 import LoadFonts from "./components/LoadFonts";
+import AgeVerification from "./components/AgeVerification";
 
 const SetTitle = () => {
   useEffect(() => {
@@ -26,6 +27,7 @@ root.render(
     <BrowserRouter>
       <SetTitle />
       <LoadFonts />
+      <AgeVerification />
       <Routes>
         <Route path="/">
           <Route index element={<Landingpage />} />
