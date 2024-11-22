@@ -3,7 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 function DetailProductAdmin() {
     const { id } = useParams();
-    const [product, setProduct] = useState(null);
+    const [product, setProduct] = useState();
+    const [selectedAmountLeft, setSelectedAmountLeft] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -14,10 +15,10 @@ function DetailProductAdmin() {
             })
             .then((data) => {
                 setProduct(data);
+                setSelectedAmountLeft(data.amountLeft);
             })
             .catch((error) => console.error('Error fetching product:', error));
     }, [id]);
-
 
     const handleDeleteProduct = () => {
         if (window.confirm('Are you sure you want to delete this product?')) {
@@ -34,6 +35,27 @@ function DetailProductAdmin() {
                 })
                 .catch((error) => console.error('Error deleting product:', error));
         }
+    };
+
+    const handleEditProduct = () => {
+        fetch('/api/wine/admin/createAndEdit', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                id: product.id,
+                amountLeft: selectedAmountLeft,
+            }),
+        })
+            .then((response) => {
+                if (!response.ok) throw new Error('Failed to edit product');
+                return response.json();
+            })
+            .then(() => {
+                alert('Product edited successfully!');
+                navigate('/admin');
+            })
+            .catch((error) => console.error('Error editing product:', error));
+        console.log('Sending data:', { id: product.id, amountLeft: selectedAmountLeft });
     };
 
     if (!product) {
@@ -61,13 +83,20 @@ function DetailProductAdmin() {
                     <p className="card-text"><strong>Price:</strong> {product.price} DKK</p>
                     <p className="card-text"><strong>Description:</strong> {product.description}</p>
                     <p className="card-text"><strong>Amount Left:</strong> {product.amountLeft}</p>
+                    <div className="form-group my-3">
+                        <label>Amount Left</label>
+                            <input
+                            type="number"
+                            name="selectedAmountLeft"
+                            value={selectedAmountLeft}
+                            onChange={(e) => setSelectedAmountLeft(e.target.value)}
+                            className="form-control"
+                            />
+                    </div>
                     <div className="d-flex justify-content-end">
-                        <button
-                            onClick={handleDeleteProduct}
-                            className="btn btn-danger"
-                        >
-                            Delete Product
-                        </button>
+                        <button onClick={handleEditProduct} className="btn btn-primary me-2"> Save Changes </button>
+
+                        <button onClick={handleDeleteProduct} className="btn btn-danger"> Delete Product </button>
                     </div>
                 </div>
             </div>
