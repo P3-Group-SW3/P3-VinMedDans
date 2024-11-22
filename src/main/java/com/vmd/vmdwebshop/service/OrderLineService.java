@@ -72,6 +72,10 @@ public class OrderLineService {
         try {
             if (existingOrderLine != null) {
                 existingOrderLine.setAmount(orderLine.getAmount());
+
+                if (orderLine.getAmount() < 1) {
+                    throw new IllegalArgumentException("The amount cannot be less than 1!");
+                }
                 // TODO: skal ændres så man ikke kan sætte amount til mindre end 1 HUSK TEST
 //            } else if (orderLine.getAmount() == 0 || orderLine.getAmount() <= 0) {
 //                orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
