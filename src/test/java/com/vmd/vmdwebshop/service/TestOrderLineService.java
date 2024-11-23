@@ -1,10 +1,8 @@
 package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.exception.orderline.CartNotClearedException;
-import com.vmd.vmdwebshop.exception.orderline.EmptyCartException;
-import com.vmd.vmdwebshop.exception.orderline.OrderLineDataAccessException;
-import com.vmd.vmdwebshop.exception.orderline.OrderLineDoesNotExistException;
+import com.vmd.vmdwebshop.exception.orderline.*;
 import com.vmd.vmdwebshop.model.OrderLine;
+import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataAccessResourceFailureException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.web.servlet.View;
 import java.util.*;
 import static org.mockito.Mockito.*;
@@ -32,14 +31,21 @@ public class TestOrderLineService {
     @Mock
     private OrderLineRepository orderLineRepository;
 
+    @Mock
+    private WineService wineService;
+
     @InjectMocks
     private OrderLineService orderLineService;
+
 
     List<OrderLine> orderLineList = new ArrayList<>() {};
 
     OrderLine orderLine;
     OrderLine orderLine1;
     OrderLine orderLine2;
+
+    Wine wine1;
+
 
     @BeforeEach
     public void setUp() {
@@ -51,6 +57,8 @@ public class TestOrderLineService {
         orderLineList.clear();
         orderLineList.add(orderLine1);
         orderLineList.add(orderLine2);
+
+        wine1 = new Wine("description", "imgUrl", 200, 10, "name");
     }
 
     // Testing on clearCart method
@@ -98,30 +106,75 @@ public class TestOrderLineService {
 
     // Testing on createAndEditOrderLine method
 
-    /** Test that when the createAndEditOrderLine method is called, the service returns a list of OrderLines*/
+    /** Test that when the createAndEditOrderLine method is called, the service returns a list of OrderLines for when
+     * existingOrderline is not null */
     @Test
     public void TestCreateAndEditOrderLine01(){
-        when(orderLineRepository.findAllByCustomerId("abc")).thenReturn(orderLineList);
-
+        when(orderLineRepository.findAllByCustomerId("abc"))
+                .thenReturn(orderLineList);
+        when(wineService.getWineById(Long.parseLong("2")))
+                .thenReturn(wine1);
 
         List<OrderLine> updatedOrderLines = orderLineService.createAndEditOrderLine(new OrderLine(2, Long.parseLong("2"), "abc"));
 
-        assertTrue(!updatedOrderLines.isEmpty(), "The customers orderlines are returned");
+        assertFalse(updatedOrderLines.isEmpty(), "The customers orderlines are returned");
+    }
+
+    /** Test that when the createAndEditOrderLine method is called, the service returns a list of OrderLines for when
+     * existingOrderline is null */
+    @Test
+    public void TestCreateAndEditOrderLine02(){
+        when(orderLineRepository.findByCustomerIDAndWineID("abc", Long.parseLong("2")))
+                .thenReturn(null);
+        when(wineService.getWineById(Long.parseLong("2")))
+                .thenReturn(wine1);
+        when(orderLineRepository.findAllByCustomerId("abc"))
+                .thenReturn(orderLineList);
+
+        List<OrderLine> updatedOrderLines = orderLineService.createAndEditOrderLine(orderLine2);
+        assertFalse(updatedOrderLines.isEmpty(), "The customers orderlines are returned");
+
     }
 
     /** Test that an exception is thrown if there is a data access failure in the database when tryijng to retrieve orderlines */
     @Test
-    public void TestCreateAndEditOrderLine02(){
-        when(orderLineRepository.findByCustomerIDAndWineID("abc", Long.parseLong("2"))).thenThrow(DataAccessResourceFailureException.class);
+    public void TestCreateAndEditOrderLine03(){
+        when(orderLineRepository.findByCustomerIDAndWineID("abc", Long.parseLong("2")))
+                .thenThrow(DataAccessResourceFailureException.class);
 
         assertThrows(DataAccessException.class, () -> orderLineRepository.findByCustomerIDAndWineID("abc", Long.parseLong("2")));
     }
 
-    /** Test whether an exeption is thrown when there is a failure when the orderline is updated/ saved to the database */
+    /** Test whether an exception is thrown when there is a failure to save the orderline to the database */
     @Test
-    public void TestCreateAndEditOrderLine03(){
-        // i gave up sorry
+    public void TestCreateAndEditOrderLine04(){
+        when(orderLineRepository.findByCustomerIDAndWineID("abc", Long.parseLong("2")))
+                .thenReturn(orderLine1);
+        doThrow(DataAccessResourceFailureException.class)
+                .when(orderLineRepository).save(orderLine1);
+
+        assertThrows(OrderLineDataAccessException.class, () -> orderLineService.createAndEditOrderLine(orderLine1));
     }
+
+    /** Test whether an exception is thrown when there is a failure to update the existing orderline */
+    @Test
+    public void TestCreateAndEditOrderLine05(){
+        when(orderLineRepository.findByCustomerIDAndWineID("abc", Long.parseLong("2")))
+                .thenReturn(orderLine1);
+        doThrow(DataIntegrityViolationException.class)
+                .when(orderLineRepository).save(orderLine1);
+
+        assertThrows(OrderLineNotUpdatedException.class, () -> orderLineService.createAndEditOrderLine(orderLine1));
+    }
+    /** Test whether an exception is thrown if amount is set to a negative integer */
+    @Test
+    public void createAndEditOrderLine06(){
+        when(orderLineRepository.findByCustomerIDAndWineID("abc", Long.parseLong("2")))
+                .thenReturn(orderLine1);
+        orderLine1.setAmount(0);
+        assertThrows(IllegalArgumentException.class, () -> orderLineService.createAndEditOrderLine(orderLine1));
+    }
+
 
     // Testing on deleteOrderLine method
 
