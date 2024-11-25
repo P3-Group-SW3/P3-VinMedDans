@@ -16,7 +16,7 @@ Content-Type: application/json
   "description": "Hej med dig",
   "imageURL": "Bøh",
   "price": 100,
-  "amountLeft": 11,
+  "amountLeft": 13,
   "name": "Blåvin"
 }
 
@@ -31,7 +31,7 @@ Content-Type: application/json
 
 {
   "ID": null,
-  "description": "a",
+  "description": "hej med -dig",
   "imageURL": "a",
   "price": 1,
   "amountLeft": 10,
