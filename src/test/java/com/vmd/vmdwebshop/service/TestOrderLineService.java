@@ -196,5 +196,46 @@ public class TestOrderLineService {
                 .thenReturn(null);
         assertThrows(NullPointerException.class, () -> orderLineService.deleteOrderLine(orderLine));
     }
+
+    //Test that asserts that when a wine has a higher stock than the amount in an orderline, the canBePurchased method will return true.
+    @Test
+    public void canBePurchased01(){
+        Wine wine1 = new Wine("Vin", "URL", 189.0, 123, "Rødvin");
+        Wine wine2 = new Wine("Rød", "URL", 189.0, 121, "Hvidvin");
+
+        when(wineRepository.getById(Long.parseLong("1"))).thenReturn(wine1);
+        when(wineRepository.getById(Long.parseLong("2"))).thenReturn(wine2);
+
+        assertTrue(orderLineService.canBePurchased(orderLineList));
+    }
+
+
+    //Test that asserts that when one wine has a lower stock than the amount in an orderline, an exception will be thrown.
+    //The error message displays the wine that cannot be purchased.
+    @Test
+    public void canBePurchased03(){
+        Wine wine1 = mock(Wine.class);
+        Wine wine2 = mock(Wine.class);
+
+        List<OrderLine> newOrderLineList = new ArrayList<>();
+        newOrderLineList.add(new OrderLine(1, Long.parseLong("1"), "1"));
+        newOrderLineList.add(new OrderLine(1, Long.parseLong("2"), "1"));
+
+        when(wine1.getID()).thenReturn(Long.parseLong("1"));
+        when(wine2.getID()).thenReturn(Long.parseLong("2"));
+
+        when(wineRepository.getById(Long.parseLong("1"))).thenReturn(wine1);
+        when(wineRepository.getById(Long.parseLong("2"))).thenReturn(wine2);
+
+        when(wine1.canBePurchased(anyInt())).thenReturn(true);
+        when(wine2.canBePurchased(anyInt())).thenReturn(false);
+
+        OrderLineCannotBePurchased newException = assertThrows(OrderLineCannotBePurchased.class, ()->{ orderLineService.canBePurchased(orderLineList); });
+
+        System.out.println(newException.getMessage());
+        assertEquals("There is not enough stock for wine(s): ID:2", newException.getMessage());
+    }
+
+
 }
 

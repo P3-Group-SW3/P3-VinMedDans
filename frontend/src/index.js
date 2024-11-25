@@ -15,6 +15,7 @@ import DetailOrderAdmin from "./pages/DetailOrderAdmin";
 import DetailProductAdmin from "./pages/DetailProductAdmin";
 import CreateNewWinePage from "./pages/CreateNewWinePage";
 import LoadFonts from "./components/LoadFonts";
+import AgeVerification from "./components/AgeVerification";
 
 const SetTitle = () => {
   useEffect(() => {
@@ -30,6 +31,7 @@ root.render(
     <BrowserRouter>
       <SetTitle />
       <LoadFonts />
+      <AgeVerification />
       <Routes>
         <Route path="/">
           <Route index element={<Landingpage />} />
