@@ -7,7 +7,7 @@ const AgeVerification = () => {
 
     const [cookieAge, setCookieAge] = useState('');
     const [show, setShow] = useState(false);
-    const showClass = show ? "modal display-block" : "modal display-none";
+    const showClass = show ? "age-modal display-block" : "age-modal display-none";
 
     useEffect(() => {
         fetch('api/createCookie')
@@ -37,7 +37,6 @@ const AgeVerification = () => {
     }
 
     const oldEnough = () => {
-        console.log("Yessss");
         fetch('api/updateCookie')
             .then(response => console.log(response))
             .catch(error => console.error('Error fetching data: ', error))
@@ -46,12 +45,19 @@ const AgeVerification = () => {
     }
 
     return (
-        <div className="d-flex">
-            <div className={showClass}>
-                <section className="modal-main" >
-                    < Button text={"Ja"} onClick={oldEnough} />
-                    < Button text={"Nej"} onClick={redirectToBR} />
-                </section>
+        <div className={showClass} >
+            <div className="modal-dialog modal-dialog-centered">
+                <div className="modal-content">
+                    <div className="modal-header">
+                        <h5 className="modal-title text-center">Er du 18 eller over?</h5>
+                    </div>
+                    <div className="modal-body">
+                        <div className="d-flex justify-content-around">
+                            < Button text={"Ja"} onClick={oldEnough} isWide={true}/>
+                            < Button text={"Nej"} onClick={redirectToBR} isWide={true}/>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     );

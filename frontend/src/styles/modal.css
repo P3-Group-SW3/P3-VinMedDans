@@ -10,6 +10,17 @@
     font-family: 'Rubik', sans-serif;
 }
 
+.age-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-radius: 0.5em;
+    backdrop-filter: blur(15px);
+    font-family: 'Rubik', sans-serif;
+}
+
 .modal-main {
     display: flex;
     flex-direction: column;
@@ -18,10 +29,11 @@
     padding: 1em;
 }
 
-.modal.display-block {
+.display-block {
+    z-index: 1035;
     display: block;
 }
 
-.modal.display-none {
+.display-none {
     display: none;
 }
