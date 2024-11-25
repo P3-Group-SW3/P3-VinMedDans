@@ -1,6 +1,5 @@
 package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.exception.order.OrderlineNotAdded;
 import com.vmd.vmdwebshop.exception.orderline.*;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
@@ -8,6 +7,7 @@ import com.vmd.vmdwebshop.repository.WineRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.View;
 
@@ -70,14 +70,24 @@ public class OrderLineService {
         try {
             if (existingOrderLine != null) {
                 existingOrderLine.setAmount(orderLine.getAmount());
-                // TODO: skal ændres så man ikke kan sætte amount til mindre end 1 HUSK TEST
-//            } else if (orderLine.getAmount() == 0 || orderLine.getAmount() <= 0) {
-//                orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
+                orderLineRepository.save(existingOrderLine);
+
             } else {
-                orderLine.setWine(wineService.getWineById(orderLine.getWineID())); // Gives orderline access to the wine object
+                orderLine.setWine(wineService.getWineById(orderLine.getWineID()));// Gives orderline access to the wine object
+                orderLine.setAmount(orderLine.getAmount());
                 orderLineRepository.save(orderLine);
+
             }
-        } catch (DataAccessException e){ throw new OrderLineDataAccessException("Failed to update or save to the database");}
+            if (orderLine.getAmount() < 1) {
+                throw new IllegalArgumentException("The amount cannot be less than 1!");
+            }
+
+
+
+        } catch (DataIntegrityViolationException e){
+            throw new OrderLineNotUpdatedException("Failed to update the orderline");
+        } catch (DataAccessException e){
+            throw new OrderLineDataAccessException("Failed to save orderline to the database");}
 
             return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
     }
