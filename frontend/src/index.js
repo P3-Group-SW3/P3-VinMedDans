@@ -10,6 +10,10 @@ import AboutUsPage from "./pages/AboutUsPage";
 import LocationPage from "./pages/LocationPage";
 import ContactPage from "./pages/ContactPage";
 import EventPage from "./pages/EventPage";
+import AdminPageFunc from "./pages/AdminPageFunc";
+import DetailOrderAdmin from "./pages/DetailOrderAdmin";
+import DetailProductAdmin from "./pages/DetailProductAdmin";
+import CreateNewWinePage from "./pages/CreateNewWinePage";
 import LoadFonts from "./components/LoadFonts";
 import AgeVerification from "./components/AgeVerification";
 
@@ -37,6 +41,11 @@ root.render(
           <Route path="locations" element={<LocationPage />} />
           <Route path="contact" element={<ContactPage />} />
           <Route path="events" element={<EventPage />} />
+          <Route path="admin" element={<AdminPageFunc />} />
+          <Route path="/orders/:id" element={<DetailOrderAdmin/>} />
+          <Route path="/products/:id" element={<DetailProductAdmin/>} />
+          <Route path="create-wine" element={<CreateNewWinePage/>} />
+          <Route path="*" element={<h1>404 - Not Found</h1>} />
           <Route path="*" element={<h1>Page not found</h1>} />
         </Route>
       </Routes>
