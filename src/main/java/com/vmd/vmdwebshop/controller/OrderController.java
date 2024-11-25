@@ -94,4 +94,15 @@ public class OrderController {
             System.out.println(e.getMessage());
         }
     }
+
+
+    @PostMapping("/api/orders/delete/{orderID}")
+    public void deleteOrder(@PathVariable @Pattern(regexp = "^\\d+$") Long orderID){
+        try {
+            Orders order = orderService.getOrderById(orderID);
+            orderService.deleteOrder(order);
+        }catch (RuntimeException e){
+            System.out.println(e.getMessage());
+        }
+    }
 }

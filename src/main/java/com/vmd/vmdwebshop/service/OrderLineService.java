@@ -145,5 +145,9 @@ public class OrderLineService {
         return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
 
     }
+
+    public void deleteOrderlineByID(OrderLine orderLine){
+        orderLineRepository.deleteById(orderLine.getID());
+    }
 }
 

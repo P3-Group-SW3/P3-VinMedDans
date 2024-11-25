@@ -19,12 +19,14 @@ public class OrderService {
     private final OrderLineRepository orderLineRepository;
 
     private final OrderRepository orderRepository;
+    private final OrderLineService orderLineService;
 
     // fjern / tilføj OrderRepository orderRepository baseret på test
-    public OrderService(View error, OrderRepository orderRepository, OrderLineRepository orderLineRepository){
+    public OrderService(View error, OrderRepository orderRepository, OrderLineRepository orderLineRepository, OrderLineService orderLineService){
         this.error = error;
         this.orderRepository = orderRepository;
         this.orderLineRepository = orderLineRepository;
+        this.orderLineService = orderLineService;
     }
 
     /**
@@ -96,6 +98,17 @@ public class OrderService {
         if(order.getState() != newState) {
             throw new StateChangeFailedException(state1, newState);
         }
+    }
+
+    /**
+     *
+     * @param order
+     */
+    public void deleteOrder(Orders order){
+        for (OrderLine orderLine: order.getOrderLines()){
+            orderLineService.deleteOrderlineByID(orderLine);
+        }
+        orderRepository.deleteById(order.getID());
     }
 
 }
