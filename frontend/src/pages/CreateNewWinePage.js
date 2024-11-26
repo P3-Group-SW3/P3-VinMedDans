@@ -9,27 +9,11 @@ function CreateNewWinePage() {
         description: '',
         imageURL: '',
     });
-    const [imageFile, setImageFile] = useState(null);
     const navigate = useNavigate();
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
         setWineData({ ...wineData, [name]: value });
-    };
-
-    const handleImageChange = (event) => {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setWineData((prevData) => ({
-                    ...prevData,
-                    imageURL: reader.result, // Store image as Base64 in imageURL
-                }));
-            };
-            reader.readAsDataURL(file); // Convert image to Base64
-            setImageFile(file);
-        }
     };
 
     const handleCreateNewWine = () => {
@@ -46,7 +30,7 @@ function CreateNewWinePage() {
             })
             .then(() => {
                 alert('New wine created successfully!');
-                navigate('/products-admin'); // Redirect to ProductsAdmin page after creation
+                navigate('/admin');
             })
             .catch(error => console.error('Error creating wine:', error));
     };
@@ -72,8 +56,8 @@ function CreateNewWinePage() {
                     <textarea name="description" value={wineData.description} onChange={handleInputChange} className="form-control" />
                 </div>
                 <div className="form-group">
-                    <label>Image File</label>
-                    <input type="file" onChange={handleImageChange} className="form-control" />
+                    <label>Image URL</label>
+                    <input type="file" name="imageURL" value={wineData.imageURL} onChange={handleInputChange} className="form-control" />
                 </div>
                 <button type="button" onClick={handleCreateNewWine} className="btn btn-primary mt-3">
                     Submit

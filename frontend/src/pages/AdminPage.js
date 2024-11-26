@@ -4,7 +4,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import OrdersAdmin from "../components/OrdersAdmin";
 import ProductsAdmin from "../components/ProductsAdmin";
 
-function AdminPageFunc() {
+function AdminPage() {
     return (
         <div className="container-fluid">
             <div className="row mt-4">
@@ -33,4 +33,4 @@ function AdminPageFunc() {
     );
 }
 
-export default AdminPageFunc;
+export default AdminPage;
