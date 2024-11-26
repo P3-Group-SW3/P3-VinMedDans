@@ -5,20 +5,16 @@ import Button from "./Button";
 
 const AgeVerification = () => {
 
-    const [cookieAge, setCookieAge] = useState('');
     const [show, setShow] = useState(false);
-    const showClass = show ? "modal display-block" : "modal display-none";
 
-    useEffect(() => {
-        fetch('api/createCookie')
+    useEffect(async () => {
+        await fetch('api/createCookie')
             .then(response => console.log(response))
             .catch(error => console.error('Error fetching data: ', error))
 
-        fetch('api/cookieAge')
+        await fetch('api/cookieAge')
             .then(response => response.text())
             .then(data => {
-                setCookieAge(data);
-                console.log("Fetched cookie age:", cookieAge);
                 console.log("Type of data: ", typeof data);
                 console.log("Fetched data:", data);
                 if (data === 'new') {
@@ -31,13 +27,12 @@ const AgeVerification = () => {
             })
             .catch(error => console.error('Error fetching data: ', error))
     }, []);
-    
+
     const redirectToBR = () => {
         document.location = "https://www.br.dk/";
     }
 
-    const oldEnough = () => {
-        console.log("Yessss");
+    const ageVerified = () => {
         fetch('api/updateCookie')
             .then(response => console.log(response))
             .catch(error => console.error('Error fetching data: ', error))
@@ -45,16 +40,28 @@ const AgeVerification = () => {
         console.log("After press yes: ", show)
     }
 
-    return (
-        <div className="d-flex">
-            <div className={showClass}>
-                <section className="modal-main" >
-                    < Button text={"Ja"} onClick={oldEnough} />
-                    < Button text={"Nej"} onClick={redirectToBR} />
-                </section>
+    if (show) {
+        return (
+            <div className="age-modal display-block" >
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title text-center">Er du 18 eller over?</h5>
+                        </div>
+                        <div className="modal-body">
+                            <div className="d-flex justify-content-around">
+                                < Button text={"Ja"} onClick={ageVerified} isWide={true}/>
+                                < Button text={"Nej"} onClick={redirectToBR} isWide={true}/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-        </div>
-    );
+        );
+    } else {
+        return null;
+    }
+
 };
 
 export default AgeVerification;
