@@ -38,7 +38,7 @@ function ProductPage() {
                     image={item.imageURL}
                     stock={item?.stock?.toString()}
                     imagePos="left"
-                    item={item}  
+                    item={item}
                 ></Item>
             ))}
             <Footer />
