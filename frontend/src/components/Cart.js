@@ -11,22 +11,21 @@ const Cart = () => {
     const [show, setShow] = useState(false);
 
     const toggleShow = () => {
-        setShow((show) => !show);
+        setShow(!show);
         console.log("Modal state after click:", show);
     };
 
     return (
         <div className="d-flex">
-            <CartOverlay show={show} handleClose={toggleShow}>
-            </CartOverlay>
             <a className="cart-button" role="button" onClick={toggleShow}>
                 <img src={cartImage} className="img-fluid" alt="Kurv"/>
             </a>
+            <CartOverlay show={show} hideModal={toggleShow} />
         </div>
     );
 };
 
-const CartOverlay = ({ handleClose, show }) => {
+const CartOverlay = ({show, hideModal}) => {
     const showHideClassName = show ? "modal display-block" : "modal display-none";
     console.log("Modal class applied:", showHideClassName);
 
@@ -42,11 +41,21 @@ const CartOverlay = ({ handleClose, show }) => {
         console.log("Orderline:", orderLines);
     }
 
-    useEffect(() => { refreshOrderLines() }, [show]);
+    useEffect(() => {
+        if (show) {
+            refreshOrderLines();
+        }
+    }, [show]);
+
+    const handleBackgroundClick = (e) => {
+        if (e.target === e.currentTarget) {
+            hideModal();
+        }
+    }
 
     return (
-        <div className={showHideClassName} onClick={handleClose}>
-            <section className="modal-main" onClick={(e) => e.stopPropagation()}>
+        <div className={showHideClassName} onClick={handleBackgroundClick}>
+            <section className="modal-main">
                 <div className="list-group list-group-flush mb-4">
                     {orderLines.map((orderLine) => (
                         <div key={orderLine.id}
