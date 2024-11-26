@@ -15,8 +15,6 @@ import java.util.*;
 public class OrderService {
 
     private final View error;
-   
-    private final OrderLineRepository orderLineRepository;
 
     private final OrderRepository orderRepository;
     private final OrderLineService orderLineService;
@@ -25,7 +23,6 @@ public class OrderService {
     public OrderService(View error, OrderRepository orderRepository, OrderLineRepository orderLineRepository, OrderLineService orderLineService){
         this.error = error;
         this.orderRepository = orderRepository;
-        this.orderLineRepository = orderLineRepository;
         this.orderLineService = orderLineService;
     }
 

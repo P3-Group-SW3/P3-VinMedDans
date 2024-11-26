@@ -34,7 +34,7 @@ public class OrderController {
      * @return
      */
     @PostMapping("/api/orderInfo/{customerID}")
-    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @PathVariable @Pattern(regexp = "^\\d+$") String customerID) {
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @PathVariable String customerID) {
 
         try{
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
