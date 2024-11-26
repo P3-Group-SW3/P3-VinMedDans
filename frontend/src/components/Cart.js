@@ -53,51 +53,94 @@ const CartOverlay = ({show, hideModal}) => {
         }
     }
 
-    return (
-        <div className={showHideClassName} onClick={handleBackgroundClick}>
-            <section className="modal-main">
-                <div className="list-group list-group-flush mb-4">
-                    {orderLines.map((orderLine) => (
-                        <div key={orderLine.id}
-                             className="list-group-item d-flex px-0 py-3">
-                            <img
-                                src={orderLine.wine.imageURL}
-                                alt={orderLine.wine.name}
-                                className="img-fluid"
-                                style={{width: '50px', height: '50px', objectFit: 'cover'}}
-                            />
-                            <div className="flex-column w-100">
-                                <div className="d-flex justify-content-between ml-2">
-                                    <span>{orderLine.wine.name}</span>
-                                    <span>{orderLine.wine.price * orderLine.amount},-</span>
-                                </div>
-                                <div className="d-flex justify-content-start">
-                                    < OrderLineEdit orderLine={orderLine} onUpdate={refreshOrderLines}/>
+    const emptyCart = () => {
+        fetch('api/clearCart/')
+            .then(response => console.log(response))
+            .then(refreshOrderLines)
+            .catch(error => console.error('Error fetching data: ', error))
+    }
+
+    if (orderLines.length > 0) {
+        return (
+            <div className={showHideClassName} onClick={handleBackgroundClick}>
+                <section className="modal-main">
+                    <div className="list-group list-group-flush mb-4">
+                        {orderLines.map((orderLine) => (
+                            <div key={orderLine.id}
+                                 className="list-group-item d-flex px-0 py-3">
+                                <img
+                                    src={orderLine.wine.imageURL}
+                                    alt={orderLine.wine.name}
+                                    className="img-fluid"
+                                    style={{width: '50px', height: '50px', objectFit: 'cover'}}
+                                />
+                                <div className="flex-column w-100">
+                                    <div className="d-flex justify-content-between ml-2">
+                                        <span>{orderLine.wine.name}</span>
+                                        <span>{orderLine.wine.price * orderLine.amount},-</span>
+                                    </div>
+                                    <div className="d-flex justify-content-start">
+                                        < OrderLineEdit orderLine={orderLine} onUpdate={refreshOrderLines}/>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                    ))}
-                </div>
-                <div className="d-flex justify-content-between">
-                    <p className="mb-0">Total inkl. moms</p>
-                    <p className="mb-0">100,-</p>
-                </div>
-                <div className="d-flex justify-content-between">
-                    <p className="mb-0">Rabat</p>
-                    <p className="mb-0">200,-</p>
-                </div>
-                <div className="d-flex justify-content-between">
-                    <p>Samlet beløb</p>
-                    <p>300,-</p>
-                </div>
-                <div className="d-flex justify-content-center">
-                    <a className="button wide" onClick={() => navigate(`/checkout`)}>
-                        Gå til betaling
-                    </a>
-                </div>
-            </section>
-        </div>
-    );
+                        ))}
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <p className="mb-0">Total inkl. moms</p>
+                        <p className="mb-0">100,-</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <p className="mb-0">Rabat</p>
+                        <p className="mb-0">200,-</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <p>Samlet beløb</p>
+                        <p>300,-</p>
+                    </div>
+                    <div className="d-flex justify-content-center">
+                        <a className="button wide" onClick={() => navigate(`/checkout`)}>
+                            Gå til betaling
+                        </a>
+                        <a className="button wide" onClick={emptyCart}>
+                            Tøm kurv
+                        </a>
+                    </div>
+                </section>
+            </div>
+        );
+    } else {
+        return (
+            <div className={showHideClassName} onClick={handleBackgroundClick}>
+                <section className="modal-main">
+                    <div className="d-flex">
+                        <p className="mt-2 mb-4"> <em>Kurven er tom.</em> </p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <p className="mb-0">Total inkl. moms</p>
+                        <p className="mb-0">100,-</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <p className="mb-0">Rabat</p>
+                        <p className="mb-0">200,-</p>
+                    </div>
+                    <div className="d-flex justify-content-between">
+                        <p>Samlet beløb</p>
+                        <p>300,-</p>
+                    </div>
+                    <div className="d-flex justify-content-center">
+                        <a className="button wide" onClick={() => navigate(`/checkout`)}>
+                            Gå til betaling
+                        </a>
+                        <a className="button wide" onClick={emptyCart}>
+                            Tøm kurv
+                        </a>
+                    </div>
+                </section>
+            </div>
+        );
+    }
+
 };
 
 export default Cart
