@@ -32,6 +32,8 @@ export const CartModify = (item) => {
     .catch((error) => {
       console.error('Error:', error);
     });
+
+    setQuantity(1);
   }
 
   return (
