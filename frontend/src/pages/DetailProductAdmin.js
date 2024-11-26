@@ -36,15 +36,7 @@ function DetailProductAdmin() {
     };
 
 
-    if (!product) {
-        return (
-            <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Vi brygger</span>
-                </div>
-            </div>
-        );
-    }
+    if (!product) return <p>Loading product...</p>;
 
     return (
         <div className="container py-5">

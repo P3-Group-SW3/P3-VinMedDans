@@ -7,11 +7,6 @@ import ProductsAdmin from "../components/ProductsAdmin";
 function AdminPageFunc() {
     return (
         <div className="container-fluid">
-            <div className="row">
-                <div className="col-12 text-center py-4 bg-primary text-white">
-                    <h1>Admin Dashboard</h1>
-                </div>
-            </div>
             <div className="row mt-4">
                 <div className="col-lg-6 col-md-12 mb-4">
                     <div className="card shadow-sm">
