@@ -1,6 +1,8 @@
 package com.vmd.vmdwebshop.service;
 
 import com.vmd.vmdwebshop.exception.order.*;
+import com.vmd.vmdwebshop.exception.wine.ProductsNotInStock;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import com.vmd.vmdwebshop.repository.*;
 import org.springframework.transaction.annotation.Transactional;
@@ -18,12 +20,14 @@ public class OrderService {
 
     private final OrderRepository orderRepository;
     private final OrderLineService orderLineService;
+    private final WineService wineService;
 
     // fjern / tilføj OrderRepository orderRepository baseret på test
-    public OrderService(View error, OrderRepository orderRepository, OrderLineRepository orderLineRepository, OrderLineService orderLineService){
+    public OrderService(View error, OrderRepository orderRepository, OrderLineService orderLineService, WineService wineService){
         this.error = error;
         this.orderRepository = orderRepository;
         this.orderLineService = orderLineService;
+        this.wineService = wineService;
     }
 
     /**
@@ -60,7 +64,14 @@ public class OrderService {
      * @param orderLines
      * @return
      */
-    public Orders createOrderFromInfo(OrderDto orderDto, List<OrderLine> orderLines) {
+    public Orders createOrderFromInfo(OrderDto orderDto, List<OrderLine> orderLineList) {
+
+        try{
+            orderLineService.canBePurchased(orderLineList);
+        } catch (RuntimeException e){
+            throw new ProductsNotInStock(e.getMessage());
+        }
+
         Orders order = orderDto.createOrderFromInfo();
         order.setState(Orders.State.REGISTERED);
         order.setDate(new Date());
@@ -70,13 +81,20 @@ public class OrderService {
             throw new OrderNotSaved(order.getFullName(), order.getMail());
         }
 
-        for(OrderLine orderLine : orderLines) {
+        for(OrderLine orderLine : orderLineList) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
             if(orderLine.getOrderID() != order.getID()){
                 throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of: " + order.getID());
             }
         }
+
+        try{
+            wineService.updateStockFromOrder(orderLineList);
+        } catch (DataAccessException e){
+            throw new StockNotUpdatedFromOrder("The order could not update the stock");
+        }
+
         return order;
     }
 
