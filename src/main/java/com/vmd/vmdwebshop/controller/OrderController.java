@@ -99,7 +99,7 @@ public class OrderController {
     }
 
 
-    @PostMapping("/api/orders/delete/{orderID}")
+    @PostMapping("/api/orders/admin/delete/{orderID}")
     public void deleteOrder(@PathVariable Long orderID){
         System.out.println(orderID);
         try {
