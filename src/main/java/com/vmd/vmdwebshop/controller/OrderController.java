@@ -100,7 +100,8 @@ public class OrderController {
 
 
     @PostMapping("/api/orders/delete/{orderID}")
-    public void deleteOrder(@PathVariable @Pattern(regexp = "^\\d+$") Long orderID){
+    public void deleteOrder(@PathVariable Long orderID){
+        System.out.println(orderID);
         try {
             Orders order = orderService.getOrderById(orderID);
             orderService.deleteOrder(order);

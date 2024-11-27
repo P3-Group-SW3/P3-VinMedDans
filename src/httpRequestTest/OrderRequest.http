@@ -35,5 +35,7 @@ Content-Type: application/json
   "city": "Ballerup"
 }
 
+### Send POST request with json body
+POST http://localhost:8080/api/orders/delete/1
 
 
