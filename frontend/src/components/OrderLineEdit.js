@@ -6,9 +6,22 @@ const OrderLineEdit = ({orderLine, onUpdate}) => {
 
     const incrementQuantity = () => {
         console.log("Previous quantity: ", orderLine.amount);
-
         orderLine.amount = quantity + 1;
-        setQuantity(quantity => orderLine.amount);
+
+        updateQuantity();
+    }
+
+    const decrementQuantity = () => {
+        console.log("Previous quantity: ", orderLine.amount);
+
+        if (quantity - 1 > 0) {
+            orderLine.amount = quantity - 1;
+            updateQuantity();
+        }
+    }
+
+    const updateQuantity = () => {
+        setQuantity(orderLine.amount);
 
         fetch('/api/createAndEditOrderLine', {
             method: 'POST',
@@ -24,30 +37,6 @@ const OrderLineEdit = ({orderLine, onUpdate}) => {
                 console.error('Error:', error);
             });
         console.log("Current quantity: ", quantity);
-    }
-
-    const decrementQuantity = () => {
-        console.log("Previous quantity: ", orderLine.amount);
-
-        if (quantity - 1 > 0) {
-            orderLine.amount = quantity - 1;
-            setQuantity(quantity => orderLine.amount);
-
-            fetch('/api/createAndEditOrderLine', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify( orderLine ),
-            })
-                .then(response => response.json())
-                .then(data => console.log('Success:', data))
-                .then(() => onUpdate())
-                .catch((error) => {
-                    console.error('Error:', error);
-                });
-            console.log("Current quantity: ", quantity);
-        }
     }
 
     return (

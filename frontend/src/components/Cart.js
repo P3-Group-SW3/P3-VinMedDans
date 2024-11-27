@@ -3,7 +3,9 @@ import {useNavigate} from "react-router-dom";
 import '../styles/modal.css'
 import '../styles/button.css'
 import cartImage from '../images/basket.png';
+import removeImage from '../images/remove.svg';
 import OrderLineEdit from "./OrderLineEdit";
+import Button from "./Button";
 
 
 const Cart = () => {
@@ -57,7 +59,20 @@ const CartOverlay = ({show, hideModal}) => {
         fetch('api/clearCart/')
             .then(response => console.log(response))
             .then(refreshOrderLines)
-            .catch(error => console.error('Error fetching data: ', error))
+            .catch(error => console.error('Error fetching data: ', error));
+    }
+
+    const removeFromCart = (orderLine) => {
+        fetch('api/deleteOrderLine', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify( orderLine )
+        })
+            .then(response => console.log(response))
+            .then(refreshOrderLines)
+            .catch(error => console.error('Error fetching data: ', error));
     }
 
     if (orderLines.length > 0) {
@@ -79,8 +94,11 @@ const CartOverlay = ({show, hideModal}) => {
                                         <span>{orderLine.wine.name}</span>
                                         <span>{orderLine.wine.price * orderLine.amount},-</span>
                                     </div>
-                                    <div className="d-flex justify-content-start">
+                                    <div className="d-flex justify-content-between ml-2">
                                         < OrderLineEdit orderLine={orderLine} onUpdate={refreshOrderLines}/>
+                                        <a style={{cursor: 'pointer'}} onClick={() => removeFromCart(orderLine)}>
+                                            <img src={removeImage} className="w-75" alt="Remove"/>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -98,13 +116,9 @@ const CartOverlay = ({show, hideModal}) => {
                         <p>Samlet beløb</p>
                         <p>300,-</p>
                     </div>
-                    <div className="d-flex justify-content-center">
-                        <a className="button wide" onClick={() => navigate(`/checkout`)}>
-                            Gå til betaling
-                        </a>
-                        <a className="button wide" onClick={emptyCart}>
-                            Tøm kurv
-                        </a>
+                    <div className="d-flex">
+                        < Button text='Gå til betaling' onClick={() => navigate(`/checkout`)} isWide={true} scale={0.8} />
+                        < Button text='Tøm kurv' onClick={emptyCart} isWide={true} scale={0.8} />
                     </div>
                 </section>
             </div>
@@ -128,8 +142,8 @@ const CartOverlay = ({show, hideModal}) => {
                         <p>Samlet beløb</p>
                         <p>300,-</p>
                     </div>
-                    <div className="d-flex justify-content-center">
-                        <a className="button wide" onClick={() => navigate(`/checkout`)}>
+                    <div className="flex-column">
+                        <a className="button wide mb-1" onClick={() => navigate(`/checkout`)}>
                             Gå til betaling
                         </a>
                         <a className="button wide" onClick={emptyCart}>
