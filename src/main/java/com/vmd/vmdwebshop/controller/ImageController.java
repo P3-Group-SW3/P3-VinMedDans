@@ -1,6 +1,6 @@
 package com.vmd.vmdwebshop.controller;
 
-import com.vmd.vmdwebshop.service.imageService;
+import com.vmd.vmdwebshop.service.ImageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
@@ -28,7 +28,7 @@ public class ImageController {
     private String uploadDir;
 
     @Autowired
-    private imageService imageService;
+    private ImageService ImageService;
 
     /**
      * Upload an image
@@ -40,7 +40,7 @@ public class ImageController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam(value = "customName", required = false) String customName) {
         try {
-            String filePath = imageService.saveImage(file, customName);
+            String filePath = ImageService.saveImage(file, customName);
             return ResponseEntity.ok("Image uploaded successfully: " + filePath);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
@@ -80,7 +80,7 @@ public class ImageController {
     @GetMapping("/getImageList")
     public ResponseEntity<List<String>> getImages() {
         try {
-            List<String> imageList = imageService.getImages();
+            List<String> imageList = ImageService.getImages();
             return ResponseEntity.ok(imageList);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
