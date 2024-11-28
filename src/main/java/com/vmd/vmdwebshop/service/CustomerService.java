@@ -10,8 +10,8 @@ public class CustomerService {
 
     /**
      * setCustomerCookie checks if there is already a cookie called "customerData" and if there is not,
-     * then it will set a cookie with the same name, that has both the JSESSIONID, legalAge and cookieAge as values, as well as
-     * a maxAge of 7 days.
+     * then it will set a cookie with the same name, that has both the JSESSIONID, legalAge and cookieAge as values,
+     * as well as a maxAge of 7 days.
      * @param response  // HttpServletResponse helps to send data from the servlet to the web browser.
      * @param request   // HttpServletRequest helps to send data from the web browser to the servlet.
      */
@@ -28,7 +28,9 @@ public class CustomerService {
                 String legalAge = "false"; // default value
                 String cookieAge = "new"; // Age of cookie. Needed for frontend.
 
-                String cookieValue = sessionID + "|" + legalAge + "|" + cookieAge; // Concatenates sessionID, legalAge and cookieAge together with a separator "|".
+                String cookieValue = sessionID + "|" + legalAge + "|" + cookieAge; /* Concatenates sessionID,
+                                                                                      legalAge and cookieAge together
+                                                                                      with a separator "|".          */
 
                 Cookie cookie = new Cookie("customerData", cookieValue); // Creates Cookie object.
                 cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days.
@@ -45,7 +47,8 @@ public class CustomerService {
 
     /**
      * updateLegalAge checks if both the JSESSIONID and the customerID in the "customerData" cookie are the same and
-     * if the value of legalAge is "false" and cookieAge is "new", then replace legalAge with "true" and cookieAge with "old". Then return.
+     * if the value of legalAge is "false" and cookieAge is "new", then replace legalAge with "true" and
+     * cookieAge with "old". Then return.
      * @param response  // HttpServletResponse helps to send data from the servlet to the web browser.
      * @param request   // HttpServletRequest helps to send data from the web browser to the servlet.
      */
@@ -60,16 +63,17 @@ public class CustomerService {
         }
 
         // We do this again, because we need the value from the cookie (this is also being done in ifCookieExist).
-        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent by the client with the request.
+        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent with the request.
 
         // If there is a "customerData" cookie, then save its value in a variable.
         for (Cookie cookie : cookies) {                     // For-each loop.
             if ("customerData".equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                // If the value contains both "false" and "new", then change them to "true" and "old" and update cookie.
+                // If the value contains both "false" and "new", then change them to "true" and "old" and update cookie
                 if (value.contains("false") && value.contains("new")) {
-                    String updatedValue = value.replace("false", "true").replace("new", "old");
+                    String updatedValue = value.replace("false", "true")
+                                            .replace("new", "old");
 
                     // Has to be the exact same as when created, or else it will create a new cookie.
                     cookie.setValue(updatedValue); // Sets value of the cookie to the updatedValue.
@@ -95,14 +99,15 @@ public class CustomerService {
     /**
      * getCustomerID checks if a "customerData" cookie exist and if it does, it returns the customerID value.
      * @param request   // HttpServletRequest helps to send data from the web browser to the servlet.
-     * @return          // Will only return the value of customerID if a " customerData" cookie exist, otherwise throw new exception.
+     * @return          // Will only return the value of customerID (String) if a " customerData" cookie exist,
+     *                  // otherwise throw new exception.
      */
     public String getCustomerID(HttpServletRequest request) {
         if (request == null) {
             throw new IllegalArgumentException("HttpServletRequest cannot be null!");
         }
 
-        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent by the client with the request.
+        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent with the request.
         if (cookies == null) {
             throw new IllegalStateException("There are no cookies for this customer!");
         }
@@ -112,7 +117,7 @@ public class CustomerService {
             if ("customerData".equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                return value.split("\\|")[0]; // Returning the value before the first "|", which is the customerID.
+                return value.split("\\|")[0]; // Returning the value before the first "|", the customerID.
             }
         }
 
@@ -122,14 +127,15 @@ public class CustomerService {
     /**
      * getLegalAge checks if a "customerData" cookie exist and if it does, then return the value of legalAge.
      * @param request   // HttpServletRequest helps to send data from the web browser to the servlet.
-     * @return          // Will only return the value of legalAge if a " customerData" cookie exist, otherwise throw new exception.
+     * @return          // Will only return the value of legalAge (String) if a " customerData" cookie exist,
+     *                  // otherwise throw new exception.
      */
     public String getLegalAge(HttpServletRequest request) {
         if (request == null) {
             throw new IllegalArgumentException("HttpServletRequest cannot be null!");
         }
 
-        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent by the client with the request.
+        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent with the request.
         if (cookies == null) {
             throw new IllegalStateException("There are no cookies for this customer!");
         }
@@ -139,7 +145,7 @@ public class CustomerService {
             if ("customerData".equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                return value.split("\\|")[1]; // Returns the String between the two "|", which is the legalAge value.
+                return value.split("\\|")[1]; // Returns the String between the two "|", the legalAge value.
             }
         }
 
@@ -156,7 +162,7 @@ public class CustomerService {
             throw new IllegalArgumentException("HttpServletRequest cannot be null!");
         }
 
-        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent by the client with the request.
+        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent with the request.
 
         // If there is a "customerData" cookie, then return true.
         if (cookies != null) {
@@ -173,14 +179,15 @@ public class CustomerService {
     /**
      * getCookieAge checks if a "customerData" cookie exist and if it does, then return the value of cookieAge.
      * @param request   // HttpServletRequest helps to send data from the web browser to the servlet.
-     * @return          // Will only return the value of cookieAge if a " customerData" cookie exist, otherwise throw new exception.
+     * @return          // Will only return the value of cookieAge (String) if a " customerData" cookie exist,
+     *                  // otherwise throw new exception.
      */
     public String getCookieAge(HttpServletRequest request) {
         if (request == null) {
             throw new IllegalArgumentException("HttpServletRequest cannot be null!");
         }
 
-        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent by the client with the request.
+        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent with the request.
         if (cookies == null) {
             throw new IllegalStateException("There are no cookies for this customer!");
         }
@@ -190,7 +197,7 @@ public class CustomerService {
             if ("customerData".equals(cookie.getName())) {
                 String value = cookie.getValue();
 
-                return value.split("\\|")[2]; // Returns the String after the second "|", which is the cookieAge value.
+                return value.split("\\|")[2]; // Returns the String after the second "|", the cookieAge value.
             }
         }
 
