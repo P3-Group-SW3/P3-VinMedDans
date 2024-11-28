@@ -58,6 +58,25 @@ public class OrderLineController {
     }
 
     /**
+     * this get request takes the customer id as a pathvariable, and returns the users orderlines
+     * returns their "cart"
+     * @param request
+     * @return list of orderlines
+     */
+    @GetMapping("/api/getPrice")
+    public ResponseEntity<Double> getPrice(HttpServletRequest request) {
+        try {
+            String customerID = customerService.getCustomerID(request);
+            List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
+            Double price = orderLineService.calculateOrderLine(orderLines);
+            return ResponseEntity.ok(price);
+        } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
      *This function takes a orderline as an object.
      * First it checks whether an orderline exists
      * If it does, i edits the amount
