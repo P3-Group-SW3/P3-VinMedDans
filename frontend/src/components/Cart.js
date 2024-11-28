@@ -35,6 +35,8 @@ const CartOverlay = ({show, hideModal}) => {
 
     const [orderLines, setOrderLines] = useState([]);
 
+    const [totalPrice, setTotalPrice] = useState(0);
+
     const refreshOrderLines = () => {
         fetch('api/getAllOrderLines')
             .then(response => response.json())
@@ -46,6 +48,7 @@ const CartOverlay = ({show, hideModal}) => {
     useEffect(() => {
         if (show) {
             refreshOrderLines();
+            getTotalPrice();
         }
     }, [show]);
 
@@ -72,6 +75,13 @@ const CartOverlay = ({show, hideModal}) => {
         })
             .then(response => console.log(response))
             .then(refreshOrderLines)
+            .catch(error => console.error('Error fetching data: ', error));
+    }
+
+    const getTotalPrice = () => {
+        fetch('api/getPrice')
+            .then(response => response.json())
+            .then(data => setTotalPrice(data))
             .catch(error => console.error('Error fetching data: ', error));
     }
 
@@ -105,16 +115,8 @@ const CartOverlay = ({show, hideModal}) => {
                         ))}
                     </div>
                     <div className="d-flex justify-content-between">
-                        <p className="mb-0">Total inkl. moms</p>
-                        <p className="mb-0">100,-</p>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <p className="mb-0">Rabat</p>
-                        <p className="mb-0">200,-</p>
-                    </div>
-                    <div className="d-flex justify-content-between">
                         <p>Samlet beløb</p>
-                        <p>300,-</p>
+                        <p>{totalPrice}</p>
                     </div>
                     <div className="d-flex">
                         < Button text='Gå til betaling' onClick={() => navigate(`/checkout`)} isWide={true} scale={0.8} />
@@ -128,27 +130,7 @@ const CartOverlay = ({show, hideModal}) => {
             <div className={showHideClassName} onClick={handleBackgroundClick}>
                 <section className="modal-main">
                     <div className="d-flex">
-                        <p className="mt-2 mb-4"> <em>Kurven er tom.</em> </p>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <p className="mb-0">Total inkl. moms</p>
-                        <p className="mb-0">100,-</p>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <p className="mb-0">Rabat</p>
-                        <p className="mb-0">200,-</p>
-                    </div>
-                    <div className="d-flex justify-content-between">
-                        <p>Samlet beløb</p>
-                        <p>300,-</p>
-                    </div>
-                    <div className="flex-column">
-                        <a className="button wide mb-1" onClick={() => navigate(`/checkout`)}>
-                            Gå til betaling
-                        </a>
-                        <a className="button wide" onClick={emptyCart}>
-                            Tøm kurv
-                        </a>
+                        <p className="my-3"> <em>Kurven er tom.</em> </p>
                     </div>
                 </section>
             </div>
