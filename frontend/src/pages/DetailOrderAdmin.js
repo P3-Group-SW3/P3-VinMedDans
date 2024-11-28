@@ -6,16 +6,49 @@ import '../bootstrap/dist/css/bootstrap.min.css';
 function DetailOrderAdmin() {
     const { id } = useParams();
     const [order, setOrder] = useState(null);
+    const [selectedState, setSelectedState] = useState("");
 
+    // List of available states with labels for the dropdown and corresponding values for the backend
+    const states = [
+        { label: "Registered", value: 0 },
+        { label: "Confirmed", value: 1 },
+        { label: "Packed", value: 2 },
+        { label: "Shipped", value: 3}
+    ];
 
+    // Fetch order details when the component loads or when the order ID changes
     useEffect(() => {
         fetch(`/api/orders/${id}`)
             .then(response => response.json())
             .then(data => {
                 setOrder(data);
+                setSelectedState(data.state);
             })
             .catch(error => console.error('Error fetching order details:', error));
     }, [id]);
+
+    // Update the selected state in local component state when the user selects a new option
+    const handleStateChange = (event) => {
+        setSelectedState(Number(event.target.value)); // Convert selected value to number
+    };
+
+    // Send updated state to the backend when the user clicks the update button
+    const updateOrderState = () => {
+        fetch(`/api/orders/state/${id}`, {
+            method: 'POST', // Using POST to match backend endpoint
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ state: selectedState }) // Send selected state as JSON
+        })
+            .then(response => {
+                if (response.ok) {
+                    // If successful, update the order's state in local component state
+                    setOrder(prevOrder => ({ ...prevOrder, state: selectedState }));
+                } else {
+                    console.error('Error updating order state');
+                }
+            })
+            .catch(error => console.error('Error updating order state:', error));
+    };
 
     if (!order) {
         return <p>Loading...</p>;
@@ -62,6 +95,22 @@ function DetailOrderAdmin() {
             ) : (
                 <p>No order lines found.</p>
             )}
+
+
+            <div className="form-group">
+                <label htmlFor="orderState">Update Order State:</label>
+                <select
+                    id="orderState"
+                    value={selectedState}
+                    onChange={handleStateChange}
+                    className="form-control"
+                >
+                    {states.map(state => (
+                        <option key={state.value} value={state.value}>{state.label}</option>
+                    ))}
+                </select>
+                <button onClick={updateOrderState} className="btn btn-primary mt-2">Update State</button>
+            </div>
         </div>
     );
 }

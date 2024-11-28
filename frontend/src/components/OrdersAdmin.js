@@ -20,6 +20,7 @@ function OrdersAdmin() {
 
     return (
         <div className="container">
+            <h1>Orders</h1>
             <table className="table table-striped table-bordered">
                 <thead>
                 <tr>

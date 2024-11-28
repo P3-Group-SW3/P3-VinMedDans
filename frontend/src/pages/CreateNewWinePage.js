@@ -30,7 +30,7 @@ function CreateNewWinePage() {
             })
             .then(() => {
                 alert('New wine created successfully!');
-                navigate('/admin');
+                navigate('/admin'); // Redirect to ProductsAdmin page after creation
             })
             .catch(error => console.error('Error creating wine:', error));
     };
