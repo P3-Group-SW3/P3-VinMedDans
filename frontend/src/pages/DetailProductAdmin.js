@@ -4,7 +4,6 @@ import { useParams, useNavigate } from 'react-router-dom';
 function DetailProductAdmin() {
     const { id } = useParams();
     const [product, setProduct] = useState();
-    const [selectedAmountLeft, setSelectedAmountLeft] = useState('');
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -15,7 +14,6 @@ function DetailProductAdmin() {
             })
             .then((data) => {
                 setProduct(data);
-                setSelectedAmountLeft(data.amountLeft);
             })
             .catch((error) => console.error('Error fetching product:', error));
     }, [id]);
@@ -37,36 +35,8 @@ function DetailProductAdmin() {
         }
     };
 
-    const handleEditProduct = () => {
-        fetch('/api/wine/admin/createAndEdit', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                id: product.id,
-                amountLeft: selectedAmountLeft,
-            }),
-        })
-            .then((response) => {
-                if (!response.ok) throw new Error('Failed to edit product');
-                return response.json();
-            })
-            .then(() => {
-                alert('Product edited successfully!');
-                navigate('/admin');
-            })
-            .catch((error) => console.error('Error editing product:', error));
-        console.log('Sending data:', { id: product.id, amountLeft: selectedAmountLeft });
-    };
 
-    if (!product) {
-        return (
-            <div className="d-flex justify-content-center align-items-center" style={{ height: '100vh' }}>
-                <div className="spinner-border text-primary" role="status">
-                    <span className="visually-hidden">Vi brygger</span>
-                </div>
-            </div>
-        );
-    }
+    if (!product) return <p>Loading product...</p>;
 
     return (
         <div className="container py-5">
@@ -83,19 +53,8 @@ function DetailProductAdmin() {
                     <p className="card-text"><strong>Price:</strong> {product.price} DKK</p>
                     <p className="card-text"><strong>Description:</strong> {product.description}</p>
                     <p className="card-text"><strong>Amount Left:</strong> {product.amountLeft}</p>
-                    <div className="form-group my-3">
-                        <label>Amount Left</label>
-                            <input
-                            type="number"
-                            name="selectedAmountLeft"
-                            value={selectedAmountLeft}
-                            onChange={(e) => setSelectedAmountLeft(e.target.value)}
-                            className="form-control"
-                            />
-                    </div>
-                    <div className="d-flex justify-content-end">
-                        <button onClick={handleEditProduct} className="btn btn-primary me-2"> Save Changes </button>
 
+                    <div className="d-flex justify-content-end">
                         <button onClick={handleDeleteProduct} className="btn btn-danger"> Delete Product </button>
                     </div>
                 </div>
