@@ -17,15 +17,18 @@ import java.util.*;
 public class OrderService {
 
     private final View error;
+   
+    private final OrderLineRepository orderLineRepository;
 
     private final OrderRepository orderRepository;
     private final OrderLineService orderLineService;
     private final WineService wineService;
 
     // fjern / tilføj OrderRepository orderRepository baseret på test
-    public OrderService(View error, OrderRepository orderRepository, OrderLineService orderLineService, WineService wineService){
+    public OrderService(View error, OrderRepository orderRepository, OrderLineRepository orderLineRepository, OrderLineService orderLineService, WineService wineService){
         this.error = error;
         this.orderRepository = orderRepository;
+        this.orderLineRepository = orderLineRepository;
         this.orderLineService = orderLineService;
         this.wineService = wineService;
     }
@@ -113,17 +116,6 @@ public class OrderService {
         if(order.getState() != newState) {
             throw new StateChangeFailedException(state1, newState);
         }
-    }
-
-    /**
-     *
-     * @param order
-     */
-    public void deleteOrder(Orders order){
-        for (OrderLine orderLine: order.getOrderLines()){
-            orderLineService.deleteOrderlineByID(orderLine);
-        }
-        orderRepository.deleteById(order.getID());
     }
 
 }

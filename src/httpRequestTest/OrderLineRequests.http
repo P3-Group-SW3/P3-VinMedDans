@@ -61,7 +61,7 @@ Content-Type: application/json
 
 {
   "amount": 10,
-  "customerID": "hep",
+  "customerID": "ken",
   "wineID": 3,
   "orderid": null
 }
@@ -69,5 +69,3 @@ Content-Type: application/json
 ### GET request with a header
 GET http://localhost:8080//api/getAllOrderLines/ken
 Accept: application/json
-
-
