@@ -130,7 +130,7 @@ const CartOverlay = ({show, hideModal}) => {
             <div className={showHideClassName} onClick={handleBackgroundClick}>
                 <section className="modal-main">
                     <div className="d-flex">
-                        <p className="mt-2 mb-4"> <em>Kurven er tom.</em> </p>
+                        <p className="my-3"> <em>Kurven er tom.</em> </p>
                     </div>
                 </section>
             </div>
