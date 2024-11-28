@@ -2,6 +2,7 @@ package com.vmd.vmdwebshop.controller;
 
 
 import com.vmd.vmdwebshop.DTO.OrderDto;
+import com.vmd.vmdwebshop.DTO.OrderStateDTO;
 import com.vmd.vmdwebshop.exception.order.OrderNotFoundInDatbase;
 import com.vmd.vmdwebshop.exception.order.StateChangeFailedException;
 import com.vmd.vmdwebshop.model.OrderLine;
@@ -91,7 +92,7 @@ public class OrderController {
      * @param state
      */
     @PostMapping("/api/orders/state/{orderID}")
-    public void changeState(@PathVariable @Pattern(regexp = "^\\d+$") Long orderID, @RequestBody OrderState state) {
+    public void changeState(@PathVariable @Pattern(regexp = "^\\d+$") Long orderID, @RequestBody OrderStateDTO state) {
         //når vi laver denne skal vi senere gemme ændringerne
         try {
             orderService.changeState(orderID, state.getState());
