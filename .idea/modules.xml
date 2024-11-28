@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/VMD-webshop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/VMD-webshop.main.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.VMD.VMD-webshop.main.iml" filepath="$PROJECT_DIR$/.idea/modules/com.VMD.VMD-webshop.main.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/com.VMD.VMD-webshop.main~2.iml" filepath="$PROJECT_DIR$/.idea/modules/com.VMD.VMD-webshop.main~2.iml" />
     </modules>
   </component>
 </project>

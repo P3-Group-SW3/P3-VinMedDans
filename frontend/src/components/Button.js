@@ -16,7 +16,6 @@ function Button({ text, isWide, onClick, flatRight, flatLeft, scale }) {
     return (
         <button
             className="button"
-            aria-label="Action button"
             onClick={onClick}
             style={scaled}
         >

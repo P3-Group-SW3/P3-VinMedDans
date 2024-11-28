@@ -6,6 +6,7 @@ import com.vmd.vmdwebshop.exception.order.StateChangeFailedException;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
 import com.vmd.vmdwebshop.service.OrderService;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,20 +24,23 @@ public class OrderController {
     OrderService orderService;
     @Autowired
     private OrderLineService orderLineService;
+    @Autowired
+    private CustomerService customerService;
 
     /**
      * This is the post mapping from the request from the front end and makes an order from a customer.
      *
      * @param order
-     * @param customerID
+     * @param request
      * We take theese two values, the order is filled with information based on the frontend
      * And we use the cookie id to get the list of ordelines from the customer send these objects through our order service
      * @return
      */
-    @PostMapping("/api/orderInfo/{customerID}")
-    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @PathVariable @Pattern(regexp = "^\\d+$") String customerID) {
+    @PostMapping("/api/orderInfo")
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, HttpServletRequest request) {
 
         try{
+            String customerID = customerService.getCustomerID(request);
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
             Orders orders = orderService.createOrderFromInfo(order, orderLines);
             return ResponseEntity.ok(orders);

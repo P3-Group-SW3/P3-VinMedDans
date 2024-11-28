@@ -37,9 +37,7 @@ Content-Type: application/json
 
 {
   "amount": 10,
-  "customerID": "jph",
   "wineID": 1,
-  "orderid": null
 }
 
 ### Send POST request with json body

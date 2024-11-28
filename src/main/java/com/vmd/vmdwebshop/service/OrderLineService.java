@@ -1,15 +1,13 @@
 package com.vmd.vmdwebshop.service;
 
-import com.vmd.vmdwebshop.exception.orderline.CartNotClearedException;
-import com.vmd.vmdwebshop.exception.orderline.EmptyCartException;
-import com.vmd.vmdwebshop.exception.orderline.OrderLineDataAccessException;
-import com.vmd.vmdwebshop.exception.orderline.OrderLineDoesNotExistException;
+import com.vmd.vmdwebshop.exception.orderline.*;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.View;
 
@@ -72,19 +70,30 @@ public class OrderLineService {
         try {
             if (existingOrderLine != null) {
                 existingOrderLine.setAmount(orderLine.getAmount());
-            } else if (orderLine.getAmount() == 0 || orderLine.getAmount() <= 0) {
-                orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
+                orderLineRepository.save(existingOrderLine);
+
             } else {
-                orderLine.setWine(wineService.getWineById(orderLine.getWineID()));
+                orderLine.setWine(wineService.getWineById(orderLine.getWineID()));// Gives orderline access to the wine object
+                orderLine.setAmount(orderLine.getAmount());
                 orderLineRepository.save(orderLine);
+
             }
-        } catch (DataAccessException e){ throw new OrderLineDataAccessException("Failed to update or save to the database");}
+            if (orderLine.getAmount() < 1) {
+                throw new IllegalArgumentException("The amount cannot be less than 1!");
+            }
+
+
+
+        } catch (DataIntegrityViolationException e){
+            throw new OrderLineNotUpdatedException("Failed to update the orderline");
+        } catch (DataAccessException e){
+            throw new OrderLineDataAccessException("Failed to save orderline to the database");}
 
             return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
     }
 
     /**
-     * clearCart
+     * clearCar
      * This method clears a customer's cart by deleting all orderlines that matches a specific customer id.
      * First finds all orderlines matching the customer id, if no such orderlines exist an exception will be thrown.
      * Then will execute the deletion of the orderlines, and afterward checks if the deletion was successful by checking
@@ -117,8 +126,18 @@ public class OrderLineService {
         }
     }
 
-    public double calculateOrderLine(int amount, double price) {
-        return amount * price;
+    public Double calculateOrderLine(OrderLine orderLine) {
+
+        return orderLine.getAmount() * orderLine.getWine().getPrice();
+    }
+
+    public double calculateOrderLine(List<OrderLine> orderLines) {
+        double totalPrice = 0.0;
+        for (OrderLine orderLine: orderLines){
+            Double price = calculateOrderLine(orderLine);
+            totalPrice += price;
+        }
+        return totalPrice;
     }
 
     /**
@@ -140,8 +159,34 @@ public class OrderLineService {
         else {
             orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
         }
+
         return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
 
+    }
+
+    public boolean canBePurchased(List<OrderLine> orderLineList){
+        boolean canBePurchased = true;
+        String exceptionMessage = "There is not enough stock for wine(s):";
+
+        try{
+            for(OrderLine orderLine : orderLineList) {
+                Wine wine = wineRepository.getById(orderLine.getWineID());
+                if (!wine.canBePurchased(orderLine.getAmount())){
+                    canBePurchased = false;
+                    exceptionMessage += " ID:" + wine.getID();
+                }
+            }
+        }catch (DataAccessException e){
+            System.out.println(e.getMessage());
+        }
+
+
+
+        if (canBePurchased == false){
+            throw new OrderLineCannotBePurchased(exceptionMessage);
+        }
+
+        return canBePurchased;
     }
 }
 
