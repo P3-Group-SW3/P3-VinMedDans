@@ -38,7 +38,6 @@ public class OrderController {
      */
     @PostMapping("/api/orderInfo")
     public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, HttpServletRequest request) {
-
         try{
             String customerID = customerService.getCustomerID(request);
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
@@ -95,6 +94,18 @@ public class OrderController {
         try {
             orderService.changeState(orderID, state.getState());
         }catch (StateChangeFailedException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+
+    @PostMapping("/api/orders/admin/delete/{orderID}")
+    public void deleteOrder(@PathVariable Long orderID){
+        System.out.println(orderID);
+        try {
+            Orders order = orderService.getOrderById(orderID);
+            orderService.deleteOrder(order);
+        }catch (RuntimeException e){
             System.out.println(e.getMessage());
         }
     }

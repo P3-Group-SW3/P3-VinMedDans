@@ -22,7 +22,7 @@ GET http://localhost:8080/api/orders/37
 Accept: application/json
 
 ### Send POST request with json body
-POST http://localhost:8080/api/orderInfo/ken
+POST http://localhost:8080/api/orderInfo/hep
 Content-Type: application/json
 
 {
@@ -35,5 +35,7 @@ Content-Type: application/json
   "city": "Ballerup"
 }
 
+### Send POST request with json body
+POST http://localhost:8080/api/orders/delete/1
 
 

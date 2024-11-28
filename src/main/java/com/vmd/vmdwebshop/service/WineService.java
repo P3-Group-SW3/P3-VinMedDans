@@ -60,7 +60,7 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
                 existingWine.setImageURL(wine.getImageURL());
                 existingWine.setPrice(wine.getPrice());
                 existingWine.setName(wine.getName());
-                wineRepository.save(wine);
+                wineRepository.save(existingWine);
             } else {
                 wineRepository.save(wine);
             }

@@ -25,7 +25,6 @@ function ProductsAdmin() {
 
     return (
         <div className="container">
-            <h1>Products</h1>
             <table className="table table-striped table-bordered">
                 <thead>
                 <tr>
