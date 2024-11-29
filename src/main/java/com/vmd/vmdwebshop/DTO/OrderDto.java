@@ -1,4 +1,4 @@
-package com.vmd.vmdwebshop.service;
+package com.vmd.vmdwebshop.DTO;
 import com.vmd.vmdwebshop.model.*;
 
 import jakarta.validation.constraints.NotBlank;
