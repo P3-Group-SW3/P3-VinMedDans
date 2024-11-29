@@ -4,7 +4,6 @@ import com.vmd.vmdwebshop.model.Wine;
 import jakarta.validation.constraints.*;
 
 public class WineDto {
-    @Min(value = 1, message = "ID'et kan ikke være 0, eller lavere.")
     private int ID;
 
     @NotBlank(message = "The wine must have a description")
