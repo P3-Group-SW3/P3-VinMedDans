@@ -1,7 +1,6 @@
-package com.vmd.vmdwebshop.service;
+package com.vmd.vmdwebshop.abstractModels;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
 
 @MappedSuperclass
 public abstract class Product {

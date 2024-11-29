@@ -164,6 +164,10 @@ public class OrderLineService {
 
     }
 
+    public void deleteOrderlineByID(OrderLine orderLine){
+        orderLineRepository.deleteById(orderLine.getID());
+    }
+
     public boolean canBePurchased(List<OrderLine> orderLineList){
         boolean canBePurchased = true;
         String exceptionMessage = "There is not enough stock for wine(s):";
