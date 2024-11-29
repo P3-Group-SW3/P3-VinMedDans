@@ -8,13 +8,13 @@ public class WineDto {
     private int ID;
 
     @NotBlank(message = "The wine must have a description")
-    @Size(min = 1, max = 250)
-    @Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9,. ]*$", message = "Kun bogstaver, tal, komma, punktum og mellemrum er tilladt")
+    @Size(min = 1, max = 300)
+    @Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9,.? ]*$", message = "Kun bogstaver, tal, komma, punktum og mellemrum er tilladt")
     private String description;
 
     @NotBlank(message = "The wine must have an image URL")
-    @Size(min = 1, max = 20)
-    @Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9,._\\- ]*$", message = "Kun bogstaver, tal, komma, punktum, mellemrum, underscore og bindestreg er tilladt")
+    @Size(min = 1, max = 50)
+    //@Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9,._\\-: ]*$", message = "Kun bogstaver, tal, komma, punktum, mellemrum, underscore og bindestreg er tilladt")
     private String imageURL;
 
     @Digits(integer = 5, fraction = 2, message = "The price can't be higher than 9999")
