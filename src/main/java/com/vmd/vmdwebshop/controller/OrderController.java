@@ -92,11 +92,22 @@ public class OrderController {
      * @param state
      */
     @PostMapping("/api/orders/state/{orderID}")
-    public void changeState(@PathVariable @Pattern(regexp = "^\\d+$") Long orderID, @RequestBody OrderStateDTO state) {
+    public void changeState(@PathVariable Long orderID, @RequestBody OrderStateDTO state) {
         //når vi laver denne skal vi senere gemme ændringerne
         try {
             orderService.changeState(orderID, state.getState());
         }catch (StateChangeFailedException e){
+            System.out.println(e.getMessage());
+        }
+    }
+
+    @PostMapping("/api/orders/admin/delete/{orderID}")
+    public void deleteOrder(@PathVariable Long orderID){
+        System.out.println(orderID);
+        try {
+            Orders order = orderService.getOrderById(orderID);
+            orderService.deleteOrder(order);
+        }catch (RuntimeException e){
             System.out.println(e.getMessage());
         }
     }
