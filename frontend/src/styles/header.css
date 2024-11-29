@@ -1,3 +1,5 @@
+
+
 .nav-button {
     padding: 10px;
     color: var(--main-color);
@@ -22,4 +24,9 @@
     right: 3em;
     max-width: 4em;
     cursor: pointer;
+}
+
+.navbar-toggler {
+    border: none;
+    width: fit-content;
 }

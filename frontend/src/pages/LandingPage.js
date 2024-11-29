@@ -2,8 +2,6 @@ import React from 'react';
 import Header from '../components/Header';
 import Section from '../components/Section';
 import Footer from '../components/Footer';
-import '../styles/styles.css';
-import '../bootstrap/dist/css/bootstrap.min.css';
 import {CustomerLinks} from "./CustomerLinkContext";
 
 

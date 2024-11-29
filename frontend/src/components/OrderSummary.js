@@ -1,6 +1,4 @@
 import React from "react";
-import '../styles/styles.css';
-import '../bootstrap/dist/css/bootstrap.min.css';
 import Orders from "./Orders";
 
 function OrderSummary() {
