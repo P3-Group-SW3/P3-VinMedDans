@@ -12,14 +12,14 @@ const AlternatingItems = ({ items }) => {
         <div className="container my-5">
             {items.map((item, index) => (
                 <div className="row align-items-center mb-4" key={index} style={{backgroundColor: item.title ? "#FFFFFF" : "#FFFAED"}}>
-                    <div className={`col-lg-6 ${index % 2 === 0 ? "order-lg-2" : "order-lg-1"} py-0`}>
+                    <div className={`col-lg-6 ${index % 2 === 0 ? "order-lg-1" : "order-lg-2"} py-0`}>
                         <img
                             src={item.imageURL}
                             alt={item.title? item.title : item.name}
                             className="img-fluid mx-auto d-block"
                         />
                     </div>
-                    <div className={`col-lg-6 ${index % 2 === 0 ? "order-lg-1" : "order-lg-2"} text-center text-lg-start`}>
+                    <div className={`col-lg-6 ${index % 2 === 0 ? "order-lg-2" : "order-lg-1"} text-center text-lg-start`}>
                         <h3 className="header-large pt-3">{item.title ? item.title : item.name}</h3>
                         {item.price && <h2 className="price-text" > {item.price} DKK </h2>}
                         <p className="body-text">{item.description}</p>
