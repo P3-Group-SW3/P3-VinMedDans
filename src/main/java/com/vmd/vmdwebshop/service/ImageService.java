@@ -10,23 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-/**
- * Service for handling image uploads and retrievals
- */
 @Service
-public class imageService {
+public class ImageService {
 
     @Value("${file.img-upload-dir}")
     private String uploadDir;
 
-    /**
-     * Save an image
-     * @param file The image file
-     * @param customName The custom name for the image
-     * @return The path to the saved image
-     * @throws IOException If an error occurs while saving the image
-     */
     public String saveImage(MultipartFile file, String customName) throws IOException {
+        if (uploadDir == null) {
+            throw new IllegalStateException("uploadDir is not set");
+        }
+
         Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
@@ -50,11 +44,11 @@ public class imageService {
         return filePath.toString();
     }
 
-    /**
-     * Get a list of images
-     * @return A list of image file names
-     */
     public List<String> getImages() throws IOException {
+        if (uploadDir == null) {
+            throw new IllegalStateException("uploadDir is not set");
+        }
+
         List<String> imageNames = new ArrayList<>();
         Path path = Paths.get(uploadDir);
 
@@ -67,13 +61,11 @@ public class imageService {
         return imageNames;
     }
 
-    /**
-     * Delete an image
-     * @param filename The name of the image file
-     * @return True if the image was deleted, false otherwise
-     * @throws IOException If an error occurs while deleting the image
-     */
     public boolean deleteImage(String filename) throws IOException {
+        if (uploadDir == null) {
+            throw new IllegalStateException("uploadDir is not set");
+        }
+
         Path path = Paths.get(uploadDir).resolve(filename);
         return Files.deleteIfExists(path);
     }
