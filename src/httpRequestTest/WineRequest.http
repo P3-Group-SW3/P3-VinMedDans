@@ -62,7 +62,7 @@ POST http://localhost:8080/api/wine/admin/changeActiveState/95
 Content-Type: application/json
 
 ### Send POST request with a header (delete wine by ID)
-POST http://localhost:8080/api/wine/admin/delete/1
+POST http://localhost:8080/api/wine/admin/delete/2
 Content-Type: application/json
 
 

@@ -8,7 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import reportWebVitals from './reportWebVitals';
 import Checkout from "./pages/Checkout";
-import Landingpage from "./pages/LandingPage";
+import LandingPage from "./pages/LandingPage";
 import ProductPage from "./pages/ProductPage";
 import AboutUsPage from "./pages/AboutUsPage";
 import LocationPage from "./pages/LocationPage";
@@ -46,7 +46,7 @@ root.render(
       <AgeVerification />
       <Routes>
         <Route path="/">
-          <Route index element={<Landingpage />} />
+          <Route index element={<LandingPage />} />
           <Route path="checkout" element={<Checkout />} />
           <Route path="shop" element={<ProductPage />} />
           <Route path="about" element={<AboutUsPage />} />
