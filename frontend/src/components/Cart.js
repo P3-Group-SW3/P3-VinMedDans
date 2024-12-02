@@ -11,7 +11,7 @@ import Button from "./Button";
 const Cart = () => {
 
     return (
-        <div className="dropdown justify-self-end">
+        <div className="dropdown justify-self-end me-2 border-0">
             <button className="unstyled" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside"
                     aria-expanded="false">
                     <img src={cartImage} className="img-fluid" alt="Kurv"/>
@@ -39,11 +39,6 @@ const CartOverlay = () => {
             .catch(error => console.error('Error fetching data: ', error));
         console.log("Orderline:", orderLines);
     }
-
-    useEffect(() => {
-            refreshOrderLines();
-            getTotalPrice();
-    }, []);
 
     const emptyCart = () => {
         fetch('api/clearCart/')
@@ -73,8 +68,12 @@ const CartOverlay = () => {
             .catch(error => console.error('Error fetching data: ', error));
     }
 
+    useEffect(() => {
+        refreshOrderLines();
+        getTotalPrice();
+    }, []);
+
     if (orderLines.length > 0) {
-        console.log('Not empty');
         return (
                 <section className="modal-main">
                     <div className="list-group list-group-flush mb-4">
@@ -113,7 +112,6 @@ const CartOverlay = () => {
                 </section>
         );
     } else {
-        console.log("Empty")
         return (
                 <section className="modal-main">
                     <div className="d-flex">

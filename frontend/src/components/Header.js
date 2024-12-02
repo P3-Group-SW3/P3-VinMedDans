@@ -21,7 +21,7 @@ const Header = ({ links, showCart }) => {
     return (
         <nav ref={headerRef} className="navbar navbar-expand-lg fixed-top bg-white justify-content-between" style={{boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)'}}>
                 <button
-                    className="navbar-toggler"
+                    className="unstyled d-lg-none"
                     type="button"
                     data-bs-toggle="collapse"
                     data-bs-target="#navbarSupportedContent"
@@ -31,6 +31,7 @@ const Header = ({ links, showCart }) => {
                 <a onClick={() => navigate('/')} style={{display: 'flex', justifyContent: 'center', flex: 1}}>
                     <img src={logo} alt="Logo" className="img-fluid" style={{cursor: 'pointer'}}/>
                 </a>
+                {showCart && <div className="d-lg-none"><Cart/></div>}
                 <div
                     className="collapse navbar-collapse justify-content-between align-items-center"
                     id="navbarSupportedContent"
@@ -43,7 +44,7 @@ const Header = ({ links, showCart }) => {
                             onClick={() => navigate(link.path)}
                         />
                     ))}
-                    {showCart && <Cart/>}
+                    {showCart && <div className="d-none d-lg-block"><Cart/></div>}
                 </div>
         </nav>
     );
