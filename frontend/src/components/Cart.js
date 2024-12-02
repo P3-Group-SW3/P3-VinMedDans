@@ -11,12 +11,12 @@ import Button from "./Button";
 const Cart = () => {
 
     return (
-        <div className="dropdown justify-self-end me-2 border-0">
+        <div className="dropdown justify-self-end me-2">
             <button className="unstyled" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside"
                     aria-expanded="false">
                     <img src={cartImage} className="img-fluid" alt="Kurv"/>
             </button>
-            <ul className="dropdown-menu dropdown-menu-end">
+            <ul className="dropdown-menu dropdown-menu-end border-0">
                 <CartOverlay />
             </ul>
         </div>
@@ -75,7 +75,7 @@ const CartOverlay = () => {
 
     if (orderLines.length > 0) {
         return (
-                <section className="modal-main">
+                <section className="cart-dropdown">
                     <div className="list-group list-group-flush mb-4">
                         {orderLines.map((orderLine) => (
                             <div key={orderLine.id}

@@ -16,17 +16,3 @@
     backdrop-filter: blur(15px);
     font-family: 'Rubik', sans-serif;
 }
-
-.modal-main {
-    display: flex;
-    flex-direction: column;
-    align-content: center;
-    background: white;
-    padding: 1em;
-    width: 20em;
-    margin-left: auto;
-    height: fit-content;
-    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
-    border-radius: 0.5em;
-    font-family: 'Rubik', sans-serif;
-}

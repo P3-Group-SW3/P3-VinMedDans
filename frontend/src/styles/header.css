@@ -8,7 +8,7 @@
     text-align: center;
     color: var(--main-color);
     text-decoration: none;
-    font-size: 1.6rem;
+    font-size: clamp(1.2rem, 2vw, 1.6rem);
     padding: 10px;
     font-family: 'Rubik Dirt', sans-serif;
     transition: color 0.3s, text-shadow 0.3s;
@@ -20,27 +20,10 @@
     text-shadow: 1px 0 var(--main-color), -1px 0 var(--main-color), 0 4px var(--main-color), 0 -1px var(--main-color);
 }
 
-.nav-button {
-    padding: 10px;
-    color: var(--main-color);
-    border: none;
-    font-size: 30px !important;
-    font-family: 'Rubik Dirt', sans-serif;
-    flex: 1 1 auto;
-    justify-content: center;
-    text-align: center;
-    transition: color 0.3s, text-shadow 0.3s;
-}
-
-.nav-button:hover {
-    transform: translateY(-2px);
-    color: white;
-    text-shadow: 1px 0 var(--main-color), -1px 0 var(--main-color), 0 4px var(--main-color), 0 -1px var(--main-color);
-}
-
-.navbar-toggler {
-    border: none;
-    width: fit-content;
+@media (max-width: 768px) {
+    .nav-link {
+        font-size: 1.6rem;
+    }
 }
 
 .unstyled {
@@ -54,4 +37,19 @@
     display: block; /* Remove inline spacing issues */
     max-width: 100%; /* Ensure the image is responsive */
     height: auto; /* Maintain aspect ratio */
+}
+
+.cart-dropdown {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    background: white;
+    padding: 1em;
+    width: 20em;
+    margin-left: auto;
+    height: fit-content;
+    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 0.5em;
+    font-family: 'Rubik', sans-serif;
+    z-index: 1060;
 }
