@@ -10,26 +10,21 @@ import Button from "./Button";
 
 const Cart = () => {
 
-    const [show, setShow] = useState(false);
-
-    const toggleShow = () => {
-        setShow(!show);
-        console.log("Modal state after click:", show);
-    };
-
     return (
-        <div className="d-flex">
-            <a className="cart-button" role="button" onClick={toggleShow}>
-                <img src={cartImage} className="img-fluid" alt="Kurv"/>
-            </a>
-            <CartOverlay show={show} hideModal={toggleShow} />
+        <div className="dropdown justify-self-end me-2">
+            <button className="unstyled" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside"
+                    aria-expanded="false">
+                    <img src={cartImage} className="img-fluid" alt="Kurv"/>
+            </button>
+            <ul className="dropdown-menu dropdown-menu-end border-0">
+                <CartOverlay />
+            </ul>
         </div>
-    );
+)
+    ;
 };
 
-const CartOverlay = ({show, hideModal}) => {
-    const showHideClassName = show ? "modal display-block" : "modal display-none";
-    console.log("Modal class applied:", showHideClassName);
+const CartOverlay = () => {
 
     const navigate = useNavigate();
 
@@ -43,19 +38,6 @@ const CartOverlay = ({show, hideModal}) => {
             .then(data => setOrderLines(data))
             .catch(error => console.error('Error fetching data: ', error));
         console.log("Orderline:", orderLines);
-    }
-
-    useEffect(() => {
-        if (show) {
-            refreshOrderLines();
-            getTotalPrice();
-        }
-    }, [show]);
-
-    const handleBackgroundClick = (e) => {
-        if (e.target === e.currentTarget) {
-            hideModal();
-        }
     }
 
     const emptyCart = () => {
@@ -82,13 +64,18 @@ const CartOverlay = ({show, hideModal}) => {
         fetch('api/getPrice')
             .then(response => response.json())
             .then(data => setTotalPrice(data))
+            .then(refreshOrderLines)
             .catch(error => console.error('Error fetching data: ', error));
     }
 
+    useEffect(() => {
+        refreshOrderLines();
+        getTotalPrice();
+    }, []);
+
     if (orderLines.length > 0) {
         return (
-            <div className={showHideClassName} onClick={handleBackgroundClick}>
-                <section className="modal-main">
+                <section className="cart-dropdown">
                     <div className="list-group list-group-flush mb-4">
                         {orderLines.map((orderLine) => (
                             <div key={orderLine.id}
@@ -123,17 +110,14 @@ const CartOverlay = ({show, hideModal}) => {
                         < Button text='Tøm kurv' onClick={emptyCart} isWide={true} scale={0.8} />
                     </div>
                 </section>
-            </div>
         );
     } else {
         return (
-            <div className={showHideClassName} onClick={handleBackgroundClick}>
                 <section className="modal-main">
                     <div className="d-flex">
                         <p className="my-3"> <em>Kurven er tom.</em> </p>
                     </div>
                 </section>
-            </div>
         );
     }
 
