@@ -3,7 +3,7 @@ package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
-import com.vmd.vmdwebshop.service.WineDto;
+import com.vmd.vmdwebshop.DTO.WineDto;
 import com.vmd.vmdwebshop.service.WineService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;

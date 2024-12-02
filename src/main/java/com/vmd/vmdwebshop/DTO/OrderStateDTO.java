@@ -1,6 +1,6 @@
-package com.vmd.vmdwebshop.service;
+package com.vmd.vmdwebshop.DTO;
 
-public class OrderState {
+public class OrderStateDTO {
     private int state;
 
     public int getState() {

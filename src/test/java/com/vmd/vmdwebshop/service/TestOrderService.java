@@ -1,12 +1,12 @@
 package com.vmd.vmdwebshop.service;
 
+import com.vmd.vmdwebshop.DTO.OrderDto;
 import com.vmd.vmdwebshop.exception.order.*;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
