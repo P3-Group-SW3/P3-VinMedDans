@@ -1,6 +1,6 @@
 
-### Send GET request
-GET http://localhost:8080/api/clearCart/0
+### Send GET request (clear cart)
+GET http://localhost:8080/api/clearCart/
 Content-Type: application/json
 
 
