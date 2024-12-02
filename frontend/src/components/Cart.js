@@ -16,7 +16,7 @@ const Cart = () => {
                     aria-expanded="false">
                     <img src={cartImage} className="img-fluid" alt="Kurv"/>
             </button>
-            <ul className="dropdown-menu dropdown-menu-end border-0">
+            <ul className="dropdown-menu dropdown-menu-end border-0 bg-transparent">
                 <CartOverlay />
             </ul>
         </div>
@@ -32,18 +32,18 @@ const CartOverlay = () => {
 
     const [totalPrice, setTotalPrice] = useState(0);
 
-    const refreshOrderLines = () => {
+    const refresh = () => {
         fetch('api/getAllOrderLines')
             .then(response => response.json())
             .then(data => setOrderLines(data))
+            .then(getTotalPrice)
             .catch(error => console.error('Error fetching data: ', error));
-        console.log("Orderline:", orderLines);
     }
 
     const emptyCart = () => {
         fetch('api/clearCart/')
             .then(response => console.log(response))
-            .then(refreshOrderLines)
+            .then(refresh)
             .catch(error => console.error('Error fetching data: ', error));
     }
 
@@ -56,7 +56,7 @@ const CartOverlay = () => {
             body: JSON.stringify( orderLine )
         })
             .then(response => console.log(response))
-            .then(refreshOrderLines)
+            .then(refresh)
             .catch(error => console.error('Error fetching data: ', error));
     }
 
@@ -64,13 +64,11 @@ const CartOverlay = () => {
         fetch('api/getPrice')
             .then(response => response.json())
             .then(data => setTotalPrice(data))
-            .then(refreshOrderLines)
             .catch(error => console.error('Error fetching data: ', error));
     }
 
     useEffect(() => {
-        refreshOrderLines();
-        getTotalPrice();
+        refresh();
     }, []);
 
     if (orderLines.length > 0) {
@@ -92,7 +90,7 @@ const CartOverlay = () => {
                                         <span>{orderLine.wine.price * orderLine.amount},-</span>
                                     </div>
                                     <div className="d-flex justify-content-between ml-2">
-                                        < OrderLineEdit orderLine={orderLine} onUpdate={refreshOrderLines}/>
+                                        < OrderLineEdit orderLine={orderLine} onUpdate={refresh}/>
                                         <a style={{cursor: 'pointer'}} onClick={() => removeFromCart(orderLine)}>
                                             <img src={removeImage} className="w-75" alt="Remove"/>
                                         </a>
@@ -103,9 +101,9 @@ const CartOverlay = () => {
                     </div>
                     <div className="d-flex justify-content-between">
                         <p>Samlet beløb</p>
-                        <p>{totalPrice}</p>
+                        <p>{totalPrice},-</p>
                     </div>
-                    <div className="d-flex">
+                    <div className="d-flex gap-2">
                         < Button text='Gå til betaling' onClick={() => navigate(`/checkout`)} isWide={true} scale={0.8} />
                         < Button text='Tøm kurv' onClick={emptyCart} isWide={true} scale={0.8} />
                     </div>

@@ -45,7 +45,7 @@
     align-content: center;
     background: white;
     padding: 1em;
-    width: 20em;
+    width: fit-content;
     margin-left: auto;
     height: fit-content;
     box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.1);
