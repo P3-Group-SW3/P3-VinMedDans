@@ -1,4 +1,24 @@
+.navbar img {
+    max-height: 80px;
+    padding: 10px;
+}
 
+.nav-link {
+    flex: 1;
+    text-align: center;
+    color: var(--main-color);
+    text-decoration: none;
+    font-size: 1.6rem;
+    padding: 10px;
+    font-family: 'Rubik Dirt', sans-serif;
+    transition: color 0.3s, text-shadow 0.3s;
+}
+
+.nav-link:hover {
+    transform: translateY(-2px);
+    color: white;
+    text-shadow: 1px 0 var(--main-color), -1px 0 var(--main-color), 0 4px var(--main-color), 0 -1px var(--main-color);
+}
 
 .nav-button {
     padding: 10px;
@@ -29,4 +49,16 @@
 .navbar-toggler {
     border: none;
     width: fit-content;
+}
+
+.unstyled {
+    all: unset; /* Reset all inherited styles */
+    display: inline-block; /* Allow proper alignment for the image */
+    cursor: pointer; /* Restore pointer cursor for clickability */
+}
+
+.unstyled img {
+    display: block; /* Remove inline spacing issues */
+    max-width: 100%; /* Ensure the image is responsive */
+    height: auto; /* Maintain aspect ratio */
 }

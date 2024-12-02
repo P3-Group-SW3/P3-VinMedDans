@@ -1,9 +1,8 @@
-// Header.js
 import React, { useEffect, useRef } from 'react';
 import logo from '../images/logo.png';
 import { useNavigate } from "react-router-dom";
 import Cart from './Cart';
-import burger from '../images/burger.svg'
+import burger from '../images/burger.svg';
 import '../styles/header.css';
 
 const Header = ({ links, showCart }) => {
@@ -20,44 +19,43 @@ const Header = ({ links, showCart }) => {
     }, []);
 
     return (
-        <nav ref={headerRef} className="navbar navbar-expand-lg fixed-top bg-white" style={{height:'fit-content'}}>
-            <div className="container flex-column justify-content-center">
-                <div className="row">
-                    <a
-                        className="navbar-toggler"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent"
-                    >
-                        <img src={burger} alt="Burger menu"/>
-                    </a>
-                    <a onClick={() => navigate('/')}>
-                        <img src={logo} alt="Logo" className="img-fluid" style={{cursor: 'pointer'}}/>
-                    </a>
-                    {showCart && <Cart/>}
-                </div>
-                <div className="flex-row collapse navbar-collapse justify-content-between align-items-center"
-                     id="navbarSupportedContent">
+        <nav ref={headerRef} className="navbar navbar-expand-lg fixed-top bg-white justify-content-between" style={{boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)'}}>
+                <button
+                    className="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#navbarSupportedContent"
+                >
+                    <img src={burger} alt="Burger menu"/>
+                </button>
+                <a onClick={() => navigate('/')} style={{display: 'flex', justifyContent: 'center', flex: 1}}>
+                    <img src={logo} alt="Logo" className="img-fluid" style={{cursor: 'pointer'}}/>
+                </a>
+                <div
+                    className="collapse navbar-collapse justify-content-between align-items-center"
+                    id="navbarSupportedContent"
+                >
                     {links.map((link, index) => (
                         <NavItem
                             key={index}
-                                text={link.text}
-                                color={link.color}
-                                onClick={() => navigate(link.path)}
-                            />
-                        ))}
+                            text={link.text}
+                            color={link.color}
+                            onClick={() => navigate(link.path)}
+                        />
+                    ))}
+                    {showCart && <Cart/>}
                 </div>
-            </div>
         </nav>
     );
 };
 
-function NavItem({ text, color, onClick }) {
+function NavItem({text, color, onClick}) {
     return (
-        <a className='nav-link header-large nav-button'
-           href="#"
-           style={{ '--main-color': color }}
-           onClick={onClick}
+        <a
+            className="nav-link"
+            href="#"
+            style={{'--main-color': color}}
+            onClick={onClick}
         >
             {text.toLowerCase()}
         </a>
