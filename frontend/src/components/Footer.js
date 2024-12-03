@@ -14,7 +14,7 @@ function Footer() {
 
 function FooterColumn({items}) {
     return (
-        <div className="flex-column">
+        <div className="col-4">
             <ul className="list-unstyled text-center">
                 {items.map((item, index) => (
                 <li key={index} style={{ fontFamily: 'Rubik', color: 'white', marginBottom: '1em' }}>{item}</li>
