@@ -1,8 +1,8 @@
 /* fonts.css */
 .header-large {
-    font-size: 2.5rem;
-    font-weight: 500;
-    font-family: 'Rubik Dirt', sans-serif; 
+    font-size: 2.6rem;
+    font-family: 'Rubik Dirt', sans-serif;
+    color: #405071;
 }
 
 .body-text {

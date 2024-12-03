@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import OrdersAdmin from "../components/OrdersAdmin";
 import ProductsAdmin from "../components/ProductsAdmin";
 

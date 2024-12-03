@@ -2,8 +2,8 @@ import React from "react";
 import { useState, useEffect } from "react";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import Item from "../components/Item";
 import {CustomerLinks} from "./CustomerLinkContext";
+import AlternatingItems from "../components/AlternatingItems";
 
 function ProductPage() {
     const [items, setItems] = useState([]);
@@ -28,19 +28,8 @@ function ProductPage() {
                 links={ CustomerLinks }
                 showCart={true}
             />
-            
-            {items.map((item, index) => (
-                <Item
-                    key={index}
-                    title={item?.name}
-                    description={item?.description}
-                    price={item?.price?.toString()} 
-                    image={item.imageURL}
-                    stock={item?.stock?.toString()}
-                    imagePos="left"
-                    item={item}
-                ></Item>
-            ))}
+
+            <AlternatingItems items={items}/>
             <Footer />
         </div>
     );

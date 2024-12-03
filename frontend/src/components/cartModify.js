@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Button from './Button';
 import IncDecButton from "./IncDecButton";
 
@@ -52,3 +52,5 @@ export const CartModify = (item) => {
     </div>
   );
 };
+
+export default CartModify;

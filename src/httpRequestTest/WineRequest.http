@@ -54,7 +54,7 @@ Content-Type: application/json
   "imageURL": "http://localhost:8080/api/images/hoenefuld.png",
   "price":189,
   "amountLeft": 10,
-  "name": "hoenefuld"
+  "name": "hønefuld"
 }
 
 ### Send POST request with a header (toggle active state by ID)
@@ -62,7 +62,7 @@ POST http://localhost:8080/api/wine/admin/changeActiveState/95
 Content-Type: application/json
 
 ### Send POST request with a header (delete wine by ID)
-POST http://localhost:8080/api/wine/admin/delete/1
+POST http://localhost:8080/api/wine/admin/delete/5
 Content-Type: application/json
 
 
