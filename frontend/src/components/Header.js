@@ -1,12 +1,10 @@
 import React, { useEffect, useRef } from 'react';
 import logo from '../images/logo.png';
-import { useNavigate } from "react-router-dom";
 import Cart from './Cart';
 import burger from '../images/burger.svg';
 import '../styles/header.css';
 
 const Header = ({ links, showCart }) => {
-    const navigate = useNavigate();
     const headerRef = useRef(null);
 
     useEffect(() => {
@@ -28,8 +26,8 @@ const Header = ({ links, showCart }) => {
                 >
                     <img src={burger} alt="Burger menu"/>
                 </button>
-                <a onClick={() => navigate('/')} style={{display: 'flex', justifyContent: 'center', flex: 1}}>
-                    <img src={logo} alt="Logo" className="img-fluid" style={{cursor: 'pointer'}}/>
+                <a href='/' style={{display: 'flex', justifyContent: 'center', flex: 1}}>
+                    <img src={logo} alt="Logo" className="img-fluid" />
                 </a>
                 {showCart && <div className="d-lg-none"><Cart/></div>}
                 <div
@@ -41,7 +39,7 @@ const Header = ({ links, showCart }) => {
                             key={index}
                             text={link.text}
                             color={link.color}
-                            onClick={() => navigate(link.path)}
+                            href={link.path}
                         />
                     ))}
                     {showCart && <div className="d-none d-lg-block"><Cart/></div>}
@@ -50,13 +48,12 @@ const Header = ({ links, showCart }) => {
     );
 };
 
-function NavItem({text, color, onClick}) {
+function NavItem({text, color, href}) {
     return (
         <a
             className="nav-link"
-            href="#"
             style={{'--main-color': color}}
-            onClick={onClick}
+            href={href}
         >
             {text.toLowerCase()}
         </a>
