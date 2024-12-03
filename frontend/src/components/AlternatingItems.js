@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "./Button";
 import CartModify from "./CartModify"
+import '../styles/fonts.css'
 import { useNavigate } from "react-router-dom";
 
 const AlternatingItems = ({ items }) => {
