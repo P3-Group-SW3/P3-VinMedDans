@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import {useNavigate} from "react-router-dom";
 import '../styles/modal.css'
 import '../styles/button.css'
+import '../styles/header.css'
 import cartImage from '../images/basket.png';
 import removeImage from '../images/remove.svg';
 import OrderLineEdit from "./OrderLineEdit";
@@ -69,7 +70,7 @@ const CartOverlay = () => {
 
     useEffect(() => {
         refresh();
-    }, []);
+    }, );
 
     if (orderLines.length > 0) {
         return (
@@ -81,8 +82,7 @@ const CartOverlay = () => {
                                 <img
                                     src={orderLine.wine.imageURL}
                                     alt={orderLine.wine.name}
-                                    className="img-fluid"
-                                    style={{width: '50px', height: '50px', objectFit: 'cover'}}
+                                    style={{width: '50px', height: '50px', padding: '0'}}
                                 />
                                 <div className="flex-column w-100">
                                     <div className="d-flex justify-content-between ml-2">
@@ -91,9 +91,9 @@ const CartOverlay = () => {
                                     </div>
                                     <div className="d-flex justify-content-between ml-2">
                                         < OrderLineEdit orderLine={orderLine} onUpdate={refresh}/>
-                                        <a style={{cursor: 'pointer'}} onClick={() => removeFromCart(orderLine)}>
+                                        <button className="unstyled" onClick={() => removeFromCart(orderLine)}>
                                             <img src={removeImage} className="w-75" alt="Remove"/>
-                                        </a>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

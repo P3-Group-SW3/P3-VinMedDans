@@ -7,25 +7,27 @@ const AgeVerification = () => {
 
     const [show, setShow] = useState(false);
 
-    useEffect(async () => {
-        await fetch('api/createCookie')
-            .then(response => console.log(response))
-            .catch(error => console.error('Error fetching data: ', error))
-
-        await fetch('api/cookieAge')
-            .then(response => response.text())
-            .then(data => {
-                console.log("Type of data: ", typeof data);
-                console.log("Fetched data:", data);
-                if (data === 'new') {
-                    setShow(true);
-                } else if (data === 'old') {
-                    setShow(false);
-                } else {
-                    console.error("Invalid cookie age value:", data);
-                }
-            })
-            .catch(error => console.error('Error fetching data: ', error))
+    useEffect( () => {
+        async function createCookie() {
+            await fetch('api/createCookie')
+                .then(response => console.log(response))
+                .catch(error => console.error('Error fetching data: ', error))
+            await fetch('api/cookieAge')
+                .then(response => response.text())
+                .then(data => {
+                    console.log("Type of data: ", typeof data);
+                    console.log("Fetched data:", data);
+                    if (data === 'new') {
+                        setShow(true);
+                    } else if (data === 'old') {
+                        setShow(false);
+                    } else {
+                        console.error("Invalid cookie age value:", data);
+                    }
+                })
+                .catch(error => console.error('Error fetching data: ', error))
+        }
+        createCookie();
     }, []);
 
     const redirectToBR = () => {
