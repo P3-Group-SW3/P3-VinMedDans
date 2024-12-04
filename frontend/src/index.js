@@ -5,7 +5,6 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { CriiptoVerifyProvider } from '@criipto/verify-react';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
-<<<<<<< HEAD
 import Checkout from './pages/Checkout';
 import Landingpage from './pages/LandingPage';
 import ProductPage from './pages/ProductPage';
@@ -16,22 +15,13 @@ import EventPage from './pages/EventPage';
 import LoadFonts from './components/LoadFonts';
 import CriiptoAuthWrapper from './components/CriiptoAuthWrapper';
 import Callback from './components/Callback';
-import Payment from "./pages/Payment";
-=======
-import Checkout from "./pages/Checkout";
-import Landingpage from "./pages/LandingPage";
-import ProductPage from "./pages/ProductPage";
-import AboutUsPage from "./pages/AboutUsPage";
-import LocationPage from "./pages/LocationPage";
-import ContactPage from "./pages/ContactPage";
-import EventPage from "./pages/EventPage";
-import AdminPageFunc from "./pages/AdminPageFunc";
-import DetailOrderAdmin from "./pages/DetailOrderAdmin";
-import DetailProductAdmin from "./pages/DetailProductAdmin";
-import CreateNewWinePage from "./pages/CreateNewWinePage";
-import LoadFonts from "./components/LoadFonts";
-import AgeVerification from "./components/AgeVerification";
->>>>>>> origin/Pre-production
+import Payment from './pages/Payment';
+import AdminPageFunc from './pages/AdminPageFunc';
+import DetailOrderAdmin from './pages/DetailOrderAdmin';
+import DetailProductAdmin from './pages/DetailProductAdmin';
+import CreateNewWinePage from './pages/CreateNewWinePage';
+import AgeVerification from './components/AgeVerification';
+
 
 const SetTitle = () => {
   useEffect(() => {
