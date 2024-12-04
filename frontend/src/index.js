@@ -41,35 +41,6 @@ const SetTitle = () => {
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-<<<<<<< HEAD
-    <React.StrictMode>
-      <CriiptoVerifyProvider
-          domain="p3-test.criipto.id"
-          clientID="urn:my:application:identifier:253367"
-          redirectUri={window.location.origin + '/callback'}
-      >
-        <BrowserRouter>
-          <SetTitle />
-          <LoadFonts />
-          <Routes>
-            <Route path="/">
-              <Route index element={<Landingpage />} />
-              <Route path="checkout" element={<Checkout />} />
-              <Route path="payment" element={<Payment />} />
-
-              <Route path="shop" element={<ProductPage />} />
-              <Route path="about" element={<AboutUsPage />} />
-              <Route path="locations" element={<LocationPage />} />
-              <Route path="contact" element={<ContactPage />} />
-              <Route path="events" element={<EventPage />} />
-              <Route path="callback" element={<Callback />} />
-              <Route path="*" element={<h1>Page not found</h1>} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </CriiptoVerifyProvider>
-    </React.StrictMode>
-=======
   <React.StrictMode>
     <BrowserRouter>
       <SetTitle />
@@ -94,7 +65,6 @@ root.render(
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
->>>>>>> origin/Pre-production
 );
 
 reportWebVitals();
