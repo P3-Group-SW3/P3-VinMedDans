@@ -7,19 +7,23 @@ import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'bootstrap/dist/js/bootstrap.bundle.min.js';
 import reportWebVitals from './reportWebVitals';
-import Checkout from "./pages/Checkout";
-import LandingPage from "./pages/LandingPage";
-import ProductPage from "./pages/ProductPage";
-import AboutUsPage from "./pages/AboutUsPage";
-import LocationPage from "./pages/LocationPage";
-import ContactPage from "./pages/ContactPage";
-import EventPage from "./pages/EventPage";
-import AdminPageFunc from "./pages/AdminPageFunc";
-import DetailOrderAdmin from "./pages/DetailOrderAdmin";
-import DetailProductAdmin from "./pages/DetailProductAdmin";
-import CreateNewWinePage from "./pages/CreateNewWinePage";
-import LoadFonts from "./components/LoadFonts";
-import AgeVerification from "./components/AgeVerification";
+import Checkout from './pages/Checkout';
+import LandingPage from './pages/LandingPage';
+import ProductPage from './pages/ProductPage';
+import AboutUsPage from './pages/AboutUsPage';
+import LocationPage from './pages/LocationPage';
+import ContactPage from './pages/ContactPage';
+import EventPage from './pages/EventPage';
+import AdminPageFunc from './pages/AdminPageFunc';
+import DetailOrderAdmin from './pages/DetailOrderAdmin';
+import DetailProductAdmin from './pages/DetailProductAdmin';
+import CreateNewWinePage from './pages/CreateNewWinePage';
+import LoadFonts from './components/LoadFonts';
+import AgeVerification from './components/AgeVerification';
+import CriiptoAuthWrapper from './components/CriiptoAuthWrapper';
+import Callback from './components/Callback';
+import Payment from './pages/Payment';
+
 
 const SetTitle = () => {
   useEffect(() => {
