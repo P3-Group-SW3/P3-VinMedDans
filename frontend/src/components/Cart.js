@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {useNavigate} from "react-router-dom";
 import '../styles/modal.css'
 import '../styles/button.css'
@@ -7,6 +7,7 @@ import cartImage from '../images/basket.png';
 import removeImage from '../images/remove.svg';
 import OrderLineEdit from "./OrderLineEdit";
 import Button from "./Button";
+import {useCart} from "./CartContext";
 
 
 const Cart = () => {
@@ -27,28 +28,26 @@ const Cart = () => {
 
 const CartOverlay = () => {
 
+    const { orderLines, totalPrice, refreshCart } = useCart();
+
+    useEffect(() => {
+        console.log("useEffect in Cart.");
+        refreshCart();
+    }, [])
+
     const navigate = useNavigate();
 
-    const [orderLines, setOrderLines] = useState([]);
-
-    const [totalPrice, setTotalPrice] = useState(0);
-
-    const refresh = () => {
-        fetch('api/getAllOrderLines')
-            .then(response => response.json())
-            .then(data => setOrderLines(data))
-            .then(getTotalPrice)
-            .catch(error => console.error('Error fetching data: ', error));
-    }
 
     const emptyCart = () => {
+        console.log("emptyCart is called!");
         fetch('api/clearCart/')
             .then(response => console.log(response))
-            .then(refresh)
+            .then(refreshCart)
             .catch(error => console.error('Error fetching data: ', error));
     }
 
     const removeFromCart = (orderLine) => {
+        console.log("removeFromCart is called!")
         fetch('api/deleteOrderLine', {
             method: 'POST',
             headers: {
@@ -57,20 +56,9 @@ const CartOverlay = () => {
             body: JSON.stringify( orderLine )
         })
             .then(response => console.log(response))
-            .then(refresh)
+            .then(refreshCart)
             .catch(error => console.error('Error fetching data: ', error));
     }
-
-    const getTotalPrice = () => {
-        fetch('api/getPrice')
-            .then(response => response.json())
-            .then(data => setTotalPrice(data))
-            .catch(error => console.error('Error fetching data: ', error));
-    }
-
-    useEffect(() => {
-        refresh();
-    }, );
 
     if (orderLines.length > 0) {
         return (
@@ -90,7 +78,7 @@ const CartOverlay = () => {
                                         <span>{orderLine.wine.price * orderLine.amount},-</span>
                                     </div>
                                     <div className="d-flex justify-content-between ml-2">
-                                        < OrderLineEdit orderLine={orderLine} onUpdate={refresh}/>
+                                        < OrderLineEdit orderLine={orderLine} />
                                         <button className="unstyled" onClick={() => removeFromCart(orderLine)}>
                                             <img src={removeImage} className="w-75" alt="Remove"/>
                                         </button>
@@ -111,7 +99,7 @@ const CartOverlay = () => {
         );
     } else {
         return (
-                <section className="modal-main">
+                <section className="cart-dropdown">
                     <div className="d-flex">
                         <p className="my-3"> <em>Kurven er tom.</em> </p>
                     </div>
