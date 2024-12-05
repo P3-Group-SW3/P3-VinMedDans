@@ -31,7 +31,6 @@ const CartOverlay = () => {
     const { orderLines, totalPrice, refreshCart } = useCart();
 
     useEffect(() => {
-        console.log("useEffect in Cart.");
         refreshCart();
     }, [])
 
@@ -39,7 +38,6 @@ const CartOverlay = () => {
 
 
     const emptyCart = () => {
-        console.log("emptyCart is called!");
         fetch('api/clearCart/')
             .then(response => console.log(response))
             .then(refreshCart)
@@ -47,7 +45,6 @@ const CartOverlay = () => {
     }
 
     const removeFromCart = (orderLine) => {
-        console.log("removeFromCart is called!")
         fetch('api/deleteOrderLine', {
             method: 'POST',
             headers: {
