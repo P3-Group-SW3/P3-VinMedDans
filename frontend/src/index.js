@@ -21,9 +21,9 @@ import DetailProductAdmin from "./pages/DetailProductAdmin";
 import CreateNewWinePage from "./pages/CreateNewWinePage";
 import LoadFonts from "./components/LoadFonts";
 import AgeVerification from "./components/AgeVerification";
-import CriiptoAuthWrapper from './components/CriiptoAuthWrapper';
-import Callback from './components/Callback';
-import Payment from './pages/Payment';
+//import CriiptoAuthWrapper from './components/CriiptoAuthWrapper';
+//import Callback from './components/Callback';
+//import Payment from './pages/Payment';
 
 
 const SetTitle = () => {
