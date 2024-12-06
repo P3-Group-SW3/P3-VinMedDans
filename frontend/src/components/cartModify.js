@@ -1,9 +1,10 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import Button from './Button';
 import IncDecButton from "./IncDecButton";
+import {useCart} from "./CartContext";
 
 export const CartModify = (item) => {
-
+  const { refreshCart } = useCart();
   const [quantity, setQuantity] = useState(1);
 
   const incrementQuantity = () => {
@@ -28,12 +29,13 @@ export const CartModify = (item) => {
       body: JSON.stringify({ wineID: item.item.id, amount: quantity }),
     })
     .then(response => response.json())
-    .then(data => console.log('Success:', data))
+        .then(() => refreshCart())
     .catch((error) => {
       console.error('Error:', error);
     });
 
     setQuantity(1);
+    console.log("Added to cart.")
   }
 
   return (
@@ -52,3 +54,5 @@ export const CartModify = (item) => {
     </div>
   );
 };
+
+export default CartModify;

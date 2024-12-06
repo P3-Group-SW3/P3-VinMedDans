@@ -1,12 +1,14 @@
 package com.vmd.vmdwebshop.abstractModels;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 
 @MappedSuperclass
 public abstract class Product {
 
     private double price;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private String imageURL;

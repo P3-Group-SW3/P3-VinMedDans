@@ -52,10 +52,10 @@ public class TestWineService {
 
     @Test
     public void TestCreateAndEditWine01() {
-        when(wineRepository.findById(Long.parseLong("99"))).thenReturn(Optional.empty());
+        when(wineRepository.findById(Long.parseLong("99"))).thenThrow( new DataAccessException(""){});
 
-        WineNotFoundException newException = assertThrows(WineNotFoundException.class, () -> { wineService.createAndEdit(wine1, Long.parseLong("99")); });
-        assertEquals("The Wine was not updated", newException.getMessage());
+        WineDataAccessException newException = assertThrows(WineDataAccessException.class, () -> { wineService.createAndEdit(wine1, Long.parseLong("99")); });
+        assertEquals("Failed to retrieve the wine from the database", newException.getMessage());
         System.out.println(newException.getMessage());
     }
 
