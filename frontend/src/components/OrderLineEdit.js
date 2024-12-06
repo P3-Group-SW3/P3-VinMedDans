@@ -1,27 +1,16 @@
 import React, { useState } from "react";
 import IncDecButton from "./IncDecButton";
+import {useCart} from "./CartContext";
 
-const OrderLineEdit = ({orderLine, onUpdate}) => {
+const OrderLineEdit = ({orderLine}) => {
+    const { refreshCart } = useCart();
     const [quantity, setQuantity] = useState(orderLine.amount);
 
-    const incrementQuantity = () => {
-        console.log("Previous quantity: ", orderLine.amount);
-        orderLine.amount = quantity + 1;
-
-        updateQuantity();
-    }
-
-    const decrementQuantity = () => {
-        console.log("Previous quantity: ", orderLine.amount);
-
-        if (quantity - 1 > 0) {
-            orderLine.amount = quantity - 1;
-            updateQuantity();
+    const updateQuantity = (change) => {
+        let newQuantity = orderLine.amount + change;
+        if (newQuantity > 0) {
+            setQuantity(newQuantity)
         }
-    }
-
-    const updateQuantity = () => {
-        setQuantity(orderLine.amount);
 
         fetch('/api/createAndEditOrderLine', {
             method: 'POST',
@@ -32,7 +21,7 @@ const OrderLineEdit = ({orderLine, onUpdate}) => {
         })
             .then(response => response.json())
             .then(data => console.log('Success:', data))
-            .then(() => onUpdate())
+            .then(refreshCart)
             .catch((error) => {
                 console.error('Error:', error);
             });
@@ -41,8 +30,8 @@ const OrderLineEdit = ({orderLine, onUpdate}) => {
 
     return (
         <IncDecButton
-            decrementQuantity={decrementQuantity}
-            incrementQuantity={incrementQuantity}
+            decrementQuantity={() => updateQuantity(-1)}
+            incrementQuantity={() => updateQuantity(+1)}
             quantity={quantity}
             scale={0.8}
         />
