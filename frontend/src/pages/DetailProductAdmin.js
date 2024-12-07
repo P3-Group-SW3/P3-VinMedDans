@@ -1,34 +1,17 @@
-import React, { useEffect, useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useNavigate, useLocation } from 'react-router-dom';
 
 function DetailProductAdmin() {
-    const { id } = useParams();
-    const [product, setProduct] = useState();
+    const product = useLocation().state?.item;
     const [selectedAmountLeft, setSelectedAmountLeft] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetch(`/api/wine/getById/${id}`)
-            .then((response) => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
-            })
-            .then((data) => {
-                setProduct(data);
-                setSelectedAmountLeft(data.amountLeft);
-            })
-            .catch((error) => console.error('Error fetching product:', error));
-    }, [id]);
-
-    const handleDeleteProduct = () => {
+    const deleteProduct = () => {
         if (window.confirm('Are you sure you want to delete this product?')) {
-            fetch(`/api/wine/admin/delete/${id}`, {
+            fetch(`/api/wine/admin/delete/${product.id}`, {
                 method: 'POST',
             })
-                .then((response) => {
-                    if (!response.ok) throw new Error('Failed to delete product');
-                    return response.json();
-                })
+                .then((response) => response.json())
                 .then(() => {
                     alert('Product deleted successfully!');
                     navigate('/admin');
@@ -37,25 +20,28 @@ function DetailProductAdmin() {
         }
     };
 
-    const handleEditProduct = () => {
+    const updateProduct = () => {
         fetch('/api/wine/admin/createAndEdit', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                id: product.id,
-                amountLeft: selectedAmountLeft,
+                ID: product.id,
+                description: product.description,
+                imageURL: product.imageURL,
+                price: product.price,
+                amountLeft: product.amountLeft,
+                name: product.name
             }),
         })
-            .then((response) => {
-                if (!response.ok) throw new Error('Failed to edit product');
-                return response.json();
-            })
-            .then(() => {
+            .then((response) =>  response.json())
+            .then((data) => {
                 alert('Product edited successfully!');
-                navigate('/admin');
+                console.log("Updated wine: ", data);
+                navigate(`/administrator/products/${product.id}`);
             })
             .catch((error) => console.error('Error editing product:', error));
         console.log('Sending data:', { id: product.id, amountLeft: selectedAmountLeft });
+
     };
 
     if (!product) {
@@ -94,9 +80,9 @@ function DetailProductAdmin() {
                             />
                     </div>
                     <div className="d-flex justify-content-end">
-                        <button onClick={handleEditProduct} className="btn btn-primary me-2"> Save Changes </button>
+                        <button onClick={updateProduct} className="btn btn-primary me-2"> Save Changes </button>
 
-                        <button onClick={handleDeleteProduct} className="btn btn-danger"> Delete Product </button>
+                        <button onClick={deleteProduct} className="btn btn-danger"> Delete Product </button>
                     </div>
                 </div>
             </div>

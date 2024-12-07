@@ -57,7 +57,7 @@ public class OrderController {
      * Gets all orders
      * @return
      */
-    @GetMapping("/api/orders")
+    @GetMapping("/api/orders/getList")
     public ResponseEntity<List<Orders>> getAllOrders() {
         try {
             return ResponseEntity.ok(orderService.getAllOrders());
