@@ -44,11 +44,20 @@ public class OrderLineService {
         this.wineService = wineService;
     }
 
+
+    /**
+     * Retrieves all order lines associated with a specific customer.
+     *
+     * @param customerID the ID of the customer whose order lines are to be retrieved
+     * @return a list of OrderLine objects associated with the specified customer
+     * @throws OrderLineDataAccessException if there is an error accessing the database
+     */
     public List<OrderLine> getAllOrderLines(String customerID) {
-        try{
+        try {
             return orderLineRepository.findAllByCustomerId(customerID);
         } catch (DataAccessException e) {
-        throw new OrderLineDataAccessException(" Can not access the database");}
+            throw new OrderLineDataAccessException("Can not access the database");
+        }
     }
 
     /**
@@ -131,7 +140,7 @@ public class OrderLineService {
         return orderLine.getAmount() * orderLine.getWine().getPrice();
     }
 
-    public double calculateOrderLine(List<OrderLine> orderLines) {
+    public double calculateOrderLines(List<OrderLine> orderLines) {
         double totalPrice = 0.0;
         for (OrderLine orderLine: orderLines){
             Double price = calculateOrderLine(orderLine);

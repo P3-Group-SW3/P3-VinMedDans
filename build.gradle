@@ -28,6 +28,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'mysql:mysql-connector-java:8.0.33'
     implementation 'com.stripe:stripe-java:28.0.1'
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     annotationProcessor 'org.projectlombok:lombok'
@@ -41,4 +42,21 @@ dependencies {
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+// Custom tasks to build React project and copy to static resources
+tasks.register('buildFrontend', Exec) {
+    workingDir 'frontend'
+    commandLine 'npm', 'install'
+    commandLine 'npm', 'run', 'build'
+}
+
+tasks.register('copyFrontend', Copy) {
+    dependsOn buildFrontend
+    from 'frontend/build'
+    into 'src/main/resources/static'
+}
+
+processResources {
+    dependsOn copyFrontend
 }

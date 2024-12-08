@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 @RestController
 @RequestMapping("/api/")
 public class CustomerController {
@@ -34,13 +37,16 @@ public class CustomerController {
     }
 
     @GetMapping("/cookieAge")
-    public ResponseEntity<String> cookieAge(HttpServletRequest request) {
+    public ResponseEntity<Map<String, String>> cookieAge(HttpServletRequest request) {
         try {
             String cookieAge = customerService.getCookieAge(request);
             if (cookieAge == null) {
                 return ResponseEntity.noContent().build(); // HTTP 204: No Content
             }
-            return ResponseEntity.ok(cookieAge);
+            Map<String, String> response = new HashMap<>();
+            response.put("cookieAge", cookieAge);
+            return ResponseEntity.ok(response);
+
         } catch (RuntimeException e) {
             System.err.println(e.getMessage());
             return ResponseEntity.notFound().build();

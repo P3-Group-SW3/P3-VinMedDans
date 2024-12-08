@@ -106,4 +106,4 @@ const CartOverlay = () => {
 
 };
 
-export default Cart
+export default Cart;

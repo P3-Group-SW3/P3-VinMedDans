@@ -29,6 +29,7 @@ public class Orders {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
+    private String SessionID;
     private String fullName;
     private String mail;
     private String phoneNumber;
@@ -47,13 +48,15 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(String firstName, String lastName, String mail, String phoneNumber, String adress, String zipCode, String city) {
+    public Orders(String firstName, String lastName, String mail, String phoneNumber, String adress, String zipCode, String city, String SessionID) {
         this.fullName = firstName + " " + lastName;
         this.mail = mail;
         this.phoneNumber = phoneNumber;
         this.adress = adress;
         this.zipCode = zipCode;
         this.city = city;
+        this.SessionID =  SessionID;
+        this.state = State.REGISTERED;
     }
 
     // tilføjer orderline
@@ -69,6 +72,14 @@ public class Orders {
     // Getters and setters
     public Long getID() {
         return ID;
+    }
+
+    public String getSessionID() {
+        return SessionID;
+    }
+
+    public void setSessionID(String sessionID) {
+        this.SessionID = sessionID;
     }
 
     public String getFullName() {

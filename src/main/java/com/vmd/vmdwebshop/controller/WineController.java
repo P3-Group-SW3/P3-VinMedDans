@@ -47,6 +47,17 @@ public class WineController {
         }
     }
 
+    @PostMapping("/api/wine/getById/{ID}")
+    public ResponseEntity<Wine> postGetWineById(@PathVariable("ID") @Pattern(regexp = "^\\d+$") @Size(max = 10) String ID) {
+        try {
+            Wine wine = wineService.getWineById(Long.parseLong(ID));
+            return ResponseEntity.ok(wine);
+        } catch (RuntimeException e){
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
 
     /**
      * Takes a wine Data Transfer Object, so that we can receive an ID, in the case that we need to edit an existing wine
