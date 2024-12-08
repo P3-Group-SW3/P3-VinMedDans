@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/fonts.css'
 import '../styles/admin.css'
+import Button from "./Button";
 
-function AdminModule({title, category, apiHandle, columns} ) {
+function AdminModule({title, category, columns} ) {
     const [items, setItems] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('Admin stuff: ', title, category, apiHandle)
-        fetch(`${apiHandle}`)
+        console.log('Admin stuff: ', title, category)
+        fetch(`/api/${category}/getList`)
             .then(response => response.json())
             .then(data => {
                 if (data) {
@@ -24,12 +25,20 @@ function AdminModule({title, category, apiHandle, columns} ) {
 
 
     const clickRow = (item) => {
-        navigate(`/administrator/${category}/${item.id}`, {state: {item}});
+        navigate(`/administrator/${category}/${item.id}`, {
+            state: {
+                item
+            }
+        });
     };
 
     return (
         <div className="admin-module">
-            <h1 className='header-large' onClick={() => navigate(`/administrator/${category}`)} style={{color: 'white', backgroundColor: '#C0924D', cursor: 'pointer'}}>{title}</h1>
+            <h1 className='header-large' style={{color: '#C0924D', cursor: 'pointer'}}>
+                {title}
+                {category==="wine" &&
+                    < Button text="Opret" onClick={() => navigate(`/administrator/${category}/create`)}></Button>}
+            </h1>
             <table className="table table-hover" style={{fontFamily: 'Rubik, sans-serif'}}>
                 <thead>
                 <tr>

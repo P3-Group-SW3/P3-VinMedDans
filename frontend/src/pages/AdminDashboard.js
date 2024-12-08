@@ -17,7 +17,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard">
-            <AdminModule category="products" title="sortiment" apiHandle="/api/wine/getList" columns={productColumns}/>
+            <AdminModule category="wine" title="sortiment" apiHandle="/api/wine/getList" columns={productColumns}/>
             <AdminModule category="orders" title="ordrer" apiHandle="/api/orders/getList" columns={orderColumns}/>
         </div>
     );
