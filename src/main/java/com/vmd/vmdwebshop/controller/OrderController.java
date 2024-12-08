@@ -38,13 +38,13 @@ public class OrderController {
      * And we use the cookie id to get the list of ordelines from the customer send these objects through our order service
      * @return
      */
-    @PostMapping("/api/orderInfo")
+    @PostMapping("/api/")
     public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, HttpServletRequest request) {
 
         try{
             String customerID = customerService.getCustomerID(request);
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
-            Orders orders = orderService.createOrderFromInfo(order, orderLines);
+            Orders orders = orderService.createOrderFromInfo(order, orderLines, null);
             return ResponseEntity.ok(orders);
 
         }catch (RuntimeException e){

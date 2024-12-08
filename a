@@ -1,0 +1,636 @@
+[33mcommit a92cebcdd70488124ceaeb9aef3d89df7205f2a6[m[33m ([m[1;36mHEAD -> [m[1;32mfeature/comb-Stripe-Criipto[m[33m)[m
+Author: Lenovo <lenovo@Lenovo.druguseisgood.dk>
+Date:   Fri Dec 6 15:43:36 2024 +0100
+
+    Customercontrollerfix
+
+:100644 100644 55c30385 b0563f20 M	src/main/java/com/vmd/vmdwebshop/controller/CustomerController.java
+
+[33mcommit 9426a0f780449cd24be179fb828945019179f922[m
+Author: Nikomiko <ngool23@student.aau.dk>
+Date:   Tue Dec 3 12:41:30 2024 +0100
+
+    Fix en test
+
+:100644 100644 9b50eb89 7e4c6b8d M	src/test/java/com/vmd/vmdwebshop/service/TestWineService.java
+
+[33mcommit 64dfc310a54ef896c8300c800c265a9e247f7d69[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Tue Dec 3 12:17:55 2024 +0100
+
+    Built with new footer
+
+:100644 100644 7a0644d3 6a4a86fb M	src/main/resources/static/asset-manifest.json
+:100644 100644 a78a6618 29188838 M	src/main/resources/static/index.html
+:000000 100644 00000000 647821b7 A	src/main/resources/static/static/js/main.638ac567.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.638ac567.js.LICENSE.txt
+:000000 100644 00000000 f810f872 A	src/main/resources/static/static/js/main.638ac567.js.map
+
+[33mcommit bd7e0d09945594cdf368765b7fbce45b237ec021[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Tue Dec 3 12:16:09 2024 +0100
+
+    Small fixes
+    
+    Imported fonts in AlternatingItems, changed imagePath back to imageURL and removed redundant component from ProductPage
+
+:100644 100644 78d484ff 905f8597 M	frontend/src/components/AlternatingItems.js
+:100644 100644 ad35013f 63900082 M	frontend/src/pages/LandingPage.js
+:100644 100644 d68acccf c585f41e M	frontend/src/pages/ProductPage.js
+:100644 100644 61ccee24 7a0644d3 M	src/main/resources/static/asset-manifest.json
+:100644 100644 da5a5681 a78a6618 M	src/main/resources/static/index.html
+:000000 100644 00000000 bda373cc A	src/main/resources/static/static/css/main.a0ea2508.css
+:000000 100644 00000000 3b5591cc A	src/main/resources/static/static/css/main.a0ea2508.css.map
+:000000 100644 00000000 57518274 A	src/main/resources/static/static/js/main.fa71f833.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.fa71f833.js.LICENSE.txt
+:000000 100644 00000000 6c8ed4bb A	src/main/resources/static/static/js/main.fa71f833.js.map
+
+[33mcommit c3ad93513694ccd772014c89c616a6bd66a5c1b0[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Tue Dec 3 10:54:09 2024 +0100
+
+    Fixed eslint issues
+    
+    Used eslint to detect issues in frontend src, which will hopefully let me pass the pull request tests
+
+:100644 100644 95140bbf e070b893 M	frontend/package-lock.json
+:100644 100644 c30c9ccf b9d7d69c M	frontend/package.json
+:100644 100644 672b7f96 d4b5eef1 M	frontend/src/components/AgeVerification.js
+:100644 100644 65bb9948 6153939d M	frontend/src/components/AlternatingItems.js
+:100644 100644 3c438d7c b764e9d8 M	frontend/src/components/Cart.js
+:100644 100644 4d9b2487 afec342b M	frontend/src/components/Header.js
+:100644 100644 9859596d dc4a4b74 M	frontend/src/components/LoadFonts.js
+:100644 000000 5af866c5 00000000 D	frontend/src/components/Navbar.js
+:100644 100644 b8e915cc 6e489174 M	frontend/src/components/CartModify.js
+:100644 100644 fc9ac7e3 c745940d M	frontend/src/index.js
+:100644 100644 e25dee35 846b2ed6 M	frontend/src/pages/AdminPageFunc.js
+:100644 100644 90ffb034 60fd3451 M	frontend/src/styles/header.css
+:100644 100644 2abc9808 917afab0 M	src/main/resources/static/asset-manifest.json
+:100644 100644 b5f1699b a51d3f26 M	src/main/resources/static/index.html
+:000000 100644 00000000 5c8207fe A	src/main/resources/static/static/css/main.5859ce84.css
+:000000 100644 00000000 742c4cd4 A	src/main/resources/static/static/css/main.5859ce84.css.map
+:000000 100644 00000000 54540356 A	src/main/resources/static/static/js/main.0170ad77.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.0170ad77.js.LICENSE.txt
+:000000 100644 00000000 209a66ea A	src/main/resources/static/static/js/main.0170ad77.js.map
+:000000 100644 00000000 1b5fcfa7 A	src/main/resources/static/static/js/main.0f0e17e6.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.0f0e17e6.js.LICENSE.txt
+:000000 100644 00000000 e79a1614 A	src/main/resources/static/static/js/main.0f0e17e6.js.map
+:000000 100644 00000000 1d4bfe48 A	src/main/resources/static/static/js/main.331efd2a.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.331efd2a.js.LICENSE.txt
+:000000 100644 00000000 65d76ccb A	src/main/resources/static/static/js/main.331efd2a.js.map
+:000000 100644 00000000 ca5a2baa A	src/main/resources/static/static/js/main.4c0612a6.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.4c0612a6.js.LICENSE.txt
+:000000 100644 00000000 f6f25ae2 A	src/main/resources/static/static/js/main.4c0612a6.js.map
+:000000 100644 00000000 b76545ed A	src/main/resources/static/static/js/main.6fb4de85.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.6fb4de85.js.LICENSE.txt
+:000000 100644 00000000 7d7bdf0c A	src/main/resources/static/static/js/main.6fb4de85.js.map
+:000000 100644 00000000 798c0e94 A	src/main/resources/static/static/js/main.818eb577.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.818eb577.js.LICENSE.txt
+:000000 100644 00000000 f9216263 A	src/main/resources/static/static/js/main.818eb577.js.map
+:000000 100644 00000000 e4aa4365 A	src/main/resources/static/static/js/main.82e7e7d7.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.82e7e7d7.js.LICENSE.txt
+:000000 100644 00000000 01e39c6f A	src/main/resources/static/static/js/main.82e7e7d7.js.map
+:000000 100644 00000000 42388310 A	src/main/resources/static/static/js/main.9c2f5939.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.9c2f5939.js.LICENSE.txt
+:000000 100644 00000000 a4b3ea07 A	src/main/resources/static/static/js/main.9c2f5939.js.map
+:000000 100644 00000000 a64e61cb A	src/main/resources/static/static/js/main.ac6a5d3f.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.ac6a5d3f.js.LICENSE.txt
+:000000 100644 00000000 6db8b54e A	src/main/resources/static/static/js/main.ac6a5d3f.js.map
+:000000 100644 00000000 6eb28d80 A	src/main/resources/static/static/js/main.adf9c3a5.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.adf9c3a5.js.LICENSE.txt
+:000000 100644 00000000 4da4b33f A	src/main/resources/static/static/js/main.adf9c3a5.js.map
+:000000 100644 00000000 ca09a7c4 A	src/main/resources/static/static/js/main.c3963770.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.c3963770.js.LICENSE.txt
+:000000 100644 00000000 6bfd4312 A	src/main/resources/static/static/js/main.c3963770.js.map
+
+[33mcommit d712fd50e806b5f1e9120f369b9df33c4b7ca73b[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Tue Dec 3 09:25:49 2024 +0100
+
+    Fixed string escape error
+    
+    ...hopefully
+
+:100644 100644 85062393 ad35013f M	frontend/src/pages/LandingPage.js
+:100644 100644 55abd7e3 2abc9808 M	src/main/resources/static/asset-manifest.json
+:100644 100644 86a676a5 b5f1699b M	src/main/resources/static/index.html
+:000000 100644 00000000 787bb63c A	src/main/resources/static/static/js/main.19b741de.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.19b741de.js.LICENSE.txt
+:000000 100644 00000000 78d17548 A	src/main/resources/static/static/js/main.19b741de.js.map
+:000000 100644 00000000 6dea0643 A	src/main/resources/static/static/js/main.27f1ca21.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.27f1ca21.js.LICENSE.txt
+:000000 100644 00000000 90ca5419 A	src/main/resources/static/static/js/main.27f1ca21.js.map
+
+[33mcommit 6089e7d1c917e9ee1e8c42543c811e5c7628fc3d[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Tue Dec 3 09:03:54 2024 +0100
+
+    Fixed footer alignment
+    
+    Not perfect but at least not stacked
+
+:100644 100644 d9569f0c a7582841 M	frontend/src/components/Footer.js
+:100644 100644 8b67eb2b 39f97e2c M	src/main/resources/static/asset-manifest.json
+:100644 100644 4962416f bb10adfe M	src/main/resources/static/index.html
+:000000 100644 00000000 90cf0e54 A	src/main/resources/static/static/js/main.2569d0f3.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.2569d0f3.js.LICENSE.txt
+:000000 100644 00000000 121e7086 A	src/main/resources/static/static/js/main.2569d0f3.js.map
+:000000 100644 00000000 8d502a4c A	src/main/resources/static/static/js/main.267a80e6.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.267a80e6.js.LICENSE.txt
+:000000 100644 00000000 69a02a16 A	src/main/resources/static/static/js/main.267a80e6.js.map
+
+[33mcommit 34e89b5ed738c48b3e6115c69819857d03db7647[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Mon Dec 2 19:16:24 2024 +0100
+
+    About and Contact page
+    
+    Updated about and contact pages, also reversed the alteration of sections
+
+:100644 100644 dd23bc49 08256a8e M	frontend/src/components/AlternatingItems.js
+:100644 100644 6b5190c3 862f50af M	frontend/src/pages/AboutUsPage.js
+:100644 100644 cf8a1c62 93213023 M	frontend/src/pages/ContactPage.js
+:100644 100644 523f92d9 61ccee24 M	src/main/resources/static/asset-manifest.json
+:100644 100644 855ecbfc da5a5681 M	src/main/resources/static/index.html
+:000000 100644 00000000 8c576213 A	src/main/resources/static/static/js/main.3787f430.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.3787f430.js.LICENSE.txt
+:000000 100644 00000000 3c0d7a13 A	src/main/resources/static/static/js/main.3787f430.js.map
+:000000 100644 00000000 3fcb6637 A	src/main/resources/static/static/js/main.43f145da.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.43f145da.js.LICENSE.txt
+:000000 100644 00000000 c292b53d A	src/main/resources/static/static/js/main.43f145da.js.map
+:000000 100644 00000000 0b2c481d A	src/main/resources/static/static/js/main.6a354094.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.6a354094.js.LICENSE.txt
+:000000 100644 00000000 f929b1f3 A	src/main/resources/static/static/js/main.6a354094.js.map
+:000000 100644 00000000 2925878b A	src/main/resources/static/static/js/main.b3827dbb.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.b3827dbb.js.LICENSE.txt
+:000000 100644 00000000 debbec63 A	src/main/resources/static/static/js/main.b3827dbb.js.map
+:000000 100644 00000000 dd4fea75 A	src/main/resources/static/static/js/main.b7f526e0.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.b7f526e0.js.LICENSE.txt
+:000000 100644 00000000 5a1a3a43 A	src/main/resources/static/static/js/main.b7f526e0.js.map
+:000000 100644 00000000 b59b00d4 A	src/main/resources/static/static/js/main.c40cc421.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.c40cc421.js.LICENSE.txt
+:000000 100644 00000000 27f49c60 A	src/main/resources/static/static/js/main.c40cc421.js.map
+
+[33mcommit c7efcb64c559e25f812ee0d73cde20f2af8bee78[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Mon Dec 2 18:01:43 2024 +0100
+
+    ProductPage updated
+    
+    Now adheres to the alternating layout that the landing page uses
+
+:100644 100644 65bb9948 dd23bc49 M	frontend/src/components/AlternatingItems.js
+:100644 100644 b8e915cc af677ffa M	frontend/src/components/CartModify.js
+:100644 100644 85062393 54393ea5 M	frontend/src/pages/LandingPage.js
+:100644 100644 d4d36db4 d68acccf M	frontend/src/pages/ProductPage.js
+:100644 100644 36e1a27d c425e859 M	src/httpRequestTest/WineRequest.http
+:100644 100644 55abd7e3 523f92d9 M	src/main/resources/static/asset-manifest.json
+:100644 100644 86a676a5 855ecbfc M	src/main/resources/static/index.html
+:000000 100644 00000000 2b0d84a2 A	src/main/resources/static/static/js/main.156763df.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.156763df.js.LICENSE.txt
+:000000 100644 00000000 63a3823f A	src/main/resources/static/static/js/main.156763df.js.map
+:000000 100644 00000000 ed5ddf42 A	src/main/resources/static/static/js/main.220b489a.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.220b489a.js.LICENSE.txt
+:000000 100644 00000000 e6039ea6 A	src/main/resources/static/static/js/main.220b489a.js.map
+:000000 100644 00000000 ccb0b1c5 A	src/main/resources/static/static/js/main.45310afc.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.45310afc.js.LICENSE.txt
+:000000 100644 00000000 ea4d39f7 A	src/main/resources/static/static/js/main.45310afc.js.map
+:000000 100644 00000000 58b55d26 A	src/main/resources/static/static/js/main.4daaa4d4.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.4daaa4d4.js.LICENSE.txt
+:000000 100644 00000000 3c3d3c76 A	src/main/resources/static/static/js/main.4daaa4d4.js.map
+:000000 100644 00000000 f713cabe A	src/main/resources/static/static/js/main.964a16bf.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.964a16bf.js.LICENSE.txt
+:000000 100644 00000000 7d1e54b4 A	src/main/resources/static/static/js/main.964a16bf.js.map
+:000000 100644 00000000 ac5d8202 A	src/main/resources/static/static/js/main.d7a20c37.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.d7a20c37.js.LICENSE.txt
+:000000 100644 00000000 ca4031ce A	src/main/resources/static/static/js/main.d7a20c37.js.map
+:000000 100644 00000000 ddd6862a A	src/main/resources/static/static/js/main.ddc95705.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.ddc95705.js.LICENSE.txt
+:000000 100644 00000000 8b8d2db3 A	src/main/resources/static/static/js/main.ddc95705.js.map
+:000000 100644 00000000 c28bd2e9 A	src/main/resources/static/static/js/main.f77267f3.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.f77267f3.js.LICENSE.txt
+:000000 100644 00000000 bb86c1a6 A	src/main/resources/static/static/js/main.f77267f3.js.map
+
+[33mcommit b20d855243ca8cb652ebbdbfce7d9b1cb9db6d51[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Mon Dec 2 17:24:52 2024 +0100
+
+    Section rework
+    
+    Sections are now handled in AlternatingItems which takes an array of objects representing items (in this case section-related items) and alternates them based on their index. Everything is fairly clean and responsive :D
+
+:000000 100644 00000000 65bb9948 A	frontend/src/components/AlternatingItems.js
+:100644 100644 9bc3bef7 fc9ac7e3 M	frontend/src/index.js
+:100644 100644 d7a63f7b 85062393 M	frontend/src/pages/LandingPage.js
+:100644 100644 148f07a9 baa6bf57 M	frontend/src/styles/fonts.css
+:100644 100644 198bb0c8 36e1a27d M	src/httpRequestTest/WineRequest.http
+:100644 100644 8b67eb2b 55abd7e3 M	src/main/resources/static/asset-manifest.json
+:100644 100644 4962416f 86a676a5 M	src/main/resources/static/index.html
+:000000 100644 00000000 284faa75 A	src/main/resources/static/static/css/main.7638b814.css
+:000000 100644 00000000 1198fc0e A	src/main/resources/static/static/css/main.7638b814.css.map
+:000000 100644 00000000 8e4024b2 A	src/main/resources/static/static/js/main.01fa5c46.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.01fa5c46.js.LICENSE.txt
+:000000 100644 00000000 12985833 A	src/main/resources/static/static/js/main.01fa5c46.js.map
+:000000 100644 00000000 4ac88754 A	src/main/resources/static/static/js/main.13074be4.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.13074be4.js.LICENSE.txt
+:000000 100644 00000000 7bb00119 A	src/main/resources/static/static/js/main.13074be4.js.map
+:000000 100644 00000000 f5852403 A	src/main/resources/static/static/js/main.16e776e4.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.16e776e4.js.LICENSE.txt
+:000000 100644 00000000 34cd9f69 A	src/main/resources/static/static/js/main.16e776e4.js.map
+:000000 100644 00000000 4c992983 A	src/main/resources/static/static/js/main.23e0d49c.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.23e0d49c.js.LICENSE.txt
+:000000 100644 00000000 5eb9dbcd A	src/main/resources/static/static/js/main.23e0d49c.js.map
+:000000 100644 00000000 6e298b2e A	src/main/resources/static/static/js/main.26259858.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.26259858.js.LICENSE.txt
+:000000 100644 00000000 c9136440 A	src/main/resources/static/static/js/main.26259858.js.map
+:000000 100644 00000000 8fefec68 A	src/main/resources/static/static/js/main.2c124acc.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.2c124acc.js.LICENSE.txt
+:000000 100644 00000000 2d555a16 A	src/main/resources/static/static/js/main.2c124acc.js.map
+:000000 100644 00000000 0b1618a6 A	src/main/resources/static/static/js/main.30937f66.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.30937f66.js.LICENSE.txt
+:000000 100644 00000000 161d4e38 A	src/main/resources/static/static/js/main.30937f66.js.map
+:000000 100644 00000000 eba14f50 A	src/main/resources/static/static/js/main.34d86ab8.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.34d86ab8.js.LICENSE.txt
+:000000 100644 00000000 a362f73e A	src/main/resources/static/static/js/main.34d86ab8.js.map
+:000000 100644 00000000 695be186 A	src/main/resources/static/static/js/main.3d2ca905.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.3d2ca905.js.LICENSE.txt
+:000000 100644 00000000 4d5e50f4 A	src/main/resources/static/static/js/main.3d2ca905.js.map
+:000000 100644 00000000 a5859dd8 A	src/main/resources/static/static/js/main.3fafddf0.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.3fafddf0.js.LICENSE.txt
+:000000 100644 00000000 d51a9ddd A	src/main/resources/static/static/js/main.3fafddf0.js.map
+:000000 100644 00000000 b7c02d9b A	src/main/resources/static/static/js/main.40c921aa.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.40c921aa.js.LICENSE.txt
+:000000 100644 00000000 e2f90ad2 A	src/main/resources/static/static/js/main.40c921aa.js.map
+:000000 100644 00000000 498c8444 A	src/main/resources/static/static/js/main.414e331a.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.414e331a.js.LICENSE.txt
+:000000 100644 00000000 bcb04e39 A	src/main/resources/static/static/js/main.414e331a.js.map
+:000000 100644 00000000 738c3089 A	src/main/resources/static/static/js/main.4f218a4d.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.4f218a4d.js.LICENSE.txt
+:000000 100644 00000000 4ebb9111 A	src/main/resources/static/static/js/main.4f218a4d.js.map
+:000000 100644 00000000 f664ee04 A	src/main/resources/static/static/js/main.575935ef.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.575935ef.js.LICENSE.txt
+:000000 100644 00000000 feeebf15 A	src/main/resources/static/static/js/main.575935ef.js.map
+:000000 100644 00000000 a61c81ea A	src/main/resources/static/static/js/main.742f779c.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.742f779c.js.LICENSE.txt
+:000000 100644 00000000 e8618059 A	src/main/resources/static/static/js/main.742f779c.js.map
+:000000 100644 00000000 904ddfaf A	src/main/resources/static/static/js/main.cfae312e.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.cfae312e.js.LICENSE.txt
+:000000 100644 00000000 5dea9eb8 A	src/main/resources/static/static/js/main.cfae312e.js.map
+:000000 100644 00000000 80924b0f A	src/main/resources/static/static/js/main.da1da755.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.da1da755.js.LICENSE.txt
+:000000 100644 00000000 20483a2a A	src/main/resources/static/static/js/main.da1da755.js.map
+:000000 100644 00000000 46c10585 A	src/main/resources/static/static/js/main.e132ce6d.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.e132ce6d.js.LICENSE.txt
+:000000 100644 00000000 3198c5f6 A	src/main/resources/static/static/js/main.e132ce6d.js.map
+:000000 100644 00000000 dbb719a9 A	src/main/resources/static/static/js/main.eb1458f5.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.eb1458f5.js.LICENSE.txt
+:000000 100644 00000000 c5e4589e A	src/main/resources/static/static/js/main.eb1458f5.js.map
+
+[33mcommit 8a6e2d8e716f5e6e166111dcdd8a527b85bf231c[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Mon Dec 2 16:04:43 2024 +0100
+
+    Dropdown styling and refresh
+    
+    refreshOrderLines is now just refresh and also handles getting total price. added minor styling fixes to cart
+
+:100644 100644 c9fc3cb9 3c438d7c M	frontend/src/components/Cart.js
+:100644 100644 17debe06 9bc3bef7 M	frontend/src/index.js
+:100644 100644 75582496 90ffb034 M	frontend/src/styles/header.css
+:100644 100644 88f05265 8b67eb2b M	src/main/resources/static/asset-manifest.json
+:100644 100644 4447a42b 4962416f M	src/main/resources/static/index.html
+:000000 100644 00000000 d1f8e67d A	src/main/resources/static/logo192.png
+:000000 100644 00000000 947c6999 A	src/main/resources/static/logo512.png
+:000000 100644 00000000 080d6c77 A	src/main/resources/static/manifest.json
+:000000 100644 00000000 e9e57dc4 A	src/main/resources/static/robots.txt
+:000000 100644 00000000 e4fd42f7 A	src/main/resources/static/static/css/main.9f066024.css
+:000000 100644 00000000 a0cc7ac0 A	src/main/resources/static/static/css/main.9f066024.css.map
+:000000 100644 00000000 09c82f6d A	src/main/resources/static/static/js/main.0f70fcf0.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.0f70fcf0.js.LICENSE.txt
+:000000 100644 00000000 dc6833ef A	src/main/resources/static/static/js/main.0f70fcf0.js.map
+:000000 100644 00000000 b027123f A	src/main/resources/static/static/js/main.1a4d7b39.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.1a4d7b39.js.LICENSE.txt
+:000000 100644 00000000 d73a9beb A	src/main/resources/static/static/js/main.1a4d7b39.js.map
+:000000 100644 00000000 88607955 A	src/main/resources/static/static/js/main.3426417d.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.3426417d.js.LICENSE.txt
+:000000 100644 00000000 0fd2732e A	src/main/resources/static/static/js/main.3426417d.js.map
+:000000 100644 00000000 41df23fc A	src/main/resources/static/static/js/main.6a0bb469.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.6a0bb469.js.LICENSE.txt
+:000000 100644 00000000 b3e0cc3c A	src/main/resources/static/static/js/main.6a0bb469.js.map
+:000000 100644 00000000 95655cc9 A	src/main/resources/static/static/js/main.9e877668.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.9e877668.js.LICENSE.txt
+:000000 100644 00000000 ecb91017 A	src/main/resources/static/static/js/main.9e877668.js.map
+:000000 100644 00000000 398260c2 A	src/main/resources/static/static/js/main.dca9f9d1.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.dca9f9d1.js.LICENSE.txt
+:000000 100644 00000000 551ea185 A	src/main/resources/static/static/js/main.dca9f9d1.js.map
+:000000 100644 00000000 855e5cea A	src/main/resources/static/static/js/main.e3198584.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.e3198584.js.LICENSE.txt
+:000000 100644 00000000 b8522125 A	src/main/resources/static/static/js/main.e3198584.js.map
+:000000 100644 00000000 ad9542ff A	src/main/resources/static/static/js/main.f9b89914.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.f9b89914.js.LICENSE.txt
+:000000 100644 00000000 9a4b4bdb A	src/main/resources/static/static/js/main.f9b89914.js.map
+:000000 100644 00000000 e72507d7 A	src/main/resources/static/static/js/main.fc9b18d3.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.fc9b18d3.js.LICENSE.txt
+:000000 100644 00000000 4e1aab09 A	src/main/resources/static/static/js/main.fc9b18d3.js.map
+
+[33mcommit f2c781c2e25168db9c94ebba21a8f3e14184c495[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Mon Dec 2 14:55:13 2024 +0100
+
+    fixed clear cart and added some images for events
+
+:100644 100644 055cb011 01d26d13 M	src/httpRequestTest/OrderLineRequests.http
+:000000 100644 00000000 10f8504a A	src/main/resources/images/aebleplukning.png
+:000000 100644 00000000 f3c02f52 A	src/main/resources/images/cykelbutik.png
+
+[33mcommit ae44e470cf702092b2029d58736445b22575b5d0[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Mon Dec 2 14:53:06 2024 +0100
+
+    Improved responsiveness
+    
+    Smoother transition between larger and smaller screens. Also renamed 'modal-main' to 'cart-dropdown' and moved it to header.css to reflect recent changes
+
+:100644 100644 2e0c79cc c9fc3cb9 M	frontend/src/components/Cart.js
+:100644 100644 5a01a87b 75582496 M	frontend/src/styles/header.css
+:100644 100644 1eaaa609 3c3336ee M	frontend/src/styles/modal.css
+:100644 100644 d5125a53 88f05265 M	src/main/resources/static/asset-manifest.json
+:100644 100644 063c20a5 4447a42b M	src/main/resources/static/index.html
+:000000 100644 00000000 7431ebe4 A	src/main/resources/static/static/css/main.096cb0a7.css
+:000000 100644 00000000 4f77e237 A	src/main/resources/static/static/css/main.096cb0a7.css.map
+:000000 100644 00000000 9a74ac4a A	src/main/resources/static/static/css/main.1ccc9a24.css
+:000000 100644 00000000 30158a1b A	src/main/resources/static/static/css/main.1ccc9a24.css.map
+:000000 100644 00000000 96f8258a A	src/main/resources/static/static/css/main.2c1cbae7.css
+:000000 100644 00000000 6017278d A	src/main/resources/static/static/css/main.2c1cbae7.css.map
+:000000 100644 00000000 77233795 A	src/main/resources/static/static/css/main.3d33326f.css
+:000000 100644 00000000 3d4ead06 A	src/main/resources/static/static/css/main.3d33326f.css.map
+:000000 100644 00000000 ce2f9211 A	src/main/resources/static/static/css/main.3eb281a2.css
+:000000 100644 00000000 59ac7c40 A	src/main/resources/static/static/css/main.3eb281a2.css.map
+:000000 100644 00000000 1f2bfe9c A	src/main/resources/static/static/css/main.57d94498.css
+:000000 100644 00000000 233146c1 A	src/main/resources/static/static/css/main.57d94498.css.map
+:000000 100644 00000000 ab85f877 A	src/main/resources/static/static/css/main.6a63ece4.css
+:000000 100644 00000000 bba63a0d A	src/main/resources/static/static/css/main.6a63ece4.css.map
+:000000 100644 00000000 7d13201d A	src/main/resources/static/static/css/main.7c86db92.css
+:000000 100644 00000000 f715aff8 A	src/main/resources/static/static/css/main.7c86db92.css.map
+:000000 100644 00000000 a84ea7d7 A	src/main/resources/static/static/css/main.87267a0f.css
+:000000 100644 00000000 632618b8 A	src/main/resources/static/static/css/main.87267a0f.css.map
+:000000 100644 00000000 dad1bf82 A	src/main/resources/static/static/css/main.95388ded.css
+:000000 100644 00000000 79df0b97 A	src/main/resources/static/static/css/main.95388ded.css.map
+:000000 100644 00000000 95ab455b A	src/main/resources/static/static/css/main.b79871e1.css
+:000000 100644 00000000 34f01ecd A	src/main/resources/static/static/css/main.b79871e1.css.map
+:000000 100644 00000000 ae743c42 A	src/main/resources/static/static/css/main.d3fff6c6.css
+:000000 100644 00000000 cea8039b A	src/main/resources/static/static/css/main.d3fff6c6.css.map
+:000000 100644 00000000 18711247 A	src/main/resources/static/static/css/main.d8f50da4.css
+:000000 100644 00000000 cd4d7653 A	src/main/resources/static/static/css/main.d8f50da4.css.map
+:000000 100644 00000000 5b95b55e A	src/main/resources/static/static/css/main.e727439b.css
+:000000 100644 00000000 ad4c6f91 A	src/main/resources/static/static/css/main.e727439b.css.map
+:000000 100644 00000000 6fd35c48 A	src/main/resources/static/static/css/main.f287700c.css
+:000000 100644 00000000 d3976f15 A	src/main/resources/static/static/css/main.f287700c.css.map
+:000000 100644 00000000 dfabbdc3 A	src/main/resources/static/static/css/main.f33cccef.css
+:000000 100644 00000000 5f1c8db6 A	src/main/resources/static/static/css/main.f33cccef.css.map
+:000000 100644 00000000 2193659a A	src/main/resources/static/static/js/main.0e63d9ed.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.0e63d9ed.js.LICENSE.txt
+:000000 100644 00000000 c348097f A	src/main/resources/static/static/js/main.0e63d9ed.js.map
+:000000 100644 00000000 db8df72d A	src/main/resources/static/static/js/main.1bb15ef3.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.1bb15ef3.js.LICENSE.txt
+:000000 100644 00000000 131f8bb6 A	src/main/resources/static/static/js/main.1bb15ef3.js.map
+:000000 100644 00000000 a5662229 A	src/main/resources/static/static/js/main.8ec25f8c.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.8ec25f8c.js.LICENSE.txt
+:000000 100644 00000000 a23daf4f A	src/main/resources/static/static/js/main.8ec25f8c.js.map
+:000000 100644 00000000 af79edf9 A	src/main/resources/static/static/js/main.b0be9f19.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.b0be9f19.js.LICENSE.txt
+:000000 100644 00000000 2013a1a6 A	src/main/resources/static/static/js/main.b0be9f19.js.map
+
+[33mcommit 9d2166e76837f027e79b551fc064e44965852f0a[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Mon Dec 2 12:18:30 2024 +0100
+
+    Cart stays top right
+    
+    Cart stays top right on any screen size
+
+:100644 100644 7bdeeb93 2e0c79cc M	frontend/src/components/Cart.js
+:100644 100644 97de4737 4d9b2487 M	frontend/src/components/Header.js
+:100644 100644 14b6d37e 5a01a87b M	frontend/src/styles/header.css
+:100644 100644 dea3be78 d5125a53 M	src/main/resources/static/asset-manifest.json
+:100644 100644 86e75cb3 063c20a5 M	src/main/resources/static/index.html
+:000000 100644 00000000 b7ef6e50 A	src/main/resources/static/static/css/main.49aec1f4.css
+:000000 100644 00000000 a6ea4593 A	src/main/resources/static/static/css/main.49aec1f4.css.map
+:000000 100644 00000000 c01ab766 A	src/main/resources/static/static/css/main.5aa301c7.css
+:000000 100644 00000000 87629441 A	src/main/resources/static/static/css/main.5aa301c7.css.map
+:000000 100644 00000000 6777fd74 A	src/main/resources/static/static/js/main.1fecfec2.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.1fecfec2.js.LICENSE.txt
+:000000 100644 00000000 d5f07f41 A	src/main/resources/static/static/js/main.1fecfec2.js.map
+:000000 100644 00000000 089ea9cd A	src/main/resources/static/static/js/main.3383efd5.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.3383efd5.js.LICENSE.txt
+:000000 100644 00000000 f4104d81 A	src/main/resources/static/static/js/main.3383efd5.js.map
+:000000 100644 00000000 372c7a10 A	src/main/resources/static/static/js/main.6ea12038.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.6ea12038.js.LICENSE.txt
+:000000 100644 00000000 54ce1c86 A	src/main/resources/static/static/js/main.6ea12038.js.map
+:000000 100644 00000000 c44c8cd5 A	src/main/resources/static/static/js/main.8d76c92b.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.8d76c92b.js.LICENSE.txt
+:000000 100644 00000000 38f7ef86 A	src/main/resources/static/static/js/main.8d76c92b.js.map
+:000000 100644 00000000 9c5de38e A	src/main/resources/static/static/js/main.b4f1fc63.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.b4f1fc63.js.LICENSE.txt
+:000000 100644 00000000 152399be A	src/main/resources/static/static/js/main.b4f1fc63.js.map
+:000000 100644 00000000 ed571ba4 A	src/main/resources/static/static/js/main.bf369638.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.bf369638.js.LICENSE.txt
+:000000 100644 00000000 c1beed5f A	src/main/resources/static/static/js/main.bf369638.js.map
+:000000 100644 00000000 43b33f3f A	src/main/resources/static/static/js/main.c60f28cf.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.c60f28cf.js.LICENSE.txt
+:000000 100644 00000000 66c8fd66 A	src/main/resources/static/static/js/main.c60f28cf.js.map
+:000000 100644 00000000 c6dfcdde A	src/main/resources/static/static/js/main.dc604f54.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.dc604f54.js.LICENSE.txt
+:000000 100644 00000000 00d1d7b2 A	src/main/resources/static/static/js/main.dc604f54.js.map
+:000000 100644 00000000 6563d033 A	src/main/resources/static/static/js/main.ddc5ee3a.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.ddc5ee3a.js.LICENSE.txt
+:000000 100644 00000000 f4eb3597 A	src/main/resources/static/static/js/main.ddc5ee3a.js.map
+
+[33mcommit 1cf64851477461b116f8046d2449e713a9004ad5[m
+Author: Emil Andersen <minnyecomputer.com@gmail.com>
+Date:   Mon Dec 2 11:13:55 2024 +0100
+
+    Rename TestImageService to TestImageService.java
+
+:100644 100644 8db713d7 8db713d7 R100	src/test/java/com/vmd/vmdwebshop/service/TestImageService	src/test/java/com/vmd/vmdwebshop/service/TestImageService.java
+
+[33mcommit 68841b2b6ae9707c2de10557664588e81eb49659[m
+Author: Emil Andersen <minnyecomputer.com@gmail.com>
+Date:   Mon Dec 2 11:09:06 2024 +0100
+
+    Create TestImageService
+
+:000000 100644 00000000 8db713d7 A	src/test/java/com/vmd/vmdwebshop/service/TestImageService
+
+[33mcommit b36e68655fe2a06c183976fc49dfdfec95b8de67[m
+Author: Emil Andersen <minnyecomputer.com@gmail.com>
+Date:   Mon Dec 2 10:40:24 2024 +0100
+
+    Delete src/main/java/com/vmd/vmdwebshop/controller/PaymentController.java
+
+:100644 000000 b7c6574a 00000000 D	src/main/java/com/vmd/vmdwebshop/controller/PaymentController.java
+
+[33mcommit 209c1e1ff79807d18e181f73bdc5421f9a6d2891[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Mon Dec 2 08:22:06 2024 +0100
+
+    Fixed header and cart
+    
+    Header is now one line only, but looks much cleaner on mobile. No glitches. Cart placement on mobile is a little funky but could probably be easily fixed. Cart is now a dropdown instead of a menu - fixes MANY problems (clicking outside of cart and such, cleaner code)
+
+:100644 100644 a0b92862 7bdeeb93 M	frontend/src/components/Cart.js
+:100644 100644 1a03a196 97de4737 M	frontend/src/components/Header.js
+:100644 100644 f1b8858d 14b6d37e M	frontend/src/styles/header.css
+:100644 100644 1847091b 1eaaa609 M	frontend/src/styles/modal.css
+:100644 100644 f866dfe5 dea3be78 M	src/main/resources/static/asset-manifest.json
+:100644 100644 459de1a6 86e75cb3 M	src/main/resources/static/index.html
+:000000 100644 00000000 0ad865bd A	src/main/resources/static/static/css/main.192e4680.css
+:000000 100644 00000000 84e1f426 A	src/main/resources/static/static/css/main.192e4680.css.map
+:000000 100644 00000000 e87a351a A	src/main/resources/static/static/css/main.20c4f507.css
+:000000 100644 00000000 eaa2066e A	src/main/resources/static/static/css/main.20c4f507.css.map
+:000000 100644 00000000 82f3c69b A	src/main/resources/static/static/css/main.55227027.css
+:000000 100644 00000000 b3d803a6 A	src/main/resources/static/static/css/main.55227027.css.map
+:000000 100644 00000000 c56b5cdd A	src/main/resources/static/static/css/main.6483bd1f.css
+:000000 100644 00000000 96140576 A	src/main/resources/static/static/css/main.6483bd1f.css.map
+:000000 100644 00000000 ea76d844 A	src/main/resources/static/static/css/main.7a7014fd.css
+:000000 100644 00000000 d5266fcb A	src/main/resources/static/static/css/main.7a7014fd.css.map
+:000000 100644 00000000 f5beb24e A	src/main/resources/static/static/css/main.99071125.css
+:000000 100644 00000000 e563e8ec A	src/main/resources/static/static/css/main.99071125.css.map
+:000000 100644 00000000 8df0deb1 A	src/main/resources/static/static/css/main.9ae1b0a5.css
+:000000 100644 00000000 512d8c48 A	src/main/resources/static/static/css/main.9ae1b0a5.css.map
+:000000 100644 00000000 526a9ff2 A	src/main/resources/static/static/css/main.a0fe8213.css
+:000000 100644 00000000 fcdd73ba A	src/main/resources/static/static/css/main.a0fe8213.css.map
+:000000 100644 00000000 69b10a40 A	src/main/resources/static/static/css/main.de250647.css
+:000000 100644 00000000 3447c406 A	src/main/resources/static/static/css/main.de250647.css.map
+:000000 100644 00000000 a5c7a17f A	src/main/resources/static/static/css/main.ec154b47.css
+:000000 100644 00000000 b3f3abcf A	src/main/resources/static/static/css/main.ec154b47.css.map
+:000000 100644 00000000 65ac0bba A	src/main/resources/static/static/css/main.f648f788.css
+:000000 100644 00000000 afb2e456 A	src/main/resources/static/static/css/main.f648f788.css.map
+:000000 100644 00000000 c4d187a1 A	src/main/resources/static/static/js/main.43c40e75.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.43c40e75.js.LICENSE.txt
+:000000 100644 00000000 563e1a71 A	src/main/resources/static/static/js/main.43c40e75.js.map
+:000000 100644 00000000 31ba1319 A	src/main/resources/static/static/js/main.477f1e38.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.477f1e38.js.LICENSE.txt
+:000000 100644 00000000 bf1d82a5 A	src/main/resources/static/static/js/main.477f1e38.js.map
+:000000 100644 00000000 f2a7bb18 A	src/main/resources/static/static/js/main.53f6f45e.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.53f6f45e.js.LICENSE.txt
+:000000 100644 00000000 49013ef6 A	src/main/resources/static/static/js/main.53f6f45e.js.map
+:000000 100644 00000000 7828cedd A	src/main/resources/static/static/js/main.5e5cbf04.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.5e5cbf04.js.LICENSE.txt
+:000000 100644 00000000 e312198a A	src/main/resources/static/static/js/main.5e5cbf04.js.map
+:000000 100644 00000000 6189dd1d A	src/main/resources/static/static/js/main.61674b9c.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.61674b9c.js.LICENSE.txt
+:000000 100644 00000000 e6c475b5 A	src/main/resources/static/static/js/main.61674b9c.js.map
+:000000 100644 00000000 403bd7c0 A	src/main/resources/static/static/js/main.67d5e105.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.67d5e105.js.LICENSE.txt
+:000000 100644 00000000 64c52c87 A	src/main/resources/static/static/js/main.67d5e105.js.map
+:000000 100644 00000000 ff2ba48d A	src/main/resources/static/static/js/main.8078b99d.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.8078b99d.js.LICENSE.txt
+:000000 100644 00000000 d763ec3a A	src/main/resources/static/static/js/main.8078b99d.js.map
+:000000 100644 00000000 fdabf5bb A	src/main/resources/static/static/js/main.91b98559.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.91b98559.js.LICENSE.txt
+:000000 100644 00000000 c85cec67 A	src/main/resources/static/static/js/main.91b98559.js.map
+:000000 100644 00000000 46ee2037 A	src/main/resources/static/static/js/main.b3d8d00a.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.b3d8d00a.js.LICENSE.txt
+:000000 100644 00000000 d0e105cf A	src/main/resources/static/static/js/main.b3d8d00a.js.map
+:000000 100644 00000000 dee56cbe A	src/main/resources/static/static/js/main.b8127c41.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.b8127c41.js.LICENSE.txt
+:000000 100644 00000000 d82dd04a A	src/main/resources/static/static/js/main.b8127c41.js.map
+:000000 100644 00000000 f060c14b A	src/main/resources/static/static/js/main.cbddc727.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.cbddc727.js.LICENSE.txt
+:000000 100644 00000000 5ff96602 A	src/main/resources/static/static/js/main.cbddc727.js.map
+:000000 100644 00000000 ec81d06a A	src/main/resources/static/static/js/main.d8fad101.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.d8fad101.js.LICENSE.txt
+:000000 100644 00000000 e477401c A	src/main/resources/static/static/js/main.d8fad101.js.map
+:000000 100644 00000000 6d302a69 A	src/main/resources/static/static/js/main.e6106cc1.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.e6106cc1.js.LICENSE.txt
+:000000 100644 00000000 a211db42 A	src/main/resources/static/static/js/main.e6106cc1.js.map
+:000000 100644 00000000 72e4d157 A	src/main/resources/static/static/js/main.ed196bbf.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.ed196bbf.js.LICENSE.txt
+:000000 100644 00000000 ccc90846 A	src/main/resources/static/static/js/main.ed196bbf.js.map
+:000000 100644 00000000 9e18dc45 A	src/main/resources/static/static/js/main.f901f576.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.f901f576.js.LICENSE.txt
+:000000 100644 00000000 c7183d18 A	src/main/resources/static/static/js/main.f901f576.js.map
+:000000 100644 00000000 0bcf19c2 A	src/main/resources/static/static/js/main.fa0fd6bc.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.fa0fd6bc.js.LICENSE.txt
+:000000 100644 00000000 018f08f0 A	src/main/resources/static/static/js/main.fa0fd6bc.js.map
+:000000 100644 00000000 cc73c992 A	src/main/resources/static/static/js/main.fb9a6ed6.js
+:000000 100644 00000000 051a6f6d A	src/main/resources/static/static/js/main.fb9a6ed6.js.LICENSE.txt
+:000000 100644 00000000 1c7167dc A	src/main/resources/static/static/js/main.fb9a6ed6.js.map
+
+[33mcommit 55e991db645f0e232adefe12307836d38ba3fd03[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Fri Nov 29 15:11:09 2024 +0100
+
+    Update WineDto.java
+    
+    Have to remove ID restrictions to create wine without manually assigning ID
+
+:100644 100644 26a1df50 117f5003 M	src/main/java/com/vmd/vmdwebshop/DTO/WineDto.java
+
+[33mcommit 22b1bba50b6e9284c783cc72eb2ed6dd941fc79f[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Fri Nov 29 15:08:19 2024 +0100
+
+    Wine http request fix
+    
+    Http requests for wine can now generate the three default wines with working image urls. Changed description format in Product to text to accomodate longer descriptions.
+
+:100644 100644 94619963 198bb0c8 M	src/httpRequestTest/WineRequest.http
+:100644 100644 0b177f84 26a1df50 M	src/main/java/com/vmd/vmdwebshop/DTO/WineDto.java
+:100644 100644 839a82da 342a7761 M	src/main/java/com/vmd/vmdwebshop/abstractModels/Product.java
+
+[33mcommit 2797314421807faba91f539f14a0c704ebaf4aaa[m
+Author: Alberte Lohse <AF44KT@student.aau.dk>
+Date:   Fri Nov 29 12:44:40 2024 +0100
+
+    Refactoring bootstrap setup
+    
+    Bootstrap now runs through the npm package and is imported in the index.js file instead of in individual files. Also fixed the header, making the whole thing an actual bootstrap navbar which collapses into a burger menu
+
+:100644 100644 5097aaab c85f390a M	frontend/package-lock.json
+:100644 100644 816386f3 1bae7a25 M	frontend/package.json
+:100644 000000 5a71a41a 00000000 D	frontend/src/bootstrap/dist/css/bootstrap-grid.css
+:100644 000000 c62a598a 00000000 D	frontend/src/bootstrap/dist/css/bootstrap-grid.css.map
+:100644 000000 ea073e98 00000000 D	frontend/src/bootstrap/dist/css/bootstrap-grid.min.css
+:100644 000000 ed4a87d4 00000000 D	frontend/src/bootstrap/dist/css/bootstrap-grid.min.css.map
+:100644 000000 5a75a62b 00000000 D	frontend/src/bootstrap/dist/css/bootstrap-reboot.css
+:100644 000000 3f184067 00000000 D	frontend/src/bootstrap/dist/css/bootstrap-reboot.css.map
+:100644 000000 ced04682 00000000 D	frontend/src/bootstrap/dist/css/bootstrap-reboot.min.css
+:100644 000000 7212ab67 00000000 D	frontend/src/bootstrap/dist/css/bootstrap-reboot.min.css.map
+:100644 000000 aa497136 00000000 D	frontend/src/bootstrap/dist/css/bootstrap.css
+:100644 000000 a4532ecc 00000000 D	frontend/src/bootstrap/dist/css/bootstrap.css.map
+:100644 000000 6561b6f4 00000000 D	frontend/src/bootstrap/dist/css/bootstrap.min.css
+:100644 000000 ee5c523c 00000000 D	frontend/src/bootstrap/dist/css/bootstrap.min.css.map
+:100644 000000 45b357d3 00000000 D	frontend/src/bootstrap/dist/js/bootstrap.bundle.js
+:100644 000000 b185c046 00000000 D	frontend/src/bootstrap/dist/js/bootstrap.bundle.js.map
+:100644 000000 7d50e873 00000000 D	frontend/src/bootstrap/dist/js/bootstrap.bundle.min.js
+:100644 000000 c234ff2c 00000000 D	frontend/src/bootstrap/dist/js/bootstrap.bundle.min.js.map
+:100644 000000 6d9549d9 00000000 D	frontend/src/bootstrap/dist/js/bootstrap.js
+:100644 000000 cafe4cb3 00000000 D	frontend/src/bootstrap/dist/js/bootstrap.js.map
+:100644 000000 534d5334 00000000 D	frontend/src/bootstrap/dist/js/bootstrap.min.js
+:100644 000000 a2100fa3 00000000 D	frontend/src/bootstrap/dist/js/bootstrap.min.js.map
+:100644 100644 30279607 1a03a196 M	frontend/src/components/Header.js
+:100644 100644 fce6ec1c ab7d0669 M	frontend/src/components/OrderSummary.js
+:100644 100644 ef709793 f8b34881 M	frontend/src/components/OrdersAdmin.js
+:100644 100644 6cffe117 76f5a177 M	frontend/src/components/ProductsAdmin.js
+:000000 100644 00000000 0554501f A	frontend/src/images/burger.svg
+:100644 100644 cb19f4f9 1c69a17e M	frontend/src/index.js
+:100644 100644 5e3bb38e e25dee35 M	frontend/src/pages/AdminPageFunc.js
+:100644 100644 467cd630 2dd30c49 M	frontend/src/pages/Checkout.js
+:100644 100644 ce40479d 813989e3 M	frontend/src/pages/DetailOrderAdmin.js
+:100644 100644 c736883d d7a63f7b M	frontend/src/pages/LandingPage.js
+:100644 100644 f1e2dc6b fd9d726d M	frontend/src/styles/button.css
+:100644 100644 ff782b03 148f07a9 M	frontend/src/styles/fonts.css
+:100644 100644 6a42aa2a f1b8858d M	frontend/src/styles/header.css
+:100644 100644 204ff53f f866dfe5 M	src/main/resources/static/asset-manifest.json
+:100644 100644 493d67d8 459de1a6 M	src/main/resources/static/index.html
+:000000 100644 00000000 09f366c1 A	src/main/resources/static/static/css/main.2183e6ba.css
+:000000 100644 00000000 3130225d A	src/main/resources/static/static/css/main.2183e6ba.css.map
+:000000 100644 00000000 621089e4 A	src/main/resources/static/static/css/main.2fb6d68a.css
+:000000 100644 00000000 19d5ff57 A	src/main/resources/static/static/css/main.2fb6d68a.css.map
+:000000 100644 00000000 faeb198f A	src/main/resources/static/static/css/main.2fbd3c0a.css
+:000000 100644 00000000 8c4ad2e8 A	src/main/resources/static/static/css/main.2fbd3c0a.css.map
+:000000 100644 00000000 d58f6288 A	src/main/resources/static/static/css/main.381a3703.css
+:000000 100644 00000000 46c8d576 A	src/main/resources/static/static/css/main.381a3703.css.map
+:000000 100644 00000000 c685f

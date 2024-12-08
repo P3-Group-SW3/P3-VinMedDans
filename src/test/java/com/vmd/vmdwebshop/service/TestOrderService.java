@@ -56,8 +56,8 @@ public class TestOrderService {
     public void setUp(){
         MockitoAnnotations.openMocks(this); // Initialize mocks before each test
 
-        orderList.add((new Orders("g t","c","e@mail.c","+4599999999","ringevej 991","5050","hej")));
-        orderList.add((new Orders("g t","c","n@mail.c","+4599888888","farvel 991","5045","hey")));
+        orderList.add((new Orders("g t","c","e@mail.c","+4599999999","ringevej 991","5050","hej", null)));
+        orderList.add((new Orders("g t","c","n@mail.c","+4599888888","farvel 991","5045","hey", null)));
 
         orderDto = mock(OrderDto.class);
         order = mock(Orders.class);
@@ -146,7 +146,7 @@ public class TestOrderService {
 
         when(orderLine.getOrderID()).thenReturn(Long.parseLong("1"));
 
-        Orders newOrder = orderService.createOrderFromInfo(orderDto, orderLineList);
+        Orders newOrder = orderService.createOrderFromInfo(orderDto, orderLineList, null);
 
         assertEquals("1", newOrder.getID().toString());
     }
@@ -160,7 +160,7 @@ public class TestOrderService {
         when(order.getFullName()).thenReturn("Jens Peter");
         when(order.getMail()).thenReturn("a@b.com");
 
-        OrderNotSaved newException = assertThrows(OrderNotSaved.class, ()->{ orderService.createOrderFromInfo(orderDto, orderLineList); });
+        OrderNotSaved newException = assertThrows(OrderNotSaved.class, ()->{ orderService.createOrderFromInfo(orderDto, orderLineList, null); });
 
         assertEquals("The order was not created, customer: Jens Peter email: a@b.com", newException.getMessage());
     }
@@ -180,7 +180,7 @@ public class TestOrderService {
         when(orderLine.getOrderID()).thenReturn(Long.parseLong("3"));
         when(orderLine.getID()).thenReturn(Long.parseLong("1"));
 
-        OrderlineNotAdded newException = assertThrows(OrderlineNotAdded.class, ()->{ orderService.createOrderFromInfo(orderDto, orderLineList); });
+        OrderlineNotAdded newException = assertThrows(OrderlineNotAdded.class, ()->{ orderService.createOrderFromInfo(orderDto, orderLineList, null); });
         assertEquals("orderline with id: 1 did not add the order ID of: 2", newException.getMessage());
     }
 

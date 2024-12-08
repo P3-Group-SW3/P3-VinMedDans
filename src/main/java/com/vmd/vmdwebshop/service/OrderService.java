@@ -59,40 +59,57 @@ public class OrderService {
         return order;
     }
 
+
+    /**
+     * finder en specifik order based on the session id
+     * @param sessionID
+     * @return
+     */
+    public Orders getOrderBySessionID(String sessionID){
+        Orders order = orderRepository.findOrderBySessionID(sessionID).orElse(null);
+
+        if(order == null){
+            throw new OrderNotFoundInDatbase(sessionID);
+        }
+
+        return order;
+    }
+
+
     /**
      * Creates a order based on the information given by the customer
      * @param orderDto
-     * @param orderLines
+     * @param orderLineList
      * @return
      */
-    public Orders createOrderFromInfo(OrderDto orderDto, List<OrderLine> orderLineList) {
-
-        try{
+    public Orders createOrderFromInfo(OrderDto orderDto, List<OrderLine> orderLineList, String sessionID) {
+        try {
             orderLineService.canBePurchased(orderLineList);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new ProductsNotInStock(e.getMessage());
         }
 
         Orders order = orderDto.createOrderFromInfo();
         order.setState(Orders.State.REGISTERED);
         order.setDate(new Date());
+        order.setSessionID(sessionID);
         orderRepository.save(order);
 
-        if(order.getID() == null){
+        if (order.getID() == null) {
             throw new OrderNotSaved(order.getFullName(), order.getMail());
         }
 
-        for(OrderLine orderLine : orderLineList) {
+        for (OrderLine orderLine : orderLineList) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
-            if(orderLine.getOrderID() != order.getID()){
-                throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of: " + order.getID());
+            if (!orderLine.getOrderID().equals(order.getID())) {
+                throw new OrderlineNotAdded("Orderline with id: " + orderLine.getID() + " did not add the order ID of: " + order.getID());
             }
         }
 
-        try{
+        try {
             wineService.updateStockFromOrder(orderLineList);
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             throw new StockNotUpdatedFromOrder("The order could not update the stock");
         }
 

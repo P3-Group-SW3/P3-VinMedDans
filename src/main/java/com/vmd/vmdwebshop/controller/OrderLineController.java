@@ -68,7 +68,7 @@ public class OrderLineController {
         try {
             String customerID = customerService.getCustomerID(request);
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
-            Double price = orderLineService.calculateOrderLine(orderLines);
+            Double price = orderLineService.calculateOrderLines(orderLines);
             return ResponseEntity.ok(price);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
