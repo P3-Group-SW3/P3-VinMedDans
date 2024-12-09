@@ -1,8 +1,6 @@
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import '../styles/styles.css';
-import '../bootstrap/dist/css/bootstrap.min.css';
 import OrderSummary from "../components/OrderSummary";
 import ContactInfo from "../components/ContactInfo";
 import {CustomerLinks} from "./CustomerLinkContext";

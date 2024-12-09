@@ -4,7 +4,6 @@ package com.vmd.vmdwebshop.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 
@@ -87,5 +86,13 @@ public class OrderLine {
 
     public Wine getWine() {
         return wine;
+    }
+
+    public long getQuantity() {
+        return amount;
+    }
+
+    public Long getWineId() {
+        return wineID;
     }
 }

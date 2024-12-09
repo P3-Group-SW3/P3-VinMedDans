@@ -109,7 +109,7 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
         }
 
         if (existingDistributor == null) {
-            throw new DistributorNotFoundException("No such distributor exists");
+            throw new NullPointerException("No such distributor exists");
         }
         try {
             distributorRepository.deleteById(ID);

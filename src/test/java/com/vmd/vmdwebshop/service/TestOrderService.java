@@ -1,12 +1,12 @@
 package com.vmd.vmdwebshop.service;
 
+import com.vmd.vmdwebshop.DTO.OrderDto;
 import com.vmd.vmdwebshop.exception.order.*;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
@@ -32,6 +32,12 @@ public class TestOrderService {
 
     @Mock
     private OrderRepository orderRepository;
+
+    @Mock
+    private OrderLineService orderLineService;
+
+    @Mock
+    private WineService wineService;
 
     @InjectMocks
     private OrderService orderService;
@@ -131,10 +137,13 @@ public class TestOrderService {
     @Test
     public void TestCreateOrderFromInfo01(){
         when(orderDto.createOrderFromInfo()).thenReturn(order);
+
         when(orderRepository.save(any(Orders.class))).thenReturn(order);
+
         when(order.getID()).thenReturn(Long.parseLong("1"));
         when(order.getFullName()).thenReturn("Jens Peter");
         when(order.getMail()).thenReturn("a@b.com");
+
         when(orderLine.getOrderID()).thenReturn(Long.parseLong("1"));
 
         Orders newOrder = orderService.createOrderFromInfo(orderDto, orderLineList);
@@ -161,10 +170,13 @@ public class TestOrderService {
     @Test
     public void TestCreateOrderFromInfo03(){
         when(orderDto.createOrderFromInfo()).thenReturn(order);
+
         when(orderRepository.save(any(Orders.class))).thenReturn(order);
+
         when(order.getID()).thenReturn(Long.parseLong("2"));
         when(order.getFullName()).thenReturn("Jens Peter");
         when(order.getMail()).thenReturn("a@b.com");
+
         when(orderLine.getOrderID()).thenReturn(Long.parseLong("3"));
         when(orderLine.getID()).thenReturn(Long.parseLong("1"));
 

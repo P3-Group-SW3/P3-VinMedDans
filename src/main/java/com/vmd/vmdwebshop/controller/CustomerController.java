@@ -1,62 +1,56 @@
 package com.vmd.vmdwebshop.controller;
 
-import jakarta.servlet.http.Cookie;
+import com.vmd.vmdwebshop.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.apache.coyote.Response;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Arrays;
-import java.util.stream.Collectors;
+import java.util.HashMap;
+import java.util.Map;
 
 @RestController
+@RequestMapping("/api/")
 public class CustomerController {
-    /**
-     * Creates a cookie for the current customer by fetching the sessionID and set it in the "customerId" cookie.
-     *
-     * @param request   
-     * @param response
-     * @return
-     */
-    @GetMapping("/register-customer")
-    public String createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
-        String sessionId = request.getSession().getId();
 
-        Cookie cookie = new Cookie("customerId", sessionId);
-        cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/"); // global cookie accessible everywhere
+    @Autowired
+    private CustomerService customerService;
 
-        response.addCookie(cookie);
-
-        return "Cookie set successfully";
-    }
-
-    @GetMapping("/get")
-    public String readCookie(@CookieValue(value = "customerId", defaultValue = "Atta") String id) {
-        return "HEY! my customer id is " + id;
-    }
-
-    @GetMapping("/getallcookies")
-    public String readAllCookies(HttpServletRequest request) {
-        Cookie[] cookies = request.getCookies();
-        if (cookies != null) {
-            return Arrays.stream(cookies)
-                    .map(c -> c.getName() + "=" + c.getValue()).collect(Collectors.joining(", "));
+    @GetMapping("/createCookie")
+    public void createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
+        try {
+            customerService.setCustomerCookie(response, request);
+            System.out.println("Cookie has been set!");
+        } catch (RuntimeException e) {
+            System.err.println("An error occurred while trying to update the cookie: " + e.getMessage());
         }
-        return "No cookies found";
     }
 
-    @GetMapping("/deletecookies")
-    public String deleteCookies(HttpServletResponse response) {
-        Cookie cookie = new Cookie("customerId", null);
-        cookie.setMaxAge(0);
-        cookie.setSecure(true);
-        cookie.setHttpOnly(true);
-        cookie.setPath("/");
+    @GetMapping("/updateCookie")
+    public void updateCustomerCookie(HttpServletResponse response, HttpServletRequest request) {
+        try {
+            customerService.updateLegalAge(response, request);
+        } catch (RuntimeException e) {
+            System.err.println("An error occurred while trying to update the cookie: " + e.getMessage());
+        }
+    }
 
-        response.addCookie(cookie);
-
-        return "cookie named " + cookie.getName() + " is now deleted";
+    @GetMapping("/cookieAge")
+    public ResponseEntity<Map<String, String>> cookieAge(HttpServletRequest request) {
+        try {
+            String cookieAge = customerService.getCookieAge(request);
+            if (cookieAge == null) {
+                return ResponseEntity.noContent().build(); // HTTP 204: No Content
+            }
+            //Store cookieAge in a response object to avoid passing plain text
+            Map<String, String> response = new HashMap<>();
+            response.put("cookieAge", cookieAge);
+            return ResponseEntity.ok(response);
+        } catch (RuntimeException e) {
+            System.err.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
     }
 }

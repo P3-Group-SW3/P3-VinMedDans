@@ -1,6 +1,6 @@
 
-### Send GET request
-GET http://localhost:8080/api/clearCart/0
+### Send GET request (clear cart)
+GET http://localhost:8080/api/clearCart/
 Content-Type: application/json
 
 
@@ -37,9 +37,7 @@ Content-Type: application/json
 
 {
   "amount": 10,
-  "customerID": "jph",
   "wineID": 1,
-  "orderid": null
 }
 
 ### Send POST request with json body

@@ -2,6 +2,7 @@
 package com.vmd.vmdwebshop.service;
 import com.vmd.vmdwebshop.Interface.AdministrativeMethodsInterface;
 import com.vmd.vmdwebshop.exception.wine.*;
+import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -59,7 +60,7 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
                 existingWine.setImageURL(wine.getImageURL());
                 existingWine.setPrice(wine.getPrice());
                 existingWine.setName(wine.getName());
-                wineRepository.save(wine);
+                wineRepository.save(existingWine);
             } else {
                 wineRepository.save(wine);
             }
@@ -108,7 +109,7 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
         try {
             existingWine = wineRepository.findById(Long.parseLong(ID)).orElse(null);
         } catch (DataAccessException e) {
-            //throw new WineDataAccessException("The wine was not retrieved from the database");
+            throw new WineDataAccessException("The wine was not retrieved from the database");
         }
 
         try {
@@ -116,9 +117,27 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
                 existingWine.changeActiveState();
             }
         } catch (DataAccessException e){
-            //throw new WineDataAccessException("The Active State of the wine was not updated");
+            throw new WineDataAccessException("The Active State of the wine was not updated");
         }
 
         return wineRepository.findAll();
+    }
+
+    public void updateStockFromOrder(List<OrderLine> orderLineList){
+        try{
+            for (OrderLine orderLine : orderLineList){
+                Wine wine = wineRepository.getById(orderLine.getWineID());
+
+                wine.setAmountLeft(wine.getAmountLeft() - orderLine.getAmount());
+
+                wineRepository.save(wine);
+            }
+
+        } catch (DataIntegrityViolationException e) {
+            throw new WineNotUpdatedException("The stock of the wine was not updated");
+
+        } catch (DataAccessException e){
+            throw new WineDataAccessException("The wine was not retrieved from the database");
+        }
     }
 }
