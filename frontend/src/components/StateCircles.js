@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/order.css';
 
-const StateCircles = ({ state }) => {
+const StateCircles = ({ state, customStateNames }) => {
     const states = ["REGISTERED", "CONFIRMED", "PACKED", "SHIPPED"];
     const currentStateIndex = states.indexOf(state);
 
@@ -11,7 +11,7 @@ const StateCircles = ({ state }) => {
                 <React.Fragment key={s}>
                     <div className={`step ${index <= currentStateIndex ? 'completed' : ''} ${index === currentStateIndex ? 'active' : ''}`}>
                         <div className="circle">{index + 1}</div>
-                        <p>{s}</p>
+                        <p>{customStateNames[s] || s}</p>
                     </div>
                     {index < states.length - 1 && <div className="line"></div>}
                 </React.Fragment>
