@@ -76,7 +76,15 @@ function OrderPage() {
                         <h2 className="card-title">Order Details</h2>
 
                         <div className="mb-4">
-                            <StateCircles state={message} />
+                            <StateCircles
+                                state={message}
+                                customStateNames={{
+                                    "REGISTERED": "Modtaget",
+                                    "CONFIRMED": "Bekræftet",
+                                    "PACKED": "Pakket",
+                                    "SHIPPED": "Afsendt"
+                                }}
+                            />
                         </div>
                     </div>
 
@@ -100,10 +108,6 @@ function OrderPage() {
                         <div className="d-flex justify-content-between">
                             <p>Total inkl. moms</p>
                             <p>{order.orderLines.reduce((total, orderLine) => total + (orderLine.wine.price * orderLine.quantity), 0)},-</p>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <p>Rabat</p>
-                            <p>{order.discount || 0},-</p>
                         </div>
                         <div className="d-flex justify-content-between">
                             <p>Samlet beløb</p>

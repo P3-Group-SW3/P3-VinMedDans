@@ -190,14 +190,6 @@ function CheckoutPage() {
                             <p>Total inkl. moms</p>
                             <p>{total},-</p>
                         </div>
-                        <div className="d-flex justify-content-between">
-                            <p>Rabat</p>
-                            <p>{discount},-</p>
-                        </div>
-                        <div className="d-flex justify-content-between">
-                            <p>Samlet beløb</p>
-                            <p>{total - discount},-</p>
-                        </div>
                     </div>
                 </div>
             </div>
