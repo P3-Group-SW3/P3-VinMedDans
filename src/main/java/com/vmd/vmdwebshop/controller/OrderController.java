@@ -87,6 +87,23 @@ public class OrderController {
     }
 
     /**
+     * Get Order from a customer using sessionID
+     * @param session_id
+     * @return
+     */
+@GetMapping("/api/orders/session/{session_id}")
+public ResponseEntity<Orders> getOrderBySessionID(@PathVariable String session_id) {
+    try {
+        System.out.println(session_id);
+        Orders order = orderService.getOrderBySessionID(session_id);
+        return ResponseEntity.ok(order);
+    } catch (OrderNotFoundInDatbase e) {
+        System.out.println(e.getMessage());
+        return ResponseEntity.notFound().build();
+    }
+}
+
+    /**
      * changes the state of an order based on a number from 0 to 2
      * @param orderID
      * @param state
@@ -98,6 +115,22 @@ public class OrderController {
             orderService.changeState(Long.parseLong(orderID), state.getState());
         }catch (StateChangeFailedException e){
             System.out.println(e.getMessage());
+        }
+    }
+
+    /**
+     * Gets the state of an order based on session_id
+     * @param session_id
+     * @return the state of the order
+     */
+    @GetMapping("/api/orders/state/session/{session_id}")
+    public ResponseEntity<Integer> getStateBySessionID(@PathVariable String session_id) {
+        try {
+            Orders order = orderService.getOrderBySessionID(session_id);
+            return ResponseEntity.ok(order.getState().ordinal());
+        } catch (OrderNotFoundInDatbase e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
         }
     }
 
