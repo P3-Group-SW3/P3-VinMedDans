@@ -76,7 +76,6 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
                 existingEvent.setTitle(event.getTitle());
                 existingEvent.setDescription(event.getDescription());
                 existingEvent.setImgURL(event.getImgURL());
-                existingEvent.setCancelled(event.isCancelled());
                 eventRepository.save(existingEvent);
             } else {
                 eventRepository.save(event);
