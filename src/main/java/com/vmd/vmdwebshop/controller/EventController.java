@@ -32,10 +32,17 @@ public class EventController {
         }
     }
 
-    @PostMapping("/admin/createAndEdit")
-    public ResponseEntity<List<Event>> createAndEdit(@RequestBody @Valid Event event) {
+    @PostMapping("/admin/createAndEdit/{ID}")
+    public ResponseEntity<List<Event>> createAndEdit(@PathVariable ("ID") Long ID, @RequestBody @Valid Event event) {
+        System.out.println(event.getDate());
+        System.out.println(event.getTime());
+        System.out.println(event.getLocation());
+        System.out.println(event.getTitle());
+        System.out.println(event.getDescription());
+        System.out.println(event.getImgURL());
+        System.out.println(event.isCancelled());
         try {
-            return ResponseEntity.ok(eventService.createAndEdit(event, event.getID()));
+            return ResponseEntity.ok(eventService.createAndEdit(event, ID));
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();
