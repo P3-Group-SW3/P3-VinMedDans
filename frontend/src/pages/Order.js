@@ -1,38 +1,39 @@
 import { CustomerLinks } from "./CustomerLinkContext";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import StateCircles from "../components/StateCircles";
 import { useState, useEffect } from "react";
 
+import "../styles/order.css";
+
 const usePaymentStatus = () => {
-    const [message, setMessage] = useState("");
+    const [state, setState] = useState("REGISTERED");
+    const states = ["REGISTERED", "CONFIRMED", "PACKED", "SHIPPED"];
 
     useEffect(() => {
-        const query = new URLSearchParams(window.location.search);
+        const sessionId = new URLSearchParams(window.location.search).get("session_id");
 
-        if (query.get("success")) {
-            const sessionId = query.get("session_id");
-            const interval = setInterval(() => {
-                fetch(`/api/payment/status?sessionId=${sessionId}`)
+        const fetchPaymentStatus = () => {
+            if (sessionId) {
+                fetch(`/api/orders/state/session/${sessionId}`)
                     .then(response => response.json())
                     .then(data => {
-                        if (data.status === "paid") {
-                            setMessage("Bestilling afgivet! Du vil modtage en e-mail bekræftelse.");
-                            clearInterval(interval);
-                        } else {
-                            setMessage("Betaling ikke gennemført. Prøv venligst igen.");
-                        }
+                        setState(states[data]);
+                    })
+                    .catch(error => {
+                        console.error("Error fetching payment status:", error);
                     });
-            }, 3000);
-        }
+            }
+        };
 
-        if (query.get("canceled")) {
-            setMessage(
-                "Bestilling annulleret -- fortsæt med at shoppe og checkout, når du er klar."
-            );
-        }
+        fetchPaymentStatus(); // Check once on load
+
+        const interval = setInterval(fetchPaymentStatus, 60000); // Check every 1 minute
+
+        return () => clearInterval(interval);
     }, []);
 
-    return message;
+    return state;
 };
 
 function OrderPage() {
@@ -41,8 +42,8 @@ function OrderPage() {
     const message = usePaymentStatus();
 
     useEffect(() => {
-        const orderId = new URLSearchParams(window.location.search).get("orderID");
-        fetch(`/api/orders/${orderId}`)
+        const session_id = new URLSearchParams(window.location.search).get("session_id");
+        fetch(`/api/orders/session/${session_id}`)
             .then(response => response.json())
             .then(data => {
                 setOrder(data);
@@ -68,41 +69,50 @@ function OrderPage() {
                 links={CustomerLinks}
                 showCart={false}
             />
-            <div className="container my-5">
-                <h1>Order Status</h1>
-                <p>{message}</p>
-                <h2>Order Details</h2>
-                <div className="list-group mb-4">
-                    {order.items.map((item) => (
-                        <div key={item.id} className="list-group-item d-flex justify-content-between align-items-center">
-                            <div className="d-flex align-items-center">
-                                <img
-                                    src={item.image}
-                                    alt={item.name}
-                                    className="img-fluid"
-                                    style={{ width: '50px', height: '50px', objectFit: 'cover' }}
-                                />
-                            </div>
-                            <span>{item.name}</span>
-                            <span>{item.quantity}</span>
-                            <span>{item.price * item.quantity},-</span>
+            <div className="container py-5">
+                <div className="card shadow-sm">
+                    <div className="card-body">
+                    <div className="d-flex flex-column align-items-center">
+                        <h2 className="card-title">Order Details</h2>
+
+                        <div className="mb-4">
+                            <StateCircles state={message} />
                         </div>
-                    ))}
-                </div>
-                <div className="d-flex justify-content-between">
-                    <p>Total inkl. moms</p>
-                    <p>{order.total},-</p>
-                </div>
-                <div className="d-flex justify-content-between">
-                    <p>Rabat</p>
-                    <p>{order.discount},-</p>
-                </div>
-                <div className="d-flex justify-content-between">
-                    <p>Samlet beløb</p>
-                    <p>{order.total - order.discount},-</p>
+                    </div>
+
+                        <div className="list-group mb-4">
+                            {order.orderLines.map((orderLine) => (
+                                <div key={orderLine.id} className="list-group-item d-flex justify-content-between align-items-center">
+                                    <div className="d-flex align-items-center">
+                                        <img
+                                            src={orderLine.wine.imageURL}
+                                            alt={orderLine.wine.name}
+                                            className="img-fluid"
+                                            style={{ width: '50px', height: '50px', objectFit: 'cover' }}
+                                        />
+                                    </div>
+                                    <span>{orderLine.wine.name}</span>
+                                    <span>{orderLine.quantity}</span>
+                                    <span>{orderLine.wine.price * orderLine.quantity},-</span>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <p>Total inkl. moms</p>
+                            <p>{order.orderLines.reduce((total, orderLine) => total + (orderLine.wine.price * orderLine.quantity), 0)},-</p>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <p>Rabat</p>
+                            <p>{order.discount || 0},-</p>
+                        </div>
+                        <div className="d-flex justify-content-between">
+                            <p>Samlet beløb</p>
+                            <p>{order.orderLines.reduce((total, orderLine) => total + (orderLine.wine.price * orderLine.quantity), 0) - (order.discount || 0)},-</p>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <Footer />
+            <Footer className="sticky-footer mt-auto w-100"/>
         </div>
     );
 }

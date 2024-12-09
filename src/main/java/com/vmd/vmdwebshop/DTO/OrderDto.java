@@ -45,7 +45,7 @@ public class OrderDto {
      * @return Orders
      */
     public Orders createOrderFromInfo() {
-        Orders order = new Orders(firstName, lastName, email, phone, address, zipCode, city);
+        Orders order = new Orders(firstName, lastName, email, phone, address, zipCode, city, null);
         return order;
     }
 

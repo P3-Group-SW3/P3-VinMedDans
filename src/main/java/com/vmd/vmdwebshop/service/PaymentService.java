@@ -9,6 +9,8 @@ import com.stripe.net.Webhook;
 import com.stripe.param.checkout.SessionCreateParams;
 import com.vmd.vmdwebshop.DTO.OrderDto;
 import com.vmd.vmdwebshop.model.OrderLine;
+import com.vmd.vmdwebshop.model.Orders;
+import io.micrometer.core.instrument.util.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -17,7 +19,9 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpServletRequest;
 
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -49,42 +53,50 @@ public class PaymentService {
         String serviceId = customerService.getCustomerID(request);
         List<OrderLine> orderLines = orderLineService.getAllOrderLines(serviceId);
 
+
+
+
         double numL = orderLineService.calculateOrderLines(orderLines) * 100;
 
-        SessionCreateParams params = SessionCreateParams.builder()
-                .setMode(SessionCreateParams.Mode.PAYMENT)
-                .setSuccessUrl(DOMAIN + "/payment?success=true&session_id={CHECKOUT_SESSION_ID}")
-                .setCancelUrl(DOMAIN + "/payment?canceled=true")
-                .addLineItem(
-                        SessionCreateParams.LineItem.builder()
-                                .setQuantity(1L)
-                                .setPriceData(
-                                        SessionCreateParams.LineItem.PriceData.builder()
-                                                .setCurrency("DKK")
-                                                .setUnitAmount((long) numL) // Price in DKK
-                                                .setProductData(
-                                                        SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                                                .setName("Wine")
-                                                                .build()
-                                                )
-                                                .build()
-                                )
-                                .build())
-                .build();
-        Session session = Session.create(params);
+SessionCreateParams params = SessionCreateParams.builder()
+        .setMode(SessionCreateParams.Mode.PAYMENT)
+        .setSuccessUrl(DOMAIN + "/order?success=true&session_id={CHECKOUT_SESSION_ID}")
+        .setCancelUrl(DOMAIN + "/order?canceled=true")
+        .setCustomerEmail(null)
+        .addLineItem(
+                SessionCreateParams.LineItem.builder()
+                        .setQuantity(1L)
+                        .setPriceData(
+                                SessionCreateParams.LineItem.PriceData.builder()
+                                        .setCurrency("DKK")
+                                        .setUnitAmount((long) numL) // Price in DKK
+                                        .setProductData(
+                                                SessionCreateParams.LineItem.PriceData.ProductData.builder()
+                                                        .setName("VMD Webshop")
+                                                        .build()
+                                        )
+                                        .build()
+                        )
+                        .build())
+        .build();
+Session session = Session.create(params);
         Map<String, String> response = new HashMap<>();
         response.put("url", session.getUrl());
+
+        Orders order = orderService.createOrderFromInfo(orderDto, orderLines, session.getId());
+
         return response;
     }
 
+
     public ResponseEntity<String> handleStripeWebhook(HttpServletRequest request) {
         String payload;
-
         try {
-            payload = request.getReader().lines().reduce("", (accumulator, actual) -> accumulator + actual);
+            payload = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             return ResponseEntity.badRequest().body("Invalid payload");
         }
+
         String sigHeader = request.getHeader("Stripe-Signature");
         Event event;
         try {
@@ -92,13 +104,16 @@ public class PaymentService {
         } catch (SignatureVerificationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid signature");
         }
+
         if ("checkout.session.completed".equals(event.getType())) {
             Session session = (Session) event.getDataObjectDeserializer().getObject().orElse(null);
             if (session != null) {
-                // Payment was successful
-                return ResponseEntity.ok("Payment successful");
+                Orders order = orderService.getOrderBySessionID(session.getId());
+                orderService.changeState(order.getID(), Orders.State.CONFIRMED.ordinal());
+                return ResponseEntity.ok("Payment successful and order state updated");
             }
         }
+
         return ResponseEntity.ok("Payment not completed");
     }
 

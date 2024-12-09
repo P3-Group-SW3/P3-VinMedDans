@@ -66,7 +66,7 @@ public class OrderService {
      * @return
      */
     public Orders getOrderBySessionID(String sessionID){
-        Orders order = orderRepository.findOrderBySessionID(sessionID).orElse(null);
+        Orders order = orderRepository.findBySessionID(sessionID);
 
         if(order == null){
             throw new OrderNotFoundInDatbase(sessionID);
@@ -118,7 +118,7 @@ public class OrderService {
 
     /**
      * allows admins to change the state of an order
-     * Det er her vi ville tilføje emails
+     * Det er her vi ville tilføje emails?
      * @param orderID
      * @param state
      */
@@ -127,6 +127,7 @@ public class OrderService {
         Orders.State state1 = order.getState();
         Orders.State newState = Orders.State.values()[state];
         order.setState(newState);
+        System.out.println("Order state changed from: " + state1 + " to: " + newState);
 
         if(order.getState() != newState) {
             throw new StateChangeFailedException(state1, newState);

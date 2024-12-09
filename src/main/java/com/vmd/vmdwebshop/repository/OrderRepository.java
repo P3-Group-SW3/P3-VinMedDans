@@ -2,12 +2,16 @@
 package com.vmd.vmdwebshop.repository;
 
 import com.vmd.vmdwebshop.model.Orders;
+import org.hibernate.query.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
-import java.util.Optional;
+import java.util.List;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Orders, Long> {
-    Optional<Orders> findOrderBySessionID(String sessionID);
+// Retrieves an order with a specific sessionID
+@Query(value="SELECT * FROM orders WHERE sessionID = ?1", nativeQuery = true)
+Orders findBySessionID(String sessionID);
 }

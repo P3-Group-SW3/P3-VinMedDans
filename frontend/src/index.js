@@ -19,6 +19,7 @@ import DetailProductAdmin from "./pages/DetailProductAdmin";
 import CreateNewWinePage from "./pages/CreateNewWinePage";
 import LoadFonts from "./components/LoadFonts";
 import AgeVerification from "./components/AgeVerification";
+import OrderPage from "./pages/Order";
 
 const SetTitle = () => {
   useEffect(() => {
@@ -48,6 +49,7 @@ root.render(
           <Route path="/orders/:id" element={<DetailOrderAdmin/>} />
           <Route path="/products/:id" element={<DetailProductAdmin/>} />
           <Route path="/create-wine" element={<CreateNewWinePage/>} />
+          <Route path="/order" element={<OrderPage />} />
           <Route path="/*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
       </CartProvider>

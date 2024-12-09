@@ -28,14 +28,4 @@ public class PaymentController {
     public ResponseEntity<String> handleStripeWebhook(HttpServletRequest request) {
         return paymentService.handleStripeWebhook(request);
     }
-
-    @GetMapping("/status")
-    public ResponseEntity<Map<String, String>> getPaymentStatus(@RequestParam String sessionId) {
-        Map<String, String> response = paymentService.getPaymentStatus(sessionId);
-        if (response != null) {
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
-        }
-    }
 }
