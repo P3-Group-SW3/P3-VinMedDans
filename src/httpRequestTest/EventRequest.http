@@ -2,7 +2,7 @@
 GET http://localhost:8080/api/event/getAll
 
 ### Send POST request with json body
-POST http://localhost:8080/api/event/admin/delete/8
+POST http://localhost:8080/api/event/admin/delete/1
 Content-Type: application/json
 
 ### Send POST request with json body
@@ -11,7 +11,7 @@ Content-Type: application/json
 
 {
   "date": "20/12/2024",
-  "time": "14:00",
+  "time": "14:00-16:00",
   "location": "roskilde",
   "title": "æbleplukning",
   "description": "fgjskfsekldka fjekdosdkfl,",
