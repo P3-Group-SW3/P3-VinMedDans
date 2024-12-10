@@ -10,15 +10,15 @@ const AdminDashboard = () => {
     ];
     const orderColumns = [
         { header: 'Ordrenummer', field: 'id' },
-        { header: 'Navn', field: 'full_name' },
+        { header: 'Navn', field: 'fullName' },
         { header: 'Dato', field: 'date' },
         { header: 'Status', field: 'state' }
     ];
 
     return (
         <div className="admin-dashboard">
-            <AdminModule category="wine" title="sortiment" apiHandle="/api/wine/getList" columns={productColumns}/>
-            <AdminModule category="orders" title="ordrer" apiHandle="/api/orders/getList" columns={orderColumns}/>
+            <AdminModule category="wine" title="sortiment" columns={productColumns}/>
+            <AdminModule category="orders" title="ordrer" columns={orderColumns}/>
         </div>
     );
 }

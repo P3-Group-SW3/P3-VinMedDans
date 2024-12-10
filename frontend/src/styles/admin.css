@@ -19,5 +19,6 @@
     border-radius: 8px;
     background-color: #f9f9f9;
     width: 100%; /* Take full width of the grid cell */
+    height: 50%;
     box-sizing: border-box; /* Ensure padding doesn't increase width */
 }

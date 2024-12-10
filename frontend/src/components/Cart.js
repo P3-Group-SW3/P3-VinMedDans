@@ -107,7 +107,7 @@ const OrderLineEdit = ({orderLine}) => {
     const [quantity, setQuantity] = useState(orderLine.amount);
 
     const updateQuantity = (change) => {
-        const newQuantity = orderLine.amount + change;
+        const newQuantity = quantity + change;
         if (newQuantity > 0) {
             setQuantity(newQuantity)
         }
