@@ -15,33 +15,34 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long ID;
 
     @NotBlank (message = "This field must not be blank")
-    @Pattern(regexp = "^(0[1-9]|[12][0-9]|3[01])/(0[1-9]|1[0-2])/(202[4-9]|20[3-9][0-9])$",
-            message = "Dato skal opfylde format dd/MM/yyyy")
+    @Future
+    @DateTimeFormat(pattern = "dd/mm/yyyy")
     @Column(name = "date", nullable = false, length = 10)
     private String date;
 
     @NotBlank (message = "This field must not be blank")
-    @Pattern(regexp = "^([01]\\d|2[0-3]):([0-5]\\d)-([01]\\d|2[0-3]):([0-5]\\d)$",
-            message = "Tid skal opfylde format HH:mm-HH:mm")
-    @Column(name = "time", nullable = false, length = 11)
+    @Future
+    @Column(name = "time", nullable = false, length = 5)
     private String time;
 
     @NotBlank (message = "This field must not be blank")
     @Size(max = 80)
+    @Pattern(regexp = "^[\\p{L} .'-]+$")
     @Column(name = "location", nullable = false, length = 80)
     private String location;
 
     @NotBlank (message = "This field must not be blank")
     @Size(max = 50)
+    @Pattern(regexp = "^[\\p{L} .'-]+$")
     @Column(name = "title", nullable = false, length = 50)
     private String title;
 
     @NotBlank (message = "This field must not be blank")
     @Size(max = 500)
+    @Pattern(regexp = "^[\\p{L} .'-]+$")
     @Column(name = "description", nullable = false, length = 500)
     private String description;
 
@@ -49,18 +50,23 @@ public class Event {
     @Column(name = "imgURL", nullable = false, length = 200)
     private String imgURL;
 
+    @Column(name = "cancelled", nullable = false)
+    private boolean cancelled;
+
     // Empty Constructor
     public Event() {}
 
     // Constructor
     public Event(String date, String time, String location, String title,
-                 String description, String imgURL) {
+                 String description, String imgURL, boolean cancelled) {
         this.date = date;
         this.time = time;
         this.location = location;
         this.title = title;
         this.description = description;
         this.imgURL = imgURL;
+        this.cancelled = cancelled;
+
     }
 
     // Getters and setters
@@ -110,6 +116,14 @@ public class Event {
 
     public void setImgURL(String imgURL) {
         this.imgURL = imgURL;
+    }
+
+    public boolean isCancelled() {
+        return cancelled;
+    }
+
+    public void setCancelled(boolean cancelled) {
+        this.cancelled = cancelled;
     }
 
     public String getTitle() {

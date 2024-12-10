@@ -14,6 +14,7 @@ import java.util.*;
 @Service
 public class EventService implements AdministrativeMethodsInterface<Event> {
 
+
     private final EventRepository eventRepository;
 
     @Autowired
@@ -46,15 +47,10 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
     }
 
     /**
-     * createAndEdit
-     * This method finds a specific event by Id. If the event already exists, its attributes will be
-     * updated with the new values. If the event does not already exist, a new event will be created
-     * and saved to the database.
-     * @param event object containing the updated data.
-     * @param ID of the event.
-     * @return List<Event> returns a list of all events.
-     * @throws EventDataAccessException if there is failure when retrieving/ saving event data to/from the database.
-     * @throws EventNotUpdatedException if there is a failure when updating the event data.
+     *
+     * @param event
+     * @param ID
+     * @return
      */
     @Override
     public List<Event> createAndEdit(Event event, Long ID){
@@ -76,7 +72,8 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
                 existingEvent.setTitle(event.getTitle());
                 existingEvent.setDescription(event.getDescription());
                 existingEvent.setImgURL(event.getImgURL());
-                eventRepository.save(existingEvent);
+                existingEvent.setCancelled(event.isCancelled());
+                eventRepository.save(event);
             } else {
                 eventRepository.save(event);
             }
@@ -90,24 +87,14 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
     }
 
     /**
-     * delete
-     * This method finds an event by Id. If no event is found, an exception is thrown.
-     * If an event is found, it will attempt to delete it from the database.
+     *
      * @param ID
-     * @return List<Event> list of all remaining events.
-     * @throws EventDataAccessException if failure to retrieve events from the database.
-     * @throws EventNotFoundException if no event with the given Id is found.
-     * @throws EventNotDeletedException if the event could not be deleted from the database.
+     * @return
      */
     @Override
     public List<Event> delete(Long ID){
-        Event existingEvent;
-        try {
             Optional<Event> optionalEvent = eventRepository.findById(ID);
-            existingEvent = optionalEvent.orElse(null);
-        } catch (DataAccessException e) {
-            throw new EventDataAccessException("Failed to retrieve the event from the database");
-        }
+            Event existingEvent = optionalEvent.orElse(null);
 
             if(existingEvent == null){
                 throw new NullPointerException("No such event exists");
