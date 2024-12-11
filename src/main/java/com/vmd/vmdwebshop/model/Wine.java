@@ -2,6 +2,7 @@ package com.vmd.vmdwebshop.model;
 
 import jakarta.persistence.*;
 import com.vmd.vmdwebshop.abstractModels.Product;
+import jakarta.validation.constraints.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,9 +14,13 @@ public class Wine extends Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
 
+    @NotBlank(message = "The wine must have a name")
+    @Size(min = 1, max = 20)
+    @Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9\\- ]*$", message = "Kun bogstaver, tal, mellemrum og bindestreg er tilladt")
     private String name;
 
-
+    @Digits(integer = 4, fraction = 0, message = "There can't be more than 9999 wines in stock")
+    @Min(value = 0, message = "The stock amount must not be less than 0")
     private int amountLeft;
 
     //relationship med orderlines

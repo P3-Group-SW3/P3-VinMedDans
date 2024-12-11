@@ -46,15 +46,15 @@ Content-Type: application/json
 }
 
 ### Send POST request with json body (create hønefuld)
-POST http://localhost:8080/api/wine/admin/createAndEdit
+POST http://localhost:8080/api/wine/admin/createAndEdit/19
 Content-Type: application/json
 
 {
   "description": "Du har inviteret til en fin middag, og har rigtigt gjort noget ud af det. Maden er færdig, bordet er dækket, og alt er ved at være klar. Hvad kunne dog være bedre? Måske at gæsterne aflyste, så kunne du tage dit nattøj på, og drikke flasken med hønefuld helt for dig selv.",
   "imageURL": "http://localhost:8080/api/images/hoenefuld.png",
-  "price":189,
-  "amountLeft": 10,
-  "name": "hønefuld"
+  "price": 900123.23,
+  "amountLeft": 111,
+  "name": "asdlgihasdg"
 }
 
 ### Send POST request with a header (toggle active state by ID)

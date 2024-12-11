@@ -1,16 +1,23 @@
 package com.vmd.vmdwebshop.abstractModels;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.*;
 import org.hibernate.annotations.Type;
 
 @MappedSuperclass
 public abstract class Product {
 
+    @Min(value = 1, message = "The price must be more than 1 DKK")
     private double price;
 
+    @NotBlank(message = "The wine must have a description")
+    @Size(min = 1, max = 300)
+    @Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9,.? ]*$", message = "Kun bogstaver, tal, komma, punktum og mellemrum er tilladt")
     @Column(columnDefinition = "TEXT")
     private String description;
 
+    @NotBlank(message = "The wine must have an image URL")
+    @Size(min = 1, max = 50)
     private String imageURL;
 
     private boolean activeState = true;

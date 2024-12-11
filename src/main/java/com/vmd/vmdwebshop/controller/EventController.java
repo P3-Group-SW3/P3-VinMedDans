@@ -40,7 +40,7 @@ public class EventController {
         System.out.println(event.getTitle());
         System.out.println(event.getDescription());
         System.out.println(event.getImgURL());
-        System.out.println(event.isCancelled());
+        //System.out.println(event.isCancelled());
         try {
             return ResponseEntity.ok(eventService.createAndEdit(event, ID));
         } catch (RuntimeException e) {
