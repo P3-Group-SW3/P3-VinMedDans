@@ -131,4 +131,3 @@ public class Orders {
     //Slet
     //public void setID(Long id){this.ID = id;}
 }
-

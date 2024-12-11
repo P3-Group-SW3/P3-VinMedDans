@@ -42,7 +42,7 @@ class TestImageService {
         String savedPath = imageService.saveImage(file, customName);
 
         assertTrue(Files.exists(Paths.get(savedPath)));
-        assertEquals(uploadDir + "\\" + customName + ".png", savedPath);
+        assertEquals(uploadDir + "/" + customName + ".png", savedPath);
     }
 
     @Test

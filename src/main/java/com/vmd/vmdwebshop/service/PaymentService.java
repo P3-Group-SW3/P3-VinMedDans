@@ -19,7 +19,6 @@ import org.springframework.stereotype.Service;
 import jakarta.servlet.http.HttpServletRequest;
 
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
@@ -38,6 +37,7 @@ public class PaymentService {
     @Value("${stripe.webhook}")
     private String endpointSecret;
 
+
     @Autowired
     private CustomerService customerService;
 
@@ -53,33 +53,28 @@ public class PaymentService {
         String serviceId = customerService.getCustomerID(request);
         List<OrderLine> orderLines = orderLineService.getAllOrderLines(serviceId);
 
-
-
-
         double numL = orderLineService.calculateOrderLines(orderLines) * 100;
 
-SessionCreateParams params = SessionCreateParams.builder()
-        .setMode(SessionCreateParams.Mode.PAYMENT)
-        .setSuccessUrl(DOMAIN + "/order?success=true&session_id={CHECKOUT_SESSION_ID}")
-        .setCancelUrl(DOMAIN + "/order?canceled=true")
-        .setCustomerEmail(null)
-        .addLineItem(
-                SessionCreateParams.LineItem.builder()
-                        .setQuantity(1L)
-                        .setPriceData(
-                                SessionCreateParams.LineItem.PriceData.builder()
-                                        .setCurrency("DKK")
-                                        .setUnitAmount((long) numL) // Price in DKK
-                                        .setProductData(
-                                                SessionCreateParams.LineItem.PriceData.ProductData.builder()
-                                                        .setName("VMD Webshop")
-                                                        .build()
-                                        )
-                                        .build()
-                        )
-                        .build())
-        .build();
-Session session = Session.create(params);
+        SessionCreateParams params = SessionCreateParams.builder()
+            .setMode(SessionCreateParams.Mode.PAYMENT)
+            .setSuccessUrl(DOMAIN + "/order?success=true&session_id={CHECKOUT_SESSION_ID}")
+            .setCancelUrl(DOMAIN + "/order?canceled=true")
+            .setCustomerEmail(null)
+            .addLineItem(
+                    SessionCreateParams.LineItem.builder()
+                            .setQuantity(1L)
+                            .setPriceData(
+                                    SessionCreateParams.LineItem.PriceData.builder()
+                                            .setCurrency("DKK")
+                                            .setUnitAmount((long) numL) // Price in DKK
+                                            .setProductData(
+                                                    SessionCreateParams.LineItem.PriceData.ProductData.builder()
+                                                            .setName("VMD Webshop")
+                                                            .build()
+                                            ).build()
+                            ).build()
+            ).build();
+        Session session = Session.create(params);
         Map<String, String> response = new HashMap<>();
         response.put("url", session.getUrl());
 

@@ -42,7 +42,7 @@ public class TestEventService {
         MockitoAnnotations.openMocks(this); // initalises mocks before each test
 
         event1 = new Event("01/01/2025", "1800", "location", "title",
-                "description", "imgURL", false);
+                "description", "imgURL");
         eventList.clear();
         eventList.add(event1);
     }
