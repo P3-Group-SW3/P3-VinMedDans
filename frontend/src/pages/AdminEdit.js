@@ -16,7 +16,6 @@ function AdminEdit() {
             })
                 .then((response) => response.json())
                 .then(() => {
-                    alert(`${item.name} deleted successfully!`);
                     navigate('/administrator');
                 })
                 .catch((error) => console.error('Error deleting item:', error));
@@ -74,31 +73,8 @@ function AdminEdit() {
                         style={{objectFit: 'contain', maxHeight: '200px', maxWidth: '200px'}}
                     />
                 }
-                < EditField
-                    title="Navn"
-                    field="name"
-                    item={item}
-                    setField={setField}
-                />
-                < EditField
-                    title="Beskrivelse"
-                    field="description"
-                    item={item}
-                    setField={setField}
-                />
-                < EditField
-                    title="Antal"
-                    field="amountLeft"
-                    item={item}
-                    setField={setField}
-                />
-                < EditField
-                    title="Pris"
-                    field="price"
-                    item={item}
-                    setField={setField}
-                    endAdornment={<InputAdornment position="end">DKK</InputAdornment>}
-                />
+
+                <EditWine item={item} setField={setField} />
 
                 <div>
                     <div className="d-flex justify-content-around">
@@ -125,6 +101,48 @@ const EditField = ({title, field, item, setField}) => {
         >
         </TextField>
     )
+}
+
+const EditWine = ( { item, setField } ) => {
+    return (
+        <div>
+            < EditField
+                title="Navn"
+                field="name"
+                item={item}
+                setField={setField}
+            />
+            < EditField
+                title="Beskrivelse"
+                field="description"
+                item={item}
+                setField={setField}
+            />
+            < EditField
+                title="Antal"
+                field="amountLeft"
+                item={item}
+                setField={setField}
+            />
+            < EditField
+                title="Pris"
+                field="price"
+                item={item}
+                setField={setField}
+                endAdornment={<InputAdornment position="end">DKK</InputAdornment>}
+            />
+        </div>
+    )
+}
+
+const EditEvent = ( { item, setField } ) => {
+    return (
+        <div>
+            <EditField
+                title={}
+            />
+        </div>
+    );
 }
 
 export default AdminEdit;

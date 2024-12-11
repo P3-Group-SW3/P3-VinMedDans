@@ -21,7 +21,7 @@ public class DistributorController {
         this.distributorService = distributorService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getList")
     public ResponseEntity<List<Distributor>>  getAll() {
         try {
             return ResponseEntity.ok(distributorService.getAll());

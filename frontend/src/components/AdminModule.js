@@ -15,6 +15,7 @@ function AdminModule({title, category, columns} ) {
             .then(data => {
                 if (data) {
                     setItems(data);
+                    console.log(data);
                 } else {
                     console.warn(`Received empty data for ${category}`);
                 }
@@ -34,9 +35,9 @@ function AdminModule({title, category, columns} ) {
 
     return (
         <div className="admin-module">
-            <h1 className='header-large' style={{color: '#C0924D', cursor: 'pointer'}}>
+            <h1 className='header-large' style={{color: '#C0924D'}}>
                 {title}
-                {category==="wine" &&
+                {category!=="orders" &&
                     < Button text="Opret" onClick={() => navigate(`/administrator/${category}/create`)}></Button>}
             </h1>
             <table className="table table-hover" style={{fontFamily: 'Rubik, sans-serif'}}>

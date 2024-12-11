@@ -22,7 +22,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getList")
     public ResponseEntity<List<Event>> getAll() {
         try {
             return ResponseEntity.ok(eventService.getAll());
