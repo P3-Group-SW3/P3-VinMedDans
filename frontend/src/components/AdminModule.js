@@ -40,28 +40,35 @@ function AdminModule({title, category, columns} ) {
                 {category!=="orders" &&
                     < Button text="Opret" onClick={() => navigate(`/administrator/${category}/create`)}></Button>}
             </h1>
-            <table className="table table-hover" style={{fontFamily: 'Rubik, sans-serif'}}>
-                <thead>
-                <tr>
-                    {columns.map((col, index) => (
-                        <th key={index}>{col.header}</th>
-                    ))}
-                </tr>
-                </thead>
-                <tbody>
-                {items?.map((item) => (
-                    <tr
-                        key={item.id}
-                        onClick={() => clickRow(item)}
-                        style={{cursor: 'pointer'}}
-                    >
-                        {columns.map((col, index) => (
-                            <td key={index}>{item[col.field]}</td>
+            <div className="scrollable">
+                <table className="table table-hover" style={{fontFamily: 'Rubik, sans-serif'}}>
+                    <thead>
+                        <tr>
+                            {columns.map((col, index) => (
+                                <th key={index}>{col.header}</th>
+                            ))}
+                        </tr>
+                    </thead>
+                        <tbody>
+                        {items?.slice(0,10).map((item) => (
+                            <tr
+                                key={item.id}
+                                onClick={() => clickRow(item)}
+                                style={{cursor: 'pointer'}}
+                            >
+                                {columns.map((col, index) => (
+                                    <td key={index}>{item[col.field]}</td>
+                                ))}
+                            </tr>
                         ))}
-                    </tr>
-                ))}
-                </tbody>
-            </table>
+                        </tbody>
+                </table>
+                {items.length > 10 && (
+                    <div className="d-flex justify-content-center my-1">
+                        <Button text="Vis flere" onClick={() => navigate(`/administrator/${category}`)} />
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

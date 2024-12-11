@@ -7,21 +7,19 @@
     padding: 20px;
 }
 
-.admin-dashboard > div {
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    max-width: 100%;
-}
-
 .admin-module {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
-    background-color: #f9f9f9;
-    width: 100%;
+    background-color: white;
+    width: 600px;
     height: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
-    overflow: scroll;
+}
+
+.scrollable {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
 }

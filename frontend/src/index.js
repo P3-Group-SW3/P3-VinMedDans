@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import {BrowserRouter, Routes, Route, useLocation, Navigate} from 'react-router-dom';
 //import { CriiptoVerifyProvider } from '@criipto/verify-react';
 import './index.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -15,7 +15,6 @@ import LocationPage from "./pages/LocationPage";
 import ContactPage from "./pages/ContactPage";
 import Checkout from "./pages/Checkout";
 import AdminDashboard from "./pages/AdminDashboard";
-import DetailOrderAdmin from "./pages/DetailOrderAdmin";
 import LoadFonts from "./components/LoadFonts";
 import AdminEdit from "./pages/AdminEdit";
 //import CriiptoAuthWrapper from './components/CriiptoAuthWrapper';
@@ -46,20 +45,24 @@ root.render(
       <SetTitle />
       <LoadFonts />
       <CartProvider>
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/shop" element={<ProductPage />} />
-          <Route path="/about" element={<AboutUsPage />} />
-          <Route path="/locations" element={<LocationPage />} />
-          <Route path="/events" element={<EventPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/checkout" element={<Checkout />} />
-          <Route path="/administrator" element={<AdminDashboard />} />
-          <Route path="/administrator/:category/:id" element={<AdminEdit/>} />
-          <Route path="/administrator/:category/create" element={<AdminEdit/>} />
-          <Route path="/*" element={<h1>404 - Page Not Found</h1>} />
-        </Routes>
-    </CartProvider>
+          <Routes>
+            <Route path="/">
+              <Route index element={<LandingPage/>} />
+              <Route path="shop" element={<ProductPage />} />
+              <Route path="about" element={<AboutUsPage />} />
+              <Route path="locations" element={<LocationPage />} />
+              <Route path="events" element={<EventPage />} />
+              <Route path="contact" element={<ContactPage />} />
+              <Route path="checkout" element={<Checkout />} />
+              <Route path="administrator">
+                <Route index element={<AdminDashboard />}/>
+                <Route path=":category/:id" element={<AdminEdit/>} />
+                <Route path=":category/create" element={<AdminEdit/>} />
+              </Route>
+              <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+            </Route>
+          </Routes>
+      </CartProvider>
     </BrowserRouter>
   </React.StrictMode>
 );

@@ -6,7 +6,7 @@ import {InputAdornment, TextField} from "@mui/material";
 function AdminEdit() {
     const navigate = useNavigate();
 
-    const [item, setItem] = useState(useLocation().state?.item || { name: '', description: '', price: '', imageURL: 'image', amountLeft: '' });
+    const [item, setItem] = useState(useLocation().state?.item || { id: -1, name: '', description: '', price: '', imageURL: 'image', imgURL: 'image', amountLeft: '' });
     const { category } = useParams();
 
     const deleteItem = () => {
@@ -32,29 +32,53 @@ function AdminEdit() {
     }
 
     const updateItem = () => {
-        fetch(`/api/${category}/admin/createAndEdit`, {
+
+        fetch(`/api/${category}/admin/createAndEdit/${item.id}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify({
-                ID: item.id,
-                description: item.description,
-                imageURL: item.imageURL,
-                price: item.price,
-                amountLeft: item.amountLeft,
-                name: item.name
-            }),
+            body: JSON.stringify(itemAsJSON()),
         })
             .then(response => response.json())
             .then((data) => {
-                console.log("Updated wine: ", data);
+                console.log("Updated item: ", data);
                 navigate(`/administrator`);
             })
             .catch((error) => {
                 console.error('Error:', error);
             });
     };
+
+    const itemAsJSON = () => {
+        if (category === "wine") {
+            return {
+                ID: item?.id,
+                description: item.description,
+                imageURL: item.imageURL,
+                price: item.price,
+                amountLeft: item.amountLeft,
+                name: item.name
+            }
+        } else if (category === "event") {
+            return {
+                ID: item.id,
+                date: item.date,
+                description: item.description,
+                imgURL: item.imgURL,
+                location: item.location,
+                time: item.time,
+                title: item.title
+            }
+        } else if (category === "distributor") {
+            return {
+                ID: item.id,
+                location: item.location,
+                name: item.name,
+                websiteURL: item.websiteURL
+            }
+        }
+    }
 
     return (
         <div className="container justify-content-center">
@@ -73,8 +97,15 @@ function AdminEdit() {
                         style={{objectFit: 'contain', maxHeight: '200px', maxWidth: '200px'}}
                     />
                 }
-
-                <EditWine item={item} setField={setField} />
+                {category==="wine" &&
+                    <EditWine item={item} setField={setField} />
+                }
+                {category==="event" &&
+                    <EditEvent item={item} setField={setField} />
+                }
+                {category==="distributor" &&
+                    <EditDistributor item={item} setField={setField} />
+                }
 
                 <div>
                     <div className="d-flex justify-content-around">
@@ -139,7 +170,59 @@ const EditEvent = ( { item, setField } ) => {
     return (
         <div>
             <EditField
-                title={}
+                title="Navn"
+                field="title"
+                item={item}
+                setField={setField}
+            />
+            <EditField
+                title="Dato"
+                field="date"
+                item={item}
+                setField={setField}
+            />
+            <EditField
+                title="Tidspunkt"
+                field="time"
+                item={item}
+                setField={setField}
+            />
+            <EditField
+                title="Sted"
+                field="location"
+                item={item}
+                setField={setField}
+            />
+            <EditField
+                title="Beskrivelse"
+                field="description"
+                item={item}
+                setField={setField}
+            />
+        </div>
+    );
+}
+
+const EditDistributor = ( { item, setField } ) => {
+    return (
+        <div>
+            <EditField
+                title="Navn"
+                field="name"
+                item={item}
+                setField={setField}
+            />
+            <EditField
+                title="Adresse"
+                field="location"
+                item={item}
+                setField={setField}
+            />
+            <EditField
+                title="Hjemmeside"
+                field="websiteURL"
+                item={item}
+                setField={setField}
             />
         </div>
     );
