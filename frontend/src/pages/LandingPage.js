@@ -1,3 +1,4 @@
+import AgeVerification from "../components/AgeVerification";
 import React from 'react';
 import Header from '../components/Header';
 import Footer from '../components/Footer';
@@ -29,6 +30,7 @@ function LandingPage() {
 
     return (
         <div className="Landingpage">
+            <AgeVerification/>
             <Header
                 links={ CustomerLinks }
                 showCart={true}

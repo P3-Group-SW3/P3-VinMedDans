@@ -5,6 +5,10 @@
   "dependencies": {
     "@criipto/auth-js": "^3.7.2",
     "@criipto/verify-react": "^2.4.2",
+    "@emotion/react": "^11.13.5",
+    "@emotion/styled": "^11.13.5",
+    "@mui/icons-material": "^6.1.10",
+    "@mui/material": "^6.1.10",
     "@stripe/react-stripe-js": "^3.0.0",
     "@stripe/stripe-js": "^5.2.0",
     "@testing-library/jest-dom": "^5.17.0",

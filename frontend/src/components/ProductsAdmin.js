@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../styles/fonts.css'
+import Button from "./Button";
 
 function ProductsAdmin() {
     const [products, setProducts] = useState([]);
@@ -7,60 +9,50 @@ function ProductsAdmin() {
 
     useEffect(() => {
 
-        fetch('/api/wine/getList')  // Opdateret endpoint
-
-            .then(response => {
-                if (!response.ok) throw new Error('Network response was not ok');
-                return response.json();
+        fetch('/api/wine/getList')
+            .then(response => response.json())
+            .then(data => {
+                if (data) {
+                    setProducts(data);
+                } else {
+                    console.warn('Received empty data for products');
+                }
             })
-            .then(data => setProducts(data))
             .catch(error => console.error('Error fetching products:', error));
     }, []);
 
-    const handleRowClick = (id) => {
-        navigate(`/products/${id}`);  // Navigerer til produktdetaljer baseret på produkt-ID
+
+
+    const handleRowClick = (product) => {
+        navigate(`/administrator/products/${product.id}`, {state: {product}});
     };
 
     return (
-        <div className="container">
-            <h1>Products</h1>
-            <table className="table table-striped table-bordered">
+        <div className="rounded">
+            <h1 className='header-large' style={{color: 'white', backgroundColor: '#C0924D'}}>sortiment</h1>
+            <table className="table table-hover" style={{fontFamily: 'Rubik, sans-serif'}}>
                 <thead>
                 <tr>
-                    <th>ID</th>
-                    <th>Name</th>
-                    <th>Amount Left</th>
-                    <th>Price</th>
-                    <th>Description</th>
-                    <th>Image</th>
+                    <th>Navn</th>
+                    <th>Antal</th>
                 </tr>
                 </thead>
                 <tbody>
-                {products.map((product, index) => (
+                {products.map((product) => (
                     <tr
-                        key={index}
-                        onClick={() => handleRowClick(product.id)}
+                        key={product.id}
+                        onClick={() => handleRowClick(product)}
                         style={{cursor: 'pointer'}}
                     >
-                        <td>{product.id}</td>
                         <td>{product.name}</td>
                         <td>{product.amountLeft}</td>
-                        <td>{product.price}</td>
-                        <td>{product.description}</td>
-                        <td>
-                            {product.imageURL ? (
-                                <img src={product.imageURL} alt={product.name} style={{width: '50px'}}/>
-                            ) : (
-                                'No image'
-                            )}
-                        </td>
                     </tr>
                 ))}
                 </tbody>
             </table>
-            <button onClick={() => navigate('/create-wine')} className="btn btn-primary mt-3">
-                Create New Wine
-            </button>
+            <div className="d-flex justify-content-center">
+                <Button text='Tilføj vin' onClick={() => navigate('/create-wine')} isWide={true}/>
+            </div>
         </div>
     );
 }

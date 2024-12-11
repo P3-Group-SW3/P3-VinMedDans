@@ -22,7 +22,7 @@ public class EventController {
         this.eventService = eventService;
     }
 
-    @GetMapping("/getAll")
+    @GetMapping("/getList")
     public ResponseEntity<List<Event>> getAll() {
         try {
             return ResponseEntity.ok(eventService.getAll());
@@ -40,7 +40,6 @@ public class EventController {
         System.out.println(event.getTitle());
         System.out.println(event.getDescription());
         System.out.println(event.getImgURL());
-        //System.out.println(event.isCancelled());
         try {
             return ResponseEntity.ok(eventService.createAndEdit(event, ID));
         } catch (RuntimeException e) {

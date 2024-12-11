@@ -1,3 +1,4 @@
+import AgeVerification from "../components/AgeVerification";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import {CustomerLinks} from "./CustomerLinkContext";
@@ -6,6 +7,7 @@ import React from "react";
 function ContactPage() {
     return (
         <div className="ContactPage">
+            <AgeVerification/>
             <Header
                 links={CustomerLinks}
                 showCart={true}

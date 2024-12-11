@@ -1,0 +1,25 @@
+.admin-dashboard {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    align-items: start;
+    justify-items: start;
+    gap: 20px !important;
+    padding: 20px;
+}
+
+.admin-module {
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background-color: white;
+    width: 600px;
+    height: 300px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+}
+
+.scrollable {
+    height: 200px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import AgeVerification from "../components/AgeVerification";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import {CustomerLinks} from "./CustomerLinkContext";
@@ -24,6 +25,7 @@ function ProductPage() {
 
     return (
         <div className="productPage">
+            <AgeVerification/>
             <Header
                 links={ CustomerLinks }
                 showCart={true}

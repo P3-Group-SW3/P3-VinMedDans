@@ -29,7 +29,10 @@ const Header = ({ links, showCart }) => {
                 <a href='/' style={{display: 'flex', justifyContent: 'center', flex: 1}}>
                     <img src={logo} alt="Logo" className="img-fluid" />
                 </a>
-                {showCart && <div className="d-lg-none"><Cart/></div>}
+                {showCart &&
+                    <div className="d-lg-none">
+                        <Cart/>
+                    </div>}
                 <div
                     className="collapse navbar-collapse justify-content-between align-items-center"
                     id="navbarSupportedContent"

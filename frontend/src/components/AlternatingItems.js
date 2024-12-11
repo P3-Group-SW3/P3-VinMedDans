@@ -12,12 +12,12 @@ const AlternatingItems = ({ items }) => {
     return (
         <div className="container my-5">
             {items.map((item, index) => (
-                <div className="row align-items-center mb-4" key={index} style={{backgroundColor: item.title ? "#FFFFFF" : "#FFFAED"}}>
+                <div className="row align-items-center justify-content-center mb-4 mx-auto fit-content" key={index} style={{backgroundColor: item.title ? "#FFFFFF" : "#FFFAED"}}>
                     <div className={`col-lg-6 ${index % 2 === 0 ? "order-lg-1" : "order-lg-2"} py-0`}>
                         <img
                             src={item.imageURL}
                             alt={item.title? item.title : item.name}
-                            className="img-fluid mx-auto d-block"
+                            className="img-fluid d-block"
                         />
                     </div>
                     <div className={`col-lg-6 ${index % 2 === 0 ? "order-lg-2" : "order-lg-1"} text-center text-lg-start`}>

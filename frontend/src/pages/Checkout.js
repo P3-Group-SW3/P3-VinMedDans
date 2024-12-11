@@ -1,4 +1,5 @@
 import React from 'react';
+import AgeVerification from "../components/AgeVerification";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
 import OrderSummary from "../components/OrderSummary";
@@ -9,6 +10,7 @@ import {CustomerLinks} from "./CustomerLinkContext";
 function Checkout() {
     return (
         <div className="Landingpage">
+            <AgeVerification/>
             <Header
                 links={ CustomerLinks }
                 showCart={true}
