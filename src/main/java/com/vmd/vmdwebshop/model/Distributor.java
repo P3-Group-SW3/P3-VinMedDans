@@ -17,13 +17,11 @@ public class Distributor {
 
     @NotBlank(message = "This field must not be blank")
     @Size(max = 35)
-    @Pattern(regexp = "^[\\p{L} .'-]+$")
     @Column(name = "name", nullable = false, length = 35)
     private String name;
 
     @NotBlank(message = "This field must not be blank")
     @Size(max = 80)
-    @Pattern(regexp = "^[\\p{L} .'-]+$")
     @Column(name = "location", nullable = false, length = 80)
     private String location;
 

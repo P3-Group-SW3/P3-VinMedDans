@@ -31,10 +31,10 @@ public class DistributorController {
         }
     }
 
-    @PostMapping("/admin/createAndEdit")
-    public ResponseEntity<List<Distributor>> createAndEdit(@RequestBody @Valid Distributor distributor) {
+    @PostMapping("/admin/createAndEdit/{ID}")
+    public ResponseEntity<List<Distributor>> createAndEdit(@PathVariable ("ID") Long ID, @RequestBody @Valid Distributor distributor) {
         try {
-            return ResponseEntity.ok(distributorService.createAndEdit(distributor, distributor.getID()));
+            return ResponseEntity.ok(distributorService.createAndEdit(distributor, ID));
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();
