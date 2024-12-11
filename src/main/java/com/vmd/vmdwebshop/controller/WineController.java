@@ -3,7 +3,6 @@ package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.WineRepository;
-import com.vmd.vmdwebshop.DTO.WineDto;
 import com.vmd.vmdwebshop.service.WineService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Pattern;
@@ -54,13 +53,15 @@ public class WineController {
      * @param wineDTO
      * @return List<Wine>
      */
-    @PostMapping(value="/admin/createAndEdit", consumes = "application/json")
-    public ResponseEntity<List<Wine>> createAndEdit(@RequestBody @Valid WineDto wineDTO) {
+    @PostMapping(value="/admin/createAndEdit/{ID}")
+    public ResponseEntity<List<Wine>> createAndEdit(@PathVariable ("ID") Long ID, @RequestBody @Valid Wine wine) {
         //creates a wine object based on the data in the wine DTO
-        Wine wine = wineDTO.createWineFromWineData();
+        //System.out.println(ID);
+        //System.out.println(wineDTO.getID());
+        //Wine wine = wineDTO.createWineFromWineData();
 
         try{
-            return ResponseEntity.ok(wineService.createAndEdit(wine, Long.valueOf(wineDTO.getID())));
+            return ResponseEntity.ok(wineService.createAndEdit(wine, ID));
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.internalServerError().build();
