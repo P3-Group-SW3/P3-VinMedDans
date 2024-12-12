@@ -1,28 +1,19 @@
 package com.vmd.vmdwebshop.controller;
 
 
-import com.vmd.vmdwebshop.exception.orderline.OrderLineDataAccessException;
+import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import com.vmd.vmdwebshop.service.CustomerService;
+import com.vmd.vmdwebshop.service.OrderLineService;
 import com.vmd.vmdwebshop.service.WineService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
-import org.hibernate.query.Order;
-import org.springframework.aot.generate.FileSystemGeneratedFiles;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import com.vmd.vmdwebshop.service.OrderLineService;
-import com.vmd.vmdwebshop.model.*;
-import com.vmd.vmdwebshop.model.Wine;
-import org.springframework.http.HttpHeaders;
 
 import java.util.List;
-import java.util.function.LongFunction;
 
 @RestController
 @RequestMapping("/")
@@ -68,7 +59,7 @@ public class OrderLineController {
         try {
             String customerID = customerService.getCustomerID(request);
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
-            Double price = orderLineService.calculateOrderLine(orderLines);
+            Double price = orderLineService.calculateOrderLines(orderLines);
             return ResponseEntity.ok(price);
         } catch (RuntimeException e) {
             System.out.println(e.getMessage());

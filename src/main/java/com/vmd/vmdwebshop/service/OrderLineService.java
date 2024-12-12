@@ -2,20 +2,16 @@ package com.vmd.vmdwebshop.service;
 
 import com.vmd.vmdwebshop.exception.orderline.*;
 import com.vmd.vmdwebshop.model.OrderLine;
+import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.WineRepository;
 import jakarta.transaction.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.View;
 
-
-import com.vmd.vmdwebshop.repository.*;
-import com.vmd.vmdwebshop.model.*;
 import java.util.List;
-import java.util.*;
 
 @Service
 @Transactional
@@ -44,11 +40,20 @@ public class OrderLineService {
         this.wineService = wineService;
     }
 
+
+    /**
+     * Retrieves all order lines associated with a specific customer.
+     *
+     * @param customerID the ID of the customer whose order lines are to be retrieved
+     * @return a list of OrderLine objects associated with the specified customer
+     * @throws OrderLineDataAccessException if there is an error accessing the database
+     */
     public List<OrderLine> getAllOrderLines(String customerID) {
-        try{
+        try {
             return orderLineRepository.findAllByCustomerId(customerID);
         } catch (DataAccessException e) {
-        throw new OrderLineDataAccessException(" Can not access the database");}
+            throw new OrderLineDataAccessException("Can not access the database");
+        }
     }
 
     /**
@@ -131,7 +136,7 @@ public class OrderLineService {
         return orderLine.getAmount() * orderLine.getWine().getPrice();
     }
 
-    public double calculateOrderLine(List<OrderLine> orderLines) {
+    public double calculateOrderLines(List<OrderLine> orderLines) {
         double totalPrice = 0.0;
         for (OrderLine orderLine: orderLines){
             Double price = calculateOrderLine(orderLine);
