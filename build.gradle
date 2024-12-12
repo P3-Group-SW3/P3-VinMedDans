@@ -35,6 +35,7 @@ dependencies {
     testImplementation 'org.springframework.security:spring-security-test'
     testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+    implementation 'commons-io:commons-io:2.16.1'
 }
 
 
@@ -42,3 +43,25 @@ dependencies {
 tasks.named('test') {
     useJUnitPlatform()
 }
+
+// Custom tasks to build React project and copy to static resources
+tasks.register('buildFrontend', Exec) {
+    workingDir 'frontend'
+    commandLine 'npm', 'install'
+    commandLine 'npm', 'run', 'build'
+    inputs.dir 'frontend/src'
+    outputs.dir 'frontend/build'
+}
+
+tasks.register('copyFrontend', Copy) {
+    dependsOn buildFrontend
+    from 'frontend/build'
+    into 'src/main/resources/static'
+    inputs.dir 'frontend/build'
+    outputs.dir 'src/main/resources/static'
+}
+
+processResources {
+    dependsOn copyFrontend
+}
+

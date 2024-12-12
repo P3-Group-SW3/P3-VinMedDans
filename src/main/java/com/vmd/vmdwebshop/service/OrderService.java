@@ -3,14 +3,16 @@ package com.vmd.vmdwebshop.service;
 import com.vmd.vmdwebshop.DTO.OrderDto;
 import com.vmd.vmdwebshop.exception.order.*;
 import com.vmd.vmdwebshop.exception.wine.ProductsNotInStock;
+import com.vmd.vmdwebshop.model.OrderLine;
+import com.vmd.vmdwebshop.model.Orders;
+import com.vmd.vmdwebshop.repository.OrderRepository;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
-import com.vmd.vmdwebshop.repository.*;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.View;
-import com.vmd.vmdwebshop.model.*;
 
-import java.util.*;
+import java.util.Date;
+import java.util.List;
 
 
 @Service
@@ -59,40 +61,57 @@ public class OrderService {
         return order;
     }
 
+
+    /**
+     * finder en specifik order based on the session id
+     * @param sessionID
+     * @return
+     */
+    public Orders getOrderBySessionID(String sessionID){
+        Orders order = orderRepository.findBySessionID(sessionID);
+
+        if(order == null){
+            throw new OrderNotFoundInDatbase(Long.parseLong(sessionID));
+        }
+
+        return order;
+    }
+
+
     /**
      * Creates a order based on the information given by the customer
      * @param orderDto
-     * @param orderLines
+     * @param orderLineList
      * @return
      */
-    public Orders createOrderFromInfo(OrderDto orderDto, List<OrderLine> orderLineList) {
-
-        try{
+    public Orders createOrderFromInfo(OrderDto orderDto, List<OrderLine> orderLineList, String sessionID) {
+        try {
             orderLineService.canBePurchased(orderLineList);
-        } catch (RuntimeException e){
+        } catch (RuntimeException e) {
             throw new ProductsNotInStock(e.getMessage());
         }
 
         Orders order = orderDto.createOrderFromInfo();
         order.setState(Orders.State.REGISTERED);
         order.setDate(new Date());
+        order.setSessionID(sessionID);
         orderRepository.save(order);
 
-        if(order.getID() == null){
+        if (order.getID() == null) {
             throw new OrderNotSaved(order.getFullName(), order.getMail());
         }
 
-        for(OrderLine orderLine : orderLineList) {
+        for (OrderLine orderLine : orderLineList) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
-            if(orderLine.getOrderID() != order.getID()){
-                throw new OrderlineNotAdded("orderline with id: " + orderLine.getID() + " did not add the order ID of: " + order.getID());
+            if (!orderLine.getOrderID().equals(order.getID())) {
+                throw new OrderlineNotAdded("Orderline with id: " + orderLine.getID() + " did not add the order ID of: " + order.getID());
             }
         }
 
-        try{
+        try {
             wineService.updateStockFromOrder(orderLineList);
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             throw new StockNotUpdatedFromOrder("The order could not update the stock");
         }
 
@@ -101,7 +120,7 @@ public class OrderService {
 
     /**
      * allows admins to change the state of an order
-     * Det er her vi ville tilføje emails
+     * Det er her vi ville tilføje emails?
      * @param orderID
      * @param state
      */
@@ -110,6 +129,7 @@ public class OrderService {
         Orders.State state1 = order.getState();
         Orders.State newState = Orders.State.values()[state];
         order.setState(newState);
+        System.out.println("Order state changed from: " + state1 + " to: " + newState);
 
         if(order.getState() != newState) {
             throw new StateChangeFailedException(state1, newState);
