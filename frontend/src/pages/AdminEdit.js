@@ -162,11 +162,12 @@ const EditWine = ( { item, setField } ) => {
                 setField={setField}
                 endAdornment={<InputAdornment position="end">DKK</InputAdornment>}
             />
+
         </div>
     )
 }
 
-const EditEvent = ( { item, setField } ) => {
+const EditEvent = ({item, setField}) => {
     return (
         <div>
             <EditField
