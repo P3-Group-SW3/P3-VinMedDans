@@ -7,8 +7,6 @@ import com.vmd.vmdwebshop.exception.order.OrderNotFoundInDatbase;
 import com.vmd.vmdwebshop.exception.order.StateChangeFailedException;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
-import com.vmd.vmdwebshop.service.CustomerService;
-import com.vmd.vmdwebshop.service.OrderLineService;
 import com.vmd.vmdwebshop.service.OrderService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
@@ -16,6 +14,8 @@ import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import com.vmd.vmdwebshop.service.*;
+
 
 import java.util.List;
 
@@ -53,6 +53,7 @@ public class OrderController {
         }
     }
 
+
     /**
      * Gets all orders
      * @return
@@ -87,23 +88,6 @@ public class OrderController {
     }
 
     /**
-     * Get Order from a customer using sessionID
-     * @param session_id
-     * @return
-     */
-@GetMapping("/api/orders/session/{session_id}")
-public ResponseEntity<Orders> getOrderBySessionID(@PathVariable String session_id) {
-    try {
-        System.out.println(session_id);
-        Orders order = orderService.getOrderBySessionID(session_id);
-        return ResponseEntity.ok(order);
-    } catch (OrderNotFoundInDatbase e) {
-        System.out.println(e.getMessage());
-        return ResponseEntity.notFound().build();
-    }
-}
-
-    /**
      * changes the state of an order based on a number from 0 to 2
      * @param orderID
      * @param state
@@ -115,22 +99,6 @@ public ResponseEntity<Orders> getOrderBySessionID(@PathVariable String session_i
             orderService.changeState(Long.parseLong(orderID), state.getState());
         }catch (StateChangeFailedException e){
             System.out.println(e.getMessage());
-        }
-    }
-
-    /**
-     * Gets the state of an order based on session_id
-     * @param session_id
-     * @return the state of the order
-     */
-    @GetMapping("/api/orders/state/session/{session_id}")
-    public ResponseEntity<Integer> getStateBySessionID(@PathVariable String session_id) {
-        try {
-            Orders order = orderService.getOrderBySessionID(session_id);
-            return ResponseEntity.ok(order.getState().ordinal());
-        } catch (OrderNotFoundInDatbase e) {
-            System.out.println(e.getMessage());
-            return ResponseEntity.notFound().build();
         }
     }
 
