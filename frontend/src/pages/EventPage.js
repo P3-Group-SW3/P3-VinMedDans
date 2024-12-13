@@ -19,7 +19,8 @@ function EventPage() {
     React.useEffect(() => {
         fetch("/api/event/getList")
             .then((response) => response.json())
-            .then((data) => setEvents(data));
+            .then((data) => setEvents(data))
+            .catch(error => console.error('Error fetching data:', error));
     }, []);
 
     return (
