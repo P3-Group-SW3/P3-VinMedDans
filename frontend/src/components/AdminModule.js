@@ -23,8 +23,7 @@ function AdminModule({title, category, columns} ) {
             .catch(error => console.error('Error fetching products:', error));
     }, []);
 
-
-
+    
     const clickRow = (item) => {
         navigate(`/administrator/${category}/${item.id}`, {
             state: {
