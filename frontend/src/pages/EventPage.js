@@ -17,7 +17,7 @@ function EventPage() {
     const [events, setEvents] = React.useState([]);
 
     React.useEffect(() => {
-        fetch("/api/event/getAll")
+        fetch("/api/event/getList")
             .then((response) => response.json())
             .then((data) => setEvents(data));
     }, []);
