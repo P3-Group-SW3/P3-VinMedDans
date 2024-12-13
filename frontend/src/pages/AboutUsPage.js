@@ -29,7 +29,7 @@ function AboutUsPage() {
     ]
 
     return (
-        <div className="Landingpage">
+        <div>
             <AgeVerification/>
             <Header
                 links={ CustomerLinks }

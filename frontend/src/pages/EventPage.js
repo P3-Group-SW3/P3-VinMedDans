@@ -23,7 +23,7 @@ function EventPage() {
     }, []);
 
     return (
-        <div className="Landingpage">
+        <div>
             <AgeVerification/>
             <Header
                 links={ CustomerLinks }

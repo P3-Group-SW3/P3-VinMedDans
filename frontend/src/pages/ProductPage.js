@@ -24,7 +24,7 @@ function ProductPage() {
     console.log(items);
 
     return (
-        <div className="productPage">
+        <div>
             <AgeVerification/>
             <Header
                 links={ CustomerLinks }

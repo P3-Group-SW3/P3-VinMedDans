@@ -6,7 +6,7 @@ import React from "react";
 
 function ContactPage() {
     return (
-        <div className="ContactPage">
+        <div>
             <AgeVerification/>
             <Header
                 links={CustomerLinks}
