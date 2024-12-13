@@ -14,13 +14,11 @@ import EventPage from "./pages/EventPage";
 import LocationPage from "./pages/LocationPage";
 import ContactPage from "./pages/ContactPage";
 import Checkout from "./pages/Checkout";
-import AdminPageFunc from "./pages/AdminPageFunc";
-import DetailOrderAdmin from "./pages/DetailOrderAdmin";
-import DetailProductAdmin from "./pages/DetailProductAdmin";
-import CreateNewWinePage from "./pages/CreateNewWinePage";
+import AdminDashboard from "./pages/AdminDashboard";
+import AdminEdit from "./pages/AdminEdit";
+import AdminModule from "./components/AdminModule";
 import LoadFonts from "./components/LoadFonts";
 import AgeVerification from "./components/AgeVerification";
-import OrderPage from "./pages/Order";
 import CriiptoCallback from "./components/CriiptoCallback";
 
 const SetTitle = () => {
@@ -47,13 +45,13 @@ root.render(
           <Route path="/events" element={<EventPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/checkout" element={<Checkout />} />
-          <Route path="/admin" element={<AdminPageFunc />} />
-          <Route path="/orders/:id" element={<DetailOrderAdmin/>} />
-          <Route path="/products/:id" element={<DetailProductAdmin/>} />
-          <Route path="/create-wine" element={<CreateNewWinePage/>} />
-          <Route path="/order" element={<OrderPage />} />
           <Route path="/callback" element={<CriiptoCallback />} />
           <Route path="/stripe-page" element={<div>Stripe Page</div>} />
+          <Route path="administrator">
+            <Route index element={<AdminDashboard />}/>
+            <Route path=":category/:id" element={<AdminEdit/>} />
+            <Route path=":category/create" element={<AdminEdit/>} />
+          </Route>
           <Route path="/*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
       </CartProvider>
