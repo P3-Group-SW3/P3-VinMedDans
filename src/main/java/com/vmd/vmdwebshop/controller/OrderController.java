@@ -102,6 +102,39 @@ public class OrderController {
         }
     }
 
+    /**
+     * Get Order from a customer using sessionID
+     * @param session_id
+     * @return
+     */
+    @GetMapping("/api/orders/session/{session_id}")
+    public ResponseEntity<Orders> getOrderBySessionID(@PathVariable String session_id) {
+        try {
+            System.out.println(session_id);
+            Orders order = orderService.getOrderBySessionID(session_id);
+            return ResponseEntity.ok(order);
+        } catch (OrderNotFoundInDatbase e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    /**
+     * Gets the state of an order based on session_id
+     * @param session_id
+     * @return the state of the order
+     */
+    @GetMapping("/api/orders/state/session/{session_id}")
+    public ResponseEntity<Integer> getStateBySessionID(@PathVariable String session_id) {
+        try {
+            Orders order = orderService.getOrderBySessionID(session_id);
+            return ResponseEntity.ok(order.getState().ordinal());
+        } catch (OrderNotFoundInDatbase e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping("/api/orders/admin/delete/{orderID}")
     public void deleteOrder(@PathVariable Long orderID){
         System.out.println(orderID);
