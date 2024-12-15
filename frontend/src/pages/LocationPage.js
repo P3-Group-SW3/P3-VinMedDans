@@ -6,7 +6,7 @@ import {CustomerLinks} from "./CustomerLinkContext";
 
 function LocationPage() {
     return (
-        <div className="Landingpage">
+        <div>
             <AgeVerification/>
             <Header
                 links={ CustomerLinks }

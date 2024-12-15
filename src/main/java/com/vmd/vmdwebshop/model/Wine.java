@@ -29,7 +29,7 @@ public class Wine extends Product {
 
     public Wine(){}
 
-    public Wine(String description, String imageURL,  double price, int amountLeft, String name) {
+    public Wine(String description, String imageURL, double price, int amountLeft, String name) {
         super(price, description, imageURL);
         this.name = name;
         this.amountLeft = amountLeft;

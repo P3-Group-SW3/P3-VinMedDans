@@ -13,17 +13,17 @@ function EventPage() {
     Method: GET
     Description: Get all events
     */
-
     const [events, setEvents] = React.useState([]);
 
     React.useEffect(() => {
-        fetch("/api/event/getAll")
+        fetch("/api/event/getList")
             .then((response) => response.json())
-            .then((data) => setEvents(data));
+            .then((data) => setEvents(data))
+            .catch(error => console.error('Error fetching data:', error));
     }, []);
 
     return (
-        <div className="Landingpage">
+        <div>
             <AgeVerification/>
             <Header
                 links={ CustomerLinks }

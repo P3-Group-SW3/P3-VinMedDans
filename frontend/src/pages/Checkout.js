@@ -69,7 +69,7 @@ function CheckoutPage() {
     const discount = Math.floor(totalQuantity / 6) * 50;
 
     return (
-        <div className="CheckoutPage">
+        <div>
             <Header
                 links={CustomerLinks}
                 showCart={true}
