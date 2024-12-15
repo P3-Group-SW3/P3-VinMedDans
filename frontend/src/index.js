@@ -21,19 +21,11 @@ import LoadFonts from "./components/LoadFonts";
 import AgeVerification from "./components/AgeVerification";
 import CriiptoCallback from "./components/CriiptoCallback";
 
-const SetTitle = () => {
-  useEffect(() => {
-    document.title = 'Vinmeddans';
-  }, []);
-
-  return null;
-};
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <BrowserRouter>
-      <SetTitle />
       <LoadFonts />
       <AgeVerification />
       <CartProvider>

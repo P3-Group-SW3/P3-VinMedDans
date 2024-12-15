@@ -34,8 +34,8 @@ const AlternatingItems = ({ items }) => {
                         }
                     </div>
                 </div>
-            ))}
-        </div>
+                ))}
+            </div>
     );
 };
 

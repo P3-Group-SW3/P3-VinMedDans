@@ -55,21 +55,21 @@ const AgeVerification = () => {
         if (show) {
             console.log("AgeVerification is shown");
             return (
-                <div className='modal show' style={{backdropFilter: 'blur(15px)'}}>
-                    <div className="modal-dialog modal-dialog-centered">
-                        <div className="modal-content">
-                            <div className="modal-header">
-                                <h5 className="modal-title text-center">Er du 18 eller over?</h5>
-                            </div>
-                            <div className="modal-body">
-                                <div className="d-flex justify-content-around">
-                                    <Button text={"Ja"} onClick={ageVerified} isWide={true}/>
-                                    <Button text={"Nej"} onClick={redirectToBR} isWide={true}/>
-                                </div>
+            <div className='modal show' style={{backdropFilter: 'blur(15px)'}}>
+                <div className="modal-dialog modal-dialog-centered">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title text-center">Er du 18 eller over?</h5>
+                        </div>
+                        <div className="modal-body">
+                            <div className="d-flex justify-content-around">
+                                <Button text={"Ja"} onClick={ageVerified} isWide={true}/>
+                                <Button text={"Nej"} onClick={redirectToBR} isWide={true}/>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
             )
         } else {
             return null;
