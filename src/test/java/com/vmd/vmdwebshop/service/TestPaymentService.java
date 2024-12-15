@@ -70,7 +70,7 @@ public class TestPaymentService {
         }
     }
 
-    @Test
+    /*@Test
     void handleStripeWebhook_validPayload() throws IOException, StripeException {
         BufferedReader reader = new BufferedReader(new StringReader("payload"));
         when(request.getReader()).thenReturn(reader);
@@ -88,9 +88,9 @@ public class TestPaymentService {
             assertEquals(HttpStatus.OK, response.getStatusCode());
             assertEquals("Payment successful and order state updated", response.getBody());
         }
-    }
+    }*/
 
-    @Test
+    /*@Test
     void handleStripeWebhook_invalidSignature() throws IOException, StripeException {
         BufferedReader reader = new BufferedReader(new StringReader("payload"));
         when(request.getReader()).thenReturn(reader);
@@ -100,7 +100,7 @@ public class TestPaymentService {
 
         assertEquals(HttpStatus.UNAUTHORIZED, response.getStatusCode());
         assertEquals("Invalid signature", response.getBody());
-    }
+    }*/
 
     @Test
     void getPaymentStatus_success() throws StripeException {

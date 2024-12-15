@@ -40,12 +40,14 @@ public class OrderDto {
     @Pattern(regexp = "^[a-zA-ZÆØÅæøå ]*$", message = "Kun bogstaver og mellemrum er tilladt")
     private String city;
 
+    private String sessionID;
+
     /**
-     * Creates an Order with it's information
+     * Creates an Order with its information
      * @return Orders
      */
     public Orders createOrderFromInfo() {
-        Orders order = new Orders(firstName, lastName, email, phone, address, zipCode, city, null);
+        Orders order = new Orders(firstName, lastName, email, phone, address, zipCode, city, sessionID);
         return order;
     }
 

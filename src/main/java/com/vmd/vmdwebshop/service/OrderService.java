@@ -79,7 +79,7 @@ public class OrderService {
 
 
     /**
-     * Creates a order based on the information given by the customer
+     * Creates an order based on the information given by the customer
      * @param orderDto
      * @param orderLineList
      * @return
