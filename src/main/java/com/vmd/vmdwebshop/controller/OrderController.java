@@ -40,12 +40,14 @@ public class OrderController {
      */
     @PostMapping("/api/")
     public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, HttpServletRequest request) {
+
         try{
             String customerID = customerService.getCustomerID(request);
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
             Orders orders = orderService.createOrderFromInfo(order, orderLines, null);
             return ResponseEntity.ok(orders);
-        } catch (RuntimeException e){
+
+        }catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
@@ -60,10 +62,12 @@ public class OrderController {
     public ResponseEntity<List<Orders>> getAllOrders() {
         try {
             return ResponseEntity.ok(orderService.getAllOrders());
-        } catch (RuntimeException e){
+        }
+        catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
+
     }
 
     /**
@@ -76,7 +80,8 @@ public class OrderController {
         try {
             Orders order = orderService.getOrderById(Long.parseLong(orderID));
             return ResponseEntity.ok(order);
-        } catch (OrderNotFoundInDatbase e){
+        }
+        catch (OrderNotFoundInDatbase e){
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
@@ -92,7 +97,7 @@ public class OrderController {
         //når vi laver denne skal vi senere gemme ændringerne
         try {
             orderService.changeState(Long.parseLong(orderID), state.getState());
-        } catch (StateChangeFailedException e){
+        }catch (StateChangeFailedException e){
             System.out.println(e.getMessage());
         }
     }
@@ -136,7 +141,7 @@ public class OrderController {
         try {
             Orders order = orderService.getOrderById(orderID);
             orderService.deleteOrder(order);
-        } catch (RuntimeException e){
+        }catch (RuntimeException e){
             System.out.println(e.getMessage());
         }
     }

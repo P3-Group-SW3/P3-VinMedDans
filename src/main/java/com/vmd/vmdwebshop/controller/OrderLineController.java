@@ -118,11 +118,15 @@ public class OrderLineController {
         try{
             String customerID = customerService.getCustomerID(request);
             orderLine.setCustomerID(customerID);
+
             return ResponseEntity.ok(orderLineService.deleteOrderLine(orderLine));
         } catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }
+
+
+
 }
 
