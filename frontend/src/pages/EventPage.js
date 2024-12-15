@@ -13,7 +13,6 @@ function EventPage() {
     Method: GET
     Description: Get all events
     */
-
     const [events, setEvents] = React.useState([]);
 
     React.useEffect(() => {
