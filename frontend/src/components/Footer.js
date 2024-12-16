@@ -14,8 +14,8 @@ function Footer() {
 
 function FooterLinks({ items }) {
     const links = {
-        "Instagram": "https://www.instagram.com/ditprofil",
-        "Email": "mailto:dinemail@domæne.dk",
+        "Instagram": "https://www.instagram.com/vinmeddans/",
+        "Email": "mailto:vinmeddans@gmail.com",
         "Levering": "#",
         "Betingelser og vilkår": "#",
         "Telefonnummer": "tel:+4531175720",

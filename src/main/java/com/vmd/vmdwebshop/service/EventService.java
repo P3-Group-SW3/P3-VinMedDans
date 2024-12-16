@@ -68,14 +68,8 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
             throw new EventDataAccessException("Failed to retrieve the event from the database");}
 
         try {
-
             if (existingEvent != null) {
-                existingEvent.setDate(event.getDate());
-                existingEvent.setTime(event.getTime());
-                existingEvent.setLocation(event.getLocation());
-                existingEvent.setTitle(event.getTitle());
-                existingEvent.setDescription(event.getDescription());
-                existingEvent.setImageURL(event.getImageURL());
+                BeanUtils.copyProperties(event, existingEvent, "ID");
                 eventRepository.save(existingEvent);
             } else {
                 eventRepository.save(event);
