@@ -55,11 +55,7 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
         try {
 
             if (existingWine != null) {
-                existingWine.setStock(wine.getStock());
-                existingWine.setDescription(wine.getDescription());
-                existingWine.setImageURL(wine.getImageURL());
-                existingWine.setPrice(wine.getPrice());
-                existingWine.setName(wine.getName());
+                BeanUtils.copyProperties(wine, existingWine, "ID");
                 wineRepository.save(existingWine);
             } else {
                 wineRepository.save(wine);
