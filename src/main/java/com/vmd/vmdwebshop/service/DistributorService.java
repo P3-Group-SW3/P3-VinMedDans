@@ -98,23 +98,15 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
      * @throws  DistributorNotDeletedException if the distributor could not be deleted from the database.
      */
     @Override
-    public List<Distributor> delete(Long ID){
-        Distributor existingDistributor;
-
+    public List<Distributor> delete(Long ID) {
         try {
             Optional<Distributor> optionalDistributor = distributorRepository.findById(ID);
-            existingDistributor = optionalDistributor.orElse(null);
-        } catch (DataAccessException e) {
-            throw new DistributorDataAccessException("Failed to retrieve the distributor from the database");
-        }
-
-        if (existingDistributor == null) {
-            throw new NullPointerException("No such distributor exists");
-        }
-        try {
+            if (optionalDistributor.isEmpty()) {
+                throw new NullPointerException("No such distributor exists with ID: " + ID);
+            }
             distributorRepository.deleteById(ID);
         } catch (DataAccessException e) {
-            throw new DistributorNotDeletedException("Failed to delete distributor in the database");
+            throw new DistributorDataAccessException("Failed to retrieve or delete the distributor from the database");
         }
 
         return distributorRepository.findAll();
