@@ -55,11 +55,6 @@ public class WineController {
      */
     @PostMapping(value="/admin/createAndEdit/{ID}")
     public ResponseEntity<List<Wine>> createAndEdit(@PathVariable ("ID") Long ID, @RequestBody @Valid Wine wine) {
-        //creates a wine object based on the data in the wine DTO
-        //System.out.println(ID);
-        //System.out.println(wineDTO.getID());
-        //Wine wine = wineDTO.createWineFromWineData();
-
         try{
             return ResponseEntity.ok(wineService.createAndEdit(wine, ID));
         } catch (RuntimeException e){
