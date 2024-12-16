@@ -55,7 +55,7 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
         try {
 
             if (existingWine != null) {
-                existingWine.setAmountLeft(wine.getAmountLeft());
+                existingWine.setStock(wine.getStock());
                 existingWine.setDescription(wine.getDescription());
                 existingWine.setImageURL(wine.getImageURL());
                 existingWine.setPrice(wine.getPrice());
@@ -128,7 +128,7 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
             for (OrderLine orderLine : orderLineList){
                 Wine wine = wineRepository.getById(orderLine.getWineID());
 
-                wine.setAmountLeft(wine.getAmountLeft() - orderLine.getAmount());
+                wine.setStock(wine.getStock() - orderLine.getAmount());
 
                 wineRepository.save(wine);
             }

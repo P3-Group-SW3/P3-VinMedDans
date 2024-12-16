@@ -28,7 +28,7 @@ const AlternatingItems = ({ items }) => {
                             <Button text={item.buttonText} isWide={true} onClick={() => navigate(item.buttonPath)}/>
                         </div>
                         }
-                        {item.amountLeft && <div className="d-flex pt-3">
+                        {item.stock && <div className="d-flex pt-3">
                             < CartModify item={item} />
                         </div>
                         }
