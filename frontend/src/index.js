@@ -16,10 +16,10 @@ import ContactPage from "./pages/ContactPage";
 import Checkout from "./pages/Checkout";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminEdit from "./pages/AdminEdit";
-import AdminModule from "./components/AdminModule";
 import LoadFonts from "./components/LoadFonts";
 import AgeVerification from "./components/AgeVerification";
 import CriiptoCallback from "./components/CriiptoCallback";
+import AdminOrders from "./pages/AdminOrders";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -42,6 +42,7 @@ root.render(
           <Route path="administrator">
             <Route index element={<AdminDashboard />}/>
             <Route path=":category/:id" element={<AdminEdit/>} />
+            <Route path="orders/:id" element={<AdminOrders/>} />
             <Route path=":category/create" element={<AdminEdit/>} />
           </Route>
           <Route path="/*" element={<h1>404 - Page Not Found</h1>} />

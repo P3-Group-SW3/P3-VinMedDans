@@ -4,20 +4,19 @@ import '../styles/fonts.css'
 import '../styles/admin.css'
 import Button from "./Button";
 
-function AdminOrders({title, category, columns} ) {
-    const [items, setItems] = useState([]);
+const AdminOrders = () = {
+    const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
 
     useEffect(() => {
-        console.log('Admin stuff: ', title, category)
-        fetch(`/api/${category}/getList`)
+        fetch(`/api/orders/getList`)
             .then(response => response.json())
             .then(data => {
                 if (data) {
-                    setItems(data);
+                    setOrders(data);
                     console.log(data);
                 } else {
-                    console.warn(`Received empty data for ${category}`);
+                    console.warn(`Received empty data for order`);
                 }
             })
             .catch(error => console.error('Error fetching products:', error));
@@ -25,7 +24,7 @@ function AdminOrders({title, category, columns} ) {
 
 
     const clickRow = (item) => {
-        navigate(`/administrator/${category}/${item.id}`, {
+        navigate(`/administrator/orders/${order.id}`, {
             state: {
                 item
             }
@@ -72,4 +71,4 @@ function AdminOrders({title, category, columns} ) {
     );
 }
 
-export default AdminMo;
+export default AdminOrders;
