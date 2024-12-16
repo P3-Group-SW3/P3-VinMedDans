@@ -30,19 +30,19 @@ public class OrderController {
     private CustomerService customerService;
 
     /**
-     * This is the post mapping from the request from the front end and makes an order from a customer.
+     * This is for testing.
      *
      * @param order
-     * @param request
+     * @param customerID
      * We take theese two values, the order is filled with information based on the frontend
      * And we use the cookie id to get the list of ordelines from the customer send these objects through our order service
      * @return
      */
-    @PostMapping("/api/")
-    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, HttpServletRequest request) {
+    @PostMapping("/api/{customerID}")
+    public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @PathVariable String customerID) {
 
         try{
-            String customerID = customerService.getCustomerID(request);
+            //String customerID = customerService.getCustomerID(request);
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
             Orders orders = orderService.createOrderFromInfo(order, orderLines, null);
             return ResponseEntity.ok(orders);
@@ -56,7 +56,7 @@ public class OrderController {
 
     /**
      * Gets all orders
-     * @return
+     * @return List<Orders>
      */
     @GetMapping("/api/orders/getList")
     public ResponseEntity<List<Orders>> getAllOrders() {
@@ -73,7 +73,7 @@ public class OrderController {
     /**
      * Gets a specifiv order based on id
      * @param orderID
-     * @return
+     * @return Order
      */
     @GetMapping("/api/orders/{orderID}")
     public ResponseEntity<Orders> getOrderById(@PathVariable @Pattern(regexp = "^\\d+$") String orderID) {
@@ -105,7 +105,7 @@ public class OrderController {
     /**
      * Get Order from a customer using sessionID
      * @param session_id
-     * @return
+     * @return Orders
      */
     @GetMapping("/api/orders/session/{session_id}")
     public ResponseEntity<Orders> getOrderBySessionID(@PathVariable String session_id) {
@@ -135,6 +135,10 @@ public class OrderController {
         }
     }
 
+    /**
+     *
+     * @param orderID
+     */
     @PostMapping("/api/orders/admin/delete/{orderID}")
     public void deleteOrder(@PathVariable Long orderID){
         System.out.println(orderID);
