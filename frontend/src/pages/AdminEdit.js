@@ -31,6 +31,10 @@ function AdminEdit() {
         console.log(item);
     }
 
+    const setPageTitle = () => {
+        
+    }
+
     const updateItem = () => {
 
         fetch(`/api/${category}/admin/createAndEdit/${item.id}`, {

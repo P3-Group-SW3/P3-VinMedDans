@@ -21,6 +21,7 @@ function AdminModule({title, category, columns} ) {
                 }
             })
             .catch(error => console.error('Error fetching products:', error));
+        setPageTitle();
     }, []);
 
     
