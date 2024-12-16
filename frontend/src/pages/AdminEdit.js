@@ -118,7 +118,7 @@ function AdminEdit() {
     );
 }
 
-const EditField = ({title, field, item, setField}) => {
+const EditField = ({title, field, item, setField, placeholder}) => {
     return (
         <TextField
             label={title}
@@ -129,6 +129,7 @@ const EditField = ({title, field, item, setField}) => {
             value={item[field]}
             onChange={setField}
             margin="normal"
+            placeholder={placeholder}
         >
         </TextField>
     )
@@ -142,6 +143,7 @@ const EditWine = ( { item, setField } ) => {
                 field="name"
                 item={item}
                 setField={setField}
+                placeholder="f.eks. Havtorben"
             />
             < EditField
                 title="Beskrivelse"
@@ -154,12 +156,14 @@ const EditWine = ( { item, setField } ) => {
                 field="amountLeft"
                 item={item}
                 setField={setField}
+                placeholder="f.eks 100"
             />
             < EditField
                 title="Pris"
                 field="price"
                 item={item}
                 setField={setField}
+                placeholder="f.eks 189"
                 endAdornment={<InputAdornment position="end">DKK</InputAdornment>}
             />
 
@@ -181,12 +185,14 @@ const EditEvent = ({item, setField}) => {
                 field="date"
                 item={item}
                 setField={setField}
+                placeholder="DD/MM/YYYY"
             />
             <EditField
                 title="Tidspunkt"
                 field="time"
                 item={item}
                 setField={setField}
+                placeholder="HH:MM-HH:MM"
             />
             <EditField
                 title="Sted"
@@ -224,6 +230,7 @@ const EditDistributor = ( { item, setField } ) => {
                 field="websiteURL"
                 item={item}
                 setField={setField}
+                placeholder="https://www.br.dk/"
             />
         </div>
     );
