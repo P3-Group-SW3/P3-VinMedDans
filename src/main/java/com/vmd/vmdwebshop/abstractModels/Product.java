@@ -4,6 +4,9 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import org.hibernate.annotations.Type;
 
+//abstract class used, as it could be used for other types of products in the future
+//uses Hibernate Validation annotations for input validation
+//subclasses inherits the input validation
 @MappedSuperclass
 public abstract class Product {
 
@@ -37,7 +40,7 @@ public abstract class Product {
 
     public double getPrice() { return this.price; }
 
-    public boolean getActiveState(){return this.activeState; }
+    public boolean getActiveState(){ return this.activeState; }
 
 
 
@@ -53,6 +56,7 @@ public abstract class Product {
         this.imageURL = imageURL;
     }
 
+    //reverses the boolean value
     public void changeActiveState(){ activeState = !activeState; }
 
 }
