@@ -46,6 +46,14 @@ public class PaymentService {
     @Autowired
     private OrderService orderService;
 
+    /**
+     * Create a checkout session
+     *
+     * @param orderDto The order data
+     * @param request The request
+     * @return A response entity with the result of the checkout session creation
+     * @throws StripeException If an error occurs during the checkout session creation
+     */
     public Map<String, String> createCheckoutSession(OrderDto orderDto, HttpServletRequest request) throws StripeException {
         Stripe.apiKey = stripeSecretKey;
 
@@ -82,22 +90,29 @@ public class PaymentService {
     }
 
 
+    /**
+     * Handle a Stripe webhook
+     *
+     * @param request The request
+     * @return A response entity with the result of the webhook handling
+     */
     public ResponseEntity<String> handleStripeWebhook(HttpServletRequest request) {
         String payload;
-        try {
+        try { // Check if the payload is valid, if not return bad request
             payload = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             return ResponseEntity.badRequest().body("Invalid payload");
         }
 
-        String sigHeader = request.getHeader("Stripe-Signature");
-        Event event;
-        try {
+        String sigHeader = request.getHeader("Stripe-Signature"); 
+        Event event; 
+        try { // Check if the signature is valid, if not return unauthorized
             event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
         } catch (SignatureVerificationException e) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Invalid signature");
         }
 
+        // Handle the event if it is a checkout session completed event and update the order state to confirmed
         if ("checkout.session.completed".equals(event.getType())) {
             Session session = (Session) event.getDataObjectDeserializer().getObject().orElse(null);
             if (session != null) {
