@@ -29,7 +29,7 @@ public class Orders {
     private String fullName;
     private String mail;
     private String phoneNumber;
-    private String adress;
+    private String address;
     private String zipCode;
     private String city;
     private State state;
@@ -44,11 +44,11 @@ public class Orders {
     public Orders() {
     }
 
-    public Orders(String firstName, String lastName, String mail, String phoneNumber, String adress, String zipCode, String city, String SessionID) {
+    public Orders(String firstName, String lastName, String mail, String phoneNumber, String address, String zipCode, String city, String SessionID) {
         this.fullName = firstName + " " + lastName;
         this.mail = mail;
         this.phoneNumber = phoneNumber;
-        this.adress = adress;
+        this.address = address;
         this.zipCode = zipCode;
         this.city = city;
         this.SessionID =  SessionID;
@@ -90,12 +90,12 @@ public class Orders {
         return phoneNumber;
     }
 
-    public String getAdress() {
-        return adress;
+    public String getAddress() {
+        return address;
     }
 
-    public void setAdress(String adress) {
-        this.adress = adress;
+    public void setAddress(String adress) {
+        this.address = adress;
     }
 
     public String getZipCode() {

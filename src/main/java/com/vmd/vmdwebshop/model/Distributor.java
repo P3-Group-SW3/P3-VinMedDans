@@ -25,7 +25,7 @@ public class Distributor {
     @Column(name = "location", nullable = false, length = 80)
     private String location;
 
-    
+
     @Column(name = "websiteURL", nullable = false, length = 200)
     private String websiteURL;
 
