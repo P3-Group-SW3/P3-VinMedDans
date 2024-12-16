@@ -57,7 +57,6 @@ public class PaymentService {
         SessionCreateParams params = SessionCreateParams.builder()
             .setMode(SessionCreateParams.Mode.PAYMENT)
             .setSuccessUrl(DOMAIN + "/order?success=true&session_id={CHECKOUT_SESSION_ID}")
-            .setCancelUrl(DOMAIN + "/order?canceled=true")
             .setCustomerEmail(null)
             .addLineItem(
                     SessionCreateParams.LineItem.builder()
