@@ -6,7 +6,7 @@ import {InputAdornment, TextField} from "@mui/material";
 function AdminEdit() {
     const navigate = useNavigate();
 
-    const [item, setItem] = useState(useLocation().state?.item || { id: -1, name: '', description: '', price: '', imageURL: 'image', imgURL: 'image', amountLeft: '' });
+    const [item, setItem] = useState(useLocation().state?.item || { id: -1, name: '', description: '', price: '', imageURL: 'image', imgURL: 'image', stock: '' });
     const { category } = useParams();
 
     const deleteItem = () => {
@@ -57,7 +57,7 @@ function AdminEdit() {
                 description: item.description,
                 imageURL: item.imageURL,
                 price: item.price,
-                amountLeft: item.amountLeft,
+                stock: item.stock,
                 name: item.name
             }
         } else if (category === "event") {
@@ -151,7 +151,7 @@ const EditWine = ( { item, setField } ) => {
             />
             < EditField
                 title="Antal"
-                field="amountLeft"
+                field="stock"
                 item={item}
                 setField={setField}
             />
