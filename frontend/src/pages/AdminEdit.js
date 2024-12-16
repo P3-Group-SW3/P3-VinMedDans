@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "../components/Button";
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import {InputAdornment, TextField} from "@mui/material";
@@ -8,7 +8,29 @@ function AdminEdit() {
 
     const [item, setItem] = useState(useLocation().state?.item || { id: -1, name: '', description: '', price: '', imageURL: 'image', stock: '' });
     const { category } = useParams();
-    const pageTitle = setPageTitle();
+
+    const [title, setTitle] = useState('');
+
+    useEffect(() => {
+        setTitle(setPageTitle);
+    }, []);
+
+    const setPageTitle = () => {
+        let title = '';
+        if(item.id === -1) {
+            title += 'Opret ';
+        } else {
+            title += 'Redigér ';
+        }
+        if (category === 'wine') {
+            title += 'vin';
+        } else if (category === 'event'){
+            title += 'event';
+        } else {
+            title += 'forhandler';
+        }
+        return title;
+    }
 
     const deleteItem = () => {
         if (window.confirm(`Are you sure you want to delete ${item.name}`)) {
@@ -30,24 +52,6 @@ function AdminEdit() {
             [name]: value,
         }));
         console.log(item);
-    }
-
-    const setPageTitle = () => {
-        let title = '';
-        if(item.id === -1) {
-            title += 'Opret '
-        } else {
-            title += 'Redigér '
-        }
-        if (category === 'wine') {
-            title += 'vin'
-        } else if (category === 'event') {
-            title += 'event'
-        } else if (category === 'distributor') {
-            title += 'forhandler'
-        }
-
-        return title;
     }
 
     const updateItem = () => {
@@ -102,7 +106,7 @@ function AdminEdit() {
     return (
         <div className="container justify-content-center">
             <div className="col-6 py-5">
-                <h1 className="header-large">{pageTitle}</h1>
+                <h1 className="header-large">{title}</h1>
                 {item.id!==-1 &&
                     <div>
                         <Button text="Slet" onClick={deleteItem} style={{marginBottom:'5em'}}/>
