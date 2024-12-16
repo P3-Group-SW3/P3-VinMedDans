@@ -76,7 +76,7 @@ public class PaymentService {
         Map<String, String> response = new HashMap<>();
         response.put("url", session.getUrl());
 
-        Orders order = orderService.createOrderFromInfo(orderDto, orderLines, session.getId());
+        orderService.createOrderFromInfo(orderDto, orderLines, session.getId());
 
         return response;
     }
