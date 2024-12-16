@@ -109,17 +109,4 @@ public class PaymentService {
 
         return ResponseEntity.ok("Payment not completed");
     }
-
-    public Map<String, String> getPaymentStatus(String sessionId) {
-        Stripe.apiKey = stripeSecretKey;
-        try {
-            Session session = Session.retrieve(sessionId);
-            String paymentStatus = session.getPaymentStatus();
-            Map<String, String> response = new HashMap<>();
-            response.put("status", paymentStatus);
-            return response;
-        } catch (StripeException e) {
-            return null;
-        }
-    }
 }
