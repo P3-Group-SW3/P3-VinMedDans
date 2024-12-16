@@ -94,7 +94,7 @@ public class TestOrderService {
 
         Orders newOrder = orderService.getOrderById(Long.parseLong("1"));
 
-        assertEquals(orderList.get(1).getAdress(), newOrder.getAdress());
+        assertEquals(orderList.get(1).getAddress(), newOrder.getAddress());
     }
 
     //Test that asserts that when an order isn't found in the database, an exception will be thrown

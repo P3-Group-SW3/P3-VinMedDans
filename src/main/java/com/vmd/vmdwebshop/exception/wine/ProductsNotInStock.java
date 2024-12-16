@@ -4,5 +4,5 @@ public class ProductsNotInStock extends RuntimeException {
 
     public ProductsNotInStock(String message) {
         super(message);
-    }
+    } //could be left out
 }

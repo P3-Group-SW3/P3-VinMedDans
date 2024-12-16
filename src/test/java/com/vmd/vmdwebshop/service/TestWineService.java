@@ -179,8 +179,8 @@ public class TestWineService {
 
         wineService.updateStockFromOrder(newOrderLineList);
 
-        assertEquals(122, wine1.getAmountLeft());
-        assertEquals(120, wine2.getAmountLeft());
+        assertEquals(122, wine1.getStock());
+        assertEquals(120, wine2.getStock());
     }
 
     @Test

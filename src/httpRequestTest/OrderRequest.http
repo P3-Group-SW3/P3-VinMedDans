@@ -1,12 +1,12 @@
 
 ### Send POST request with json body
-POST http://localhost:8080/api/orderInfo
+POST http://localhost:8080/api/hello2u
 Content-Type: application/json
 
 {
   "firstName":"G T",
   "lastName": "C",
-  "email": "g.t@.gmail.com",
+  "email": "g.t@gmail.com",
   "phone": "+9999999999",
   "address": "ringevej 23",
   "zipCode": "4100",

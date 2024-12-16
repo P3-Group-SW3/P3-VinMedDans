@@ -33,7 +33,7 @@ public class ImageController {
      * @param customName The custom name for the image
      * @return A response entity with the result of the upload
      */
-    @PostMapping("/upload")
+    @PostMapping("/admin/upload")
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam(value = "customName", required = false) String customName) {
         try {
             String filePath = ImageService.saveImage(file, customName);

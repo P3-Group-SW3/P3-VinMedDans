@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Button from "../components/Button";
 import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import {InputAdornment, TextField} from "@mui/material";
@@ -6,8 +6,32 @@ import {InputAdornment, TextField} from "@mui/material";
 function AdminEdit() {
     const navigate = useNavigate();
 
-    const [item, setItem] = useState(useLocation().state?.item || { id: -1, name: '', description: '', price: '', imageURL: 'image', imgURL: 'image', amountLeft: '' });
+    const [item, setItem] = useState(useLocation().state?.item || { id: -1, name: '', description: '', price: '', imageURL: 'image', stock: '' });
     const { category } = useParams();
+
+    const [title, setTitle] = useState('');
+
+    useEffect(() => {
+        setTitle(setPageTitle);
+        console.log("Item: ", item);
+    }, []);
+
+    const setPageTitle = () => {
+        let title = '';
+        if(item.id === -1) {
+            title += 'Opret ';
+        } else {
+            title += 'Redigér ';
+        }
+        if (category === 'wine') {
+            title += 'vin';
+        } else if (category === 'event'){
+            title += 'event';
+        } else {
+            title += 'forhandler';
+        }
+        return title;
+    }
 
     const deleteItem = () => {
         if (window.confirm(`Are you sure you want to delete ${item.name}`)) {
@@ -57,7 +81,7 @@ function AdminEdit() {
                 description: item.description,
                 imageURL: item.imageURL,
                 price: item.price,
-                amountLeft: item.amountLeft,
+                stock: item.stock,
                 name: item.name
             }
         } else if (category === "event") {
@@ -65,7 +89,7 @@ function AdminEdit() {
                 ID: item.id,
                 date: item.date,
                 description: item.description,
-                imgURL: item.imgURL,
+                imageURL: item.imageURL,
                 location: item.location,
                 time: item.time,
                 title: item.title
@@ -83,8 +107,8 @@ function AdminEdit() {
     return (
         <div className="container justify-content-center">
             <div className="col-6 py-5">
-                <h1 className="header-large">{item.imageURL==='image'?"Opret vin":"Redigér vin"}</h1>
-                {item.imageURL!=='image' &&
+                <h1 className="header-large">{title}</h1>
+                {item.id!==-1 &&
                     <div>
                         <Button text="Slet" onClick={deleteItem} style={{marginBottom:'5em'}}/>
                     </div>
@@ -118,7 +142,7 @@ function AdminEdit() {
     );
 }
 
-const EditField = ({title, field, item, setField}) => {
+const EditField = ({title, field, item, setField, placeholder}) => {
     return (
         <TextField
             label={title}
@@ -129,6 +153,7 @@ const EditField = ({title, field, item, setField}) => {
             value={item[field]}
             onChange={setField}
             margin="normal"
+            defaultValue={placeholder}
         >
         </TextField>
     )
@@ -142,6 +167,7 @@ const EditWine = ( { item, setField } ) => {
                 field="name"
                 item={item}
                 setField={setField}
+                placeholder="f.eks. Havtorben"
             />
             < EditField
                 title="Beskrivelse"
@@ -151,15 +177,17 @@ const EditWine = ( { item, setField } ) => {
             />
             < EditField
                 title="Antal"
-                field="amountLeft"
+                field="stock"
                 item={item}
                 setField={setField}
+                placeholder="f.eks 100"
             />
             < EditField
                 title="Pris"
                 field="price"
                 item={item}
                 setField={setField}
+                placeholder="f.eks 189"
                 endAdornment={<InputAdornment position="end">DKK</InputAdornment>}
             />
 
@@ -181,12 +209,14 @@ const EditEvent = ({item, setField}) => {
                 field="date"
                 item={item}
                 setField={setField}
+                placeholder="DD/MM/YYYY"
             />
             <EditField
                 title="Tidspunkt"
                 field="time"
                 item={item}
                 setField={setField}
+                placeholder="HH:MM-HH:MM"
             />
             <EditField
                 title="Sted"
@@ -224,6 +254,7 @@ const EditDistributor = ( { item, setField } ) => {
                 field="websiteURL"
                 item={item}
                 setField={setField}
+                placeholder="https://www.br.dk/"
             />
         </div>
     );

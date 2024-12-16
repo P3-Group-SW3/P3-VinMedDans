@@ -6,10 +6,17 @@ import jakarta.validation.constraints.*;
 import java.util.HashSet;
 import java.util.Set;
 
+//uses Hibernate validation
+//inherits from the Product class, also input validation
+//@Entity is for the database, to tell the database that it must be able to store objects of this class
+//Table generates the table name
 @Entity
 @Table(name="Wine")
 public class Wine extends Product {
 
+    //these annotation are for the database
+    //tells that this attribute should be the primary key, and the generation strategy
+    //The database generates this field automatically
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -21,7 +28,20 @@ public class Wine extends Product {
 
     @Digits(integer = 4, fraction = 0, message = "There can't be more than 9999 wines in stock")
     @Min(value = 0, message = "The stock amount must not be less than 0")
-    private int amountLeft;
+    private int stock;
+
+    @Max(value = 100, message = "The AlcoholPercentage can't be above a 100%")
+    private double alcoholPercentage;
+
+    @Size(max = 300)
+    @Column(columnDefinition = "TEXT")
+    @Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9\\- ]*$", message = "Kun bogstaver, tal, mellemrum og bindestreg er tilladt")
+    private String contents;
+
+    @Size(max = 300)
+    @Column(columnDefinition = "TEXT")
+    @Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9\\- ]*$", message = "Kun bogstaver, tal, mellemrum og bindestreg er tilladt")
+    private String TasteDescription;
 
     //relationship med orderlines
     @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -30,10 +50,10 @@ public class Wine extends Product {
     // Constructors
     public Wine(){}
 
-    public Wine(String description, String imageURL, double price, int amountLeft, String name) {
+    public Wine(String description, String imageURL, double price, int stock, String name) {
         super(price, description, imageURL);
         this.name = name;
-        this.amountLeft = amountLeft;
+        this.stock = stock;
     }
 
     // Getters and setters
@@ -47,21 +67,49 @@ public class Wine extends Product {
         this.name = name;
     }
 
-    public int getAmountLeft() {
-        return amountLeft;
+    // Getter for amountLeft
+    public int getStock() {
+        return stock;
     }
 
-    public void setAmountLeft(int amountLeft) {
-        this.amountLeft = amountLeft;
+    // Setter for amountLeft
+    public void setStock(int amountLeft) {
+        this.stock = amountLeft;
     }
 
     // Method to check if the wine can be purchased
+    //is used in the creation of an order
     public boolean canBePurchased(int amountPurchased) {
-        return amountLeft - amountPurchased >= 0;
+        return stock - amountPurchased >= 0;
     }
 
     // Method to add to the amount left
-    public void addToAmountLeft(int amountPurchased) {
-        this.amountLeft += amountPurchased;
+    public void addToStock(int amountPurchased) {
+        this.stock += amountPurchased;
+    }
+
+
+    public double getAlcoholPercentage() {
+        return alcoholPercentage;
+    }
+
+    public void setAlcoholPercentage( double alcoholPercentage) {
+        this.alcoholPercentage = alcoholPercentage;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public String getTasteDescription() {
+        return TasteDescription;
+    }
+
+    public void setTasteDescription(String tasteDescription) {
+        TasteDescription = tasteDescription;
     }
 }

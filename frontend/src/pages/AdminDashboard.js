@@ -6,7 +6,7 @@ const AdminDashboard = () => {
 
     const productColumns = [
         { header: 'Navn', field: 'name' },
-        { header: 'Antal', field: 'amountLeft' }
+        { header: 'Antal', field: 'stock' }
     ];
     const orderColumns = [
         { header: 'Ordrenummer', field: 'id' },

@@ -24,16 +24,16 @@ public class CustomerService {
         try {
             // If there are no existing "customerData" cookie, then create a new one.
             if (!ifCookieExist(request)) {
-                String sessionID = request.getSession().getId(); // Gets the JSESSIONID.
+                String sessionID = request.getSession().getId(); 
                 String legalAge = "false"; // default value
-                String cookieAge = "new"; // Age of cookie. Needed for frontend.
+                String cookieAge = "new"; 
 
                 String cookieValue = sessionID + "|" + legalAge + "|" + cookieAge; /* Concatenates sessionID,
                                                                                       legalAge and cookieAge together
                                                                                       with a separator "|".          */
 
-                Cookie cookie = new Cookie("customerData", cookieValue); // Creates Cookie object.
-                cookie.setMaxAge(7 * 24 * 60 * 60); // expires in 7 days.
+                Cookie cookie = new Cookie("customerData", cookieValue); 
+                cookie.setMaxAge(7 * 24 * 60 * 60); // 7 Days
                 cookie.setSecure(true); // Cookie can only be sent over secure HTTPS connections.
                 cookie.setHttpOnly(true); // Cookie cannot get accessed or modified via Javascript.
                 cookie.setPath("/"); // Cookie is accessible to all pages in the domain.
@@ -63,10 +63,10 @@ public class CustomerService {
         }
 
         // We do this again, because we need the value from the cookie (this is also being done in ifCookieExist).
-        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent with the request.
+        Cookie[] cookies = request.getCookies(); 
 
         // If there is a "customerData" cookie, then save its value in a variable.
-        for (Cookie cookie : cookies) {                     // For-each loop.
+        for (Cookie cookie : cookies) {      
             if ("customerData".equals(cookie.getName())) {
                 String value = cookie.getValue();
 
@@ -74,13 +74,14 @@ public class CustomerService {
                 if (value.contains("false") && value.contains("new")) {
                     String updatedValue = value.replace("false", "true")
                                             .replace("new", "old");
-
-                    // Has to be the exact same as when created, or else it will create a new cookie.
-                    cookie.setValue(updatedValue); // Sets value of the cookie to the updatedValue.
-                    cookie.setMaxAge(7 * 24 * 60 * 60); // 7 days
-                    cookie.setSecure(true); // Cookie can only be sent over secure HTTPS connections.
-                    cookie.setHttpOnly(true); // Cookie cannot get accessed or modified via Javascript.
-                    cookie.setPath("/"); // Cookie is accessible to all pages in the domain.
+                    
+                    // Updates the cookie with a new value, sets it to expire in 7 days, ensures it is secure (HTTPS only), 
+                    // HTTP-only (not accessible via JavaScript), and available to all pages in the domain.
+                    cookie.setValue(updatedValue);
+                    cookie.setMaxAge(7 * 24 * 60 * 60);
+                    cookie.setSecure(true);
+                    cookie.setHttpOnly(true);
+                    cookie.setPath("/");
 
                     response.addCookie(cookie); // cookie gets added to the response.
 
@@ -186,7 +187,7 @@ public class CustomerService {
             throw new IllegalArgumentException("HttpServletRequest cannot be null!");
         }
 
-        Cookie[] cookies = request.getCookies(); // Retrieves an array of Cookie objects sent with the request.
+        Cookie[] cookies = request.getCookies(); 
         if (cookies == null) {
             throw new IllegalStateException("There are no cookies for this customer!");
         }

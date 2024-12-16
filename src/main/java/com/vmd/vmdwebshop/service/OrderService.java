@@ -23,7 +23,7 @@ public class OrderService {
     private final OrderLineService orderLineService;
     private final WineService wineService;
 
-    // fjern / tilføj OrderRepository orderRepository baseret på test
+    // til test
     // Constructor
     public OrderService(View error, OrderRepository orderRepository, OrderLineService orderLineService, WineService wineService){
         this.error = error;
@@ -82,7 +82,8 @@ public class OrderService {
      * Creates an order based on the information given by the customer
      * @param orderDto
      * @param orderLineList
-     * @return
+     * @param sessionID
+     * @return Orders
      */
     public Orders createOrderFromInfo(OrderDto orderDto, List<OrderLine> orderLineList, String sessionID) {
         try {
@@ -95,6 +96,7 @@ public class OrderService {
         order.setState(Orders.State.REGISTERED);
         order.setDate(new Date());
         order.setSessionID(sessionID);
+        order.setPrice(OrderLineService.calculateOrderLines(orderLineList));
 
         orderRepository.save(order);
 
@@ -125,13 +127,14 @@ public class OrderService {
      * allows admins to change the state of an order
      * Det er her vi ville tilføje emails?
      * @param orderID
-     * @param state
+     * @param state, new state
+     * @throws StateChangeFailedException if the object is not properly updated in the database.
      */
     public void changeState(Long orderID, int state) {
-        Orders order = getOrderById(orderID);
-        Orders.State state1 = order.getState();
-        Orders.State newState = Orders.State.values()[state];
-        order.setState(newState);
+        Orders order = getOrderById(orderID);  //retrieves an order object
+        Orders.State state1 = order.getState(); //retrives the state
+        Orders.State newState = Orders.State.values()[state]; //defines the new state
+        order.setState(newState); //sets the new state of the existing object
         System.out.println("Order state changed from: " + state1 + " to: " + newState);
 
         if (order.getState() != newState) {
@@ -140,10 +143,11 @@ public class OrderService {
     }
 
     /**
-     *
+     *Method to delete a specific order
      * @param order
      */
     public void deleteOrder(Orders order) {
+        //before deleting an order, all orderlines referenced by the order must be deleted.
         for (OrderLine orderLine: order.getOrderLines()) {
             orderLineService.deleteOrderlineByID(orderLine);
         }

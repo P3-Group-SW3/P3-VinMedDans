@@ -39,20 +39,20 @@ public class Event {
     private String description;
 
     @NotBlank (message = "This field must not be blank")
-    @Column(name = "imgURL", nullable = false, length = 200)
-    private String imgURL;
+    @Column(name = "imageURL", nullable = false, length = 200)
+    private String imageURL;
 
     // Constructors
     public Event() {}
 
     public Event(String date, String time, String location, String title,
-                 String description, String imgURL) {
+                 String description, String imageURL) {
         this.date = date;
         this.time = time;
         this.location = location;
         this.title = title;
         this.description = description;
-        this.imgURL = imgURL;
+        this.imageURL = imageURL;
     }
 
     // Getters and setters
@@ -96,12 +96,12 @@ public class Event {
         this.description = description;
     }
 
-    public String getImgURL() {
-        return imgURL;
+    public String getImageURL() {
+        return imageURL;
     }
 
-    public void setImgURL(String imgURL) {
-        this.imgURL = imgURL;
+    public void setImageURL(String imageURL) {
+        this.imageURL = imageURL;
     }
 
     public String getTitle() {

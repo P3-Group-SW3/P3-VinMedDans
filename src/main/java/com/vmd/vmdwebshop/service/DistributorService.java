@@ -3,6 +3,7 @@ package com.vmd.vmdwebshop.service;
 import com.vmd.vmdwebshop.Interface.AdministrativeMethodsInterface;
 import com.vmd.vmdwebshop.model.Distributor;
 import com.vmd.vmdwebshop.exception.distributor.*;
+import com.vmd.vmdwebshop.model.Event;
 import com.vmd.vmdwebshop.repository.DistributorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -43,6 +44,15 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
         }
 
         return distributorList;
+    }
+
+    public Distributor getDistributorById(Long distributorID){
+        Distributor distributor = distributorRepository.findById(distributorID).orElse(null);
+        if(distributor == null){
+            throw new DistributorNotFoundException("Distributor " + distributorID + "not found");
+        }
+
+        return distributor;
     }
 
     /**
@@ -97,23 +107,14 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
      */
     @Override
     public List<Distributor> delete(Long ID) {
-        Distributor existingDistributor;
-
         try {
             Optional<Distributor> optionalDistributor = distributorRepository.findById(ID);
-            existingDistributor = optionalDistributor.orElse(null);
-        } catch (DataAccessException e) {
-            throw new DistributorDataAccessException("Failed to retrieve the distributor from the database");
-        }
-
-        if (existingDistributor == null) {
-            throw new NullPointerException("No such distributor exists");
-        }
-
-        try {
+            if (optionalDistributor.isEmpty()) {
+                throw new NullPointerException("No such distributor exists with ID: " + ID);
+            }
             distributorRepository.deleteById(ID);
         } catch (DataAccessException e) {
-            throw new DistributorNotDeletedException("Failed to delete distributor in the database");
+            throw new DistributorDataAccessException("Failed to retrieve or delete the distributor from the database");
         }
 
         return distributorRepository.findAll();
