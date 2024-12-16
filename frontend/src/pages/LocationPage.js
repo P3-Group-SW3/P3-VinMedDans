@@ -2,7 +2,6 @@ import AgeVerification from "../components/AgeVerification";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import {CustomerLinks} from "./CustomerLinkContext";
-import Event from "../components/Event";
 import React from "react";
 import Distributor from "../components/Distributor";
 
@@ -17,7 +16,6 @@ function LocationPage() {
             .catch(error => console.error('Error fetching data:', error));
     }, []);
 
-    function LocationPage() {
         return (
             <div>
                 <AgeVerification/>
@@ -25,18 +23,16 @@ function LocationPage() {
                     links={CustomerLinks}
                     showCart={true}
                 />
-                {distributors.map((event) => (
+                {distributors.map((distributor) => (
                     <Distributor
-                        key={event.id}
-                        title={distributors.title}
-                        name={distributors.name}
-                        location={distributors.locations}
-                        websiteURL={distributors.websiteURL}
+                        key={distributor.id}
+                        name={distributor.name}
+                        location={distributor.location}
+                        websiteURL={distributor.websiteURL}
                     />
                 ))}
                 <Footer/>
             </div>
         );
-    }
 }
     export default LocationPage;
