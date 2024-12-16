@@ -22,10 +22,6 @@ public class OrderLineController {
     @Autowired
     private OrderLineService orderLineService;
     @Autowired
-    private OrderLineRepository orderLineRepository;
-    @Autowired
-    private WineRepository wineRepository;
-    @Autowired
     private WineService wineService;
     @Autowired
     private CustomerService customerService;
