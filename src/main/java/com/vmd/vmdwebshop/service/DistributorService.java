@@ -4,6 +4,7 @@ import com.vmd.vmdwebshop.Interface.AdministrativeMethodsInterface;
 import com.vmd.vmdwebshop.exception.event.EventNotFoundException;
 import com.vmd.vmdwebshop.model.Distributor;
 import com.vmd.vmdwebshop.exception.distributor.*;
+import com.vmd.vmdwebshop.model.Event;
 import com.vmd.vmdwebshop.repository.DistributorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -44,6 +45,15 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
         }
 
         return distributorList;
+    }
+
+    public Distributor getDistributorById(Long distributorID){
+        Distributor distributor = distributorRepository.findById(distributorID).orElse(null);
+        if(distributor == null){
+            throw new DistributorNotFoundException("Distributor " + distributorID + "not found");
+        }
+
+        return distributor;
     }
 
     /**

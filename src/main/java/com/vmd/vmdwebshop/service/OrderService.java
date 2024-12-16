@@ -25,7 +25,7 @@ public class OrderService {
     private final OrderLineService orderLineService;
     private final WineService wineService;
 
-    // fjern / tilføj OrderRepository orderRepository baseret på test
+    // til test
     public OrderService(View error, OrderRepository orderRepository, OrderLineService orderLineService, WineService wineService){
         this.error = error;
         this.orderRepository = orderRepository;
@@ -82,7 +82,8 @@ public class OrderService {
      * Creates a order based on the information given by the customer
      * @param orderDto
      * @param orderLineList
-     * @return
+     * @param sessionID
+     * @return Orders
      */
     public Orders createOrderFromInfo(OrderDto orderDto, List<OrderLine> orderLineList, String sessionID) {
         try {
@@ -95,6 +96,7 @@ public class OrderService {
         order.setState(Orders.State.REGISTERED);
         order.setDate(new Date());
         order.setSessionID(sessionID);
+        order.setPrice(OrderLineService.calculateOrderLines(orderLineList));
         orderRepository.save(order);
 
         if (order.getID() == null) {

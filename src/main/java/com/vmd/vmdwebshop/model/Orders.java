@@ -34,6 +34,7 @@ public class Orders {
     private String city;
     private State state;
     private Date date;
+    private double price;
 
     //relationship med orderlines
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -126,6 +127,14 @@ public class Orders {
 
     public void setDate(Date date) {
         this.date = date;
+    }
+
+    public double getPrice() {
+        return price;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
     }
 
     //Slet
