@@ -8,6 +8,7 @@ function AdminEdit() {
 
     const [item, setItem] = useState(useLocation().state?.item || { id: -1, name: '', description: '', price: '', imageURL: 'image', stock: '' });
     const { category } = useParams();
+    const pageTitle = setPageTitle();
 
     const deleteItem = () => {
         if (window.confirm(`Are you sure you want to delete ${item.name}`)) {
@@ -32,7 +33,21 @@ function AdminEdit() {
     }
 
     const setPageTitle = () => {
-        
+        let title = '';
+        if(item.id === -1) {
+            title += 'Opret '
+        } else {
+            title += 'Redigér '
+        }
+        if (category === 'wine') {
+            title += 'vin'
+        } else if (category === 'event') {
+            title += 'event'
+        } else if (category === 'distributor') {
+            title += 'forhandler'
+        }
+
+        return title;
     }
 
     const updateItem = () => {
@@ -87,8 +102,8 @@ function AdminEdit() {
     return (
         <div className="container justify-content-center">
             <div className="col-6 py-5">
-                <h1 className="header-large">{item.imageURL==='image'?"Opret vin":"Redigér vin"}</h1>
-                {item.imageURL!=='image' &&
+                <h1 className="header-large">{pageTitle}</h1>
+                {item.id!==-1 &&
                     <div>
                         <Button text="Slet" onClick={deleteItem} style={{marginBottom:'5em'}}/>
                     </div>

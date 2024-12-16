@@ -38,7 +38,7 @@ public class OrderController {
      * And we use the cookie id to get the list of ordelines from the customer send these objects through our order service
      * @return
      */
-    @PostMapping("/api/{customerID}")
+    @PostMapping("/api/admin/orders/create/{customerID}")
     public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @PathVariable String customerID) {
 
         try{
