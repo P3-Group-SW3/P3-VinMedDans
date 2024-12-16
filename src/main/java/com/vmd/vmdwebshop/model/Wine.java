@@ -23,6 +23,19 @@ public class Wine extends Product {
     @Min(value = 0, message = "The stock amount must not be less than 0")
     private int stock;
 
+    @Max(value = 100, message = "The AlcoholPercentage can't be above a 100%")
+    private double alcoholPercentage;
+
+    @Size(max = 300)
+    @Column(columnDefinition = "TEXT")
+    @Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9\\- ]*$", message = "Kun bogstaver, tal, mellemrum og bindestreg er tilladt")
+    private String contents;
+
+    @Size(max = 300)
+    @Column(columnDefinition = "TEXT")
+    @Pattern(regexp = "^[a-zA-ZÆØÅæøå0-9\\- ]*$", message = "Kun bogstaver, tal, mellemrum og bindestreg er tilladt")
+    private String TasteDescription;
+
     //relationship med orderlines
     @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderLine> orderLines = new HashSet<>();
@@ -65,5 +78,30 @@ public class Wine extends Product {
     // Method to add to the amount left
     public void addToStock(int amountPurchased) {
         this.stock += amountPurchased;
+    }
+
+
+    public double getAlcoholPercentage() {
+        return alcoholPercentage;
+    }
+
+    public void setAlcoholPercentage( double alcoholPercentage) {
+        this.alcoholPercentage = alcoholPercentage;
+    }
+
+    public String getContents() {
+        return contents;
+    }
+
+    public void setContents(String contents) {
+        this.contents = contents;
+    }
+
+    public String getTasteDescription() {
+        return TasteDescription;
+    }
+
+    public void setTasteDescription(String tasteDescription) {
+        TasteDescription = tasteDescription;
     }
 }
