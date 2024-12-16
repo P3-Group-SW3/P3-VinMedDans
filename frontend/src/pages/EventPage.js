@@ -37,7 +37,7 @@ function EventPage() {
                     time={event.time}
                     location={event.location}
                     description={event.description}
-                    imageUrl={event.imgURL}
+                    imageUrl={event.imageURL}
                 />
             ))}
             <Footer />

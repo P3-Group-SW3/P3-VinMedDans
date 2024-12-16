@@ -6,7 +6,7 @@ import {InputAdornment, TextField} from "@mui/material";
 function AdminEdit() {
     const navigate = useNavigate();
 
-    const [item, setItem] = useState(useLocation().state?.item || { id: -1, name: '', description: '', price: '', imageURL: 'image', imgURL: 'image', stock: '' });
+    const [item, setItem] = useState(useLocation().state?.item || { id: -1, name: '', description: '', price: '', imageURL: 'image', stock: '' });
     const { category } = useParams();
 
     const deleteItem = () => {
@@ -65,7 +65,7 @@ function AdminEdit() {
                 ID: item.id,
                 date: item.date,
                 description: item.description,
-                imgURL: item.imgURL,
+                imageURL: item.imageURL,
                 location: item.location,
                 time: item.time,
                 title: item.title
@@ -129,7 +129,7 @@ const EditField = ({title, field, item, setField, placeholder}) => {
             value={item[field]}
             onChange={setField}
             margin="normal"
-            placeholder={placeholder}
+            defaultValue={placeholder}
         >
         </TextField>
     )
