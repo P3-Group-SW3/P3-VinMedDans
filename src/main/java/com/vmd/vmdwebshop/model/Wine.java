@@ -7,9 +7,16 @@ import jakarta.validation.constraints.*;
 import java.util.HashSet;
 import java.util.Set;
 
+//uses Hibernate validation
+//inherits from the Product class, also input validation
+//@Entity is for the database, to tell the database that it must be able to store objects of this class
+//Table generates the table name
 @Entity
 @Table(name="Wine")
 public class Wine extends Product {
+    //these annotation are for the database
+    //tells that this attribute should be the primary key, and the generation strategy
+    //The database generates this field automatically
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -71,6 +78,7 @@ public class Wine extends Product {
     }
 
     // Method to check if the wine can be purchased
+    //is used in the creation of an order
     public boolean canBePurchased(int amountPurchased) {
         return stock - amountPurchased >= 0;
     }

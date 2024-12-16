@@ -5,6 +5,9 @@ public class OrderNotFoundInDatbase extends RuntimeException {
     public OrderNotFoundInDatbase(Long id) {
         this.id = id;
     }
+
+    //builds a more precise error message,
+    //uses the id that is used to look in the database
     @Override
     public String getMessage(){
         return "The order with the id: " + id +" was not found";
