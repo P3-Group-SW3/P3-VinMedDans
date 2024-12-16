@@ -181,21 +181,16 @@ public class OrderLineService {
             for(OrderLine orderLine : orderLineList) {
                 Wine wine = wineRepository.getById(orderLine.getWineID());
                 if (!wine.canBePurchased(orderLine.getAmount())){
-                    canBePurchased = false;
                     exceptionMessage += " ID:" + wine.getID();
+                    throw new OrderLineCannotBePurchased(exceptionMessage);
                 }
             }
         }catch (DataAccessException e){
             System.out.println(e.getMessage());
         }
-
-
-
-        if (canBePurchased == false){
-            throw new OrderLineCannotBePurchased(exceptionMessage);
-        }
-
+        
         return canBePurchased;
     }
 }
+
 
