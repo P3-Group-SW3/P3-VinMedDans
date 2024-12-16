@@ -96,6 +96,7 @@ public class OrderService {
         order.setState(Orders.State.REGISTERED);
         order.setDate(new Date());
         order.setSessionID(sessionID);
+        order.setPrice(OrderLineService.calculateOrderLines(orderLineList));
         orderRepository.save(order);
 
         if (order.getID() == null) {

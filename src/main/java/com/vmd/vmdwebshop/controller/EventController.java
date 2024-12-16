@@ -1,8 +1,11 @@
 package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.model.Event;
+import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.service.EventService;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +29,17 @@ public class EventController {
         try {
             return ResponseEntity.ok(eventService.getAll());
         } catch (RuntimeException e) {
+            System.out.println(e.getMessage());
+            return ResponseEntity.notFound().build();
+        }
+    }
+
+    @GetMapping("/getById/{ID}")
+    public ResponseEntity<Event> getEventById(@PathVariable("ID") @Pattern(regexp = "^\\d+$") @Size(max = 10) String ID) {
+        try {
+            Event event = eventService.getEventById(Long.parseLong(ID));
+            return ResponseEntity.ok(event);
+        } catch (RuntimeException e){
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }

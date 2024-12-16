@@ -4,6 +4,7 @@ import com.vmd.vmdwebshop.Interface.AdministrativeMethodsInterface;
 import com.vmd.vmdwebshop.exception.event.*;
 import com.vmd.vmdwebshop.model.Event;
 import com.vmd.vmdwebshop.repository.EventRepository;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -44,6 +45,16 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
 
         return eventList;
     }
+
+    public Event getEventById(Long eventID){
+        Event event = eventRepository.findById(eventID).orElse(null);
+        if(event == null){
+            throw new EventNotFoundException("Event " + eventID + "not found");
+        }
+
+        return event;
+    }
+
 
     /**
      * createAndEdit

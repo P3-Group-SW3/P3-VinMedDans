@@ -75,7 +75,7 @@ public class OrderController {
      * @param orderID
      * @return Order
      */
-    @GetMapping("/api/orders/{orderID}")
+    @GetMapping("/api/orders/getByID/{orderID}")
     public ResponseEntity<Orders> getOrderById(@PathVariable @Pattern(regexp = "^\\d+$") String orderID) {
         try {
             Orders order = orderService.getOrderById(Long.parseLong(orderID));

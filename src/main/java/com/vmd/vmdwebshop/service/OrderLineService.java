@@ -131,12 +131,12 @@ public class OrderLineService {
         }
     }
 
-    public Double calculateOrderLine(OrderLine orderLine) {
+    public static Double calculateOrderLine(OrderLine orderLine) {
 
         return orderLine.getAmount() * orderLine.getWine().getPrice();
     }
 
-    public double calculateOrderLines(List<OrderLine> orderLines) {
+    public static double calculateOrderLines(List<OrderLine> orderLines) {
         double totalPrice = 0.0;
         for (OrderLine orderLine: orderLines){
             Double price = calculateOrderLine(orderLine);

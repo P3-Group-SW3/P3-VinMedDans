@@ -25,11 +25,7 @@ function AdminModule({title, category, columns} ) {
 
     
     const clickRow = (item) => {
-        navigate(`/administrator/${category}/${item.id}`, {
-            state: {
-                item
-            }
-        });
+        navigate(`/administrator/${category}/${item.id}`);
     };
 
     return (
@@ -62,11 +58,11 @@ function AdminModule({title, category, columns} ) {
                         ))}
                         </tbody>
                 </table>
-                {items.length > 10 && (
+                {category === 'orders' &&
                     <div className="d-flex justify-content-center my-1">
-                        <Button text="Vis flere" onClick={() => navigate(`/administrator/${category}`)} />
+                        <Button text="Vis flere" onClick={() => navigate(`/administrator/${category}`)}/>
                     </div>
-                )}
+                }
             </div>
         </div>
     );
