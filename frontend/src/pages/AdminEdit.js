@@ -13,6 +13,7 @@ function AdminEdit() {
 
     useEffect(() => {
         setTitle(setPageTitle);
+        console.log("Item: ", item);
     }, []);
 
     const setPageTitle = () => {

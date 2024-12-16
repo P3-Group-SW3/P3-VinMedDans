@@ -20,6 +20,7 @@ import LoadFonts from "./components/LoadFonts";
 import AgeVerification from "./components/AgeVerification";
 import CriiptoCallback from "./components/CriiptoCallback";
 import AdminOrders from "./pages/AdminOrders";
+import AdminOrderEdit from "./pages/AdminOrderEdit";
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -41,8 +42,9 @@ root.render(
           <Route path="/stripe-page" element={<div>Stripe Page</div>} />
           <Route path="administrator">
             <Route index element={<AdminDashboard />}/>
+            <Route path="orders" element={<AdminOrders/>} />
+            <Route path="orders/:id" element={<AdminOrderEdit/>} />
             <Route path=":category/:id" element={<AdminEdit/>} />
-            <Route path="orders/:id" element={<AdminOrders/>} />
             <Route path=":category/create" element={<AdminEdit/>} />
           </Route>
           <Route path="/*" element={<h1>404 - Page Not Found</h1>} />

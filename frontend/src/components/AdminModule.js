@@ -25,7 +25,11 @@ function AdminModule({title, category, columns} ) {
 
     
     const clickRow = (item) => {
-        navigate(`/administrator/${category}/${item.id}`);
+        navigate(`/administrator/${category}/${item.id}`, {
+            state: {
+                item
+            }
+        });
     };
 
     return (
