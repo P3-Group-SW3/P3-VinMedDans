@@ -1,28 +1,18 @@
 package com.vmd.vmdwebshop.service;
 
 import com.vmd.vmdwebshop.exception.event.EventDataAccessException;
-import com.vmd.vmdwebshop.exception.event.EventNotDeletedException;
-import com.vmd.vmdwebshop.exception.event.EventNotFoundException;
 import com.vmd.vmdwebshop.exception.event.EventNotUpdatedException;
 import com.vmd.vmdwebshop.repository.EventRepository;
 import com.vmd.vmdwebshop.model.Event;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-
-import static java.util.Optional.*;
-import static org.mockito.Mockito.*;
-import org.mockito.MockitoAnnotations;
-import static org.junit.jupiter.api.Assertions.*;
-
-import org.springframework.dao.DataAccessException;
+import org.mockito.*;
 import org.springframework.dao.DataAccessResourceFailureException;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.test.context.TestPropertySource;
 import java.util.*;
 
+import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class TestEventService {
 
@@ -43,6 +33,7 @@ public class TestEventService {
 
         event1 = new Event("01/01/2025", "1800", "location", "title",
                 "description", "imgURL");
+
         eventList.clear();
         eventList.add(event1);
     }
@@ -54,6 +45,7 @@ public class TestEventService {
                 .thenReturn(eventList);
 
         List<Event> events = eventService.getAll();
+
         assertNotNull(events);
     }
 
@@ -64,6 +56,7 @@ public class TestEventService {
                 .thenReturn(Collections.emptyList());
 
         List<Event> events = eventService.getAll();
+
         assertTrue(events.isEmpty());
     }
 
@@ -82,7 +75,9 @@ public class TestEventService {
     public void TestCreateAndEdit01() {
         when(eventRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.of(event1));
+
         List<Event> events = eventService.createAndEdit(event1, Long.parseLong("1"));
+
         assertNotNull(events);
     }
 
@@ -91,6 +86,7 @@ public class TestEventService {
     public void TestCreateAndEdit02() {
         when(eventRepository.findById(Long.parseLong("1")))
                 .thenThrow(DataAccessResourceFailureException.class);
+
         assertThrows(EventDataAccessException.class, () -> eventService.createAndEdit(event1,Long.parseLong("1")));
     }
 
@@ -99,8 +95,10 @@ public class TestEventService {
     public void TestCreateAndEdit03() {
         when(eventRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.of(event1));
+
         doThrow(DataIntegrityViolationException.class)
                 .when(eventRepository).save(event1);
+
         assertThrows(EventNotUpdatedException.class, () -> eventService.createAndEdit(event1, Long.parseLong("1")));
     }
 
@@ -109,10 +107,11 @@ public class TestEventService {
     public void TestCreateAndEdit04() {
         when(eventRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.of(event1));
+
         doThrow(DataAccessResourceFailureException.class)
                 .when(eventRepository).save(event1);
-        assertThrows(EventDataAccessException.class, () -> eventService.createAndEdit(event1, Long.parseLong("1")));
 
+        assertThrows(EventDataAccessException.class, () -> eventService.createAndEdit(event1, Long.parseLong("1")));
     }
 
 
@@ -121,7 +120,9 @@ public class TestEventService {
     public void TestDelete01() {
         when(eventRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.of(event1));
+
         List<Event> events = eventService.delete(Long.parseLong("1"));
+
         assertNotNull(events);
     }
 
@@ -130,7 +131,7 @@ public class TestEventService {
     public void TestDelete02 () {
         when(eventRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.empty());
+
         assertThrows(NullPointerException.class, () -> eventService.delete(Long.parseLong("1")));
     }
-
 }

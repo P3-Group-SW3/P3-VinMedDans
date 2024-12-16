@@ -3,13 +3,13 @@ package com.vmd.vmdwebshop.model;
 import jakarta.persistence.*;
 import com.vmd.vmdwebshop.abstractModels.Product;
 import jakarta.validation.constraints.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
 @Entity
 @Table(name="Wine")
 public class Wine extends Product {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long ID;
@@ -27,6 +27,7 @@ public class Wine extends Product {
     @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderLine> orderLines = new HashSet<>();
 
+    // Constructors
     public Wine(){}
 
     public Wine(String description, String imageURL, double price, int amountLeft, String name) {
@@ -35,10 +36,9 @@ public class Wine extends Product {
         this.amountLeft = amountLeft;
     }
 
+    // Getters and setters
     public Long getID() { return this.ID; }
 
-
-    // Getter for name
     public String getName() {
         return name;
     }
@@ -47,12 +47,10 @@ public class Wine extends Product {
         this.name = name;
     }
 
-    // Getter for amountLeft
     public int getAmountLeft() {
         return amountLeft;
     }
 
-    // Setter for amountLeft
     public void setAmountLeft(int amountLeft) {
         this.amountLeft = amountLeft;
     }

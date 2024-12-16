@@ -1,5 +1,6 @@
 // src/main/java/com/vmd/vmdwebshop/service/WineService.java
 package com.vmd.vmdwebshop.service;
+
 import com.vmd.vmdwebshop.Interface.AdministrativeMethodsInterface;
 import com.vmd.vmdwebshop.exception.wine.*;
 import com.vmd.vmdwebshop.model.OrderLine;
@@ -10,7 +11,6 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.util.*;
 
 @Service
@@ -24,7 +24,7 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
     public List<Wine> getAll() {
         List<Wine> wineList = wineRepository.findAll();
 
-        if (wineList.isEmpty()){
+        if (wineList.isEmpty()) {
             throw new WineNotFoundException("No wines were found in the database");
         }
 
@@ -34,7 +34,7 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
     public Wine getWineById(Long wineID) {
         Wine existingWine = wineRepository.findById(wineID).orElse(null);
 
-        if (existingWine == null){
+        if (existingWine == null) {
             throw new WineNotFoundException("The wine was not found");
         }
 
@@ -43,31 +43,32 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
 
     @Override
     public List<Wine> createAndEdit(Wine wine, Long ID) {
-
         Wine existingWine;
 
         try {
             Optional<Wine> optionalWine = wineRepository.findById(ID);
             existingWine = optionalWine.orElse(null);
-        }catch (DataAccessException e) {
-            throw new WineDataAccessException("Failed to retrieve the wine from the database");}
+        } catch (DataAccessException e) {
+            throw new WineDataAccessException("Failed to retrieve the wine from the database");
+        }
 
         try {
-
             if (existingWine != null) {
                 existingWine.setAmountLeft(wine.getAmountLeft());
                 existingWine.setDescription(wine.getDescription());
                 existingWine.setImageURL(wine.getImageURL());
                 existingWine.setPrice(wine.getPrice());
                 existingWine.setName(wine.getName());
+
                 wineRepository.save(existingWine);
             } else {
                 wineRepository.save(wine);
             }
         } catch (DataIntegrityViolationException e) {
             throw new WineNotUpdatedException("Failed to update wine");
-        } catch (DataAccessException e)
-        { throw new WineDataAccessException("Failed to save wine to the database");}
+        } catch (DataAccessException e) {
+            throw new WineDataAccessException("Failed to save wine to the database");
+        }
 
         return wineRepository.findAll();
     }
@@ -82,13 +83,12 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
     public List<Wine> delete(Long ID) {
         Wine existingWine = wineRepository.findById(ID).orElse(null);
 
-        if (existingWine == null){
+        if (existingWine == null) {
             throw new WineNotFoundException("Wine does not exist in the database");
         }
 
-        try{
+        try {
             wineRepository.deleteById(ID);
-
         } catch (DataAccessException e) {
             throw new WineNotDeletedException(e.getMessage());
         }
@@ -113,30 +113,28 @@ public class WineService implements AdministrativeMethodsInterface<Wine> {
         }
 
         try {
-            if (existingWine != null){
+            if (existingWine != null) {
                 existingWine.changeActiveState();
             }
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             throw new WineDataAccessException("The Active State of the wine was not updated");
         }
 
         return wineRepository.findAll();
     }
 
-    public void updateStockFromOrder(List<OrderLine> orderLineList){
-        try{
-            for (OrderLine orderLine : orderLineList){
+    public void updateStockFromOrder(List<OrderLine> orderLineList) {
+        try {
+            for (OrderLine orderLine : orderLineList) {
                 Wine wine = wineRepository.getById(orderLine.getWineID());
 
                 wine.setAmountLeft(wine.getAmountLeft() - orderLine.getAmount());
 
                 wineRepository.save(wine);
             }
-
         } catch (DataIntegrityViolationException e) {
             throw new WineNotUpdatedException("The stock of the wine was not updated");
-
-        } catch (DataAccessException e){
+        } catch (DataAccessException e) {
             throw new WineDataAccessException("The wine was not retrieved from the database");
         }
     }

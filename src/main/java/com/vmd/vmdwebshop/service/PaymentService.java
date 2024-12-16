@@ -16,12 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.apache.commons.io.IOUtils;
 
 @Service
@@ -35,7 +32,6 @@ public class PaymentService {
 
     @Value("${stripe.webhook}")
     private String endpointSecret;
-
 
     @Autowired
     private CustomerService customerService;
@@ -73,6 +69,7 @@ public class PaymentService {
                                             ).build()
                             ).build()
             ).build();
+
         Session session = Session.create(params);
         Map<String, String> response = new HashMap<>();
         response.put("url", session.getUrl());
@@ -82,9 +79,9 @@ public class PaymentService {
         return response;
     }
 
-
     public ResponseEntity<String> handleStripeWebhook(HttpServletRequest request) {
         String payload;
+
         try {
             payload = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
         } catch (IOException e) {
@@ -93,6 +90,7 @@ public class PaymentService {
 
         String sigHeader = request.getHeader("Stripe-Signature");
         Event event;
+
         try {
             event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
         } catch (SignatureVerificationException e) {
@@ -113,11 +111,13 @@ public class PaymentService {
 
     public Map<String, String> getPaymentStatus(String sessionId) {
         Stripe.apiKey = stripeSecretKey;
+
         try {
             Session session = Session.retrieve(sessionId);
             String paymentStatus = session.getPaymentStatus();
             Map<String, String> response = new HashMap<>();
             response.put("status", paymentStatus);
+
             return response;
         } catch (StripeException e) {
             return null;

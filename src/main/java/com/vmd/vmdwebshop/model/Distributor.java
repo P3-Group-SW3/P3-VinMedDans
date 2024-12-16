@@ -29,18 +29,16 @@ public class Distributor {
     @Column(name = "websiteURL", nullable = false, length = 200)
     private String websiteURL;
 
-    // Empty Constructor
+    // Constructors
     public Distributor(){}
 
-    // Constructor
     public Distributor(String name, String location, String websiteURL){
         this.name = name;
         this.location = location;
         this.websiteURL = websiteURL;
     }
 
-    // Getters and Setters
-
+    // Getters and setters
     public Long getID(){
         return ID;
     }
@@ -72,5 +70,4 @@ public class Distributor {
     public void setWebsiteURL(String websiteURL){
         this.websiteURL = websiteURL;
     }
-
 }

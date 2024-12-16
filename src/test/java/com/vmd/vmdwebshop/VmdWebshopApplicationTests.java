@@ -9,5 +9,4 @@ class VmdWebshopApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }

@@ -3,12 +3,9 @@ package com.vmd.vmdwebshop.service;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.nio.file.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 @Service
 public class ImageService {
@@ -31,6 +28,7 @@ public class ImageService {
             if (customName.contains("..") || customName.contains("/") || customName.contains("\\")) {
                 throw new IllegalArgumentException("Invalid custom name");
             }
+
             fileName = customName + ".png";
         } else {
             Random random = new Random();
@@ -67,6 +65,7 @@ public class ImageService {
         }
 
         Path path = Paths.get(uploadDir).resolve(filename);
+
         return Files.deleteIfExists(path);
     }
 }

@@ -3,11 +3,9 @@ package com.vmd.vmdwebshop.controller;
 import com.vmd.vmdwebshop.service.CustomerService;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,9 +42,11 @@ public class CustomerController {
             if (cookieAge == null) {
                 return ResponseEntity.noContent().build(); // HTTP 204: No Content
             }
+
             //Store cookieAge in a response object to avoid passing plain text
             Map<String, String> response = new HashMap<>();
             response.put("cookieAge", cookieAge);
+
             return ResponseEntity.ok(response);
         } catch (RuntimeException e) {
             System.err.println(e.getMessage());

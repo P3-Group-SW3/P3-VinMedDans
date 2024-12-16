@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
-
 import java.util.*;
 
 @Service
@@ -16,6 +15,7 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
 
     private final EventRepository eventRepository;
 
+    // Constructor
     @Autowired
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
@@ -47,7 +47,7 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
 
     /**
      * createAndEdit
-     * This method finds a specific event by Id. If the event already exists, its attributes will be
+     * This method finds a specific event by ID. If the event already exists, its attributes will be
      * updated with the new values. If the event does not already exist, a new event will be created
      * and saved to the database.
      * @param event object containing the updated data.
@@ -57,18 +57,17 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
      * @throws EventNotUpdatedException if there is a failure when updating the event data.
      */
     @Override
-    public List<Event> createAndEdit(Event event, Long ID){
-
+    public List<Event> createAndEdit(Event event, Long ID) {
         Event existingEvent;
 
         try {
             Optional<Event> optionalEvent = eventRepository.findById(ID);
-            existingEvent = optionalEvent.orElse(null);}
-        catch (DataAccessException e) {
-            throw new EventDataAccessException("Failed to retrieve the event from the database");}
+            existingEvent = optionalEvent.orElse(null);
+        } catch (DataAccessException e) {
+            throw new EventDataAccessException("Failed to retrieve the event from the database");
+        }
 
         try {
-
             if (existingEvent != null) {
                 existingEvent.setDate(event.getDate());
                 existingEvent.setTime(event.getTime());
@@ -80,28 +79,29 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
             } else {
                 eventRepository.save(event);
             }
-
-        }catch (DataIntegrityViolationException e) {
+        } catch (DataIntegrityViolationException e) {
             throw new EventNotUpdatedException("Failed to update event");
-        }catch (DataAccessException e) {
-            throw new EventDataAccessException("Failed to save event to the database");}
+        } catch (DataAccessException e) {
+            throw new EventDataAccessException("Failed to save event to the database");
+        }
 
         return eventRepository.findAll();
     }
 
     /**
      * delete
-     * This method finds an event by Id. If no event is found, an exception is thrown.
+     * This method finds an event by ID. If no event is found, an exception is thrown.
      * If an event is found, it will attempt to delete it from the database.
      * @param ID
      * @return List<Event> list of all remaining events.
      * @throws EventDataAccessException if failure to retrieve events from the database.
-     * @throws EventNotFoundException if no event with the given Id is found.
+     * @throws EventNotFoundException if no event with the given ID is found.
      * @throws EventNotDeletedException if the event could not be deleted from the database.
      */
     @Override
-    public List<Event> delete(Long ID){
+    public List<Event> delete(Long ID) {
         Event existingEvent;
+
         try {
             Optional<Event> optionalEvent = eventRepository.findById(ID);
             existingEvent = optionalEvent.orElse(null);
@@ -109,14 +109,15 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
             throw new EventDataAccessException("Failed to retrieve the event from the database");
         }
 
-            if(existingEvent == null){
-                throw new NullPointerException("No such event exists");
-            }
-            try {
-                eventRepository.deleteById(ID);
-            } catch (DataAccessException e) {
-                throw new EventNotDeletedException("Failed to delete event in the database");
-            }
+        if(existingEvent == null){
+            throw new NullPointerException("No such event exists");
+        }
+
+        try {
+            eventRepository.deleteById(ID);
+        } catch (DataAccessException e) {
+            throw new EventNotDeletedException("Failed to delete event in the database");
+        }
 
         return eventRepository.findAll();
     }

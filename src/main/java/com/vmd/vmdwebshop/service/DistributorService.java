@@ -1,7 +1,6 @@
 package com.vmd.vmdwebshop.service;
 
 import com.vmd.vmdwebshop.Interface.AdministrativeMethodsInterface;
-import com.vmd.vmdwebshop.exception.event.EventNotFoundException;
 import com.vmd.vmdwebshop.model.Distributor;
 import com.vmd.vmdwebshop.exception.distributor.*;
 import com.vmd.vmdwebshop.repository.DistributorRepository;
@@ -16,6 +15,7 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
 
     private final DistributorRepository distributorRepository;
 
+    // Constructor
     @Autowired
     public DistributorService(DistributorRepository distributorRepository) {
         this.distributorRepository = distributorRepository;
@@ -30,12 +30,11 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
      */
     @Override
     public List<Distributor> getAll() {
-
         List<Distributor> distributorList;
 
         try {
-            distributorList = distributorRepository.findAll();}
-        catch (DataAccessException e) {
+            distributorList = distributorRepository.findAll();
+        } catch (DataAccessException e) {
             throw new DistributorDataAccessException("Failure to retrieve distributors from the database");
         }
 
@@ -48,7 +47,7 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
 
     /**
      * createAndEdit
-     * This method finds a specific distributor by Id. If the distributor already exists, its attributes will be
+     * This method finds a specific distributor by ID. If the distributor already exists, its attributes will be
      * updated with the new values. If the distributor does not already exist, a new distributor will be created
      * and saved to the database.
      * @param distributor object containing the updated data.
@@ -58,14 +57,13 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
      * @throws DistributorNotUpdatedException if there is a failure when updating the distributor data.
      */
     @Override
-    public List<Distributor> createAndEdit(Distributor distributor, Long ID){
-
+    public List<Distributor> createAndEdit(Distributor distributor, Long ID) {
         Distributor existingDistributor;
 
         try {
             Optional<Distributor> optionalDistributor = distributorRepository.findById(ID);
-            existingDistributor = optionalDistributor.orElse(null);}
-        catch (DataAccessException e) {
+            existingDistributor = optionalDistributor.orElse(null);
+        } catch (DataAccessException e) {
             throw new DistributorDataAccessException("Failed to retrieve the distributor from the database");
         }
 
@@ -89,16 +87,16 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
 
     /**
      * delete
-     * This method finds a distributor by Id. If no distributor is found, an exception is thrown.
+     * This method finds a distributor by ID. If no distributor is found, an exception is thrown.
      * If a distributor is found, it will attempt to delete it from the database.
      * @param ID
      * @return List<Distributor> list of all remaining distributors.
      * @throws DistributorDataAccessException if failure to retrieve distributors from the database.
-     * @throws  DistributorNotFoundException if no distributor with the given Id is found.
+     * @throws  DistributorNotFoundException if no distributor with the given ID is found.
      * @throws  DistributorNotDeletedException if the distributor could not be deleted from the database.
      */
     @Override
-    public List<Distributor> delete(Long ID){
+    public List<Distributor> delete(Long ID) {
         Distributor existingDistributor;
 
         try {
@@ -111,6 +109,7 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
         if (existingDistributor == null) {
             throw new NullPointerException("No such distributor exists");
         }
+
         try {
             distributorRepository.deleteById(ID);
         } catch (DataAccessException e) {

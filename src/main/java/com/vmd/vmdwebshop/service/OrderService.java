@@ -10,10 +10,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.View;
-
 import java.util.Date;
 import java.util.List;
-
 
 @Service
 @Transactional
@@ -26,6 +24,7 @@ public class OrderService {
     private final WineService wineService;
 
     // fjern / tilføj OrderRepository orderRepository baseret på test
+    // Constructor
     public OrderService(View error, OrderRepository orderRepository, OrderLineService orderLineService, WineService wineService){
         this.error = error;
         this.orderRepository = orderRepository;
@@ -38,11 +37,12 @@ public class OrderService {
      * @return List<Orders>
      */
     public List<Orders> getAllOrders() {
-
         List<Orders> orders = orderRepository.findAll();
-        if (orders.isEmpty()){
+
+        if (orders.isEmpty()) {
             throw new OrdersNotFound();
         }
+
         return orders;
     }
 
@@ -51,10 +51,10 @@ public class OrderService {
      * @param orderID
      * @return
      */
-    public Orders getOrderById(Long orderID){
+    public Orders getOrderById(Long orderID) {
         Orders order = orderRepository.findById(orderID).orElse(null);
 
-        if(order == null){
+        if (order == null) {
             throw new OrderNotFoundInDatbase(orderID);
         }
 
@@ -67,10 +67,10 @@ public class OrderService {
      * @param sessionID
      * @return
      */
-    public Orders getOrderBySessionID(String sessionID){
+    public Orders getOrderBySessionID(String sessionID) {
         Orders order = orderRepository.findBySessionID(sessionID);
 
-        if(order == null){
+        if (order == null) {
             throw new OrderNotFoundInDatbase(Long.parseLong(sessionID));
         }
 
@@ -95,6 +95,7 @@ public class OrderService {
         order.setState(Orders.State.REGISTERED);
         order.setDate(new Date());
         order.setSessionID(sessionID);
+
         orderRepository.save(order);
 
         if (order.getID() == null) {
@@ -104,8 +105,10 @@ public class OrderService {
         for (OrderLine orderLine : orderLineList) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
+
             if (!orderLine.getOrderID().equals(order.getID())) {
-                throw new OrderlineNotAdded("Orderline with id: " + orderLine.getID() + " did not add the order ID of: " + order.getID());
+                throw new OrderlineNotAdded("Orderline with id: " + orderLine.getID() +
+                                            " did not add the order ID of: " + order.getID());
             }
         }
 
@@ -131,7 +134,7 @@ public class OrderService {
         order.setState(newState);
         System.out.println("Order state changed from: " + state1 + " to: " + newState);
 
-        if(order.getState() != newState) {
+        if (order.getState() != newState) {
             throw new StateChangeFailedException(state1, newState);
         }
     }
@@ -140,11 +143,11 @@ public class OrderService {
      *
      * @param order
      */
-    public void deleteOrder(Orders order){
-        for (OrderLine orderLine: order.getOrderLines()){
+    public void deleteOrder(Orders order) {
+        for (OrderLine orderLine: order.getOrderLines()) {
             orderLineService.deleteOrderlineByID(orderLine);
         }
+
         orderRepository.deleteById(order.getID());
     }
-
 }

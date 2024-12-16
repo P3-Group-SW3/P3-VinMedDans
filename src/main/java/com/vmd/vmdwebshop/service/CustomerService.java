@@ -89,7 +89,6 @@ public class CustomerService {
                 } else {
                     throw new IllegalStateException("Cookie is already set to true.");
                 }
-
             }
         }
 

@@ -3,11 +3,9 @@ package com.vmd.vmdwebshop.controller;
 import com.vmd.vmdwebshop.model.Event;
 import com.vmd.vmdwebshop.service.EventService;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Pattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.List;
 
 @RestController
@@ -40,6 +38,7 @@ public class EventController {
         System.out.println(event.getTitle());
         System.out.println(event.getDescription());
         System.out.println(event.getImgURL());
+
         try {
             return ResponseEntity.ok(eventService.createAndEdit(event, ID));
         } catch (RuntimeException e) {
@@ -57,9 +56,4 @@ public class EventController {
             return ResponseEntity.internalServerError().build();
         }
     }
-
-
-
-
-
 }
