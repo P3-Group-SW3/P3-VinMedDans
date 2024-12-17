@@ -38,12 +38,12 @@ const AdminOrders = () => {
             <div className="scrollable">
                 <table className="table table-hover" style={{fontFamily: 'Rubik, sans-serif'}}>
                     <thead>
-                    <tr>
-                        <th> Ordrenummer </th>
-                        <th> Navn </th>
-                        <th> Dato </th>
-                        <th> Status </th>
-                    </tr>
+                        <tr>
+                            <th> Ordrenummer </th>
+                            <th> Navn </th>
+                            <th> Dato </th>
+                            <th> Status </th>
+                        </tr>
                     </thead>
                     <tbody>
                     {orders.map((item) => (
@@ -52,10 +52,10 @@ const AdminOrders = () => {
                             onClick={() => clickRow(item)}
                             style={{cursor: 'pointer'}}
                         >
-                            <th> {item.id} </th>
-                            <th> {item.fullName} </th>
-                            <th> {item.date} </th>
-                            <th> {item.state} </th>
+                            <td> {item.id} </td>
+                            <td> {item.fullName} </td>
+                            <td> {new Date(item.date).toLocaleDateString()} </td>
+                            <td> {item.state} </td>
                         </tr>
                     ))}
                     </tbody>
