@@ -24,7 +24,7 @@ const FooterLinks = ({ items }) => {
         "Levering": "#",
         "Betingelser og vilkår": "#",
         "Telefonnummer": "tel:+4531175720",
-        "Kontrolrapport": "#"
+        "Kontrolrapport": "https://www.findsmiley.dk/1259568"
     };
 
     return (
