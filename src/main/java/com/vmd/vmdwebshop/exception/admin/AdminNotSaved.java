@@ -1,6 +1,7 @@
 package com.vmd.vmdwebshop.exception.admin;
 
 public class AdminNotSaved extends RuntimeException {
+
     private String name;
     private String password;
 

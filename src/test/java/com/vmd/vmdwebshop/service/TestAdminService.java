@@ -1,26 +1,18 @@
 package com.vmd.vmdwebshop.service;
 
-
-
 import com.vmd.vmdwebshop.exception.admin.AdminNotSaved;
-import com.vmd.vmdwebshop.exception.event.EventDataAccessException;
 import com.vmd.vmdwebshop.repository.AdminRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import com.vmd.vmdwebshop.model.Admin;
-import org.springframework.dao.DataAccessResourceFailureException;
-
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 public class TestAdminService {
@@ -36,7 +28,7 @@ public class TestAdminService {
     Admin admin = null;
 
     @BeforeEach
-    public void setUp(){
+    public void setUp() {
         MockitoAnnotations.openMocks(this); // Initialize mocks before each test
 
         admin = mock(Admin.class);
@@ -44,8 +36,8 @@ public class TestAdminService {
 
     @Test
     public void TestCreateAdmin01() {
-        assertThrows(AdminNotSaved.class,()->{adminService.CreateAdmin("Mogens","1stpassword");});
-
+        assertThrows(AdminNotSaved.class, ()-> {
+            adminService.createAdmin("Mogens","1stpassword");
+        });
     }
-
 }
