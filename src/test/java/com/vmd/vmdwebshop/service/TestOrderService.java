@@ -4,6 +4,7 @@ import com.vmd.vmdwebshop.DTO.OrderDto;
 import com.vmd.vmdwebshop.exception.order.*;
 import com.vmd.vmdwebshop.model.OrderLine;
 import com.vmd.vmdwebshop.model.Orders;
+import com.vmd.vmdwebshop.model.Wine;
 import com.vmd.vmdwebshop.repository.OrderLineRepository;
 import com.vmd.vmdwebshop.repository.OrderRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -44,6 +45,7 @@ public class TestOrderService {
     OrderDto orderDto = null;
     OrderLine orderLine = null;
     String sessionID = "testSessionID";
+    Wine wine = null;
 
     @BeforeEach
     public void setUp(){
@@ -55,6 +57,8 @@ public class TestOrderService {
         orderDto = mock(OrderDto.class);
         order = mock(Orders.class);
         orderLine = mock(OrderLine.class);
+        wine = mock(Wine.class);
+        orderLine.setWine(wine);
 
         orderLineList.add(orderLine);
     }
@@ -157,6 +161,9 @@ public class TestOrderService {
                 .thenReturn("a@b.com");
         when(orderLine.getOrderID())
                 .thenReturn(Long.parseLong("1"));
+        when(orderLine.getWine()).thenReturn(wine);
+        when(wine.getPrice()).thenReturn(100.0);
+        when(orderLine.getAmount()).thenReturn(10);
 
         Orders newOrder = orderService.createOrderFromInfo(orderDto, orderLineList, sessionID);
 
@@ -176,7 +183,9 @@ public class TestOrderService {
                 .thenReturn("Jens Peter");
         when(order.getMail())
                 .thenReturn("a@b.com");
-
+        when(orderLine.getWine()).thenReturn(wine);
+        when(wine.getPrice()).thenReturn(100.0);
+        when(orderLine.getAmount()).thenReturn(10);
         OrderNotSaved newException = assertThrows(OrderNotSaved.class, ()-> {
             orderService.createOrderFromInfo(orderDto, orderLineList, sessionID);
         });
@@ -201,7 +210,9 @@ public class TestOrderService {
                 .thenReturn(Long.parseLong("3"));
         when(orderLine.getID())
                 .thenReturn(Long.parseLong("1"));
-
+        when(orderLine.getWine()).thenReturn(wine);
+        when(wine.getPrice()).thenReturn(100.0);
+        when(orderLine.getAmount()).thenReturn(10);
         OrderlineNotAdded newException = assertThrows(OrderlineNotAdded.class, ()-> {
             orderService.createOrderFromInfo(orderDto, orderLineList, sessionID);
         });
