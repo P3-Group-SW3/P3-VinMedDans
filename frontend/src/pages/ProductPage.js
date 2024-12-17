@@ -10,7 +10,7 @@ function ProductPage() {
     const [items, setItems] = useState([]);
 
     /*
-    call: /api/getAllWines
+    call: /api/wine/getList
     method: GET
     response: JSON array of objects
     */

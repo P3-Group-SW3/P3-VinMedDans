@@ -9,7 +9,7 @@ import {CustomerLinks} from "./CustomerLinkContext";
 function EventPage() {
 
     /* 
-    API handle: /api/event/getAll
+    API handle: /api/event/getList
     Method: GET
     Description: Get all events
     */
