@@ -10,6 +10,33 @@ function AdminEdit() {
     const { category } = useParams();
 
     const [title, setTitle] = useState('');
+    const [image, setImage] = useState(item.imageURL!=='image' ? item.imageURL:'');
+    const [file, setFile] = useState();
+
+    function uploadImage(e) {
+        setImage(URL.createObjectURL(e.target.files[0]));
+        setFile(e.target.files[0]);
+    }
+
+    const saveImage = () => {
+        const name = (category==='wine' ? item.name :  item.title);
+        console.log("Selected file:", file);
+        console.log("Name: ", name);
+
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('customName', name)
+
+        fetch('/api/images/admin/upload', {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => response.text())
+            .then(result => console.log('Success:', result))
+            .catch(error => console.error('Error:', error));
+
+        item.imageURL = `http://127.0.0.1:8080/api/images/${name}.png`
+    }
 
     useEffect(() => {
         setTitle(setPageTitle);
@@ -56,6 +83,8 @@ function AdminEdit() {
     }
 
     const updateItem = () => {
+
+        saveImage();
 
         fetch(`/api/${category}/admin/createAndEdit/${item.id}`, {
             method: 'POST',
@@ -110,21 +139,24 @@ function AdminEdit() {
                 <h1 className="header-large">{title}</h1>
                 {item.id!==-1 &&
                     <div>
-                        <Button text="Slet" onClick={deleteItem} style={{marginBottom:'5em'}}/>
+                        <Button text="Slet" onClick={deleteItem}/>
                     </div>
                 }
-                {item.imageURL &&
-                    <img
-                        src={item.imageURL}
-                        alt={item.name}
-                        className="card-img-top"
-                        style={{objectFit: 'contain', maxHeight: '200px', maxWidth: '200px'}}
-                    />
+                {(category === "wine" || category === "event") &&
+                    <div className="col">
+                        <img
+                            src={image}
+                            alt='image'
+                            className="card-img-top"
+                            style={{objectFit: 'contain', maxHeight: '200px', maxWidth: '200px'}}
+                        />
+                        <input type="file" onChange={uploadImage}/>
+                    </div>
                 }
-                {category==="wine" &&
-                    <EditWine item={item} setField={setField} />
+                {category === "wine" &&
+                    <EditWine item={item} setField={setField}/>
                 }
-                {category==="event" &&
+                {category === "event" &&
                     <EditEvent item={item} setField={setField} />
                 }
                 {category==="distributor" &&
@@ -162,6 +194,7 @@ const EditField = ({title, field, item, setField, placeholder}) => {
 const EditWine = ( { item, setField } ) => {
     return (
         <div>
+
             < EditField
                 title="Navn"
                 field="name"

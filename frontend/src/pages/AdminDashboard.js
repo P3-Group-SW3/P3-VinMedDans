@@ -9,7 +9,7 @@ const AdminDashboard = () => {
         { header: 'Antal', field: 'stock' }
     ];
     const orderColumns = [
-        { header: 'Ordrenummer', field: 'id' },
+        { header: 'Ordrenr.', field: 'id' },
         { header: 'Navn', field: 'fullName' },
         { header: 'Dato', field: 'date' },
         { header: 'Status', field: 'state' }

@@ -49,17 +49,21 @@ function AdminModule({title, category, columns} ) {
                         </tr>
                     </thead>
                         <tbody>
-                        {items?.slice(0,10).map((item) => (
-                            <tr
-                                key={item.id}
-                                onClick={() => clickRow(item)}
-                                style={{cursor: 'pointer'}}
-                            >
-                                {columns.map((col, index) => (
-                                    <td key={index}>{item[col.field]}</td>
-                                ))}
-                            </tr>
-                        ))}
+                            {items?.slice(0, 10).map((item) => (
+                                <tr
+                                    key={item.id}
+                                    onClick={() => clickRow(item)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    {columns.map((col, index) => (
+                                        <td key={index}>
+                                            {!isNaN(Date.parse(item[col.field]))
+                                                ? new Date(item[col.field]).toLocaleDateString()
+                                                : item[col.field]}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
                         </tbody>
                 </table>
                 {category === 'orders' &&
