@@ -9,6 +9,11 @@ import Distributor from "../components/Distributor";
 function LocationPage() {
     const [distributors, setDistributors] = React.useState([]);
 
+    /*
+    call: /api/distributor/getList
+    method: GET
+    response: JSON array of objects
+    */
     React.useEffect(() => {
         fetch("/api/distributor/getList")
             .then((response) => response.json())
