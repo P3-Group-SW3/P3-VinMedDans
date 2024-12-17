@@ -52,7 +52,7 @@ public class ImageController {
     @GetMapping("/{filename}")
     public ResponseEntity<Resource> getImage(@PathVariable String filename) {
         try {
-            if (filename.contains("..") || filename.contains("/") || filename.contains("\\")) {
+            if (filename.contains("..") || filename.contains("/") || filename.contains("\\")) { // If request contains illegal file chars
                 throw new IllegalArgumentException("Invalid filename");
             }
 
@@ -60,7 +60,7 @@ public class ImageController {
             Resource resource = new UrlResource(path.toUri());
 
             return ResponseEntity.ok()
-                    .contentType(MediaType.IMAGE_JPEG)
+                    .contentType(MediaType.IMAGE_JPEG) // Respond with image in JPEG format, JPEG has smaller size = faster download for end user
                     .body(resource);
         } catch (MalformedURLException e) {
             return ResponseEntity.notFound().build();

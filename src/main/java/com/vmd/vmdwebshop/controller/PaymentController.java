@@ -19,6 +19,14 @@ public class PaymentController {
     @Autowired
     private PaymentService paymentService;
 
+    /**
+     * Create a checkout session
+     *
+     * @param orderDto The order data
+     * @param request The request
+     * @return A response entity with the result of the checkout session creation
+     * @throws StripeException If an error occurs during the checkout session creation
+     */
     @PostMapping("/create-checkout-session")
     public ResponseEntity<Map<String, String>> createCheckoutSession(@RequestBody OrderDto orderDto, HttpServletRequest request) throws StripeException {
         Map<String, String> response = paymentService.createCheckoutSession(orderDto, request);
@@ -26,6 +34,12 @@ public class PaymentController {
         return ResponseEntity.ok(response);
     }
 
+    /**
+     * Handle a Stripe webhook
+     *
+     * @param request The request
+     * @return A response entity with the result of the webhook handling
+     */
     @PostMapping("/webhook")
     public ResponseEntity<String> handleStripeWebhook(HttpServletRequest request) {
         return paymentService.handleStripeWebhook(request);
