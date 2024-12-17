@@ -16,6 +16,11 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
+    /**
+     * This GET request takes the request and the response objects as parameters and returns nothing.
+     * @param response  // HttpServletResponse helps to send data from the servlet to the web browser.
+     * @param request   // HttpServletRequest helps to send data from the web browser to the servlet.
+     */
     @GetMapping("/createCookie")
     public void createCustomerCookie(HttpServletRequest request, HttpServletResponse response) {
         try {
@@ -26,6 +31,11 @@ public class CustomerController {
         }
     }
 
+    /**
+     * This GET request takes the request and response objects as parameters and returns nothing
+     * @param response  // HttpServletResponse helps to send data from the servlet to the web browser.
+     * @param request   // HttpServletRequest helps to send data from the web browser to the servlet.
+     */
     @GetMapping("/updateCookie")
     public void updateCustomerCookie(HttpServletResponse response, HttpServletRequest request) {
         try {
@@ -35,6 +45,13 @@ public class CustomerController {
         }
     }
 
+    /**
+     * This GET request takes the request object as a parameter
+     * and returns a map with a key-value pair of cookieAge and its value,
+     * that is wrapped in a ResponseEntity.
+     * @param request // HttpServletRequest helps to send data from the web browser to the servlet.
+     * @return ResponseEntity<Map<String, String>>
+     */
     @GetMapping("/cookieAge")
     public ResponseEntity<Map<String, String>> cookieAge(HttpServletRequest request) {
         try {
