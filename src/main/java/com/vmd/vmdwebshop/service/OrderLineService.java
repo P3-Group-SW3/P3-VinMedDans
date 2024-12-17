@@ -87,9 +87,9 @@ public class OrderLineService {
 
     /**
      * clearCar
-     * This method clears a customer's cart by deleting all orderlines that matches a specific customer id.
-     * First finds all orderlines matching the customer id, if no such orderlines exist an exception will be thrown.
-     * Then will execute the deletion of the orderlines, and afterward checks if the deletion was successful by checking
+     * This method clears a customer's cart by deleting all orderlines that matches a specific customer ID.
+     * First finds all orderlines matching the customer ID, if no such orderlines exist an exception will be thrown.
+     * Then it will execute the deletion of the orderlines, and afterward checks if the deletion was successful by checking
      * if any orderlines remain in the cart. If so, an exception error will be thrown.
      * The method will return a list of the remaining orderlines associated with the customer.
      * @param customerID
