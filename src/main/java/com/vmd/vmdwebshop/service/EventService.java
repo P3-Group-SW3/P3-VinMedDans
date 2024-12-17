@@ -5,7 +5,6 @@ import com.vmd.vmdwebshop.exception.event.*;
 import com.vmd.vmdwebshop.model.Event;
 import com.vmd.vmdwebshop.repository.EventRepository;
 import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -14,10 +13,13 @@ import java.util.*;
 @Service
 public class EventService implements AdministrativeMethodsInterface<Event> {
 
+    /* Constructor Dependency Injection (CDI) - provides the eventRepository to the EventService class
+       through the constructor. Injecting the repository into the service allows the service class
+       to interact with the database through the repository. 'final' ensures that the repository
+       cannot be changed after the service has been initialised */
+
     private final EventRepository eventRepository;
 
-    // Constructor
-    @Autowired
     public EventService(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
     }
@@ -26,7 +28,7 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
      * getAll
      * This method finds and returns all existing events in the database.
      * If no events are found, an exception will be thrown.
-     * @return list of all events in the database.
+     * @return List<Event> returns a list of all events in the database.
      * @exception EventNotFoundException is thrown if an event cannot be retrieved from the database.
      */
     @Override
@@ -98,7 +100,7 @@ public class EventService implements AdministrativeMethodsInterface<Event> {
      * delete
      * This method finds an event by ID. If no event is found, an exception is thrown.
      * If an event is found, it will attempt to delete it from the database.
-     * @param ID
+     * @param ID of the event.
      * @return List<Event> list of all remaining events.
      * @throws EventDataAccessException if failure to retrieve events from the database.
      * @throws EventNotFoundException if no event with the given ID is found.

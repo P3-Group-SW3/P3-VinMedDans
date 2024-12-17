@@ -18,7 +18,8 @@ import java.util.*;
 @Transactional
 public class WineService implements AdministrativeMethodsInterface<Wine> {
 
-    @Autowired
+    // Field Injection
+    @Autowired // Tells Spring Boot to automatically inject an instance of the wineRepository
     private WineRepository wineRepository;
 
     /**

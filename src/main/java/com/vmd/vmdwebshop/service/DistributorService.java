@@ -3,9 +3,7 @@ package com.vmd.vmdwebshop.service;
 import com.vmd.vmdwebshop.Interface.AdministrativeMethodsInterface;
 import com.vmd.vmdwebshop.model.Distributor;
 import com.vmd.vmdwebshop.exception.distributor.*;
-import com.vmd.vmdwebshop.model.Event;
 import com.vmd.vmdwebshop.repository.DistributorRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
@@ -14,10 +12,13 @@ import java.util.*;
 @Service
 public class DistributorService implements AdministrativeMethodsInterface<Distributor> {
 
+    /* Constructor Dependency Injection (CDI) - provides the distributorRepository to the DistributorService class
+       through the constructor. Injecting the repository into the service allows the service class
+       to interact with the database through the repository. 'final' ensures that the repository
+       cannot be changed after the service has been initialised */
+
     private final DistributorRepository distributorRepository;
 
-    // Constructor
-    @Autowired
     public DistributorService(DistributorRepository distributorRepository) {
         this.distributorRepository = distributorRepository;
     }
@@ -99,7 +100,7 @@ public class DistributorService implements AdministrativeMethodsInterface<Distri
      * delete
      * This method finds a distributor by ID. If no distributor is found, an exception is thrown.
      * If a distributor is found, it will attempt to delete it from the database.
-     * @param ID
+     * @param ID of the distributor.
      * @return List<Distributor> list of all remaining distributors.
      * @throws DistributorDataAccessException if failure to retrieve distributors from the database.
      * @throws  DistributorNotFoundException if no distributor with the given ID is found.

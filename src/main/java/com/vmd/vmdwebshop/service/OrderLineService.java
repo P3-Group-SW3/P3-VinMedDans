@@ -16,21 +16,15 @@ import java.util.List;
 @Transactional
 public class OrderLineService {
 
-    private final View error;
-
+    /* Constructor Dependency Injection (CDI) - provides the repository dependencies to the OrderLineService class
+    through the constructor. Injecting the repositories into the service allows the service class
+    to interact with the database through the repositories. 'final' ensures that the repositories
+    cannot be changed after the service has been initialised */
     private final WineRepository wineRepository;
     private final OrderLineRepository orderLineRepository;
     private final WineService wineService;
 
-    /**
-     * Constructor Dependency Injection (CDI) - Dependencies are injected via the constructor.
-     * We use a constructor to inject the concepts of the wine and orderline repositories into the OrderLineService class.
-     * @param error
-     * @param orderLineRepository
-     * @param wineRepository
-     */
-    public OrderLineService(View error, OrderLineRepository orderLineRepository, WineRepository wineRepository, WineService wineService) {
-        this.error = error;
+    public OrderLineService(OrderLineRepository orderLineRepository, WineRepository wineRepository, WineService wineService) {
         this.orderLineRepository = orderLineRepository;
         this.wineRepository = wineRepository;
         this.wineService = wineService;
