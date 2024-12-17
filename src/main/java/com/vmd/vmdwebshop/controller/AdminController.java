@@ -1,39 +1,29 @@
 package com.vmd.vmdwebshop.controller;
 
-import com.vmd.vmdwebshop.model.Admin;
-import com.vmd.vmdwebshop.repository.AdminRepository;
-import jakarta.servlet.http.HttpServletRequest;
+import com.vmd.vmdwebshop.service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
-
-import java.util.HashMap;
-import java.util.Map;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/password/")
 public class AdminController {
 
     @Autowired
-    private AdminRepository adminRepository;
+    private AdminService adminService;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
+    /**
+     * Creates an admin in the database that takes the username and password as parameters
+     * and returns the String "success" if completed.
+     * @param username
+     * @param password
+     * @return String
+     */
     @PostMapping("admin/create")
     public String code(@RequestParam String username, @RequestParam String password) {
         try {
-            Admin admin = new Admin();
-            admin.setUsername(username);
-            admin.setPassword(bCryptPasswordEncoder.encode(password));
-            System.out.println(password);
-            adminRepository.save(admin);
-            return "succes";
-        }
-        catch (Exception e){
+            adminService.createAdmin(username, password);
+            return "success";
+        } catch (Exception e) {
             return "failed";
         }
     }

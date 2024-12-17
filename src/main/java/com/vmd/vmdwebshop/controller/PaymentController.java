@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.util.Map;
 
 @RestController
@@ -31,6 +30,7 @@ public class PaymentController {
     @PostMapping("/create-checkout-session")
     public ResponseEntity<Map<String, String>> createCheckoutSession(@RequestBody OrderDto orderDto, HttpServletRequest request) throws StripeException {
         Map<String, String> response = paymentService.createCheckoutSession(orderDto, request);
+
         return ResponseEntity.ok(response);
     }
 

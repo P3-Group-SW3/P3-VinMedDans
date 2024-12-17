@@ -16,12 +16,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import org.apache.commons.io.IOUtils;
 
 @Service
@@ -35,7 +32,6 @@ public class PaymentService {
 
     @Value("${stripe.webhook}")
     private String endpointSecret;
-
 
     @Autowired
     private CustomerService customerService;
@@ -80,6 +76,7 @@ public class PaymentService {
                                             ).build()
                             ).build()
             ).build();
+
         Session session = Session.create(params);
         Map<String, String> response = new HashMap<>();
         response.put("url", session.getUrl());
@@ -98,14 +95,16 @@ public class PaymentService {
      */
     public ResponseEntity<String> handleStripeWebhook(HttpServletRequest request) {
         String payload;
+
         try { // Check if the payload is valid, if not return bad request
             payload = IOUtils.toString(request.getInputStream(), StandardCharsets.UTF_8);
         } catch (IOException e) {
             return ResponseEntity.badRequest().body("Invalid payload");
         }
 
-        String sigHeader = request.getHeader("Stripe-Signature"); 
-        Event event; 
+        String sigHeader = request.getHeader("Stripe-Signature");
+        Event event;
+
         try { // Check if the signature is valid, if not return unauthorized
             event = Webhook.constructEvent(payload, sigHeader, endpointSecret);
         } catch (SignatureVerificationException e) {

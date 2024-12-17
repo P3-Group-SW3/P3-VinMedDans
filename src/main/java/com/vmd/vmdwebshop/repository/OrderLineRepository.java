@@ -1,17 +1,14 @@
 package com.vmd.vmdwebshop.repository;
 
 import com.vmd.vmdwebshop.model.OrderLine;
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Modifying;
-import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.jpa.repository.*;
 import org.springframework.stereotype.Repository;
-
 import java.util.List;
 
 @Repository
 public interface OrderLineRepository extends JpaRepository<OrderLine, Long> {
-    //@Query lets us define custom SQL queries
 
+    //@Query lets us define custom SQL queries
     //Retrieves all orderlines with a specific customerID
     @Query(value="SELECT * FROM orderline WHERE customerID = ?1", nativeQuery = true)
     List<OrderLine> findAllByCustomerId(String customerID);

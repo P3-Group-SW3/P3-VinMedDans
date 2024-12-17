@@ -2,7 +2,6 @@
 package com.vmd.vmdwebshop.model;
 
 import jakarta.persistence.*;
-
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -10,10 +9,8 @@ import java.util.Set;
 @Entity
 @Table(name = "orders") // Renamed to avoid SQL reserved keyword conflict
 public class Orders {
-    /**
-     * Denne enum er til fortælle hvilken state pakken er for levering
-     *
-     */
+
+    // Denne enum er til fortælle hvilken state pakken er for levering
     public enum State {
         REGISTERED,
         CONFIRMED,
@@ -40,7 +37,6 @@ public class Orders {
     @OneToMany(mappedBy = "orders", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderLine> orderLines = new HashSet<>();
 
-
     //constructors
     public Orders() {
     }
@@ -61,12 +57,11 @@ public class Orders {
         orderLines.add(orderLine);
     }
 
+    // Getters and setters
     public Set<OrderLine> getOrderLines(){
         return orderLines;
     }
 
-
-    // Getters and setters
     public Long getID() {
         return ID;
     }

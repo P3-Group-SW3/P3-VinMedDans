@@ -8,7 +8,8 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface OrderRepository extends JpaRepository<Orders, Long> {
-// Retrieves an order with a specific sessionID
-@Query(value="SELECT * FROM orders WHERE sessionID = ?1", nativeQuery = true)
-Orders findBySessionID(String sessionID);
+
+    // Retrieves an order with a specific sessionID
+    @Query(value="SELECT * FROM orders WHERE sessionID = ?1", nativeQuery = true)
+    Orders findBySessionID(String sessionID);
 }

@@ -1,6 +1,5 @@
 package com.vmd.vmdwebshop.controller;
 
-
 import com.vmd.vmdwebshop.DTO.OrderDto;
 import com.vmd.vmdwebshop.DTO.OrderStateDTO;
 import com.vmd.vmdwebshop.exception.order.OrderNotFoundInDatbase;
@@ -15,44 +14,43 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.vmd.vmdwebshop.service.*;
-
-
 import java.util.List;
 
 @RestController
 @RequestMapping("/")
 public class OrderController {
+
     @Autowired
     OrderService orderService;
+
     @Autowired
     private OrderLineService orderLineService;
+
     @Autowired
     private CustomerService customerService;
 
     /**
      * This is for testing.
-     *
      * @param order
      * @param customerID
-     * We take theese two values, the order is filled with information based on the frontend
+     * We take these two values, the order is filled with information based on the frontend
      * And we use the cookie id to get the list of ordelines from the customer send these objects through our order service
      * @return
      */
     @PostMapping("/api/admin/orders/create/{customerID}")
     public ResponseEntity<Orders> createOrder(@Valid @RequestBody OrderDto order, @PathVariable String customerID) {
 
-        try{
+        try {
             //String customerID = customerService.getCustomerID(request);
             List<OrderLine> orderLines = orderLineService.getAllOrderLines(customerID);
             Orders orders = orderService.createOrderFromInfo(order, orderLines, null);
-            return ResponseEntity.ok(orders);
 
-        }catch (RuntimeException e){
+            return ResponseEntity.ok(orders);
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
     }
-
 
     /**
      * Gets all orders
@@ -62,16 +60,14 @@ public class OrderController {
     public ResponseEntity<List<Orders>> getAllOrders() {
         try {
             return ResponseEntity.ok(orderService.getAllOrders());
-        }
-        catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
-
     }
 
     /**
-     * Gets a specifiv order based on id
+     * Gets a specific order based on id
      * @param orderID
      * @return Order
      */
@@ -79,9 +75,9 @@ public class OrderController {
     public ResponseEntity<Orders> getOrderById(@PathVariable @Pattern(regexp = "^\\d+$") String orderID) {
         try {
             Orders order = orderService.getOrderById(Long.parseLong(orderID));
+
             return ResponseEntity.ok(order);
-        }
-        catch (OrderNotFoundInDatbase e){
+        } catch (OrderNotFoundInDatbase e) {
             System.out.println(e.getMessage());
             return ResponseEntity.notFound().build();
         }
@@ -97,7 +93,7 @@ public class OrderController {
         //når vi laver denne skal vi senere gemme ændringerne
         try {
             orderService.changeState(Long.parseLong(orderID), state.getState());
-        }catch (StateChangeFailedException e){
+        } catch (StateChangeFailedException e) {
             System.out.println(e.getMessage());
         }
     }
@@ -112,6 +108,7 @@ public class OrderController {
         try {
             System.out.println(session_id);
             Orders order = orderService.getOrderBySessionID(session_id);
+
             return ResponseEntity.ok(order);
         } catch (OrderNotFoundInDatbase e) {
             System.out.println(e.getMessage());
@@ -128,6 +125,7 @@ public class OrderController {
     public ResponseEntity<Integer> getStateBySessionID(@PathVariable String session_id) {
         try {
             Orders order = orderService.getOrderBySessionID(session_id);
+
             return ResponseEntity.ok(order.getState().ordinal());
         } catch (OrderNotFoundInDatbase e) {
             System.out.println(e.getMessage());
@@ -140,12 +138,14 @@ public class OrderController {
      * @param orderID
      */
     @PostMapping("/api/orders/admin/delete/{orderID}")
-    public void deleteOrder(@PathVariable Long orderID){
+    public void deleteOrder(@PathVariable Long orderID) {
         System.out.println(orderID);
+
         try {
             Orders order = orderService.getOrderById(orderID);
+
             orderService.deleteOrder(order);
-        }catch (RuntimeException e){
+        } catch (RuntimeException e) {
             System.out.println(e.getMessage());
         }
     }

@@ -5,12 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.nio.file.Path;
@@ -32,7 +29,6 @@ public class ImageController {
 
     /**
      * Upload an image
-     *
      * @param file       The image file
      * @param customName The custom name for the image
      * @return A response entity with the result of the upload
@@ -41,6 +37,7 @@ public class ImageController {
     public ResponseEntity<String> uploadImage(@RequestParam("file") MultipartFile file, @RequestParam(value = "customName", required = false) String customName) {
         try {
             String filePath = ImageService.saveImage(file, customName);
+
             return ResponseEntity.ok("Image uploaded successfully: " + filePath);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error uploading image");
@@ -49,7 +46,6 @@ public class ImageController {
 
     /**
      * Get an image
-     *
      * @param filename The name of the image file
      * @return The image file
      */
@@ -59,6 +55,7 @@ public class ImageController {
             if (filename.contains("..") || filename.contains("/") || filename.contains("\\")) { // If request contains illegal file chars
                 throw new IllegalArgumentException("Invalid filename");
             }
+
             Path path = Paths.get(uploadDir).resolve(filename).normalize();
             Resource resource = new UrlResource(path.toUri());
 
@@ -74,13 +71,13 @@ public class ImageController {
 
     /**
      * Get a list of images
-     *
      * @return A response entity with the list of images
      */
     @GetMapping("/getImageList")
     public ResponseEntity<List<String>> getImages() {
         try {
             List<String> imageList = ImageService.getImages();
+
             return ResponseEntity.ok(imageList);
         } catch (IOException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);

@@ -1,28 +1,25 @@
 package com.vmd.vmdwebshop.DTO;
-import com.vmd.vmdwebshop.model.*;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import com.vmd.vmdwebshop.model.*;
+import jakarta.validation.constraints.*;
 
 public class OrderDto {
 
     @NotBlank(message = "Dette felt må ikke være blankt")
-    @Size(max = 35, message = "Der må ikke være mere ind 35 karaktere")
+    @Size(max = 35, message = "Der må ikke være mere end 35 karakterer")
     @Pattern(regexp = "^[\\p{L} .'-]+$", message = "Kun bogstaver, mellemrum, punktum, apostrof og bindestreg er tilladt")
     private String firstName;
 
     @NotBlank(message = "Dette felt må ikke være blankt")
-    @Size(max = 35, message = "Der må ikke være mere ind 35 karaktere")
+    @Size(max = 35, message = "Der må ikke være mere end 35 karakterer")
     @Pattern(regexp = "^[\\p{L} .'-]+$", message = "Kun bogstaver, mellemrum, punktum, apostrof og bindestreg er tilladt")
     private String lastName;
 
     @NotBlank(message = "Dette felt må ikke være blankt")
-    @Email(message = "Email er krævet")
+    @Email(message = "Email er påkrævet")
     private String email;
 
-    @Pattern(regexp = "^(\\d{8}|\\+\\d{1,3}\\d{8,15})$", message = "Tillefon nummeret skal inten være 8 tal eller starte med land code.")
+    @Pattern(regexp = "^(\\d{8}|\\+\\d{1,3}\\d{8,15})$", message = "Telefon nummeret skal enten være 8 tal eller starte med land kode.")
     private String phone;
 
     @NotBlank(message = "Dette felt må ikke være blankt")
@@ -41,16 +38,15 @@ public class OrderDto {
     private String city;
 
     /**
-     * Creates an Order with it's information
+     * Creates an Order with its information
      * @return Orders
      */
     public Orders createOrderFromInfo() {
         return new Orders(firstName, lastName, email, phone, address, zipCode, city, null);
     }
 
-    public OrderDto(){
-
-    }
+    // Constructor
+    public OrderDto() {}
 
     // Getters and setters
     public String getFirstName(){
@@ -100,7 +96,6 @@ public class OrderDto {
     public String getZipCode(){
         return zipCode;
     }
-
 
     public void setCity(String city) {
         this.city = city;
