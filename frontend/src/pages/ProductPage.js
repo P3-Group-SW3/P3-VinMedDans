@@ -12,7 +12,7 @@ function ProductPage() {
 
     // The 'items' state will contain all items
     const [items, setItems] = useState([]);
-    
+
     // On mount: Get all items and store in state variable 'items'
     useEffect(() => {
         fetch('/api/wine/getList')
