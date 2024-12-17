@@ -15,6 +15,7 @@ const LocationPage = () => {
 
     // On mount: Get all distributors and store in state variable 'distributors'
     useEffect(() => {
+
         fetch("/api/distributor/getList")
             .then((response) => response.json())
             .then((data) => setDistributors(data))

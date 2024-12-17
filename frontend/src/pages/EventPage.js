@@ -14,6 +14,7 @@ const EventPage = () => {
 
     // On mount: Get all events and store in state variable 'events'
     useEffect(() => {
+
         fetch("/api/event/getList")
             .then((response) => response.json())
             .then((data) => setEvents(data))
