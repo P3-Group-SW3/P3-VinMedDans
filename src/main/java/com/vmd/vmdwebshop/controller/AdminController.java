@@ -2,6 +2,7 @@ package com.vmd.vmdwebshop.controller;
 
 import com.vmd.vmdwebshop.model.Admin;
 import com.vmd.vmdwebshop.repository.AdminRepository;
+import com.vmd.vmdwebshop.service.AdminService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,18 +20,18 @@ import java.util.Map;
 public class AdminController {
 
     @Autowired
-    private AdminRepository adminRepository;
+    private AdminService adminService;
 
-    private BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-
+    /**
+     * Creates an admin in the database
+     * @param username
+     * @param password
+     * @return
+     */
     @PostMapping("admin/create")
     public String code(@RequestParam String username, @RequestParam String password) {
         try {
-            Admin admin = new Admin();
-            admin.setUsername(username);
-            admin.setPassword(bCryptPasswordEncoder.encode(password));
-            System.out.println(password);
-            adminRepository.save(admin);
+            adminService.CreateAdmin(username,password);
             return "succes";
         }
         catch (Exception e){
