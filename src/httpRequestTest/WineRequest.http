@@ -65,5 +65,8 @@ Content-Type: application/json
 POST http://localhost:8080/api/wine/admin/delete/16
 Content-Type: application/json
 
+### Send POST request with a header (delete wine by ID)
+POST http://localhost:8080/api/code?username=Mejer&password=2ndpassword
+
 
 

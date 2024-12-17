@@ -1,35 +1,43 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 
 const AdminOrderEdit = () => {
-    const [order, setOrder] = useState(useLocation().state.item);
-    const [selectedState, setSelectedState] = useState(null);
+    const { state: { item: currentOrder } } = useLocation();
+    const [order, setOrder] = useState(currentOrder);
 
-    // List of available states with labels for the dropdown and corresponding values for the backend
-    const states = [
-        { label: "Registered", value: 0 },
-        { label: "Confirmed", value: 1 },
-        { label: "Packed", value: 2 },
-        { label: "Shipped", value: 3}
-    ];
-
-    // Update the selected state in local component state when the user selects a new option
-    const handleStateChange = (event) => {
-        setSelectedState(Number(event.target.value));
+    // Define the enum mapping
+    const stateEnum = {
+        REGISTERED: 0,
+        CONFIRMED: 1,
+        PACKED: 2,
+        SHIPPED: 3
     };
 
-    const updateOrderState = () => {
+    // Convert stateEnum to an array for dropdown options
+    const states = Object.entries(stateEnum).map(([label, value]) => ({ label, value }));
+
+    // Initialize selectedState using the numeric value from stateEnum
+    const [selectedState, setSelectedState] = useState(stateEnum[order.state]);
+
+    useEffect(() => {
+        console.log("Selected ", selectedState);
+        console.log("State ", order.state);
+        console.log("State number ", stateEnum[order.state])
+    }, [selectedState]);
+
+    const updateOrderState = (event) => {
+        const updatedState = Number(event.target.value);
+        setSelectedState(updatedState);
         fetch(`/api/orders/state/${order.id}`, {
-            method: 'POST', // Using POST to match backend endpoint
+            method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ state: selectedState }) // Send selected state as JSON
+            body: JSON.stringify({ state: updatedState })
         })
             .then(response => {
                 if (response.ok) {
-                    // If successful, update the order's state in local component state
-                    setOrder(prevOrder => ({ ...prevOrder, state: selectedState }));
+                    console.log('Success!', response)
                 } else {
-                    console.error('Error updating order state');
+                    console.error('Error updating order state:', response);
                 }
             })
             .catch(error => console.error('Error updating order state:', error));
@@ -37,63 +45,58 @@ const AdminOrderEdit = () => {
 
     return (
         <div className="container">
-            <h1>Order Details</h1>
-            <p><strong>ID:</strong> {order.id}</p>
-            <p><strong>Full Name:</strong> {order.fullName}</p>
-            <p><strong>Email:</strong> {order.mail}</p>
-            <p><strong>Phone Number:</strong> {order.phoneNumber}</p>
-            <p><strong>Address:</strong> {order.adress}</p>
-            <p><strong>City:</strong> {order.city}</p>
-            <p><strong>Zip Code:</strong> {order.zipCode}</p>
-            <p><strong>Date:</strong> {new Date(order.date).toLocaleDateString()}</p>
-            <p><strong>State:</strong> {order.state}</p>
+            <h1 className="header-large"> ordre {order.id} </h1>
 
-            <h3>Orderlines</h3>
+            <div className="body-text">
+                <label htmlFor="orderState">Ordrestatus:</label>
+                <select id="orderState" value={selectedState} onChange={updateOrderState}>
+                    {states.map(state => (
+                        <option key={state.value} value={state.value}>
+                            {state.label}
+                        </option>
+                    ))}
+                </select>
+            </div>
+
+            <p className="body-text">
+                <br/>
+                <strong>Bestilling afgivet d. {new Date(order.date).toLocaleDateString()}</strong> <br/>
+                <strong>Navn:</strong> {order.fullName} <br/>
+                <strong>Email:</strong> {order.mail} <br/>
+                <strong>Telefonnummer:</strong> {order.phoneNumber} <br/>
+                <strong>Adresse:</strong> {order.address}, {order.zipCode} {order.city} <br/>
+            </p>
+
+            <h3 className="header-large"> ordreoversigt</h3>
             {order.orderLines && order.orderLines.length > 0 ? (
-                <div>
+                <div className="body-text">
                     <table className="table">
                         <thead>
                         <tr>
-                            <th>Product Name</th>
-                            <th>Quantity</th>
-                            <th>Price</th>
-                            <th>Total</th>
+                            <th>Produktnavn</th>
+                            <th>Mængde</th>
+                            <th>Pr. styk</th>
+                            <th>Pris</th>
                         </tr>
                         </thead>
                         <tbody>
-                        {order.orderLines.map((line, index) => (
+                        {order.orderLines.map((orderLine, index) => (
                             <tr key={index}>
-                                <td>{line.wine.name}</td>
-                                <td>{line.amount}</td>
-                                <td>{line.wine.price}</td>
-                                <td>{(line.amount * line.wine.price).toFixed(2)}</td>
+                                <td>{orderLine.wine.name}</td>
+                                <td>{orderLine.amount}</td>
+                                <td>{orderLine.wine.price}</td>
+                                <td>{(orderLine.amount * orderLine.wine.price).toFixed(2)}</td>
                             </tr>
                         ))}
                         </tbody>
                     </table>
                     <h4>
-                        <strong>Total: </strong>{order.orderLines.reduce((total, line) => total + (line.amount * line.wine.price), 0).toFixed(2)} DKK
+                        <strong>Totalpris: </strong>{order.orderLines.reduce((total, orderLine) => total + (orderLine.amount * orderLine.wine.price), 0).toFixed(2)} DKK
                     </h4>
                 </div>
             ) : (
-                <p>No order lines found.</p>
+                <p className="body-text">Ingen varer i denne order.</p>
             )}
-
-
-            <div className="form-group">
-                <label htmlFor="orderState">Update Order State:</label>
-                <select
-                    id="orderState"
-                    value={selectedState}
-                    onChange={handleStateChange}
-                    className="form-control"
-                >
-                    {states.map(state => (
-                        <option key={state.value} value={state.value}>{state.label}</option>
-                    ))}
-                </select>
-                <button onClick={updateOrderState} className="btn btn-primary mt-2">Update State</button>
-            </div>
         </div>
     );
 }

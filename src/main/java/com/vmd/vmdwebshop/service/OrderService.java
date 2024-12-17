@@ -114,6 +114,7 @@ public class OrderService {
             }
         }
 
+        //Updates Stock
         try {
             wineService.updateStockFromOrder(orderLineList);
         } catch (DataAccessException e) {
