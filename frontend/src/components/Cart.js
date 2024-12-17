@@ -112,6 +112,8 @@ const OrderLineEdit = ({orderLine}) => {
             setQuantity(newQuantity)
         }
 
+        orderLine.amount = newQuantity;
+
         fetch('/api/createAndEditOrderLine', {
             method: 'POST',
             headers: {
