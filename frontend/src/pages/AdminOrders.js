@@ -3,10 +3,16 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/fonts.css'
 import '../styles/admin.css'
 
+/*
+ * AdminOrders shows the full overview of all orders where the dashboard module only shows 10.
+ */
 const AdminOrders = () => {
+
+    //The 'orders' state will contain all orders
     const [orders, setOrders] = useState([]);
     const navigate = useNavigate();
 
+    //On mount: Get all orders and add to 'orders' state variable
     useEffect(() => {
         fetch(`/api/orders/getList`)
             .then(response => response.json())
@@ -21,7 +27,7 @@ const AdminOrders = () => {
             .catch(error => console.error('Error fetching products:', error));
     }, []);
 
-
+    ////Redirects to specific order page when clicking a table row. Passes the item object
     const clickRow = (item) => {
         navigate(`/administrator/orders/${item.id}`, {
             state: {

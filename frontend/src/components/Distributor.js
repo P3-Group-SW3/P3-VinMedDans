@@ -1,6 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/*
+ * The Distributor component handles displaying a distributor on the LocationPage
+ */
 const Distributor = ({ name, location, websiteURL }) => {
 
     return (
@@ -17,7 +20,6 @@ const Distributor = ({ name, location, websiteURL }) => {
 };
 
 Distributor.propTypes = {
-    title: PropTypes.string.isRequired,
     name: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
     websiteURL: PropTypes.string.isRequired,

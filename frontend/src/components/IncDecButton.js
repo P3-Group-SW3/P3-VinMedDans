@@ -1,7 +1,13 @@
 import React from 'react';
 import Button from './Button';
 
-function IncDecButton({ decrementQuantity, incrementQuantity, quantity, scale = 1}) {
+/*
+ * IncDecButton (increase/decrease) displays a quantity with - and + buttons on each side
+ * The increment and decrement functions are customisable, as well as the scale
+ */
+const IncDecButton = ({ decrementQuantity, incrementQuantity, quantity, scale = 1}) => {
+
+    //Scale of the quantity display is scaled by the parameter 'scale' (default is 1)
     const quantityStyle = {
         width: `${30 * scale}px`,
         fontSize: `${20 * scale}px`,
@@ -10,6 +16,7 @@ function IncDecButton({ decrementQuantity, incrementQuantity, quantity, scale = 
 
     return (
         <div className="d-flex" style={{ transform: `scale(${scale})` }}>
+            {/* Button is flat on side facing the quantity display and scaled to the same size */}
             <Button
                 text="-"
                 onClick={decrementQuantity}

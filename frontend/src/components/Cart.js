@@ -8,8 +8,12 @@ import removeImage from '../images/remove.svg';
 import Button from "./Button";
 import IncDecButton from "./IncDecButton";
 
+/*
+ * The Cart component handles the dropdown-menu functionality.
+ */
 const Cart = () => {
 
+    //Outer component with dropdown-menu button and container with the CartContent.
     return (
         <div className="dropdown justify-self-end me-2">
             <button className="unstyled" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside"
@@ -23,17 +27,21 @@ const Cart = () => {
     );
 };
 
+/*
+ * The CartContent component handles the list of order lines.
+ */
 const CartContent = () => {
 
+    //Using the CartContext to get order lines, total price and refreshCart function
     const { orderLines, totalPrice, refreshCart } = useCart();
+    const navigate = useNavigate();
 
+    //On mount: Refresh cart content
     useEffect(() => {
         refreshCart();
     }, [])
 
-    const navigate = useNavigate();
-
-
+    //Empty cart by using clearCart API
     const emptyCart = () => {
         fetch('api/clearCart/')
             .then(response => console.log(response))
@@ -41,6 +49,7 @@ const CartContent = () => {
             .catch(error => console.error('Error fetching data: ', error));
     }
 
+    //Remove an order line from cart by using deleteOrderLine API
     const removeFromCart = (orderLine) => {
         fetch('api/deleteOrderLine', {
             method: 'POST',
@@ -54,6 +63,7 @@ const CartContent = () => {
             .catch(error => console.error('Error fetching data: ', error));
     }
 
+    //Show a list of order lines if there are any.
     if (orderLines.length > 0) {
         return (
             <section className="cart-dropdown">
@@ -91,6 +101,7 @@ const CartContent = () => {
                 </div>
             </section>
         );
+    //If there are no order lines for this customer, show text indicating the cart is empty.
     } else {
         return (
             <section className="cart-dropdown">
@@ -102,16 +113,29 @@ const CartContent = () => {
     }
 };
 
+/*
+ * The OrderLineEdit component is in each order line
+ * It allows a customer to change amount of a product in their cart.
+ */
 const OrderLineEdit = ({orderLine}) => {
+
+    //Uses refreshCart from CartContext.
     const { refreshCart } = useCart();
+    //The state 'quantity' tracks the amount of products in the specified order line
     const [quantity, setQuantity] = useState(orderLine.amount);
 
+    //Based on the value of 'change' parameter, quantity state is updated as well as amount stored in orderline
     const updateQuantity = (change) => {
+
         const newQuantity = quantity + change;
+
+        //Only change quantity if it remains a positive integer
         if (newQuantity > 0) {
-            setQuantity(newQuantity)
+            setQuantity(newQuantity) //local state
+            orderLine.amount = newQuantity; //store in order line object
         }
 
+        //Save updated order line to the database
         fetch('/api/createAndEditOrderLine', {
             method: 'POST',
             headers: {
@@ -125,7 +149,6 @@ const OrderLineEdit = ({orderLine}) => {
             .catch((error) => {
                 console.error('Error:', error);
             });
-        console.log("Current quantity: ", quantity);
     }
 
     return (

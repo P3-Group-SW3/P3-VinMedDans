@@ -4,18 +4,24 @@ import '../styles/fonts.css'
 import '../styles/admin.css'
 import Button from "./Button";
 
-function AdminModule({title, category, columns} ) {
+/*
+ * Dashboard module for administrator dashboard.
+ * Can be used for either wine, events, distributor and orders
+ */
+
+const AdminModule = ({title, category, columns} ) => {
+
+    //The state 'items' contains array of items in the given category
     const [items, setItems] = useState([]);
     const navigate = useNavigate();
 
+    //On mount: Get all items and assign to 'items' state
     useEffect(() => {
-        console.log('Admin stuff: ', title, category)
         fetch(`/api/${category}/getList`)
             .then(response => response.json())
             .then(data => {
                 if (data) {
                     setItems(data);
-                    console.log(data);
                 } else {
                     console.warn(`Received empty data for ${category}`);
                 }
@@ -23,7 +29,7 @@ function AdminModule({title, category, columns} ) {
             .catch(error => console.error('Error fetching products:', error));
     }, []);
 
-    
+    //Redirects to specific item page when clicking a table row. Passes the item object
     const clickRow = (item) => {
         navigate(`/administrator/${category}/${item.id}`, {
             state: {
@@ -43,23 +49,27 @@ function AdminModule({title, category, columns} ) {
                 <table className="table table-hover" style={{fontFamily: 'Rubik, sans-serif'}}>
                     <thead>
                         <tr>
+                            {/* Table head values mapped from the 'columns' array */}
                             {columns.map((col, index) => (
                                 <th key={index}>{col.header}</th>
                             ))}
                         </tr>
                     </thead>
                         <tbody>
-                        {items?.slice(0,10).map((item) => (
-                            <tr
-                                key={item.id}
-                                onClick={() => clickRow(item)}
-                                style={{cursor: 'pointer'}}
-                            >
-                                {columns.map((col, index) => (
-                                    <td key={index}>{item[col.field]}</td>
-                                ))}
-                            </tr>
-                        ))}
+                            {/* Table rows mapped from the 'columns' array, 10 rows max */}
+                            {items?.slice(0, 10).map((item) => (
+                                <tr
+                                    key={item.id}
+                                    onClick={() => clickRow(item)}
+                                    style={{ cursor: 'pointer' }}
+                                >
+                                    {columns.map((col, index) => (
+                                        <td key={index}>
+                                            {item[col.field]}
+                                        </td>
+                                    ))}
+                                </tr>
+                            ))}
                         </tbody>
                 </table>
                 {category === 'orders' &&
