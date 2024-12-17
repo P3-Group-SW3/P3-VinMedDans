@@ -125,7 +125,7 @@ public class OrderService {
 
     /**
      * allows admins to change the state of an order
-     * Det er her vi ville tilføje emails?
+     * This is where we would add emails
      * @param orderID
      * @param state, new state
      * @throws StateChangeFailedException if the object is not properly updated in the database.
