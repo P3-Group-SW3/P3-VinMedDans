@@ -48,7 +48,8 @@ tasks.named('test') {
 // Custom tasks to build React project and copy to static resources
 tasks.register('buildFrontend', Exec) {
     workingDir 'frontend'
-    commandLine 'cmd', '/d', 'npm install && npm run build'
+    commandLine 'npm', 'install'
+    commandLine 'npm', 'run', 'build'
     inputs.dir 'frontend/src'
     outputs.dir 'frontend/build'
 }
