@@ -2,12 +2,18 @@ import React, {useEffect, useState} from "react";
 import '../styles/modal.css'
 import Button from "./Button";
 
-
+/*
+ * Modal to verify the age of the customer.
+ * Is only shown to visitors with no stored customer cookie.
+ */
 const AgeVerification = () => {
 
+    //The state 'show' handles the visibility of the module
     const [show, setShow] = useState(false);
 
+    //On mount: Create customer cookie if necessary and check if modal should be shown
     useEffect(() => {
+        //Fetch createCookie API to create a customer cookie if there is none beforehand
         fetch('api/createCookie')
             .then(response => {
                 if (response.ok) {
@@ -20,15 +26,14 @@ const AgeVerification = () => {
                 console.error('Error creating cookie:', error);
             });
 
+        //Fetch cookieAge API to see if customer cookie is 'new' or 'old', set 'show' accordingly
         fetch('api/cookieAge')
             .then(response => response.json())
             .then(data => {
                 if (data.cookieAge === 'new') {
                     setShow(true);
-                    console.log("New cookie! Show: ", show);
                 } else if (data.cookieAge === 'old') {
                     setShow(false);
-                    console.log("Old cookie... Show: ", show);
                 } else {
                     console.warn("Invalid cookie age value:", data.cookieAge);
                 }
@@ -36,24 +41,20 @@ const AgeVerification = () => {
             .catch(error => console.error('Error fetching data: ', error));
     }, []);
 
-    useEffect(() => {
-        console.log("Show state updated:", show);
-    }, [show]);
-
+    //Redirects the customer to BR's website if they declare that they are younger than 18
     const redirectToBR = () => {
         document.location = "https://www.br.dk/";
     }
 
+    //Hides modal and sets cookieAge to 'old' if customer declares that they are 18 or older
     const ageVerified = () => {
         fetch('api/updateCookie')
             .then(response => console.log(response))
             .catch(error => console.error('Error fetching data: ', error))
         setShow(false);
-        console.log("After press yes: ", show)
     }
-
+        //Show modal based on the value of 'show'
         if (show) {
-            console.log("AgeVerification is shown");
             return (
             <div className='modal show' style={{backdropFilter: 'blur(15px)'}}>
                 <div className="modal-dialog modal-dialog-centered">

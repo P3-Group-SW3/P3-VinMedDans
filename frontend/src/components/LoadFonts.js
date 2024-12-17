@@ -1,4 +1,4 @@
-// LoadFonts.js
+// LoadFonts loads custom Google fonts through an external API link.
 import { useEffect } from 'react';
 
 const LoadFonts = () => {

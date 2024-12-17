@@ -1,4 +1,4 @@
-// CustomerLinkContext.js
+// Maps all navigation links to specific paths and text colors
 export const CustomerLinks = [
     { text: 'Webshop', path: '/shop', color: '#E93271' },
     { text: 'Hvem er vi', path: '/about', color: '#C44097' },

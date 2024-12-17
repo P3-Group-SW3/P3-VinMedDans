@@ -1,20 +1,21 @@
+import {useState, useEffect} from "react";
 import AgeVerification from "../components/AgeVerification";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import {CustomerLinks} from "./CustomerLinkContext";
-import React from "react";
 import Distributor from "../components/Distributor";
+import {CustomerLinks} from "./CustomerLinkContext";
 
+/*
+ * This page displays all distributors currently stored in the database.
+ */
+const LocationPage = () => {
 
-function LocationPage() {
-    const [distributors, setDistributors] = React.useState([]);
+    // The 'distributors' state will contain all distributors
+    const [distributors, setDistributors] = useState([]);
 
-    /*
-    call: /api/distributor/getList
-    method: GET
-    response: JSON array of objects
-    */
-    React.useEffect(() => {
+    // On mount: Get all distributors and store in state variable 'distributors'
+    useEffect(() => {
+
         fetch("/api/distributor/getList")
             .then((response) => response.json())
             .then((data) => setDistributors(data))

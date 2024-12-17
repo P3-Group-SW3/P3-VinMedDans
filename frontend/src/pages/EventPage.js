@@ -2,20 +2,19 @@ import AgeVerification from "../components/AgeVerification";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import Event from "../components/Event";
-import React from "react";
+import {useState, useEffect} from "react";
 import {CustomerLinks} from "./CustomerLinkContext";
 
+/*
+ * This page displays all events currently stored in the database.
+ */
+const EventPage = () => {
+    // The 'events' state will contain all events
+    const [events, setEvents] = useState([]);
 
-function EventPage() {
+    // On mount: Get all events and store in state variable 'events'
+    useEffect(() => {
 
-    /* 
-    API handle: /api/event/getList
-    Method: GET
-    Description: Get all events
-    */
-    const [events, setEvents] = React.useState([]);
-
-    React.useEffect(() => {
         fetch("/api/event/getList")
             .then((response) => response.json())
             .then((data) => setEvents(data))

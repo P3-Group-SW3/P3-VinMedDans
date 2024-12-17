@@ -1,6 +1,9 @@
 import React from 'react';
 
-function Footer() {
+/*
+ * The Footer component handles displaying the footer at the bottom of each page.
+ */
+const Footer = () => {
     return (
         <footer className="container-fluid py-4" style={{backgroundColor: '#C0924D'}}>
             <div className="row justify-content-around">
@@ -12,14 +15,16 @@ function Footer() {
     );
 }
 
-function FooterLinks({ items }) {
+//Maps each footer element to a link (if any are available)
+const FooterLinks = ({ items }) => {
+
     const links = {
         "Instagram": "https://www.instagram.com/vinmeddans/",
         "Email": "mailto:vinmeddans@gmail.com",
         "Levering": "#",
         "Betingelser og vilkår": "#",
         "Telefonnummer": "tel:+4531175720",
-        "Kontrolrapport": "#"
+        "Kontrolrapport": "https://www.findsmiley.dk/1259568"
     };
 
     return (
