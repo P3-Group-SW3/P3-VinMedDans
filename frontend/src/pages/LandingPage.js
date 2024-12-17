@@ -1,13 +1,14 @@
-import AgeVerification from "../components/AgeVerification";
 import React from 'react';
+import AgeVerification from "../components/AgeVerification";
 import Header from '../components/Header';
 import Footer from '../components/Footer';
-import {CustomerLinks} from "./CustomerLinkContext";
 import AlternatingItems from "../components/AlternatingItems";
+import {CustomerLinks} from "./CustomerLinkContext";
 
 
-function LandingPage() {
+const LandingPage = () => {
 
+    //Sections to be shown on the landing page are defined in this array of objects
     const sections = [
         {
             title: 'Hvad er frugtvin?',
@@ -35,6 +36,7 @@ function LandingPage() {
                 links={ CustomerLinks }
                 showCart={true}
             />
+            {/* Sections are passed into an AlternatingItems component */}
             <AlternatingItems items={sections}/>
             <Footer />
         </div>

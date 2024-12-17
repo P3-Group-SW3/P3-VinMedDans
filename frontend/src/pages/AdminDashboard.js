@@ -2,9 +2,15 @@ import React from 'react';
 import '../styles/admin.css'
 import AdminModule from "../components/AdminModule";
 
+/*
+ * The AdminDashBoard page displays the different AdminModules for
+ * wine, order, event and distributor.
+ * The columns define the information shown in the columns of each AdminModule table.
+ * Headers are shown in the table header, fields are mapped to each row
+ */
 const AdminDashboard = () => {
 
-    const productColumns = [
+    const wineColumns = [
         { header: 'Navn', field: 'name' },
         { header: 'Antal', field: 'stock' }
     ];
@@ -28,7 +34,7 @@ const AdminDashboard = () => {
 
     return (
         <div className="admin-dashboard">
-            <AdminModule category="wine" title="sortiment" columns={productColumns}/>
+            <AdminModule category="wine" title="sortiment" columns={wineColumns}/>
             <AdminModule category="orders" title="ordrer" columns={orderColumns}/>
             <AdminModule category="event" title="events" columns={eventColumns}/>
             <AdminModule category="distributor" title="forhandlere" columns={distributorColumns}/>

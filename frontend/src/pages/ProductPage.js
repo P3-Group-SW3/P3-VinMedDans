@@ -1,27 +1,25 @@
-import React from "react";
 import { useState, useEffect } from "react";
 import AgeVerification from "../components/AgeVerification";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
-import {CustomerLinks} from "./CustomerLinkContext";
 import AlternatingItems from "../components/AlternatingItems";
+import {CustomerLinks} from "./CustomerLinkContext";
 
+/*
+ * This page displays all products currently stored in the database.
+ */
 function ProductPage() {
+
+    // The 'items' state will contain all items
     const [items, setItems] = useState([]);
 
-    /*
-    call: /api/getAllWines
-    method: GET
-    response: JSON array of objects
-    */
+    // On mount: Get all items and store in state variable 'items'
     useEffect(() => {
         fetch('/api/wine/getList')
             .then(response => response.json())
             .then(data => setItems(data))
             .catch(error => console.error('Error fetching data:', error));
     }, []);
-
-    console.log(items);
 
     return (
         <div>
@@ -30,7 +28,7 @@ function ProductPage() {
                 links={ CustomerLinks }
                 showCart={true}
             />
-
+            {/* Items are passed into an AlternatingItems component */}
             <AlternatingItems items={items}/>
             <Footer />
         </div>

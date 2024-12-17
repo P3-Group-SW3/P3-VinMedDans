@@ -1,10 +1,13 @@
+import React from "react";
 import AgeVerification from "../components/AgeVerification";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import {CustomerLinks} from "./CustomerLinkContext";
-import React from "react";
 
-function ContactPage() {
+/*
+ * This page displays contact information for VMD.
+ */
+const ContactPage = () => {
     return (
         <div>
             <AgeVerification/>
@@ -15,7 +18,7 @@ function ContactPage() {
             <div className="row align-items-center mb-4 my-5" >
                 <div className={`col-lg-6 py-0`}>
                     <img
-                        src='http://localhost:8080/api/images/image6.png'
+                        src='http://127.0.0.1:8080/api/images/image6.png'
                         alt='Vinflasker'
                         className="img-fluid mx-auto d-block"
                     />

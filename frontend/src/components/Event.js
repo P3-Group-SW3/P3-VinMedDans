@@ -1,8 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+/*
+ * The Event component handles displaying an event on the EventPage.
+ */
 const Event = ({ title, date, time, location, description, imageUrl }) => {
 
+    //Checks if the date for the event has passed or not, display text for each case
     const renderEventStatus = () => {
         const eventDate = new Date(date);
         const today = new Date();
@@ -44,7 +48,7 @@ Event.propTypes = {
     time: PropTypes.string.isRequired,
     location: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
-    imageUrl: PropTypes.string,
+    imageURL: PropTypes.string,
 };
 
 export default Event;

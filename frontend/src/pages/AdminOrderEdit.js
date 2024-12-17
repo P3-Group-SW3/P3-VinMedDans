@@ -1,11 +1,15 @@
 import React, {useEffect, useState} from 'react';
 import {useLocation} from "react-router-dom";
 
+/*
+ * AdminOrderEdit displays order details and allows administrators to change their state.
+ * This page is implemented differently than other AdminEdit pages, and is thus a separate file.
+ */
 const AdminOrderEdit = () => {
-    const { state: { item: currentOrder } } = useLocation();
-    const [order, setOrder] = useState(currentOrder);
+    //The order is received through the useLocation state
+    const [order, setOrder] = useState(useLocation().state?.item);
 
-    // Define the enum mapping
+    // Enums for the order's state are mapped as they are in the order model
     const stateEnum = {
         REGISTERED: 0,
         CONFIRMED: 1,
@@ -13,21 +17,20 @@ const AdminOrderEdit = () => {
         SHIPPED: 3
     };
 
-    // Convert stateEnum to an array for dropdown options
+    // Here, stateEnum is converted to an array to be used in the 'select' element on the page
     const states = Object.entries(stateEnum).map(([label, value]) => ({ label, value }));
 
-    // Initialize selectedState using the numeric value from stateEnum
+    // The selectedState holds the number value for the selected state.
     const [selectedState, setSelectedState] = useState(stateEnum[order.state]);
 
-    useEffect(() => {
-        console.log("Selected ", selectedState);
-        console.log("State ", order.state);
-        console.log("State number ", stateEnum[order.state])
-    }, [selectedState]);
-
+    // The selectedState is updated, and this state is saved to the order in the database.
     const updateOrderState = (event) => {
+        // The variable updatedState holds the number value of the selected state
         const updatedState = Number(event.target.value);
+        //Set selectedState to the new value
         setSelectedState(updatedState);
+
+        //Using the state API, save the updatedState to the order
         fetch(`/api/orders/state/${order.id}`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
@@ -47,6 +50,7 @@ const AdminOrderEdit = () => {
         <div className="container">
             <h1 className="header-large"> ordre {order.id} </h1>
 
+            {/* This 'select' element dynamically updates the order's state */}
             <div className="body-text">
                 <label htmlFor="orderState">Ordrestatus:</label>
                 <select id="orderState" value={selectedState} onChange={updateOrderState}>
@@ -58,6 +62,7 @@ const AdminOrderEdit = () => {
                 </select>
             </div>
 
+            {/* Display all order information */}
             <p className="body-text">
                 <br/>
                 <strong>Bestilling afgivet d. {new Date(order.date).toLocaleDateString()}</strong> <br/>
@@ -67,6 +72,7 @@ const AdminOrderEdit = () => {
                 <strong>Adresse:</strong> {order.address}, {order.zipCode} {order.city} <br/>
             </p>
 
+            {/* Display all order lines for this order */}
             <h3 className="header-large"> ordreoversigt</h3>
             {order.orderLines && order.orderLines.length > 0 ? (
                 <div className="body-text">

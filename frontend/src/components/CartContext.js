@@ -1,12 +1,18 @@
 import React, { createContext, useContext, useState } from "react";
 
+//Default context value is null
 const CartContext = createContext(null);
 
+/*
+ * The CartProvider component can wrap any number of components.
+ * These child components will have access to the context's functions and variables.
+ */
 export const CartProvider = ({ children }) => {
+    //The states orderLines and totalPrice are declared with default values
     const [orderLines, setOrderLines] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
 
-    //Refresh the orderLines and total price for current customerID
+    //use getAllOrderLines and getPrice APIs to populate the state variables
     const refreshCart = () => {
         fetch('api/getAllOrderLines')
             .then(response => response.json())
@@ -40,4 +46,5 @@ export const CartProvider = ({ children }) => {
     );
 };
 
+//This custom hook can be used in any children of the CartProvider to import variables and functions
 export const useCart = () => useContext(CartContext);
