@@ -3,6 +3,8 @@
 [[License](https://github.com/P3-Group-SW3/P3-VinMedDans/blob/main/LICENSE)]
 
 
+
+
 ## DISCLAIMER READ ME FIRST
 - All pushes to the production(Stable) branch should be STABLE versions of the software. It must pass all tests before a pull request for it to be made. 
 - The pre-production branch is allowed to have failing unit tests, although they should be solved within a relatively short time frame or generally avoided
