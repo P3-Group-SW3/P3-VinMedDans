@@ -10,10 +10,8 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.servlet.View;
-
 import java.util.Date;
 import java.util.List;
-
 
 @Service
 @Transactional
@@ -26,6 +24,7 @@ public class OrderService {
     private final WineService wineService;
 
     // til test
+    // Constructor
     public OrderService(View error, OrderRepository orderRepository, OrderLineService orderLineService, WineService wineService){
         this.error = error;
         this.orderRepository = orderRepository;
@@ -38,11 +37,12 @@ public class OrderService {
      * @return List<Orders>
      */
     public List<Orders> getAllOrders() {
-
         List<Orders> orders = orderRepository.findAll();
-        if (orders.isEmpty()){
+
+        if (orders.isEmpty()) {
             throw new OrdersNotFound();
         }
+
         return orders;
     }
 
@@ -51,10 +51,10 @@ public class OrderService {
      * @param orderID
      * @return
      */
-    public Orders getOrderById(Long orderID){
+    public Orders getOrderById(Long orderID) {
         Orders order = orderRepository.findById(orderID).orElse(null);
 
-        if(order == null){
+        if (order == null) {
             throw new OrderNotFoundInDatbase(orderID);
         }
 
@@ -67,10 +67,10 @@ public class OrderService {
      * @param sessionID
      * @return
      */
-    public Orders getOrderBySessionID(String sessionID){
+    public Orders getOrderBySessionID(String sessionID) {
         Orders order = orderRepository.findBySessionID(sessionID);
 
-        if(order == null){
+        if (order == null) {
             throw new OrderNotFoundInDatbase(Long.parseLong(sessionID));
         }
 
@@ -79,7 +79,7 @@ public class OrderService {
 
 
     /**
-     * Creates a order based on the information given by the customer
+     * Creates an order based on the information given by the customer
      * @param orderDto
      * @param orderLineList
      * @param sessionID
@@ -97,6 +97,7 @@ public class OrderService {
         order.setDate(new Date());
         order.setSessionID(sessionID);
         order.setPrice(OrderLineService.calculateOrderLines(orderLineList));
+
         orderRepository.save(order);
 
         if (order.getID() == null) {
@@ -106,8 +107,10 @@ public class OrderService {
         for (OrderLine orderLine : orderLineList) {
             order.addOrderLine(orderLine);
             orderLine.setOrders(order);
+
             if (!orderLine.getOrderID().equals(order.getID())) {
-                throw new OrderlineNotAdded("Orderline with id: " + orderLine.getID() + " did not add the order ID of: " + order.getID());
+                throw new OrderlineNotAdded("Orderline with id: " + orderLine.getID() +
+                                            " did not add the order ID of: " + order.getID());
             }
         }
 
@@ -123,10 +126,10 @@ public class OrderService {
 
     /**
      * allows admins to change the state of an order
-     * Det er her vi ville tilføje emails?
+     * This is where we would add emails
      * @param orderID
      * @param state, new state
-     * @throws StateChangeFailedException if the object is not properly updated in the database. 
+     * @throws StateChangeFailedException if the object is not properly updated in the database.
      */
     public void changeState(Long orderID, int state) {
         Orders order = getOrderById(orderID);  //retrieves an order object
@@ -135,7 +138,7 @@ public class OrderService {
         order.setState(newState); //sets the new state of the existing object
         System.out.println("Order state changed from: " + state1 + " to: " + newState);
 
-        if(order.getState() != newState) {
+        if (order.getState() != newState) {
             throw new StateChangeFailedException(state1, newState);
         }
     }
@@ -144,12 +147,12 @@ public class OrderService {
      *Method to delete a specific order
      * @param order
      */
-    public void deleteOrder(Orders order){
+    public void deleteOrder(Orders order) {
         //before deleting an order, all orderlines referenced by the order must be deleted.
-        for (OrderLine orderLine: order.getOrderLines()){
+        for (OrderLine orderLine: order.getOrderLines()) {
             orderLineService.deleteOrderlineByID(orderLine);
         }
+
         orderRepository.deleteById(order.getID());
     }
-
 }

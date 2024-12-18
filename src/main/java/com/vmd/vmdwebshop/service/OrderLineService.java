@@ -10,40 +10,28 @@ import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.View;
-
 import java.util.List;
 
 @Service
 @Transactional
 public class OrderLineService {
 
-
-    private final View error;
-
+    /* Constructor Dependency Injection (CDI) - provides the repository dependencies to the OrderLineService class
+    through the constructor. Injecting the repositories into the service allows the service class
+    to interact with the database through the repositories. 'final' ensures that the repositories
+    cannot be changed after the service has been initialised */
     private final WineRepository wineRepository;
     private final OrderLineRepository orderLineRepository;
     private final WineService wineService;
 
-    // Constructor injection to receive the repositories
-
-    /**
-     * Constructor Dependency Injection (CDI) - Dependencies are injected via the constructor.
-     * We use a constructor to inject the concepts of the wine and orderline repositories into the OrderLineService class.
-     * @param error
-     * @param orderLineRepository
-     * @param wineRepository
-     */
-    public OrderLineService(View error, OrderLineRepository orderLineRepository, WineRepository wineRepository, WineService wineService) {
-        this.error = error;
+    public OrderLineService(OrderLineRepository orderLineRepository, WineRepository wineRepository, WineService wineService) {
         this.orderLineRepository = orderLineRepository;
         this.wineRepository = wineRepository;
         this.wineService = wineService;
     }
 
-
     /**
      * Retrieves all order lines associated with a specific customer.
-     *
      * @param customerID the ID of the customer whose order lines are to be retrieved
      * @return a list of OrderLine objects associated with the specified customer
      * @throws OrderLineDataAccessException if there is an error accessing the database
@@ -64,44 +52,44 @@ public class OrderLineService {
      * the new orderlines to the database.
      */
     public List<OrderLine> createAndEditOrderLine(OrderLine orderLine) {
-
         OrderLine existingOrderLine;
 
         try {
             existingOrderLine =
                     orderLineRepository.findByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
-        } catch (DataAccessException e){ throw new OrderLineDataAccessException("Failed to retrieve the orderlines from the database");}
+        } catch (DataAccessException e) {
+            throw new OrderLineDataAccessException("Failed to retrieve the orderlines from the database");
+        }
 
         try {
             if (existingOrderLine != null) {
                 existingOrderLine.setAmount(orderLine.getAmount());
-                orderLineRepository.save(existingOrderLine);
 
+                orderLineRepository.save(existingOrderLine);
             } else {
                 orderLine.setWine(wineService.getWineById(orderLine.getWineID()));// Gives orderline access to the wine object
                 orderLine.setAmount(orderLine.getAmount());
-                orderLineRepository.save(orderLine);
 
+                orderLineRepository.save(orderLine);
             }
+
             if (orderLine.getAmount() < 1) {
                 throw new IllegalArgumentException("The amount cannot be less than 1!");
             }
-
-
-
-        } catch (DataIntegrityViolationException e){
+        } catch (DataIntegrityViolationException e) {
             throw new OrderLineNotUpdatedException("Failed to update the orderline");
-        } catch (DataAccessException e){
-            throw new OrderLineDataAccessException("Failed to save orderline to the database");}
+        } catch (DataAccessException e) {
+            throw new OrderLineDataAccessException("Failed to save orderline to the database");
+        }
 
-            return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
+        return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
     }
 
     /**
      * clearCar
-     * This method clears a customer's cart by deleting all orderlines that matches a specific customer id.
-     * First finds all orderlines matching the customer id, if no such orderlines exist an exception will be thrown.
-     * Then will execute the deletion of the orderlines, and afterward checks if the deletion was successful by checking
+     * This method clears a customer's cart by deleting all orderlines that matches a specific customer ID.
+     * First finds all orderlines matching the customer ID, if no such orderlines exist an exception will be thrown.
+     * Then it will execute the deletion of the orderlines, and afterward checks if the deletion was successful by checking
      * if any orderlines remain in the cart. If so, an exception error will be thrown.
      * The method will return a list of the remaining orderlines associated with the customer.
      * @param customerID
@@ -111,7 +99,6 @@ public class OrderLineService {
      * @throws OrderLineDataAccessException
      */
     public List<OrderLine> clearCart(String customerID) {
-
         try {
             List<OrderLine> orderLines = orderLineRepository.findAllByCustomerId(customerID);
             if (orderLines.isEmpty()) {
@@ -124,24 +111,24 @@ public class OrderLineService {
             if (!remainingOrderLines.isEmpty()) {
                 throw new CartNotClearedException("The cart has not been cleared");
             }
-            return remainingOrderLines;
 
+            return remainingOrderLines;
         } catch (DataAccessException e) {
             throw new OrderLineDataAccessException(" Can not access the database");
         }
     }
 
     public static Double calculateOrderLine(OrderLine orderLine) {
-
         return orderLine.getAmount() * orderLine.getWine().getPrice();
     }
 
     public static double calculateOrderLines(List<OrderLine> orderLines) {
         double totalPrice = 0.0;
-        for (OrderLine orderLine: orderLines){
+        for (OrderLine orderLine: orderLines) {
             Double price = calculateOrderLine(orderLine);
             totalPrice += price;
         }
+
         return totalPrice;
     }
 
@@ -158,39 +145,36 @@ public class OrderLineService {
         OrderLine existingOrderLine =
                 orderLineRepository.findByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
 
-        if(existingOrderLine == null){
+        if (existingOrderLine == null) {
             throw new NullPointerException("No such orderline exists");
-        }
-        else {
+        } else {
             orderLineRepository.deleteOrderLineByCustomerIDAndWineID(orderLine.getCustomerID(), orderLine.getWineID());
         }
 
         return orderLineRepository.findAllByCustomerId(orderLine.getCustomerID());
-
     }
 
-    public void deleteOrderlineByID(OrderLine orderLine){
+    public void deleteOrderlineByID(OrderLine orderLine) {
         orderLineRepository.deleteById(orderLine.getID());
     }
 
-    public boolean canBePurchased(List<OrderLine> orderLineList){
+    public boolean canBePurchased(List<OrderLine> orderLineList) {
         boolean canBePurchased = true;
         String exceptionMessage = "There is not enough stock for wine(s):";
 
-        try{
+        try {
             for(OrderLine orderLine : orderLineList) {
                 Wine wine = wineRepository.getById(orderLine.getWineID());
-                if (!wine.canBePurchased(orderLine.getAmount())){
+                if (!wine.canBePurchased(orderLine.getAmount())) {
                     exceptionMessage += " ID:" + wine.getID();
                     throw new OrderLineCannotBePurchased(exceptionMessage);
                 }
             }
-        }catch (DataAccessException e){
+        } catch (DataAccessException e) {
             System.out.println(e.getMessage());
         }
-        
+
         return canBePurchased;
     }
 }
-
 

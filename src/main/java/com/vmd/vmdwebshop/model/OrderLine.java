@@ -1,11 +1,9 @@
 package com.vmd.vmdwebshop.model;
 
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Digits;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
-
 
 @Entity
 @Table(name ="orderline")
@@ -39,18 +37,16 @@ public class OrderLine {
     @JoinColumn(name = "orderID", nullable = true)
     private Orders orders;
 
-    //Empty Constructor
+    // Constructors
     public OrderLine() {}
 
-    //Constructor
     public OrderLine(int amount, Long wineID, String customerID) {
         this.amount = amount;
         this.wineID = wineID;
         this.customerID = customerID;
     }
 
-
-
+    // Getters and setters
     public Long getID() {
         return this.ID;
     }

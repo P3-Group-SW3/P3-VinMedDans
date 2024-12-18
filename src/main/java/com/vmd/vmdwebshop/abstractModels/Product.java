@@ -2,7 +2,6 @@ package com.vmd.vmdwebshop.abstractModels;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
-import org.hibernate.annotations.Type;
 
 //abstract class used, as it could be used for other types of products in the future
 //uses Hibernate Validation annotations for input validation
@@ -25,6 +24,7 @@ public abstract class Product {
 
     private boolean activeState = true;
 
+    // Constructors
     public Product() {}
 
     public Product(double price, String description, String imageURL) {
@@ -33,7 +33,7 @@ public abstract class Product {
         this.imageURL = imageURL;
     }
 
-    //Getters
+    // Getters and setters
     public String getDescription() { return this.description; }
 
     public String getImageURL() { return this.imageURL; }
@@ -41,8 +41,6 @@ public abstract class Product {
     public double getPrice() { return this.price; }
 
     public boolean getActiveState(){ return this.activeState; }
-
-
 
     public void setPrice(double price) {
         this.price = price;
@@ -58,5 +56,4 @@ public abstract class Product {
 
     //reverses the boolean value
     public void changeActiveState(){ activeState = !activeState; }
-
 }

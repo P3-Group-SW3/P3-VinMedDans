@@ -3,7 +3,6 @@ package com.vmd.vmdwebshop.model;
 import jakarta.persistence.*;
 import com.vmd.vmdwebshop.abstractModels.Product;
 import jakarta.validation.constraints.*;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -14,6 +13,7 @@ import java.util.Set;
 @Entity
 @Table(name="Wine")
 public class Wine extends Product {
+
     //these annotation are for the database
     //tells that this attribute should be the primary key, and the generation strategy
     //The database generates this field automatically
@@ -47,6 +47,7 @@ public class Wine extends Product {
     @OneToMany(mappedBy = "wine", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<OrderLine> orderLines = new HashSet<>();
 
+    // Constructors
     public Wine(){}
 
     public Wine(String description, String imageURL, double price, int stock, String name) {
@@ -55,10 +56,9 @@ public class Wine extends Product {
         this.stock = stock;
     }
 
+    // Getters and setters
     public Long getID() { return this.ID; }
 
-
-    // Getter for name
     public String getName() {
         return name;
     }

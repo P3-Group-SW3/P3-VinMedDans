@@ -1,10 +1,11 @@
 package com.vmd.vmdwebshop.exception.order;
 
-import com.vmd.vmdwebshop.model.Orders;
-
 public class OrderNotSaved extends RuntimeException {
+
     private String name;
     private String email;
+
+    // Constructor
     public OrderNotSaved(String name, String email) {
         this.name = name;
         this.email = email;

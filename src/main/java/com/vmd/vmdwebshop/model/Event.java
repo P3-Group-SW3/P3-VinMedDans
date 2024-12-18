@@ -1,9 +1,7 @@
 package com.vmd.vmdwebshop.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 
 @Entity
 @Table(name = "event")
@@ -11,7 +9,6 @@ public class Event {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-
     private Long ID;
 
     @NotBlank (message = "This field must not be blank")
@@ -45,10 +42,9 @@ public class Event {
     @Column(name = "imageURL", nullable = false, length = 200)
     private String imageURL;
 
-    // Empty Constructor
+    // Constructors
     public Event() {}
 
-    // Constructor
     public Event(String date, String time, String location, String title,
                  String description, String imageURL) {
         this.date = date;

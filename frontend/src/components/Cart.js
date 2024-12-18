@@ -134,7 +134,7 @@ const OrderLineEdit = ({orderLine}) => {
             setQuantity(newQuantity) //local state
             orderLine.amount = newQuantity; //store in order line object
         }
-
+        
         //Save updated order line to the database
         fetch('/api/createAndEditOrderLine', {
             method: 'POST',

@@ -4,13 +4,10 @@ import com.vmd.vmdwebshop.model.Distributor;
 import com.vmd.vmdwebshop.repository.DistributorRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 import org.springframework.dao.DataAccessResourceFailureException;
 import com.vmd.vmdwebshop.exception.distributor.*;
 import org.springframework.dao.DataIntegrityViolationException;
-
 import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,6 +44,7 @@ public class TestDistributorService {
                 .thenReturn(distributorList);
 
         List<Distributor> distributors = distributorService.getAll();
+
         assertNotNull(distributors);
     }
 
@@ -57,6 +55,7 @@ public class TestDistributorService {
                 .thenReturn(Collections.emptyList());
 
         List<Distributor> distributors = distributorService.getAll();
+
         assertTrue(distributors.isEmpty());
     }
 
@@ -74,7 +73,9 @@ public class TestDistributorService {
     public void TestCreateAndEdit01() {
         when(distributorRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.of(distributor1));
+
         List<Distributor> distributors = distributorService.createAndEdit(distributor1, Long.parseLong("1"));
+
         assertNotNull(distributors);
     }
 
@@ -83,6 +84,7 @@ public class TestDistributorService {
     public void TestCreateAndEdit02() {
         when(distributorRepository.findById(Long.parseLong("1")))
                 .thenThrow(DataAccessResourceFailureException.class);
+
         assertThrows(DistributorDataAccessException.class, () -> distributorService.createAndEdit(distributor1,Long.parseLong("1")));
     }
 
@@ -91,8 +93,10 @@ public class TestDistributorService {
     public void TestCreateAndEdit03() {
         when(distributorRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.of(distributor1));
+
         doThrow(DataIntegrityViolationException.class)
                 .when(distributorRepository).save(distributor1);
+
         assertThrows(DistributorNotUpdatedException.class, () -> distributorService.createAndEdit(distributor1, Long.parseLong("1")));
     }
 
@@ -101,8 +105,10 @@ public class TestDistributorService {
     public void TestCreateAndEdit04() {
         when(distributorRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.of(distributor1));
+
         doThrow(DataAccessResourceFailureException.class)
                 .when(distributorRepository).save(distributor1);
+
         assertThrows(DistributorDataAccessException.class, () -> distributorService.createAndEdit(distributor1, Long.parseLong("1")));
     }
 
@@ -111,7 +117,9 @@ public class TestDistributorService {
     public void TestDelete01() {
         when(distributorRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.of(distributor1));
+
         List<Distributor> distributors = distributorService.delete(Long.parseLong("1"));
+
         assertNotNull(distributors);
     }
 
@@ -120,9 +128,7 @@ public class TestDistributorService {
     public void TestDelete02 () {
         when(distributorRepository.findById(Long.parseLong("1")))
                 .thenReturn(Optional.empty());
+
         assertThrows(NullPointerException.class, () -> distributorService.delete(Long.parseLong("1")));
     }
-
-
-
 }
