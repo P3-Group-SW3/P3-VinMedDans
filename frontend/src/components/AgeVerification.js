@@ -13,23 +13,27 @@ const AgeVerification = () => {
 
     //On mount: Create customer cookie if necessary and check if modal should be shown
     useEffect(() => {
-        //Fetch createCookie API to create a customer cookie if there is none beforehand
-        fetch('api/createCookie')
-            .then(response => {
-                if (response.ok) {
-                    console.log('Cookie successfully created!');
-                } else {
-                    console.warn('Failed to create cookie. Status:', response.status);
+        const initializeCookieAndCheckAge = async () => {
+            try {
+                // Step 1: Create the cookie
+                const createResponse = await fetch('api/createCookie');
+                if (!createResponse.ok) {
+                    console.warn('Failed to create cookie. Status:', createResponse.status);
+                    return; // Exit if cookie creation fails
                 }
-            })
-            .catch(error => {
-                console.error('Error creating cookie:', error);
-            });
+                console.log('Cookie successfully created!');
 
-        //Fetch cookieAge API to see if customer cookie is 'new' or 'old', set 'show' accordingly
-        fetch('api/cookieAge')
-            .then(response => response.json())
-            .then(data => {
+                // Step 2: Check cookie age
+                const ageResponse = await fetch('api/cookieAge');
+                if (!ageResponse.ok) {
+                    console.warn('Failed to fetch cookie age. Status:', ageResponse.status);
+                    return;
+                }
+
+                const data = await ageResponse.json();
+                console.log('Cookie Age Response:', data);
+
+                // Step 3: Update 'show' state based on cookie age
                 if (data.cookieAge === 'new') {
                     setShow(true);
                 } else if (data.cookieAge === 'old') {
@@ -37,8 +41,12 @@ const AgeVerification = () => {
                 } else {
                     console.warn("Invalid cookie age value:", data.cookieAge);
                 }
-            })
-            .catch(error => console.error('Error fetching data: ', error));
+            } catch (error) {
+                console.error('Error during initialization:', error);
+            }
+        };
+
+        initializeCookieAndCheckAge();
     }, []);
 
     //Redirects the customer to BR's website if they declare that they are younger than 18

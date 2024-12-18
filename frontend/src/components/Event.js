@@ -20,13 +20,13 @@ const Event = ({ title, date, time, location, description, imageUrl }) => {
     return (
         <div className="container my-3" style={{ backgroundColor: '#f8f6e8'}}>
             <div className="row no-gutters align-items-stretch">
-                <div className="col-md-6">
-                    <h2 style={{ fontFamily: 'Rubik Dirt', fontWeight: 'bold', color: '#405071' }}>{title}</h2>
+                <div className="col-md-6 body-text">
+                    <h2 className="header-large" >{title}</h2>
                     {renderEventStatus()}
-                    <p style={{ fontFamily: 'Rubik', color: 'black' }}> {date} </p>
-                    <p style={{ fontFamily: 'Rubik', color: 'black' }}> {time} </p>
-                    <p style={{ fontFamily: 'Rubik', color: 'black' }}> {location} </p>
-                    <p style={{ fontFamily: 'Rubik', color: 'black' }}> {description} </p>
+                    <p> {date} </p>
+                    <p> {time} </p>
+                    <p> {location} </p>
+                    <p> {description} </p>
                 </div>
                 <div className="col-md-6">
                     {imageUrl && (

@@ -64,4 +64,3 @@ tasks.register('copyFrontend', Copy) {
 processResources {
     dependsOn copyFrontend
 }
-
