@@ -46,13 +46,21 @@ tasks.named('test') {
 }
 
 // Custom tasks to build React project and copy to static resources
+def isWindows = System.getProperty('os.name').toLowerCase().contains('win')
+def isMac = System.getProperty('os.name').toLowerCase().contains('mac')
+def isLinux = System.getProperty('os.name').toLowerCase().contains('nix') || System.getProperty('os.name').toLowerCase().contains('nux')
+ 
 tasks.register('buildFrontend', Exec) {
     workingDir 'frontend'
-    commandLine 'cmd', '/d', 'npm install && npm run build'
+    if (isWindows) {
+        commandLine 'cmd', '/c', 'npm install && npm run build'
+    } else if (isMac || isLinux) {
+        commandLine 'sh', '-c', 'npm install && npm run build'
+    }
     inputs.dir 'frontend/src'
     outputs.dir 'frontend/build'
 }
-
+ 
 tasks.register('copyFrontend', Copy) {
     dependsOn buildFrontend
     from 'frontend/build'
@@ -60,7 +68,7 @@ tasks.register('copyFrontend', Copy) {
     inputs.dir 'frontend/build'
     outputs.dir 'src/main/resources/static'
 }
-
+ 
 processResources {
     dependsOn copyFrontend
 }
