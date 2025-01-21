@@ -1,0 +1,72 @@
+### GET request with a header (get wine by ID)
+GET http://localhost:8080/api/wine/getById/
+Content-Type: application/json
+
+### GET request with a header (get all wines)
+GET http://localhost:8080/api/wine/getList
+Content-Type: application/json
+
+
+### Send POST request with json body (edit wine by ID)
+POST http://localhost:8080/api/wine/admin/createAndEdit
+Content-Type: application/json
+
+{
+  "ID": 1,
+  "description": "Hej med dig",
+  "imageURL": "Bøh",
+  "price": 100,
+  "amountLeft": 13,
+  "name": "Blåvin"
+}
+
+
+### Send POST request with json body (create havtorben)
+POST http://localhost:8080/api/wine/admin/createAndEdit
+Content-Type: application/json
+
+{
+  "description": "Drøm dig væk til de varmende stråler af den sydlige sol, med denne sprudlende og elegangte flaske havtornvin. Glem at det ikke blev den romantiske tur til Bali du havde drømt om, men i stedet på camping, med børnene, på langeland, med rugbrødsmadder. I regnvejr.",
+  "imageURL": "http://localhost:8080/api/images/havtorben.png",
+  "price": 189,
+  "amountLeft": 10,
+  "name": "havtorben"
+}
+
+### Send POST request with json body (create stikkelsvin)
+POST http://localhost:8080/api/wine/admin/createAndEdit
+Content-Type: application/json
+
+{
+  "description": "Lystige små stikkelsbær i den smukkeste symbiose med håndplukkede danske æbler kombineret i dette pragteksemplar af en flaske vin. Perfekt til afslutningen på en lang arbejdsuge. Eller på en lang mandag, fordi sekretæren på kontoret et pisse irriterende, og du fortjener det.",
+  "imageURL": "http://localhost:8080/api/images/stikkelsvin.png",
+  "price":189,
+  "amountLeft": 10,
+  "name": "stikkelsvin"
+}
+
+### Send POST request with json body (create hønefuld)
+POST http://localhost:8080/api/wine/admin/createAndEdit/19
+Content-Type: application/json
+
+{
+  "description": "Du har inviteret til en fin middag, og har rigtigt gjort noget ud af det. Maden er færdig, bordet er dækket, og alt er ved at være klar. Hvad kunne dog være bedre? Måske at gæsterne aflyste, så kunne du tage dit nattøj på, og drikke flasken med hønefuld helt for dig selv.",
+  "imageURL": "http://localhost:8080/api/images/hoenefuld.png",
+  "price": 900123.23,
+  "amountLeft": 111,
+  "name": "asdlgihasdg"
+}
+
+### Send POST request with a header (toggle active state by ID)
+POST http://localhost:8080/api/wine/admin/changeActiveState/95
+Content-Type: application/json
+
+### Send POST request with a header (delete wine by ID)
+POST http://localhost:8080/api/wine/admin/delete/16
+Content-Type: application/json
+
+### Send POST request with a header (delete wine by ID)
+POST http://localhost:8080/api/code?username=Mejer&password=2ndpassword
+
+
+

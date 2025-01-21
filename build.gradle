@@ -1,0 +1,74 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.3.4'
+    id 'io.spring.dependency-management' version '1.1.6'
+}
+
+group = 'com.VMD'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(23)
+    }
+}
+
+configurations {
+    compileOnly {
+        extendsFrom annotationProcessor
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'mysql:mysql-connector-java:8.0.33'
+    implementation 'com.stripe:stripe-java:28.0.1'
+    compileOnly 'org.projectlombok:lombok'
+    developmentOnly 'org.springframework.boot:spring-boot-devtools'
+    annotationProcessor 'org.projectlombok:lombok'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation 'org.springframework.security:spring-security-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+    implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+    implementation 'commons-io:commons-io:2.16.1'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+}
+
+
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
+
+// Custom tasks to build React project and copy to static resources
+def isWindows = System.getProperty('os.name').toLowerCase().contains('win')
+def isMac = System.getProperty('os.name').toLowerCase().contains('mac')
+def isLinux = System.getProperty('os.name').toLowerCase().contains('nix') || System.getProperty('os.name').toLowerCase().contains('nux')
+ 
+tasks.register('buildFrontend', Exec) {
+    workingDir 'frontend'
+    if (isWindows) {
+        commandLine 'cmd', '/c', 'npm install && npm run build'
+    } else if (isMac || isLinux) {
+        commandLine 'sh', '-c', 'npm install && npm run build'
+    }
+    inputs.dir 'frontend/src'
+    outputs.dir 'frontend/build'
+}
+ 
+tasks.register('copyFrontend', Copy) {
+    dependsOn buildFrontend
+    from 'frontend/build'
+    into 'src/main/resources/static'
+    inputs.dir 'frontend/build'
+    outputs.dir 'src/main/resources/static'
+}
+ 
+processResources {
+    dependsOn copyFrontend
+}
