@@ -13,6 +13,7 @@ import AboutUsPage from "./pages/AboutUsPage";
 import EventPage from "./pages/EventPage";
 import LocationPage from "./pages/LocationPage";
 import ContactPage from "./pages/ContactPage";
+import OrderPage from "./pages/OrderPage";
 import Checkout from "./pages/Checkout";
 import AdminDashboard from "./pages/AdminDashboard";
 import AdminEdit from "./pages/AdminEdit";
@@ -38,6 +39,7 @@ root.render(
           <Route path="/events" element={<EventPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/checkout" element={<Checkout />} />
+          <Route path="/order" element={<OrderPage />} />
           <Route path="/callback" element={<CriiptoCallback />} />
           <Route path="/stripe-page" element={<div>Stripe Page</div>} />
           <Route path="administrator">
